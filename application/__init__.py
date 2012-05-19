@@ -42,13 +42,14 @@ app_run_args = {}
 db = SQLAlchemy()
 
 
-def create_app(_run_mode = "production"):
-    if _run_mode == 'dev':
-        # Set up logging
-        console = logging.StreamHandler()
-        console.setLevel(logging.INFO)
-        console.setFormatter(logging.Formatter('%(message)s'))
-        logging.getLogger('').addHandler(console)
+def create_app(_run_mode = 'production'):
+    # Set up logging
+    # if _run_mode != 'dev':
+    #     # This messes up Werkzeug's console output - no idea why
+    #     console = logging.StreamHandler()
+    #     console.setLevel(logging.INFO)
+    #     console.setFormatter(logging.Formatter('%(message)s'))
+    #     logging.getLogger('').addHandler(console)
 
     # Create Flask app
     global app
@@ -77,6 +78,7 @@ def create_app(_run_mode = "production"):
 
     # Test run mode
     elif _run_mode == 'test':
+        app.config["DEBUG"] = True
         app.config["TESTING"] = True
         app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
         
@@ -97,6 +99,7 @@ def create_app(_run_mode = "production"):
 
     # Initialize the database
     global db
+    import application.models
     db.init_app(app)
 
     # Initialize application
@@ -108,5 +111,6 @@ def run_app():
     # Run the application
     # See flask/app.py run() for the implementation of run().
     # See http://werkzeug.pocoo.org/docs/serving/ for the parameters of Werkzeug's run_simple().
-    # If debug is not set, Flask does not change app.debug, which we've already set above.
+    # If the debug parameter is not set, Flask does not change app.debug, which is set from
+    # the DEBUG app config variable, which we've set in create_app().
     app.run(**app_run_args)

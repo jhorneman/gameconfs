@@ -7,31 +7,32 @@ from application import geocoder
 
 logger = logging.getLogger(__name__)
 
-#TODO: Right now, these models cannot handle multiple cities with the same name in the same country.
-# So we need to add states for some countries...
-
 
 class User(db.Model):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    name = Column(String(50), unique=True)
-    email = Column(String(120), unique=True)
+    user_name = Column(String(250), unique=True, nullable=False)
+    first_name = Column(String(250), nullable=False)
+    last_name = Column(String(250), nullable=False)
+    email = Column(String(250), unique=True, nullable=False)
 
-    def __init__(self, _name=None, _email=None):
-        self.name = _name
+    def __init__(self, _user_name, _first_name, _last_name, _email):
+        self.user_name = _user_name
+        self.first_name = _first_name
+        self.last_name = _last_name
         self.email = _email
 
     def __repr__(self):
-        return '<User %r>' % (self.name)
+        return '<User %r (%r %r)>' % (self.user_name, self.first_name, self.last_name)
 
 
 class Series(db.Model):
     __tablename__ = 'series'
 
     id = Column(Integer, primary_key=True)
-    name = Column(String(250))
+    name = Column(String(250), unique=True, nullable=False)
 
-    def __init__(self, _name=None):
+    def __init__(self, _name):
         self.name = _name
 
     def __repr__(self):
@@ -43,24 +44,33 @@ class City(db.Model):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
-    country_id = Column(Integer, ForeignKey("countries.id"), nullable=False)
+    country_id = Column(Integer, ForeignKey('countries.id'), nullable=False)
     country = relationship('Country', backref=backref('cities', lazy='lazy'))
+    state_id = Column(Integer, ForeignKey('states.id'))
+    state = relationship('State', backref=backref('cities', lazy='lazy'))
 
-    def __init__(self, _db_session, _name, _country_name, _continent_name):
+    def __init__(self, _name):
         self.name = _name
-        try:
-            print "Looking for country", _country_name
-            country = _db_session.query(Country).\
-                filter(Country.name == _country_name).\
-                join(Country.continent).\
-                filter(Continent.name == _continent_name).\
-                one()
-        except sqlalchemy.orm.exc.NoResultFound:
-            country = Country(_db_session, _country_name, _continent_name)
-        self.country = country
 
     def __repr__(self):
         return '<City %r>' % (self.name)
+
+
+class State(db.Model):
+    __tablename__ = 'states'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), nullable=False)
+    short_name = Column(String(50), nullable=False)
+    country_id = Column(Integer, ForeignKey('countries.id'), nullable=False)
+    country = relationship('Country', backref=backref('states', lazy='lazy'))
+
+    def __init__(self, _name, _short_name = ""):
+        self.name = _name
+        self.short_name = _short_name
+
+    def __repr__(self):
+        return '<State %r>' % (self.name)
 
 
 class Country(db.Model):
@@ -68,21 +78,11 @@ class Country(db.Model):
 
     id = Column(Integer, primary_key=True)
     name = Column(String(250), unique=True, nullable=False)
-    continent_id = Column(Integer, ForeignKey("continents.id"), nullable=False)
+    continent_id = Column(Integer, ForeignKey('continents.id'), nullable=False)
     continent = relationship('Continent', backref=backref('countries', lazy='lazy'))
 
-    def __init__(self, _db_session, _name, _continent_name):
+    def __init__(self, _name):
         self.name = _name
-        continent = _db_session.query(Continent).filter(Continent.name == _continent_name).one()
-
-        # The following causes horrible problems:
-        #   continent = Continent.query.filter(Continent.name == _continent_name).one()
-        # It will magically invoke a _SignallingSession session instead of a ScopingSession
-        # and then sometime later the following exception will be raised:
-        #   InvalidRequestError: Object '<Country at 0x10cb29e10>' is already attached to session '6' (this is '7')
-        # It probably kinda makes sense.
-
-        self.continent = continent
 
     def __repr__(self):
         return '<Country %r>' % (self.name)
@@ -94,7 +94,7 @@ class Continent(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(250), unique=True, nullable=False)
 
-    def __init__(self, _name=None):
+    def __init__(self, _name):
         self.name = _name
 
     def __repr__(self):
@@ -107,9 +107,11 @@ class Event(db.Model):
     #TODO: Handle compound / child events (GDC tutorials and summits, e.g.)
     #TODO: Add event prototype model and link to it
     #TODO: Creation / modification dates
+    #TODO: Non-database index ID?
     #TODO: Slug support
     #TODO: Slug history in other table
     #TODO: Deadline support in other table
+    #TODO: See if strings that are null (nullable) are treated as empty strings
 
     # Primary key. Global event ID.
     id = Column(Integer, primary_key=True)
@@ -120,8 +122,8 @@ class Event(db.Model):
     # slug = Column(String(250))
 
     # Series this event is a part of.
-    series_id = Column(Integer, ForeignKey("series.id"))
-    series = relationship('Series')
+    series_id = Column(Integer, ForeignKey('series.id'))
+    series = relationship('Series', backref=backref('events', lazy='lazy'))
 
     # Start and end dates of the event.
     #TODO: Decide if we need a start time for very short events
@@ -146,37 +148,130 @@ class Event(db.Model):
 
     # Twitter hash tags for this event, with hash signs, separated by spaces.
     twitter_hashtags = Column(String(250))
+    twitter_account = Column(String(250))
 
     # Location info
-    is_geolocated = Column(Boolean)
-    raw_location_info = Column(String(250))
-    formatted_location_info = Column(String(250))
+    raw_location_info = Column(String(250), nullable=False)
+    formatted_location_info = Column(String(250), nullable=False)
 
-    city_id = Column(Integer, ForeignKey("cities.id"))
+    city_id = Column(Integer, ForeignKey('cities.id'), nullable=False)
     city = relationship('City')
 
-    def __init__(self, _name=None):
+    def __init__(self, _name):
         self.name = _name
         self.is_free = False
-        self.is_geolocated = False
 
-    def set_location(self, _location_info):
+    def set_location(self, _db_session, _location_info):
+        """
+        Set location data based on geocoding of location info.
+        Caller is responsible for committing database transaction.
+        """
         self.raw_location_info = _location_info
-
         g = geocoder.GeocodeResults(self.raw_location_info)
-        self.is_geolocated = g.is_valid
-
         if g.is_valid:
-            self.formatted_location_info = g.formatted_location_info
-            city = City.query.filter((City.name == g.city) & (City.country.name == g.country) & (City.country.continent.name == g.continent)).one()
-            if city:
-                self.city = city
-            else:
-                self.city = City(g.city, g.country, g.continent)
+            self.formatted_location_info = g.formatted_address
+            (self.city, self.state, self.country, self.continent) = set_up_location_data(_db_session, g)
 
     def __repr__(self):
         return '<Event %r>' % (self.name)
 
+
+def set_up_location_data(_db_session, _geocoded):
+    """
+    Find or create city, state, country and continent data based on geocoder results.
+    Caller is responsible for committing database transaction.
+    """
+
+    state = None
+
+    # Try to find the city
+    try:
+        city = _db_session.query(City).\
+            filter(City.name == _geocoded.city).\
+            join(City.country).\
+            filter(Country.name == _geocoded.country).\
+            join(Country.continent).\
+            filter(Continent.name == _geocoded.continent).\
+            one()
+        logger.debug("Found city " + _geocoded.city)
+
+        country = city.country
+        state = city.state
+        continent = country.continent
+
+    except sqlalchemy.orm.exc.NoResultFound:
+        logger.debug("Didn't find city " + _geocoded.city)
+
+        # Try to find the country
+        try:
+            country = _db_session.query(Country).\
+                filter(Country.name == _geocoded.country).\
+                join(Country.continent).\
+                filter(Continent.name == _geocoded.continent).\
+                one()
+
+            logger.debug("Found country " + _geocoded.country)
+
+            city = City(_geocoded.city)
+            city.country = country
+            _db_session.add(city)
+            logger.debug("Created city " + _geocoded.city)
+
+            if _geocoded.state:
+                try:
+                    state = _db_session.query(State).\
+                        filter(State.name == _geocoded.state).\
+                        join(State.country).\
+                        filter(Country.name == _geocoded.country).\
+                        join(Country.continent).\
+                        filter(Continent.name == _geocoded.continent).\
+                        one()
+
+                except sqlalchemy.orm.exc.NoResultFound:
+                    logger.debug("Didn't find state " + _geocoded.state)
+
+                    state = State(_geocoded.state, _geocoded.state_abbr)
+                    state.country = country
+                    _db_session.add(state)
+                    logger.debug("Created state " + _geocoded.state)
+
+                city.state = state
+
+            continent = country.continent
+
+        except sqlalchemy.orm.exc.NoResultFound:
+            logger.debug("Didn't find country " + _geocoded.country)
+
+            # Try to find the continent
+            try:
+                continent = _db_session.query(Continent).\
+                    filter(Continent.name == _geocoded.continent).\
+                    one()
+
+                logger.debug("Found continent " + _geocoded.continent)
+
+                country = Country(_geocoded.country)
+                country.continent = continent
+                _db_session.add(country)
+                logger.debug("Created country " + _geocoded.country)
+
+                city = City(_geocoded.city)
+                city.country = country
+                _db_session.add(city)
+                logger.debug("Created city " + _geocoded.city)
+
+                if _geocoded.state:
+                    state = State(_geocoded.state, _geocoded.state_abbr)
+                    state.country = country
+                    _db_session.add(state)
+                    logger.debug("Created state " + _geocoded.state)
+                    city.state = state
+
+            except sqlalchemy.orm.exc.NoResultFound:
+                logger.error("Didn't find continent " + _geocoded.continent)
+                return (None, None, None, None)
+
+    return (city, state, country, continent)
 
 def initialize_continents(_db):
     db_session = _db.create_scoped_session()
@@ -184,4 +279,3 @@ def initialize_continents(_db):
         continent = Continent(continent_name)
         db_session.add(continent)
     db_session.commit()
-
