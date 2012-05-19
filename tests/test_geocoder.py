@@ -2,26 +2,8 @@ import logging
 import unittest
 from nose.tools import *
 from application.geocoder import GeocodeResults
+from utils import *
 
-class MockLoggingHandler(logging.Handler):
-    """Mock logging handler to check for expected logs."""
-    # Origin: http://stackoverflow.com/questions/899067/how-should-i-verify-a-log-message-when-testing-python-code-under-nose
-
-    def __init__(self, *args, **kwargs):
-        self.reset()
-        logging.Handler.__init__(self, *args, **kwargs)
-
-    def emit(self, record):
-        self.messages[record.levelname.lower()].append(record.getMessage())
-
-    def reset(self):
-        self.messages = {
-            'debug': [],
-            'info': [],
-            'warning': [],
-            'error': [],
-            'critical': [],
-        }
 
 class GeocoderTestCase(unittest.TestCase):
     def __init__(self, *args, **kwargs):

@@ -2,8 +2,9 @@
 # creating the Flask app, and running it.
 #
 # We need the following run modes:
-#   dev - local, personal development server.
-#   team - still local server, for development by team (specifically non-coder team members).
+#   dev        - local, personal development server.
+#   test       - used for automated testing.
+#   team       - still local server, for development by team (specifically non-coder team members).
 #   production - deployed on Heroku.
 #
 # Don't use environment variables for local configurations.
@@ -69,10 +70,16 @@ def create_app(_run_mode = "production"):
     # Dev run mode
     if _run_mode == "dev":
         app.config["DEBUG"] = True
+        #TODO: Change this as soon as we have a somewhat stable database and database tools
         # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
         app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
         toolbar = DebugToolbarExtension(app)
 
+    # Test run mode
+    elif _run_mode == 'test':
+        app.config["TESTING"] = True
+        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
+        
     # Team run mode
     elif _run_mode == "team":
         app.config["DEBUG"] = True
