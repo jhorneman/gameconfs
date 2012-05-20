@@ -1,0 +1,13 @@
+{% extends "layout.html" %}
+{% block title %}{{ event.name }}{% endblock %}
+{% block content %}
+	<h1>{{ event.name }}</h1>
+	<p>
+	Series: {{ event.series.name }}<br/>
+	Website: <a href="{{ event.main_url }}" target="_blank">{{ event.main_url }}</a><br/>
+	Twitter hashtags: {{ event.twitter_hashtags }}<br/>
+	Twitter account: <a href="http://twitter.com/{{ event.twitter_account }}" target="_blank">@{{ event.twitter_account }}</a><br/>
+	Location: {{ event.formatted_location_info }}<br/>
+	</p>
+	<a href="{{ url_for('events') }}">Back to event list</a>
+{% endblock %}

@@ -1,0 +1,17 @@
+name: Stagconf 2012
+series: Stagconf
+start_date: [2012, 12, 1]
+end_date: [2012, 12, 1]
+main_url: http://stagconf.com
+twitter_hashtags: "#stagconf #stagconf12"
+twitter_account: stagconf
+location: Museum of Natural History, Vienna
+---
+name: Game Developers Conference 2013
+series: Game Developers Conference
+start_date: [2012, 12, 1]
+end_date: [2012, 12, 1]
+main_url: http://gdconf.com
+twitter_hashtags: "#gdc #gdc12"
+twitter_account: Official_GDC
+location: "Moscone, 747 Howard Street, San Francisco"

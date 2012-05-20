@@ -42,7 +42,7 @@ app_run_args = {}
 db = SQLAlchemy()
 
 
-def create_app(_run_mode = 'production'):
+def create_app(_run_mode):
     # Set up logging
     # if _run_mode != 'dev':
     #     # This messes up Werkzeug's console output - no idea why
@@ -71,9 +71,7 @@ def create_app(_run_mode = 'production'):
     # Dev run mode
     if _run_mode == "dev":
         app.config["DEBUG"] = True
-        #TODO: Change this as soon as we have a somewhat stable database and database tools
-        # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
-        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
+        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///test.db"
         toolbar = DebugToolbarExtension(app)
 
     # Test run mode

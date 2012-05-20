@@ -34,12 +34,12 @@ class TestCaseUsingDatabase(unittest.TestCase):
 class UserModelTestCase(TestCaseUsingDatabase):
     def test_user_can_be_added(self):
         with self.app.test_request_context():
-            user = User('admin', 'Jurie', 'Horneman', 'admin@example.com')
+            user = User('Jurie', 'Horneman', 'admin@example.com')
             self.db_session.add(user)
             self.db_session.commit()
 
             found_user = User.query.one()
-            ok_(found_user.user_name == 'admin')
+            ok_(found_user.display_name == 'Jurie Horneman')
             ok_(found_user.email == 'admin@example.com')
 
 

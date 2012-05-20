@@ -11,16 +11,18 @@ logger = logging.getLogger(__name__)
 class User(db.Model):
     __tablename__ = 'users'
     id = Column(Integer, primary_key=True)
-    user_name = Column(String(250), unique=True, nullable=False)
     first_name = Column(String(250), nullable=False)
     last_name = Column(String(250), nullable=False)
     email = Column(String(250), unique=True, nullable=False)
 
-    def __init__(self, _user_name, _first_name, _last_name, _email):
-        self.user_name = _user_name
+    def __init__(self, _first_name, _last_name, _email):
         self.first_name = _first_name
         self.last_name = _last_name
         self.email = _email
+
+    @property
+    def display_name(self):
+        return self.first_name + " " + self.last_name
 
     def __repr__(self):
         return '<User %r (%r %r)>' % (self.user_name, self.first_name, self.last_name)
@@ -127,16 +129,15 @@ class Event(db.Model):
 
     # Start and end dates of the event.
     #TODO: Decide if we need a start time for very short events
-    event_start_date = Column(Date)
-    event_end_date = Column(Date)
+    start_date = Column(Date)
+    end_date = Column(Date)
 
+    #TODO: Replace these with deadline table rows
     # Start and end dates of the speaker submission period.
     # submission_start_date = Column(Date)
     # submission_end_date = Column(Date)
-
     # Start date of event registration. The end date is assumed to be the event itself.
     # registration_start_date = Column(Date)
-
     # End date of the early bird discount period. Some events may have.
     # early_bird_end_date = Column(Date)
 
@@ -170,7 +171,7 @@ class Event(db.Model):
         g = geocoder.GeocodeResults(self.raw_location_info)
         if g.is_valid:
             self.formatted_location_info = g.formatted_address
-            (self.city, self.state, self.country, self.continent) = set_up_location_data(_db_session, g)
+            (self.city, state, country, continent) = set_up_location_data(_db_session, g)
 
     def __repr__(self):
         return '<Event %r>' % (self.name)
