@@ -1,17 +1,224 @@
-name: Stagconf 2012
+name: Stagconf 2011
 series: Stagconf
-start_date: [2012, 12, 1]
-end_date: [2012, 12, 1]
-main_url: http://stagconf.com
-twitter_hashtags: "#stagconf #stagconf12"
+start_date: [2011, 9, 27]
+end_date: [2011, 9, 27]
+main_url: "http://stagconf.com"
+twitter_hashtags: "#stagconf"
 twitter_account: stagconf
 location: Museum of Natural History, Vienna
 ---
 name: Game Developers Conference 2013
 series: Game Developers Conference
-start_date: [2012, 12, 1]
-end_date: [2012, 12, 1]
-main_url: http://gdconf.com
-twitter_hashtags: "#gdc #gdc12"
+start_date: [2013, 3, 25]
+end_date: [2013, 3, 29]
+main_url: "http://www.gdconf.com"
+twitter_hashtags: "#gdc #gdc13"
 twitter_account: Official_GDC
 location: "Moscone, 747 Howard Street, San Francisco"
+---
+name: Game Developers Conference Europe 2012
+series: Game Developers Conference Europe
+start_date: [2012, 8, 13]
+end_date: [2012, 8, 15]
+main_url: "http://www.gdceurope.com/"
+twitter_hashtags: "#gdce #gdce12"
+twitter_account: GDC_Europe
+location: "Koelnmesse, Köln, Germany"
+---
+name: PIXEL 7
+series: PIXEL
+start_date: [2012, 10, 5]
+end_date: [2012, 10, 7]
+main_url: "http://www.pixelvienna.com/7"
+twitter_hashtags: ""
+twitter_account: PixelVienna
+location: "Österreichische Akademie der Wissenschaften (ÖAW), Dr. Ignaz Seipel-Platz 2, 1010 Vienna"
+---
+name: Nordic Game 2012
+series: Nordic Game
+start_date: [2012, 5, 23]
+end_date: [2012, 5, 25]
+main_url: "http://nordicgame.com/"
+twitter_hashtags: "#nordicgame"
+twitter_account: NordicGame
+location: "Luftkastellet, Malmö"
+---
+name: Develop Conference 2012
+series: Develop Conference
+start_date: [2012, 7, 10]
+end_date: [2012, 7, 12]
+main_url: "http://www.developconference.com/"
+twitter_hashtags: ""
+twitter_account: DevelopConf
+location: "Hilton Brighton Metropole, Kings Road, Brighton"
+---
+name: GameHorizon Conference 2013
+series: "NONE"
+start_date: [2012, 6, 27]
+end_date: [2012, 6, 28]
+main_url: "http://www.gamehorizonconference.com/"
+twitter_hashtags: ""
+twitter_account: gamehorizon
+location: "THE SAGE GATESHEAD, St Mary's Square, Gateshead Quays, Gateshead"
+---
+name: Edinburgh Interactive 2012
+series: "NONE"
+start_date: [2012, 8, 9]
+end_date: [2012, 8, 11]
+main_url: "http://edinburghinteractive.co.uk/"
+twitter_hashtags: ""
+twitter_account: EdiInteractive
+location: "The Radisson Blu Hotel, 80 High St, The Royal Mile, EH1 1TH"
+---
+name: East Coast Game Conference
+series: "NONE"
+start_date: [2012, 4, 25]
+end_date: [2012, 4, 26]
+main_url: "http://www.ecgconf.com/"
+twitter_hashtags: ""
+twitter_account: ECGameCon
+location: "500 S. Salisbury St. Raleigh, NC 27601"
+---
+name: Social Gaming Summit
+series: "NONE"
+start_date: [2012, 5, 23]
+end_date: [2012, 5, 24]
+main_url: "http://www.mediabistro.com/socialgamingsummit/"
+twitter_hashtags: "#sgsconf"
+twitter_account: socialtimes
+location: "Kalkscheine, Johannisstr. 2, 10117 Berlin"
+---
+name: Casual Connect Asia 2012
+series: "NONE"
+start_date: [2012, 5, 22]
+end_date: [2012, 5, 24]
+main_url: "http://asia.casualconnect.org/"
+twitter_hashtags: ""
+twitter_account:
+location: "Suntec 3rd Floor, 1 Raffles Boulevard, Suntec City, Singapore"
+---
+name: Casual Connect Seattle
+series: "NONE"
+start_date: [2012, 7, 24]
+end_date: [2012, 7, 26]
+main_url: "http://seattle.casualconnect.org/"
+twitter_hashtags: ""
+twitter_account:
+location: "BENAROYA HALL & TRIPLE DOOR, 200 University St, Seattle, WA 98101"
+---
+name: Casual Connect Kyiv
+series: "NONE"
+start_date: [2012, 10, 24]
+end_date: [2012, 10, 26]
+main_url: "http://kyiv.casualconnect.org/"
+twitter_hashtags: ""
+twitter_account:
+location: "RUS HOTEL, 4, Hospitalna Street, Kyiv, 01601, Ukraine"
+---
+name: E3
+series: "NONE"
+start_date: [2012, 6, 5]
+end_date: [2012, 6, 7]
+main_url: "http://www.e3expo.com/"
+twitter_hashtags: ""
+twitter_account: e3expo
+location: "Los Angeles Convention Center, 1201 South Figueroa Street  Los Angeles, CA 90015"
+---
+name: Games for Health Conference 2012
+series: "NONE"
+start_date: [2012, 6, 12]
+end_date: [2012, 6, 14]
+main_url: "http://www.gamesforhealth.org/index.php/conferences/gfh-2012/"
+twitter_hashtags: ""
+twitter_account:
+location: "Boston Hyatt Harborside, 101 Harborside Drive  East Boston, MA 02128"
+---
+name: Games For Health Europe
+series: "NONE"
+start_date: [2012, 11, 5]
+end_date: [2012, 11, 6]
+main_url: "http://www.gamesforhealtheurope.com/"
+twitter_hashtags: ""
+twitter_account:
+location: "Piet Heinkade 1 1019 BR Amsterdam"
+---
+name: AAAI Conference 12
+series: "NONE"
+start_date: [2012, 7, 22]
+end_date: [2012, 7, 26]
+main_url: "http://www.aaai.org/Conferences/AAAI/aaai12.php"
+twitter_hashtags: ""
+twitter_account:
+location: "Sheraton Centre Toronto Hotel, 123 Queen Street West, Toronto, Ontario M5H 2M9 Canada"
+---
+name: China Joy
+series: "NONE"
+start_date: [2012, 7, 25]
+end_date: [2012, 7, 29]
+main_url: "http://en.chinajoy.net/"
+twitter_hashtags: ""
+twitter_account:
+location: "Shanghai Pudong Kerry Center Hotel (No. 1388, Huamu Road, Pudong District, Shanghai)"
+---
+name: GDC Online 2012
+series: "NONE"
+start_date: [2012, 10, 9]
+end_date: [2012, 10, 11]
+main_url: "http://www.gdconline.com/"
+twitter_hashtags: ""
+twitter_account:
+location: "Austin Convention Center, 500 East Cesar Chavez Street  Austin, TX 78701"
+---
+name: GDC China
+series: "NONE"
+start_date: [2012, 11, 7]
+end_date: [2012, 11, 12]
+main_url: "http://www.gdcchina.com/"
+twitter_hashtags: ""
+twitter_account:
+location: "Shanghai Exhibition Center, Gate 7, 1333 West Nanjing Road, Shanghai, China"
+---
+name: PAX East
+series: "NONE"
+start_date: [2012, 4, 6]
+end_date: [2012, 4, 8]
+main_url: "http://east.paxsite.com/"
+twitter_hashtags: ""
+twitter_account: Official_PAX
+location: "Boston Convention & Exhibition Center, 415 Summer Street, Boston, MA 02210"
+---
+name: PAX Prime
+series: "NONE"
+start_date: [2012, 8, 31]
+end_date: [2012, 9, 2]
+main_url: "http://prime.paxsite.com/"
+twitter_hashtags: ""
+twitter_account: Official_PAX
+location: "Washington State Convention & Trade Center, 800 Convention Place, Seattle, WA 98101-2350"
+---
+name: PAX Dev Seattle
+series: "NONE"
+start_date: [2012, 8, 29]
+end_date: [2012, 8, 30]
+main_url: "http://dev.paxsite.com/"
+twitter_hashtags: ""
+twitter_account: Official_PAX
+location: "Seattle Westin Hotel, 1400 6th Avenue, Seattle, WA 98101"
+---
+name: D.I.C.E. Summit
+series: "NONE"
+start_date: [2012, 2, 7]
+end_date: [2012, 2, 10]
+main_url: "http://www.dicesummit.org/"
+twitter_hashtags: ""
+twitter_account:
+location: "Red Rock Resort & Casino, 11011 West Charleston Boulevard  Las Vegas, NV 89135"
+---
+name: Indiecade
+series: "NONE"
+start_date: [2012, 10, 4]
+end_date: [2012, 10, 7]
+main_url: "http://www.indiecade.com/"
+twitter_hashtags: ""
+twitter_account: IndieCade
+location: "Culver City, Los Angeles"

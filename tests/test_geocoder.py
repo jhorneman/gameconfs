@@ -1,3 +1,5 @@
+# coding=iso-8859-1
+
 import logging
 import unittest
 from nose.tools import *
@@ -30,12 +32,26 @@ class GeocoderTestCase(unittest.TestCase):
         ok_(g.country == "Austria")
         ok_(g.continent == "Europe")
 
-    def test_query_fail(self):
+    def test_query_fail_outputs_error(self):
         g = GeocodeResults("")
         ok_(not g.is_valid)
         ok_(len(self.mock_handler.messages["error"]) > 0)
 
-    def test_query_multiple_results(self):
+    def test_query_multiple_results_outputs_warning(self):
         g = GeocodeResults("Springfield")
         ok_(g.is_valid)
         ok_(len(self.mock_handler.messages["warning"]) > 0)
+
+    def test_utf8_query_works(self):
+        g = GeocodeResults("Koelnmesse, Köln, Germany")
+        ok_(g.is_valid)
+        ok_(g.city == "Cologne")
+        ok_(g.country == "Germany")
+        ok_(g.continent == "Europe")
+
+    def test_unicode_query_works(self):
+        g = GeocodeResults(u"Koelnmesse, Köln, Germany")
+        ok_(g.is_valid)
+        ok_(g.city == "Cologne")
+        ok_(g.country == "Germany")
+        ok_(g.continent == "Europe")

@@ -1,8 +1,9 @@
+import codecs
 import logging
+import yaml
 from application import create_app, run_app
 from application.models import *
 from datetime import date
-import yaml
 
 if __name__ == "__main__":
     console = logging.StreamHandler()
@@ -21,14 +22,14 @@ if __name__ == "__main__":
         db_session = db.create_scoped_session()
 
         # Load event series
-        with open('data/series.yaml') as f:
+        with codecs.open('data/series.yaml', 'r', 'utf-8') as f:
             for data in yaml.load_all(f):
                 new_series = Series(data["name"])
                 db_session.add(new_series)
         db_session.commit()
 
         # Load events
-        with open('data/events.yaml') as f:
+        with codecs.open('data/events.yaml', 'r', 'utf-8') as f:
             for data in yaml.load_all(f):
                 new_event = Event(data["name"])
                 new_event.series = db_session.query(Series).filter(Series.name == data["series"]).one()
@@ -39,12 +40,19 @@ if __name__ == "__main__":
                 new_event.twitter_hashtags = data["twitter_hashtags"]
                 new_event.twitter_account = data["twitter_account"]
                 new_event.set_location(db_session, data["location"])
-                db_session.add(new_event)
-                # Must commit inside loop because set_location() will add cities, countries, etc.
-                db_session.commit()
+
+                # Only add if setting location worked (geocoding can fail)
+                if new_event.formatted_location_info:
+                    db_session.add(new_event)
+
+                    # Must commit inside loop because set_location() will add cities, countries, etc.
+                    db_session.commit()
+                else:
+                    # Otherwise get rid of whatever was done to the session or it will cause trouble later
+                    db_session.expunge_all()
 
         # Load users
-        with open('data/users.yaml') as f:
+        with codecs.open('data/users.yaml', 'r', 'utf-8') as f:
             for data in yaml.load_all(f):
                 new_user = User(data["first_name"], data["last_name"], data["email"])
                 db_session.add(new_user)

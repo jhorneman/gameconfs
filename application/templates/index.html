@@ -1,0 +1,9 @@
+{% extends "layout.html" %}
+{% block title %}{% endblock %}
+{% block content %}
+	<h1>Look for an event</h1>
+	<form action="search" method='post'>
+		<input type="search" name="q">  
+	  	<input type="submit" value="Search">  
+	</form>
+{% endblock %}

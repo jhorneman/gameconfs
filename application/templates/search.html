@@ -1,0 +1,21 @@
+{% extends "layout.html" %}
+{% block title %}Search{% endblock %}
+{% block content %}
+	<h1>Search results</h1>
+	<p>You searched for: {{ query }}</p>
+	{% if events %}
+	<ul>
+		{% for event in events %}
+		<li><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></li>
+		{% else %}
+		Gah.
+		{% endfor %}
+	</ul>
+	{% else %}
+	No events found.
+	{% endif %}
+	<form action="search" method='post'>
+		<input type="search" name="q" value="{{ query }}">  
+	  	<input type="submit" value="Search">  
+	</form>
+{% endblock %}

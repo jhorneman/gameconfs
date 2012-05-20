@@ -33,7 +33,10 @@ class GeocodeResults(object):
     """
     def __init__(self, _query):
         #: the original query string
-        self.query = _query
+        if isinstance(_query, unicode):
+            self.query = _query.encode('utf-8', 'replace')
+        else:
+            self.query = _query
         #: True if geocoding succeeded
         self.is_valid = False
         #: the full formatted address
@@ -78,7 +81,7 @@ class GeocodeResults(object):
         # Interpret results
         if results["status"] == u"OK":
             if len(results["results"]) == 0:
-                logger.error("Geocoding query '%s': Status was OK but no results were returned" % self.query)
+                logger.error("Geocoding query '%s': Status was 'OK' but no results were returned" % self.query)
             else:
                 if len(results["results"]) > 1:
                     logger.warning("Geocoding query '%s': More than 1 result was returned: using first one" % self.query)
@@ -108,7 +111,7 @@ class GeocodeResults(object):
                     self.state = None
                     self.state_abbr = ""
         else:
-            logger.error("Geocoding query '%s': Status was '%s' instead of 'OK'" % (self.query, results["status"]))
+            logger.error("Geocoding query '%s': Status was '%s' instead of 'OK'" % (self.query.decode('ascii', 'replace'), results["status"]))
 
     @property
     def is_in_a_state(self):
@@ -131,8 +134,9 @@ class GeocodeResults(object):
 
 if __name__ == "__main__":
     for query in ["Naturhistorisches Museum in Vienna, Austria", "One Wimpole Street, London",
-        "Luftkastellet, MalmÃ¶", "Moscone, 747 Howard Street, San Francisco", "MaceiÃ³, Alagoas, Brazil",
-        "Shanghai International Convention Center, Shanghai", "Adelaide Convention Centre, Adelaide"]:
+        "Luftkastellet, Malmö", "Moscone, 747 Howard Street, San Francisco", "Maceió, Alagoas, Brazil",
+        "Shanghai International Convention Center, Shanghai", "Adelaide Convention Centre, Adelaide",
+        "Koelnmesse, Köln, Germany"]:
         g = GeocodeResults(query)
         print unicode(g)
         # print g.raw_json
