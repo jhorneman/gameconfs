@@ -90,6 +90,7 @@ def create_app(_run_mode):
         # Get configuration data from Heroku environment variables
         app.config.setdefault('SQLALCHEMY_DATABASE_URI', os.environ.get('DATABASE_URL'))
         app_run_args['port'] = int(os.environ['PORT'])
+        app_run_args['host'] = '0.0.0.0'
 
     # Unrecognized run mode
     else:
