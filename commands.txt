@@ -1,0 +1,31 @@
+To make psycopg2 use OpenSSL 1.0.0:
+
+export DYLD_LIBRARY_PATH=/usr/local/Cellar/openssl/1.0.1c/lib
+
+To dump database for Heroku:
+
+/Library/PostgreSQL/9.1/bin/pg_dump --host localhost --port 5432 --username "postgres" -Fc --no-acl --no-owner --verbose --file "/Users/jhorneman/Desktop/data.dump" "gdcal-dev"
+
+To import data dump into Heroku database:
+
+heroku pgbackups:restore DATABASE 'http://www.intelligent-artifice.com/data.dump' --confirm gdcal
+
+To upload to Heroku:
+
+git push heroku master
+
+Various Heroku commands:
+
+heroku pg:info
+heroku pg:psql
+heroku pg:promote
+heroku pg:wait
+heroku addons
+heroku ps
+heroku restart
+heroku logs
+heroku run python
+heroku ps:scale web=1
+heroku create --stack cedar
+heroku login
+foreman start
