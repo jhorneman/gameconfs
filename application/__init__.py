@@ -89,10 +89,9 @@ def create_app(_run_mode):
     elif _run_mode == "production":
         #TODO: TURN THIS OFF
         app.config["DEBUG"] = True
-        toolbar = DebugToolbarExtension(app)
 
         # Get configuration data from Heroku environment variables
-        app.config.setdefault('SQLALCHEMY_DATABASE_URI', os.environ.get('HEROKU_POSTGRESQL_RED_URL'))
+        app.config.setdefault('SQLALCHEMY_DATABASE_URI', os.environ.get('DATABASE_URL'))
         app_run_args['port'] = int(os.environ['PORT'])
         app_run_args['host'] = '0.0.0.0'
 
@@ -109,6 +108,8 @@ def create_app(_run_mode):
     # Initialize application
     # Import the views, to apply the decorators which use the global app object.
     import application.views
+
+    return (app, db)
 
 
 def run_app():

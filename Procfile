@@ -1,1 +1,1 @@
-web: python run_server.py production
+web: python manage.py run_server production
