@@ -1,18 +1,14 @@
+import os.path
 import codecs
 import logging
 import yaml
 from application import create_app, run_app
 from application.models import *
+from application.geocoder import GeocodeResults
 from datetime import date
 
 if __name__ == "__main__":
-    console = logging.StreamHandler()
-    console.setLevel(logging.INFO)
-    console.setFormatter(logging.Formatter('%(message)s'))
-    logging.getLogger('').addHandler(console)
-
-    create_app("dev")
-    from application import app, db
+    (app, db) = create_app("dev")
 
     with app.test_request_context():
         db.drop_all()
@@ -29,6 +25,9 @@ if __name__ == "__main__":
         db_session.commit()
 
         # Load events
+        if os.path.exists("geocoder_cache.json"):
+            GeocodeResults.load_cache("geocoder_cache.json")
+
         with codecs.open('data/events.yaml', 'r', 'utf-8') as f:
             for data in yaml.load_all(f):
                 new_event = Event(data["name"])
@@ -50,6 +49,8 @@ if __name__ == "__main__":
                 else:
                     # Otherwise get rid of whatever was done to the session or it will cause trouble later
                     db_session.expunge_all()
+
+        GeocodeResults.save_cache("geocoder_cache.json")
 
         # Load users
         with codecs.open('data/users.yaml', 'r', 'utf-8') as f:
