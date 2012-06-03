@@ -17,6 +17,7 @@ manager = Manager(create_app_for_Flask_script, with_default_commands=False)
 
 
 @manager.command
+@manager.option('-r', '--runmode', help='Run mode')
 def run_server():
     run_app()
 

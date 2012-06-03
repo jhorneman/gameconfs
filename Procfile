@@ -1,1 +1,1 @@
-web: python manage.py run_server production
+web: python manage.py run_server -r production
