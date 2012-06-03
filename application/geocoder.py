@@ -70,6 +70,10 @@ class GeocodeResults(object):
         self.country = "<Unknown>"
         #: the name of the continent the country is in
         self.continent = "<Unknown>"
+        #: the latitude of the location
+        self.latitude = ""
+        #: the longitude of the location
+        self.longitude = ""
 
         if _use_cache and GeocodeResults.cache_dict.has_key(_query):
             logger.info("Geocoding query '%s': Using results from cache" % self.query)
@@ -123,6 +127,9 @@ class GeocodeResults(object):
                 self.is_valid = True
 
                 self.formatted_address = self.result["formatted_address"]
+
+                self.latitude = self.result["geometry"]["location"]["lat"]
+                self.longitude = self.result["geometry"]["location"]["lng"]
 
                 for component in self.result["address_components"]:
                     if u"locality" in component["types"]:

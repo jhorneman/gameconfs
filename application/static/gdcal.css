@@ -10,7 +10,17 @@ table.events
 	/*width: 400px;*/
 }
 
+table.events th, table.events td
+{
+	overflow: hidden;
+}
+
 table.events tbody tr td:nth-child(1)
 {
-	width: 25%;
+	width: 10em;
+}
+
+div.footer
+{
+	margin-top: 30px;
 }

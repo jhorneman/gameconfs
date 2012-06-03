@@ -1,4 +1,5 @@
 from datetime import datetime, date, timedelta
+import urllib
 from flask import render_template, request, redirect, url_for
 from sqlalchemy.sql.expression import *
 from application import app, db
@@ -43,6 +44,15 @@ def friendly_time(dt, past_="ago",
 @app.template_filter()
 def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
     return value.strftime(format)
+
+@app.template_filter()
+def split(value, sep=None):
+    return value.split(sep)
+
+@app.template_filter()
+def urlencode(value):
+    return urllib.urlencode([("", value)])[1:]
+
 
 @app.teardown_request
 def shutdown_session(exception=None):

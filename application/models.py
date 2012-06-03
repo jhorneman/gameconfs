@@ -155,6 +155,9 @@ class Event(db.Model):
     raw_location_info = Column(String(250), nullable=False)
     formatted_location_info = Column(String(250), nullable=False)
 
+    location_lat = Column(String(32))
+    location_long = Column(String(32))
+
     city_id = Column(Integer, ForeignKey('cities.id'), nullable=False)
     city = relationship('City')
 
@@ -171,6 +174,8 @@ class Event(db.Model):
         g = geocoder.GeocodeResults(self.raw_location_info)
         if g.is_valid:
             self.formatted_location_info = g.formatted_address
+            self.location_lat = g.latitude
+            self.location_long = g.longitude
             (self.city, state, country, continent) = set_up_location_data(_db_session, g)
 
     def __repr__(self):
