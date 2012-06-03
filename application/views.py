@@ -1,6 +1,48 @@
-from flask import render_template, request
+from datetime import datetime, date, timedelta
+from flask import render_template, request, redirect, url_for
+from sqlalchemy.sql.expression import *
 from application import app, db
 from application.models import *
+
+# http://flask.pocoo.org/snippets/33/
+# By Sean Vieira
+# Adapted
+@app.template_filter()
+def friendly_time(dt, past_="ago", 
+    future_="from now", 
+    default="just now"):
+    """
+    Returns string representing "time since"
+    or "time until" e.g.
+    3 days ago, 5 hours from now etc.
+    """
+
+    today = date.today()
+    if today > dt:
+        diff = today - dt
+        dt_is_past = True
+    else:
+        diff = dt - today
+        dt_is_past = False
+
+    periods = (
+        (diff.days / 365, "year", "years"),
+        (diff.days / 30, "month", "months"),
+        (diff.days / 7, "week", "weeks"),
+        (diff.days, "day", "days"),
+    )
+
+    for period, singular, plural in periods:
+        if period:
+            return "%d %s %s" % (period, \
+                singular if period == 1 else plural, \
+                past_ if dt_is_past else future_)
+
+    return default
+
+@app.template_filter()
+def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
+    return value.strftime(format)
 
 @app.teardown_request
 def shutdown_session(exception=None):
@@ -8,12 +50,27 @@ def shutdown_session(exception=None):
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    return redirect(url_for('events'))
+    # return render_template('index.html')
 
 @app.route('/event/')
 def events():
-    events = Event.query.all()
-    return render_template('events.html', events=events)
+    today = date.today()
+
+    past_events = Event.query.\
+        filter(and_(Event.start_date > today - timedelta(days=30), Event.start_date < today)).\
+        all()
+
+    current_events = Event.query.\
+        filter(and_(today >= Event.start_date, today <= Event.end_date)).\
+        all()
+
+    future_events = Event.query.\
+        filter(and_(Event.end_date > today, Event.start_date < today + timedelta(days=180))).\
+        filter(Event.start_date >= date.today()).\
+        all()
+
+    return render_template('events.html', past_events=past_events, current_events=current_events, future_events=future_events)
 
 @app.route('/event/<id>')
 def event(id):

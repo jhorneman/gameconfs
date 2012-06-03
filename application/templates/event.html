@@ -2,12 +2,25 @@
 {% block title %}{{ event.name }}{% endblock %}
 {% block content %}
 	<h1>{{ event.name }}</h1>
-	<p>
-	Series: {{ event.series.name }}<br/>
-	Website: <a href="{{ event.main_url }}" target="_blank">{{ event.main_url }}</a><br/>
-	Twitter hashtags: {{ event.twitter_hashtags }}<br/>
-	Twitter account: <a href="http://twitter.com/{{ event.twitter_account }}" target="_blank">@{{ event.twitter_account }}</a><br/>
-	Location: {{ event.formatted_location_info }}<br/>
-	</p>
+	<table class="table table-condensed">
+	  <tbody>
+	    <tr>
+	      <td>Website</td>
+	      <td><a href="{{ event.main_url }}" target="_blank">{{ event.main_url }}</a></td>
+	    </tr>
+	    <tr>
+	      <td>Twitter hashtags</td>
+	      <td>{{ event.twitter_hashtags }}</td>
+	    </tr>
+	    <tr>
+	      <td>Twitter account</td>
+	      <td><a href="http://twitter.com/{{ event.twitter_account }}" target="_blank">@{{ event.twitter_account }}</a></td>
+	    </tr>
+	    <tr>
+	      <td>Location</td>
+	      <td>{{ event.formatted_location_info }}</td>
+	    </tr>
+	  </tbody>
+	</table>
 	<a href="{{ url_for('events') }}">Back to event list</a>
 {% endblock %}
