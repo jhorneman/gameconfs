@@ -8,28 +8,15 @@
 		  	<button type="submit" class="btn btn-primary">Search</button>
 		</div>
 	</form>
-	{% if past_events %}
-	<h2>Recent events</h2>
-	<table class="table table-condensed events">
-	  <tbody>
-		{% for event in past_events|sort(attribute='start_date') %}
-	    <tr>
-	      <td>{{ event.start_date|friendly_time }}</td>
-	      <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
-	    </tr>
-		{% endfor %}
-	    </tr>
-	  </tbody>
-	</table>
-	{% endif %}
 	{% if current_events %}
 	<h2>Current events</h2>
 	<table class="table table-condensed events">
 	  <tbody>
 		{% for event in current_events|sort(attribute='start_date') %}
 	    <tr>
-	      <td>{{ event.start_date }}</td>
+	      <td>{{ event.start_date|datetimeformat("%B %d %Y") }}</td>
 	      <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
+	      <td>{{ event.location }}</td>
 	    </tr>
 		{% endfor %}
 	    </tr>
@@ -44,6 +31,22 @@
 	    <tr>
 	      <td>{{ event.start_date|datetimeformat("%B %d %Y") }}</td>
 	      <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
+	      <td>{{ event.location }}</td>
+	    </tr>
+		{% endfor %}
+	    </tr>
+	  </tbody>
+	</table>
+	{% endif %}
+	{% if past_events %}
+	<h2>Recent events</h2>
+	<table class="table table-condensed events">
+	  <tbody>
+		{% for event in past_events|sort(attribute='start_date') %}
+	    <tr>
+	      <td>{{ event.start_date|friendly_time }}</td>
+	      <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
+	      <td>{{ event.location }}</td>
 	    </tr>
 		{% endfor %}
 	    </tr>

@@ -1,9 +1,11 @@
 from datetime import datetime, date, timedelta
 import urllib
+import codecs
 from flask import render_template, request, redirect, url_for
 from sqlalchemy.sql.expression import *
 from application import app, db
 from application.models import *
+import geocoder
 
 # http://flask.pocoo.org/snippets/33/
 # By Sean Vieira
@@ -51,7 +53,7 @@ def split(value, sep=None):
 
 @app.template_filter()
 def urlencode(value):
-    return urllib.urlencode([("", value)])[1:]
+    return urllib.urlencode([("", value.encode('utf8'))])[1:]
 
 
 @app.teardown_request
@@ -60,27 +62,34 @@ def shutdown_session(exception=None):
 
 @app.route('/')
 def index():
-    return redirect(url_for('events'))
-    # return render_template('index.html')
-
-@app.route('/event/')
-def events():
     today = date.today()
 
     past_events = Event.query.\
         filter(and_(Event.start_date > today - timedelta(days=30), Event.start_date < today)).\
         all()
+    add_location_to_events(past_events)
 
     current_events = Event.query.\
         filter(and_(today >= Event.start_date, today <= Event.end_date)).\
         all()
+    add_location_to_events(current_events)
 
     future_events = Event.query.\
-        filter(and_(Event.end_date > today, Event.start_date < today + timedelta(days=180))).\
+        filter(and_(Event.start_date > today, Event.start_date < today + timedelta(days=180))).\
         filter(Event.start_date >= date.today()).\
         all()
+    add_location_to_events(future_events)
 
     return render_template('events.html', past_events=past_events, current_events=current_events, future_events=future_events)
+
+def add_location_to_events(_events):
+    for e in _events:
+        l = e.city.name
+        if e.city.country.name in geocoder.countries_with_states:
+            l += ", " + e.city.state.name
+        elif e.city.name not in geocoder.cities_without_countries:
+            l += ", " + e.city.country.name
+        e.location = l
 
 @app.route('/event/<id>')
 def event(id):
