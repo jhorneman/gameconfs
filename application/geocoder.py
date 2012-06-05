@@ -8,6 +8,9 @@
     :copyright: (c) 2012 by Jurie Horneman.
 """
 
+import sys
+import os
+import os.path
 import logging
 import datetime
 import codecs
@@ -16,6 +19,7 @@ from urllib2 import urlopen
 import json
 import xml.dom.minidom
 from xml.parsers.expat import ExpatError
+import pygeoip
 
 
 logger = logging.getLogger(__name__)
@@ -29,6 +33,23 @@ continents_per_country_code = {"AD":"Europe","AE":"Asia","AF":"Asia","AG":"North
 all_continents = list(set(continents_per_country_code.values()))
 countries_with_states = ["United States", "Australia", "Canada", "Brazil"]
 cities_without_countries = ["Singapore"]
+
+if __name__ == "__main__":
+    script_dir = os.path.abspath(os.path.dirname(sys.argv[0])) + os.sep
+else:
+    script_dir = os.path.dirname(os.path.abspath(__file__))
+
+
+class IPGeocodeResults(object):
+    """
+    Results of geocoding an IP address into location information using the MaxMind Cities lite database.
+    """
+
+    city_db_full_path = os.path.join(script_dir, 'GeoLiteCity.dat')
+
+    def __init__(self, _ip_address):
+        gi = pygeoip.GeoIP(IPGeocodeResults.city_db_full_path, pygeoip.STANDARD)
+        self.results = gi.record_by_addr(_ip_address)
 
 
 class GeocodeResults(object):
@@ -182,3 +203,6 @@ if __name__ == "__main__":
         print unicode(g)
         print
     print json.dumps(GeocodeResults.cache_dict)
+
+    g = geocoder.IPGeocodeResults("213.47.84.26")
+    print g.results

@@ -13,4 +13,6 @@ blinker==1.2
 docutils==0.9
 nose==1.1.2
 psycopg2==2.4.5
+pygeoip==0.2.3
+six==1.1.0
 wsgiref==0.1.2

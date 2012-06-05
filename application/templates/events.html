@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Events{% endblock %}
 {% block content %}
-	<h1>Game Industry Events</h1>
+	<h1>Game Events</h1>
 	<form action="search" method='post'>
 		<div class="input-append">
 			<input type="search" name="q"/>
@@ -53,4 +53,5 @@
 	  </tbody>
 	</table>
 	{% endif %}
+	<p>{{ user_location|safe }}</p>
 {% endblock %}

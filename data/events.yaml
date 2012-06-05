@@ -34,6 +34,15 @@ twitter_hashtags: ""
 twitter_account: PixelVienna
 location: "Österreichische Akademie der Wissenschaften (ÖAW), Dr. Ignaz Seipel-Platz 2, 1010 Vienna"
 ---
+name: Vienna Game/AI Conference 2012
+series: "NONE"
+start_date: [2012, 9, 18]
+end_date: [2012, 9, 19]
+main_url: "http://gameaiconf.com/"
+twitter_hashtags: ""
+twitter_account: GameAIConf
+location: "University of Vienna, Doktor-Karl-Lueger-Ring 1, 1010 Vienna, Austria"
+---
 name: Nordic Game 2012
 series: Nordic Game
 start_date: [2012, 5, 23]
