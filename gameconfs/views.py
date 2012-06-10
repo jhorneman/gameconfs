@@ -109,7 +109,7 @@ def index():
         all()
     add_location_to_events(future_events)
 
-    return render_template('events.html', past_events=past_events, current_events=current_events, future_events=future_events) #, user_location=user_location)
+    return render_template('index.html', past_events=past_events, current_events=current_events, future_events=future_events) #, user_location=user_location)
 
 def add_location_to_events(_events):
     for e in _events:
@@ -142,6 +142,10 @@ def city(city_id):
 def event(id):
     event = Event.query.filter(Event.id == id).one()
     return render_template('event.html', event=event)
+
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 @app.route('/search', methods=['POST'])
 def search():
