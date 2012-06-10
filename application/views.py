@@ -62,34 +62,34 @@ def shutdown_session(exception=None):
 
 @app.route('/')
 def index():
-    # Get user IP address
-    user_host = request.headers["Host"]
-    if user_host == "127.0.0.1:5000":
-        user_host = "213.47.84.26"
-        # user_host = "66.249.73.131"
+    # # Get user IP address
+    # user_host = request.headers["Host"]
+    # if user_host == "127.0.0.1:5000":
+    #     user_host = "213.47.84.26"
+    #     # user_host = "66.249.73.131"
 
-    # Geocode
-    ipg = geocoder.IPGeocodeResults(user_host)
+    # # Geocode
+    # ipg = geocoder.IPGeocodeResults(user_host)
 
-    user_location = "You are apparently based in "
+    # user_location = "You are apparently based in "
 
-    # Refine (state) and refactor this (move to model?)
-    city = City.query.\
-        filter(City.name == ipg.results["city"]).\
-        join(City.country).\
-        filter(Country.name == ipg.results["country_name"]).\
-        first()
-    if city:
-        user_location += "<a href=\"" + url_for('city', city_id=city.id) + "\">" + city.name + "</a>"
-    else:
-        user_location += ipg.results["city"]
+    # # Refine (state) and refactor this (move to model?)
+    # city = City.query.\
+    #     filter(City.name == ipg.results["city"]).\
+    #     join(City.country).\
+    #     filter(Country.name == ipg.results["country_name"]).\
+    #     first()
+    # if city:
+    #     user_location += "<a href=\"" + url_for('city', city_id=city.id) + "\">" + city.name + "</a>"
+    # else:
+    #     user_location += ipg.results["city"]
 
-    if ipg.results["country_name"] in geocoder.countries_with_states:
-        user_location += ", " + ipg.results["region_name"]
-    user_location += ", " + ipg.results["country_name"]
-    user_location += "."
+    # if ipg.results["country_name"] in geocoder.countries_with_states:
+    #     user_location += ", " + ipg.results["region_name"]
+    # user_location += ", " + ipg.results["country_name"]
+    # user_location += "."
 
-    # user_location = repr(ipg.results)
+    # # user_location = repr(ipg.results)
 
     today = date.today()
 
@@ -109,7 +109,7 @@ def index():
         all()
     add_location_to_events(future_events)
 
-    return render_template('events.html', past_events=past_events, current_events=current_events, future_events=future_events, user_location=user_location)
+    return render_template('events.html', past_events=past_events, current_events=current_events, future_events=future_events) #, user_location=user_location)
 
 def add_location_to_events(_events):
     for e in _events:
