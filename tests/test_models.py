@@ -1,14 +1,14 @@
 import unittest
 import sqlalchemy.orm
 from nose.tools import *
-from application import create_app, geocoder
-from application.models import *
+from gameconfs import create_app, geocoder
+from gameconfs.models import *
 
 
 class TestCaseUsingDatabase(unittest.TestCase):
     def setUp(self):
         create_app("test")
-        from application import app, db
+        from gameconfs import app, db
         self.app = app
 
         with app.test_request_context():

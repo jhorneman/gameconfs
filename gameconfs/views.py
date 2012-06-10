@@ -3,8 +3,8 @@ import urllib
 import codecs
 from flask import render_template, request, redirect, url_for
 from sqlalchemy.sql.expression import *
-from application import app, db
-from application.models import *
+from gameconfs import app, db
+from gameconfs.models import *
 import geocoder
 
 # http://flask.pocoo.org/snippets/33/

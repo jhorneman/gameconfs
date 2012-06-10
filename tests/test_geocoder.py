@@ -3,7 +3,7 @@
 import logging
 import unittest
 from nose.tools import *
-from application.geocoder import GeocodeResults
+from gameconfs.geocoder import GeocodeResults
 from utils import *
 
 
@@ -13,7 +13,7 @@ class GeocoderTestCase(unittest.TestCase):
         self.mock_handler.setLevel(logging.WARNING)
         self.mock_handler.setFormatter(logging.Formatter('%(message)s'))
 
-        self.geocoder_logger = logging.getLogger("application.geocoder")
+        self.geocoder_logger = logging.getLogger("gameconfs.geocoder")
         self.geocoder_logger.setLevel(logging.WARNING)
         self.geocoder_logger.addHandler(self.mock_handler)
 

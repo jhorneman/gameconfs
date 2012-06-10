@@ -2,8 +2,8 @@ import logging
 from sqlalchemy import Column, Integer, String, ForeignKey, Date, Boolean
 from sqlalchemy.orm import relationship, backref
 import sqlalchemy.orm
-from application import db
-from application import geocoder
+from gameconfs import db
+from gameconfs import geocoder
 
 logger = logging.getLogger(__name__)
 

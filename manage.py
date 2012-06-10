@@ -1,6 +1,6 @@
 from flaskext.script import Manager, Shell
-from application import create_app, run_app
-from application.models import *
+from gameconfs import create_app, run_app
+from gameconfs.models import *
 
 app = None
 db = None

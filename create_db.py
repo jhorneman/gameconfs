@@ -2,9 +2,9 @@ import os.path
 import codecs
 import logging
 import yaml
-from application import create_app, run_app
-from application.models import *
-from application.geocoder import GeocodeResults
+from gameconfs import create_app, run_app
+from gameconfs.models import *
+from gameconfs.geocoder import GeocodeResults
 from datetime import date
 
 if __name__ == "__main__":

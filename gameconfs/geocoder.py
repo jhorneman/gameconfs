@@ -1,6 +1,6 @@
 # coding=iso-8859-1
 """
-    application.geocoder
+    gameconfs.geocoder
     ====================
 
     Adds geocoding support and general location business logic.

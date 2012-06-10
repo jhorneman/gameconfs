@@ -53,10 +53,10 @@ def create_app(_run_mode):
 
     # Create Flask app
     global app
-    app = Flask("application")
+    app = Flask("gameconfs")
 
     # Load default configuration
-    app.config.from_object('application.default_config')
+    app.config.from_object('gameconfs.default_config')
 
     # app.debug and app.config["DEBUG"] do the same thing. app.debug defaults to False.
     # To be extra sure default_config doesn't change this behavior, we set it to False again,
@@ -102,12 +102,12 @@ def create_app(_run_mode):
 
     # Initialize the database
     global db
-    import application.models
+    import gameconfs.models
     db.init_app(app)
 
     # Initialize application
     # Import the views, to apply the decorators which use the global app object.
-    import application.views
+    import gameconfs.views
 
     return (app, db)
 
