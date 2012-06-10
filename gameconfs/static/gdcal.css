@@ -20,6 +20,13 @@ table.events tbody tr td:nth-child(1)
 	width: 10em;
 }
 
+
+div.container
+{
+	padding-left: 1em;
+	padding-right: 1em;
+}
+
 div.footer
 {
 	margin-top: 30px;
