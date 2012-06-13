@@ -44,6 +44,15 @@ def friendly_time(dt, past_="ago",
     return default
 
 @app.template_filter()
+def nice_date(_datetime):
+    return "{0} {1}".format(_datetime.strftime("%B"), _datetime.day)
+
+@app.template_filter()
+def nice_month(_month):
+    month = date(2012, _month, 1)
+    return "{0} 2012".format(month.strftime("%B"))
+
+@app.template_filter()
 def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
     return value.strftime(format)
 
@@ -93,23 +102,13 @@ def index():
 
     today = date.today()
 
-    past_events = Event.query.\
-        filter(and_(Event.start_date > today - timedelta(days=30), Event.start_date < today)).\
-        all()
-    add_location_to_events(past_events)
-
-    current_events = Event.query.\
-        filter(and_(today >= Event.start_date, today <= Event.end_date)).\
-        all()
-    add_location_to_events(current_events)
-
-    future_events = Event.query.\
+    events = Event.query.\
         filter(and_(Event.start_date > today, Event.start_date < today + timedelta(days=180))).\
         filter(Event.start_date >= date.today()).\
         all()
-    add_location_to_events(future_events)
+    add_location_to_events(events)
 
-    return render_template('index.html', past_events=past_events, current_events=current_events, future_events=future_events) #, user_location=user_location)
+    return render_template('index.html', events=events) #, user_location=user_location)
 
 def add_location_to_events(_events):
     for e in _events:
