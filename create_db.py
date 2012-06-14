@@ -8,6 +8,8 @@ from gameconfs.geocoder import GeocodeResults
 from datetime import date
 
 if __name__ == "__main__":
+    logging.basicConfig()
+    
     (app, db) = create_app("dev")
 
     with app.test_request_context():
@@ -17,31 +19,34 @@ if __name__ == "__main__":
 
         db_session = db.create_scoped_session()
 
-        # Load event series
-        with codecs.open('data/series.yaml', 'r', 'utf-8') as f:
-            for data in yaml.load_all(f):
-                new_series = Series(data["name"])
-                db_session.add(new_series)
-        db_session.commit()
-
-        # Load events
+        # Load geocoder cache
         if os.path.exists("geocoder_cache.json"):
             GeocodeResults.load_cache("geocoder_cache.json")
 
+        # Load events
         with codecs.open('data/events.yaml', 'r', 'utf-8') as f:
             for data in yaml.load_all(f):
                 new_event = Event(data["name"])
-                new_event.series = db_session.query(Series).filter(Series.name == data["series"]).one()
-                new_event.start_date = date(*data["start_date"])
-                new_event.end_date = date(*data["end_date"])
-                new_event.main_url = data["main_url"]
-                new_event.is_free = False
-                new_event.twitter_hashtags = data["twitter_hashtags"]
-                new_event.twitter_account = data["twitter_account"]
-                new_event.set_location(db_session, data["location"])
+                d = [int(i) for i in data["start_date"]]
+                new_event.start_date = date(d[0], d[1], d[2])
+                d = [int(i) for i in data["end_date"]]
+                new_event.end_date = date(d[0], d[1], d[2])
+
+                if "main_url" in data:
+                    new_event.main_url = data["main_url"]
+                if "twitter_hashtags" in data:
+                    new_event.twitter_hashtags = data["twitter_hashtags"]
+                if "twitter_account" in data:
+                    new_event.twitter_account = data["twitter_account"]
+
+                if "address" in data:
+                    address = data["address"]
+                else:
+                    address = data["location"]
+                result = new_event.set_location(db_session, data["location"], address)
 
                 # Only add if setting location worked (geocoding can fail)
-                if new_event.formatted_location_info:
+                if result:
                     db_session.add(new_event)
 
                     # Must commit inside loop because set_location() will add cities, countries, etc.
@@ -50,6 +55,7 @@ if __name__ == "__main__":
                     # Otherwise get rid of whatever was done to the session or it will cause trouble later
                     db_session.expunge_all()
 
+        # Save geocoder cache
         GeocodeResults.save_cache("geocoder_cache.json")
 
         # Load users
@@ -62,6 +68,5 @@ if __name__ == "__main__":
         # Report
         print db_session.query(Country).count(), "countries"
         print db_session.query(City).count(), "cities"
-        print db_session.query(Series).count(), "event series"
         print db_session.query(Event).count(), "events"
         print db_session.query(User).count(), "users"

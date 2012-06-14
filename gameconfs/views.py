@@ -105,21 +105,8 @@ def index():
     events = Event.query.\
         filter(and_(Event.end_date >= today, Event.start_date < today + timedelta(days=180))).\
         all()
-    add_location_to_events(events)
 
     return render_template('index.html', events=events, today=today) #, user_location=user_location)
-
-def add_location_to_events(_events):
-    for e in _events:
-        e.location = nice_location_name(e.city)
-
-def nice_location_name(_city):
-    l = _city.name
-    if _city.country.name in geocoder.countries_with_states:
-        l += ", " + _city.state.name
-    elif _city.name not in geocoder.cities_without_countries:
-        l += ", " + _city.country.name
-    return l
 
 @app.route('/city/<city_id>')
 def city(city_id):

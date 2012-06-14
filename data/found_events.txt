@@ -1,0 +1,55 @@
+Found event Salon Multimédia Innov', taking place from 06/02/12 until 06/03/12 in Tournefeuille, France
+Found event 3e Festival du jeu vidéo ancien actuel, taking place from 06/02/12 until 06/03/12 in Union (31), France
+Found event Festival international du film d'animation d'Annecy, taking place from 06/04/12 until 06/09/12 in Annecy, France
+Found event Electronic Entertainment Expo - E3, taking place from 06/05/12 until 06/07/12 in Los Angeles, US
+Found event 3D Experience Meetup, taking place on 06/12/12 in Paris, France
+Found event Dimension 3, taking place from 06/13/12 until 06/15/12 in Paris, France
+Found event Futur en Seine, taking place from 06/14/12 until 06/24/12 in Paris, France
+Found event Tournée Rocksmith, taking place from 06/14/12 until 07/01/12 in Clisson / Belfort, France
+Found event Games for Change Europe, taking place on 06/14/12 in Paris, France
+Found event Dédicace BD Lapins Crétins, taking place on 06/14/12 in Paris, France
+Found event Developer Teatime de Twitter, taking place on 06/16/12 in Paris, France
+Found event Ubiq, taking place from 06/18/12 until 06/19/12 in Paris, France
+Found event Micromania Game Show spécial E3, taking place on 06/22/12 in Paris, France
+Found event Cyberathlete Summit, taking place on 06/23/12 in Paris, France
+Found event IDEF 2012, taking place from 06/26/12 until 06/28/12 in Cannes, France
+Found event IDEF 5KM, taking place on 06/26/12 in Cannes, France
+Found event Serious Game & Gamification, taking place on 06/27/12 in Paris, France
+Found event Game Connection Asie, taking place from 06/28/12 until 06/29/12 in Shanghai, Chine
+Found event European Indie Game Days, taking place from 07/02/12 until 07/03/12 in Marseille, France
+Found event Université d'été de la bande dessinée, taking place from 07/02/12 until 07/04/12 in Angoulême, France
+Found event Virtual World 2012, taking place from 07/03/12 until 07/05/12 in Paris, France
+Found event Japan Expo, taking place from 07/05/12 until 07/08/12 in Paris-Nord Villepinte, France
+Found event ChinaJoy, taking place from 07/26/12 until 07/28/12 in Shanghai, Chine
+Found event Gamecom, taking place from 08/15/12 until 08/19/12 in Cologne, Allemagne
+Found event Unite 2012, taking place from 08/22/12 until 08/24/12 in Amsterdam, Pays-Bas
+Found event Ludovia 2012, taking place from 08/27/12 until 08/30/12 in Ax-les-Thermes, France
+Found event Paris Manga & Sci-Fi Show 14, taking place from 09/15/12 until 09/16/12 in Paris, France
+Found event Tokyo Game Show, taking place from 09/20/12 until 09/23/12 in Tokyo, Japon
+Found event Virtual Calais 3.0, taking place from 10/06/12 until 10/07/12 in Calais, France
+Found event Paris Games Week 2012, taking place from 10/31/12 until 11/04/12 in Paris, France
+Found event Sommet International du Jeu de Montréal (MIGS), taking place from 11/13/12 until 11/14/12 in Montréal, Canada
+Found event SATIS 2012, taking place from 11/13/12 until 11/15/12 in Paris, France
+Found event DigiWorld Summit 2012, taking place from 11/14/12 until 11/15/12 in Montpellier, France
+Found event Nobuo Uematsu (Final Fantasy) en concert, taking place from 11/17/12 until 11/18/12 in Paris, France
+Found event ParisFx, taking place from 11/26/12 until 11/27/12 in Enghien-les-Bains, France
+
+Found event BAFTA Games Question Time, taking place on 06/12/12 in BAFTA, 195 Piccadilly, London W1J 9LN (see https://www.bafta.org/public-event.html?Pevent=com.othermedia.bafta.model.BaftaEvent-L-6201255)
+Found event PS Vita Devcon 2012, taking place from 06/19/12 until 06/21/12 in Marriott Waterfront, San Francisco Airport, CA (see https://www.bafta.org/public-event.html?Pevent=com.othermedia.bafta.model.BaftaEvent-L-6201255)
+Found event Games & Interactive Entertainment Conference, taking place from 06/19/12 until 06/20/12 in Luna Park, Sydney (see www.game-tech.com.au  )
+Found event GameHorizon Conference 2012, taking place from 06/27/12 until 06/28/12 in Newcastle, Gateshead (see http://www.gamehorizonconference.com/)
+Found event GAMES BRITANNIA: Schools Videogame Festival, taking place from 07/02/12 until 07/08/12 in Magna Science Adventure Centre, Templeborough (see http://www.gamesbritannia.com/)
+Found event Develop 2012, taking place from 07/10/12 until 07/12/12 in Hilton Brighton Metropole (see http://www.developconference.com/)
+Found event IGDA Summit Seattle, taking place from 07/23/12 until 07/24/12 in Seattle, WA (see http://seattle.casualconnect.org/IGDA.html)
+Found event Casual Connect Seattle 2012, taking place from 07/24/12 until 07/26/12 in Benaroya Hall & Triple Door, Seattle (see http://seattle.casualconnect.org   )
+Found event Edinburgh Interactive, taking place from 08/09/12 until 08/10/12 in Edinburgh (see http://www.edinburghinteractive.co.uk/)
+Found event Classic Gaming Expo 2012, taking place from 08/11/12 until 08/12/12 in Plaza Hotel, Las Vegas (see http://www.cgexpo.com/)
+Found event Gamescom 2012, taking place from 08/15/12 until 08/19/12 in Koelnmesse, Cologne, Germany (see http://www.gamescom-cologne.com/)
+Found event Serious Play Conference, taking place from 08/21/12 until 08/23/12 in DigiPen Institute of Technology, Washington (see http://www.seriousplayconference.com/)
+Found event Tokyo Game Show 2012, taking place from 09/20/12 until 09/23/12 in Makuhari Messe Convention Centre, Tokyo (see http://tgs.cesa.or.jp/)
+Found event LOGIN Conference 2012, taking place from 09/26/12 until 09/27/12 in San Francisco, California (see http://www.loginconference.com/)
+Found event Eurogamer Expo 2012, taking place from 09/27/12 until 09/30/12 in Earls Court, London (see http://www.eurogamer.net/expo/)
+Found event Brasil Game Show, taking place from 10/11/12 until 10/14/12 in São Paulo (see http://www.brasilgameshow.com.br/)
+Found event GameCity 2012, taking place from 10/20/12 until 10/27/12 in Nottingham (see http://gamecity.org/)
+Found event GamesMaster Golden Joystick Awards, taking place on 10/26/12 in Westminster Park Plaza (see http://www.goldenjoystick.tv/)
+Found event LAUNCH: Future Gaming & Digital Conference, taking place from 11/13/12 until 11/14/12 in Birmingham Science Park, Faraday Wharf (see http://launchconference.co.uk/)

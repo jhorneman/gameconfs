@@ -8,7 +8,7 @@ To dump database for Heroku:
 
 To import data dump into Heroku database:
 
-heroku pgbackups:restore DATABASE 'http://www.intelligent-artifice.com/data.dump' --confirm gdcal
+heroku pgbackups:restore DATABASE 'http://www.intelligent-artifice.com/data.dump' --confirm gameconfs
 
 To upload to Heroku:
 

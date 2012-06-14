@@ -1,12 +1,14 @@
 # coding=utf-8
 
-from bs4 import BeautifulSoup
-import requests
 import re
 import logging
 import datetime
+import codecs
 
-LOCAL_TEST_MODE = True
+import requests
+from bs4 import BeautifulSoup
+
+LOCAL_TEST_MODE = False
 
 logger = logging.getLogger(__name__)
 
@@ -14,7 +16,7 @@ french_months = [u"Janvier", u"Février", u"Mars", u"Avril", u"Mai", u"Juxin", u
 english_months = ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
 
 
-def scrape_gibiz_event_list():
+def scrape_gibiz_event_list(_f):
     if LOCAL_TEST_MODE:
         soup = BeautifulSoup(open("data/gibiz_test.html"))
     else:
@@ -64,20 +66,21 @@ def scrape_gibiz_event_list():
 
         tag = tag.find("a")
         if tag:
-            event_url = tag["href"]
-
-        message = "Found event " + title + ", taking place "
-        if start_date == end_date:
-            message += "on " + start_date.strftime("%x")
+            event_url = tag["href"].strip()
         else:
-            message += "from " + start_date.strftime("%x") + " until " + end_date.strftime("%x")
-        message += " in " + location
-        if event_url:
-            message += " (see %s)" % event_url
-        print message
+            event_url = ""
+
+        _f.write("---\n")
+        _f.write("name: %s\n" % title)
+        _f.write("start_date: %s\n" % start_date.strftime("[%Y, %m, %d]"))
+        _f.write("end_date: %s\n" % end_date.strftime("[%Y, %m, %d]"))
+        _f.write('main_url: "%s"\n' % event_url)
+        _f.write('twitter_hashtags: ""\n')
+        _f.write("twitter_account:\n")
+        _f.write("location: %s\n" % location)
 
 
-def scrape_afjv_event_list():
+def scrape_afjv_event_list(_f):
     if LOCAL_TEST_MODE:
         soup = BeautifulSoup(open("data/afjv_test.html"))
     else:
@@ -106,18 +109,18 @@ def scrape_afjv_event_list():
         city = location[:i]
         country = location[i+3:]
 
-        message = "Found event " + title + ", taking place "
-        if start_date == end_date:
-            message += "on " + start_date.strftime("%x")
-        else:
-            message += "from " + start_date.strftime("%x") + " until " + end_date.strftime("%x")
-        message += " in %s, %s" % (city, country)
-        print message
+        _f.write("---\n")
+        _f.write("name: %s\n" % title)
+        _f.write("start_date: %s\n" % start_date.strftime("[%Y, %m, %d]"))
+        _f.write("end_date: %s\n" % end_date.strftime("[%Y, %m, %d]"))
+        _f.write('main_url: ""\n')
+        _f.write('twitter_hashtags: ""\n')
+        _f.write("twitter_account:\n")
+        _f.write("location: %s, %s\n" % (city, country))
 
 
 if __name__ == "__main__":
     logging.basicConfig()
-    scrape_afjv_event_list()
-    print
-    scrape_gibiz_event_list()
-    print
+    with codecs.open('scraped.yaml', 'w', encoding='utf-8') as f:
+        scrape_afjv_event_list(f)
+        scrape_gibiz_event_list(f)

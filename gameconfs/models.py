@@ -28,19 +28,6 @@ class User(db.Model):
         return '<User %r (%r %r)>' % (self.user_name, self.first_name, self.last_name)
 
 
-class Series(db.Model):
-    __tablename__ = 'series'
-
-    id = Column(Integer, primary_key=True)
-    name = Column(String(250), unique=True, nullable=False)
-
-    def __init__(self, _name):
-        self.name = _name
-
-    def __repr__(self):
-        return '<Series %r>' % (self.name)
-
-
 class City(db.Model):
     __tablename__ = 'cities'
 
@@ -123,12 +110,7 @@ class Event(db.Model):
 
     # slug = Column(String(250))
 
-    # Series this event is a part of.
-    series_id = Column(Integer, ForeignKey('series.id'))
-    series = relationship('Series', backref=backref('events', lazy='lazy'))
-
     # Start and end dates of the event.
-    #TODO: Decide if we need a start time for very short events
     start_date = Column(Date)
     end_date = Column(Date)
 
@@ -144,16 +126,13 @@ class Event(db.Model):
     # Main URL for the site for this event.
     main_url = Column(String(250))
 
-    # Is this event free or not?
-    is_free = Column(Boolean)
-
     # Twitter hash tags for this event, with hash signs, separated by spaces.
     twitter_hashtags = Column(String(250))
     twitter_account = Column(String(250))
 
     # Location info
-    raw_location_info = Column(String(250), nullable=False)
-    formatted_location_info = Column(String(250), nullable=False)
+    location_name = Column(String(250), nullable=False)
+    address_for_geocoding = Column(String(250), nullable=False)
 
     location_lat = Column(String(32))
     location_long = Column(String(32))
@@ -165,18 +144,32 @@ class Event(db.Model):
         self.name = _name
         self.is_free = False
 
-    def set_location(self, _db_session, _location_info):
+    def set_location(self, _db_session, _location_name, _address_for_geocoding):
         """
         Set location data based on geocoding of location info.
         Caller is responsible for committing database transaction.
         """
-        self.raw_location_info = _location_info
-        g = geocoder.GeocodeResults(self.raw_location_info)
+        self.location_name = _location_name
+        self.address_for_geocoding = _address_for_geocoding
+        g = geocoder.GeocodeResults(self.address_for_geocoding)
         if g.is_valid:
-            self.formatted_location_info = g.formatted_address
             self.location_lat = g.latitude
             self.location_long = g.longitude
             (self.city, state, country, continent) = set_up_location_data(_db_session, g)
+        return g.is_valid
+
+    @property
+    def full_location(self):
+        return self.location_name + ", " + self.city_and_state_or_country
+
+    @property
+    def city_and_state_or_country(self):
+        loc = self.city.name + ", "
+        if self.city.country.name in geocoder.countries_with_states:
+            loc += self.city.state.name
+        elif self.city.name not in geocoder.cities_without_countries:
+            loc += self.city.country.name
+        return loc
 
     def __repr__(self):
         return '<Event %r>' % (self.name)

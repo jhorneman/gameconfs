@@ -12,7 +12,7 @@
 			     	<td>{{ event.start_date|nice_date }}</td>
 		      {% endif %}
 		      <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
-		      <td>{{ event.location }}</td>
+		      <td>{{ event.city_and_state_or_country }}</td>
 		    </tr>
 				{% endfor %}
 		  </tbody>

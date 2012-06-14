@@ -44,7 +44,7 @@
     	{% endif %}
 	    <tr>
 	      <td>Location</td>
-	      <td><a href="http://maps.google.com?q={{ event.formatted_location_info|urlencode }}" target="_blank">{{ event.formatted_location_info }}</a></td>
+	      <td>{{ event.full_location }}</td>
 	    </tr>
 	  </tbody>
 	</table>
