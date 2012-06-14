@@ -1,6 +1,5 @@
 {% extends "layout.html" %}
 {% block content %}
- 	<h2>Upcoming events</h2>
 	{% for group in events|sort(attribute='start_date')|groupby('start_date.month') %}
     <h3>{{ group.grouper|nice_month }}</h3>
 		<table class="table table-condensed events">
