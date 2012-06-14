@@ -6,8 +6,12 @@
 		<table class="table table-condensed events">
 		  <tbody>
 	    	{% for event in group.list %}
-		    <tr>
-		      <td>{{ event.start_date|nice_date }}</td>
+	      <tr>
+		    	{% if event.start_date <= today and today <= event.end_date %}
+		      	<td><span class="badge badge-today">TODAY</span></td>
+		      {% else %}
+			     	<td>{{ event.start_date|nice_date }}</td>
+		      {% endif %}
 		      <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
 		      <td>{{ event.location }}</td>
 		    </tr>

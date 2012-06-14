@@ -16,6 +16,11 @@ div.footer
 	margin-top: 30px;
 }
 
+.badge-today
+{
+	background: DarkSeaGreen;
+}
+
 /* Events list */
 table.events
 {
@@ -28,17 +33,22 @@ table.events td
 	overflow: hidden;
 }
 
-table.events tbody tr td:nth-child(1)
+table.events tr:last-child td
+{
+  border-bottom: 1px solid #dddddd;
+}
+
+table.events tr td:nth-child(1)
 {
     width: 9em;
 }
 
-table.events tbody tr td:nth-child(2)
+table.events tr td:nth-child(2)
 {
     width: 22em;
 }
 
-table.events tbody tr td:nth-child(3)
+table.events tr td:nth-child(3)
 {
     padding-right: 1em;
 }
@@ -55,12 +65,17 @@ table.event td
 	overflow: hidden;
 }
 
-table.event tbody tr td:nth-child(1)
+table.event tr:last-child td
+{
+  border-bottom: 1px solid #dddddd;
+}
+
+table.event tr td:nth-child(1)
 {
     width: 10em;
 }
 
-table.event tbody tr td:nth-child(2)
+table.event tr td:nth-child(2)
 {
     padding-right: 1em;
 }

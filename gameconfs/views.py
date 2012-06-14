@@ -103,12 +103,11 @@ def index():
     today = date.today()
 
     events = Event.query.\
-        filter(and_(Event.start_date > today, Event.start_date < today + timedelta(days=180))).\
-        filter(Event.start_date >= date.today()).\
+        filter(and_(Event.end_date >= today, Event.start_date < today + timedelta(days=180))).\
         all()
     add_location_to_events(events)
 
-    return render_template('index.html', events=events) #, user_location=user_location)
+    return render_template('index.html', events=events, today=today) #, user_location=user_location)
 
 def add_location_to_events(_events):
     for e in _events:
@@ -140,7 +139,7 @@ def city(city_id):
 @app.route('/event/<id>')
 def event(id):
     event = Event.query.filter(Event.id == id).one()
-    return render_template('event.html', event=event)
+    return render_template('event.html', event=event, today=date.today())
 
 @app.route('/about')
 def about():
