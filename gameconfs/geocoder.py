@@ -168,6 +168,13 @@ class GeocodeResults(object):
                         self.country = component["long_name"]
                         self.continent = continents_per_country_code[component["short_name"]]
 
+                # Fix for Tokyo and Singapore, where not all expected components are sent
+                if self.city == "<Unknown>":
+                    if self.state:
+                        self.city = self.state
+                    else:
+                        self.city = self.country
+
                 # Reset state data if we don't support state for this country
                 if self.country not in countries_with_states:
                     self.state = None

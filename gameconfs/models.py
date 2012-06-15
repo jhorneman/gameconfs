@@ -164,11 +164,11 @@ class Event(db.Model):
 
     @property
     def city_and_state_or_country(self):
-        loc = self.city.name + ", "
+        loc = self.city.name
         if self.city.country.name in geocoder.countries_with_states:
-            loc += self.city.state.name
+            loc += ", " + self.city.state.name
         elif self.city.name not in geocoder.cities_without_countries:
-            loc += self.city.country.name
+            loc += ", " + self.city.country.name
         return loc
 
     def __repr__(self):

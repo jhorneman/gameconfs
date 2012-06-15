@@ -48,6 +48,10 @@ def nice_date(_datetime):
     return "{0} {1}".format(_datetime.strftime("%B"), _datetime.day)
 
 @app.template_filter()
+def short_date(_datetime):
+    return "{0} {1}".format(_datetime.strftime("%b"), _datetime.day)
+
+@app.template_filter()
 def nice_month(_month):
     month = date(2012, _month, 1)
     return "{0} 2012".format(month.strftime("%B"))

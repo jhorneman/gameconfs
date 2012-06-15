@@ -266,7 +266,7 @@ main_url: "http://www.siggraph.org/asia2012/"
 twitter_hashtags: "#SIGGRAPH"
 twitter_account: siggraph
 location: Singapore EXPO
-address: Singapore
+address: Singapore Expo, Singapore
 ---
 name: Game City 2012
 start_date: [2012, 10, 12]
@@ -284,7 +284,7 @@ main_url: "http://gamesforchange.org/festival2012/"
 twitter_hashtags: ""
 twitter_account: 
 location: NYU
-address: New York, NY 10012
+address: New York, NY
 ---
 name: Salon Multimédia Innov'
 start_date: [2012, 06, 02]
@@ -379,26 +379,28 @@ address: 3 rue papin 75003 Paris, France
 name: European Indie Game Days
 start_date: [2012, 07, 02]
 end_date: [2012, 07, 03]
-main_url: ""
+main_url: "http://eigd.org/"
 twitter_hashtags: ""
-twitter_account:
-location: Marseille, France
+twitter_account: EIGD_2012
+location: Bibliothèque de l'Alcazar
+address: 58 cours Belsunce, Marseille, France
 ---
 name: Virtual World 2012
 start_date: [2012, 07, 03]
 end_date: [2012, 07, 05]
-main_url: ""
+main_url: "http://www.virtual-worlds.net/vw2012/"
 twitter_hashtags: ""
-twitter_account:
+twitter_account: Pôle universitaire Léonard de Vinci
 location: Paris, France
 ---
 name: Japan Expo
 start_date: [2012, 07, 05]
 end_date: [2012, 07, 08]
-main_url: ""
+main_url: "http://www.japan-expo.com/"
 twitter_hashtags: ""
 twitter_account:
-location: Paris-Nord Villepinte, France
+location: Parc des exposition de Paris-Nord Villepinte
+address: Paris, France
 ---
 name: Unite 2012
 start_date: [2012, 08, 22]
@@ -409,74 +411,64 @@ twitter_account: Unity3D
 location: Westergasfabriek
 address: Amsterdam, Netherlands
 ---
-name: Ludovia 2012
-start_date: [2012, 08, 27]
-end_date: [2012, 08, 30]
-main_url: ""
-twitter_hashtags: ""
-twitter_account:
-location: Ax-les-Thermes, France
----
 name: Paris Manga & Sci-Fi Show 14
 start_date: [2012, 09, 15]
 end_date: [2012, 09, 16]
-main_url: ""
+main_url: "http://www.parismanga.fr/"
 twitter_hashtags: ""
-twitter_account:
-location: Paris, France
+twitter_account: 
+location: Porte de Versailles
+address: Paris, France
 ---
 name: Virtual Calais 3.0
 start_date: [2012, 10, 06]
 end_date: [2012, 10, 07]
-main_url: ""
+main_url: "http://www.virtualcalais.com/"
 twitter_hashtags: ""
 twitter_account:
-location: Calais, France
+location: Forum Gambetta
+address: Calais, France
 ---
 name: Paris Games Week 2012
 start_date: [2012, 10, 31]
 end_date: [2012, 11, 04]
-main_url: ""
+main_url: "http://www.parisgamesweek.com/"
 twitter_hashtags: ""
-twitter_account:
-location: Paris, France
+twitter_account: parisgamesweek
+location: Paris Expo
+address: Paris, France
 ---
-name: Sommet International du Jeu de Montréal (MIGS)
+name: Montreal International Game Summit
 start_date: [2012, 11, 13]
 end_date: [2012, 11, 14]
-main_url: ""
+main_url: "http://mtldgtl.com/2012/en/"
 twitter_hashtags: ""
 twitter_account:
-location: Montréal, Canada
----
-name: SATIS 2012
-start_date: [2012, 11, 13]
-end_date: [2012, 11, 15]
-main_url: ""
-twitter_hashtags: ""
-twitter_account:
-location: Paris, France
+location: Hilton Montreal Bonaventure
+address: Montréal, Canada
 ---
 name: DigiWorld Summit 2012
 start_date: [2012, 11, 14]
 end_date: [2012, 11, 15]
-main_url: ""
+main_url: "http://www.digiworldsummit.com/2011/pages/?all=actualites&id=79&idl=22"
 twitter_hashtags: ""
-twitter_account:
-location: Montpellier, France
+twitter_account: DigiWorldDATE
+location: Le Corum
+address: Montpellier, France
 ---
 name: ParisFx
 start_date: [2012, 11, 26]
 end_date: [2012, 11, 27]
-main_url: ""
+main_url: "http://www.parisfx.fr/en"
 twitter_hashtags: ""
-twitter_account:
-location: Enghien-les-Bains, France
+twitter_account: parisfx_IDF
+location: Centre des Arts
+address: Enghien-les-Bains, France
 ---
 name: PS Vita Devcon 2012
 start_date: [2012, 06, 19]
 end_date: [2012, 06, 21]
-main_url: ""
+main_url: 
 twitter_hashtags: ""
 twitter_account:
 location: San Francisco Airport Marriott Waterfront
@@ -497,7 +489,8 @@ end_date: [2012, 06, 30]
 main_url: "http://gamedevnorth5.eventbrite.co.uk/"
 twitter_hashtags: ""
 twitter_account:
-location: Kash Bar, Chester
+location: Kash Bar
+address: Chester, United Kingdom
 ---
 name: "GAMES BRITANNIA: Schools Videogame Festival"
 start_date: [2012, 07, 02]
@@ -514,7 +507,8 @@ end_date: [2012, 07, 24]
 main_url: "http://seattle.casualconnect.org/IGDA.html"
 twitter_hashtags: ""
 twitter_account:
-location: Seattle, WA
+location: Fairmont Olympic Hotel
+address: Seattle, WA
 ---
 name: Classic Gaming Expo 2012
 start_date: [2012, 08, 11]
@@ -522,7 +516,8 @@ end_date: [2012, 08, 12]
 main_url: "http://www.cgexpo.com/"
 twitter_hashtags: ""
 twitter_account:
-location: Plaza Hotel, Las Vegas
+location: Plaza Hotel
+address: Las Vegas, NV
 ---
 name: Gamescom 2012
 start_date: [2012, 08, 15]
@@ -530,7 +525,8 @@ end_date: [2012, 08, 19]
 main_url: "http://www.gamescom-cologne.com/"
 twitter_hashtags: ""
 twitter_account:
-location: Koelnmesse, Cologne, Germany
+location: Koelnmesse
+address: Cologne, Germany
 ---
 name: Serious Play Conference
 start_date: [2012, 08, 21]
@@ -538,7 +534,8 @@ end_date: [2012, 08, 23]
 main_url: "http://www.seriousplayconference.com/"
 twitter_hashtags: ""
 twitter_account:
-location: DigiPen Institute of Technology, Washington
+location: DigiPen Institute of Technology
+address: 9931 Willows Rd NE, Redmond, WA 98052
 ---
 name: Cloud Gaming USA 2012
 start_date: [2012, 09, 11]
@@ -555,15 +552,17 @@ end_date: [2012, 09, 23]
 main_url: "http://tgs.cesa.or.jp/"
 twitter_hashtags: ""
 twitter_account:
-location: Makuhari Messe Convention Centre, Tokyo
+location: Makuhari Messe Convention Centre
+address: Tokyo, Japan
 ---
 name: LOGIN Conference 2012
 start_date: [2012, 09, 26]
 end_date: [2012, 09, 27]
 main_url: "http://www.loginconference.com/"
 twitter_hashtags: ""
-twitter_account:
-location: San Francisco, California
+twitter_account: loginconference
+location: Bently Reserve
+address: San Francisco, California
 ---
 name: Eurogamer Expo 2012
 start_date: [2012, 09, 27]
@@ -571,7 +570,8 @@ end_date: [2012, 09, 30]
 main_url: "http://www.eurogamer.net/expo/"
 twitter_hashtags: ""
 twitter_account:
-location: Earls Court, London
+location: Earls Court
+address: London, United Kingdom
 ---
 name: Brasil Game Show
 start_date: [2012, 10, 11]
@@ -579,31 +579,34 @@ end_date: [2012, 10, 14]
 main_url: "http://www.brasilgameshow.com.br/"
 twitter_hashtags: ""
 twitter_account:
-location: São Paulo
+location: Expo Center Norte
+address: São Paulo
 ---
-name: GameCity 2012
+name: GameCity 7
 start_date: [2012, 10, 20]
 end_date: [2012, 10, 27]
-main_url: "http://gamecity.org/"
+main_url: "http://festival.gamecity.org/"
 twitter_hashtags: ""
-twitter_account:
-location: Nottingham
+twitter_account: gamecity
+location: Nottingham, United Kingdom
 ---
 name: GamesMaster Golden Joystick Awards
 start_date: [2012, 10, 26]
 end_date: [2012, 10, 26]
 main_url: "http://www.goldenjoystick.tv/"
-twitter_hashtags: ""
-twitter_account:
+twitter_hashtags: "#goldenjoystick2012"
+twitter_account: GoldenJoysticks
 location: Westminster Park Plaza
+address: London, United Kingdom
 ---
 name: "LAUNCH: Future Gaming & Digital Conference"
 start_date: [2012, 11, 13]
 end_date: [2012, 11, 14]
 main_url: "http://launchconference.co.uk/"
 twitter_hashtags: ""
-twitter_account:
-location: Birmingham Science Park, Faraday Wharf
+twitter_account: launchconf
+location: Birmingham Science Park Aston
+address: Birmingham, United Kingdom
 ---
 name: "Imagina 2013"
 start_date: [2013, 2, 19]

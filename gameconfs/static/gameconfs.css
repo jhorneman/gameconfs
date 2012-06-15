@@ -22,6 +22,22 @@ div.footer
 }
 
 /* Events list */
+@media (max-width: 480px)
+{
+	.date
+	{
+		display: none;
+	}
+}
+
+@media (min-width: 481px)
+{
+	.short_date
+	{
+		display: none;
+	}
+}
+
 table.events
 {
 	table-layout: fixed;
