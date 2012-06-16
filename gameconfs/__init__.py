@@ -72,7 +72,7 @@ def create_app(_run_mode):
     if _run_mode == "dev":
         app.config["DEBUG"] = True
         app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
-        toolbar = DebugToolbarExtension(app)
+        # toolbar = DebugToolbarExtension(app)
 
     # Test run mode
     elif _run_mode == 'test':
@@ -87,9 +87,6 @@ def create_app(_run_mode):
 
     # Production run mode
     elif _run_mode == "production":
-        #TODO: TURN THIS OFF
-        # app.config["DEBUG"] = True
-
         # Get configuration data from Heroku environment variables
         app.config.setdefault('SQLALCHEMY_DATABASE_URI', os.environ.get('DATABASE_URL'))
         app_run_args['port'] = int(os.environ['PORT'])
@@ -98,7 +95,7 @@ def create_app(_run_mode):
     # Unrecognized run mode
     else:
         logging.error("Did not recognize run mode '%s'" % _run_mode)
-        return
+        return (None, None)
 
     # Initialize the database
     global db

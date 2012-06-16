@@ -251,8 +251,8 @@ location: Haus der Wirtschaft
 address: Willi-Bleicher-Straße 19, 70174 Stuttgart, Germany
 ---
 name: SIGGRAPH 2012
-start_date: [2012, 11, 28]
-end_date: [2012, 12, 01]
+start_date: [2012, 8, 5]
+end_date: [2012, 8, 9]
 main_url: "http://s2012.siggraph.org/"
 twitter_hashtags: "#SIGGRAPH"
 twitter_account: siggraph
