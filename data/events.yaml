@@ -616,3 +616,117 @@ twitter_hashtags: ""
 twitter_account:
 location: Grimaldi Forum
 address: 10, avenue Princesse Grace MC 9801 MONACO
+---
+name: G-Star 2012
+start_date: [2012, 11, 8]
+end_date: [2012, 11, 11]
+main_url: "http://www.gstar.or.kr/"
+twitter_hashtags: ""
+twitter_account: 
+location: BEXCO Exhibition Hall
+address: Busan, South Korea
+---
+name: No Show Conference
+start_date: [2012, 7, 14]
+end_date: [2012, 7, 15]
+main_url: "http://noshowconf.com/"
+twitter_hashtags: ""
+twitter_account: noshowconf
+location: MIT Stratton Center
+address: Cambridge Massachussets
+---
+name: AltDev Student Summit
+start_date: [2012, 7, 10]
+end_date: [2012, 7, 11]
+main_url: "http://altdevconf.com"
+twitter_hashtags: ""
+twitter_account: altdevconf
+location:
+---
+name: Project Horseshoe
+start_date: [2012, 11, 1]
+end_date: [2012, 11, 4]
+main_url: "http://www.projecthorseshoe.com/"
+twitter_hashtags: ""
+twitter_account: 
+location: Ye Kendall Inn
+address: Boerne, Texas
+---
+name: GAMEXPO 2012
+start_date: [2012, 10, 19]
+end_date: [2012, 10, 21]
+main_url: "http://gamexpo.info/"
+twitter_hashtags: ""
+twitter_account: 
+location: Pasadena, California
+---
+name: Project Bar-B-Q
+start_date: [2012, 10, 7]
+end_date: [2012, 10, 10]
+main_url: "http://www.projectbarbq.com/"
+twitter_hashtags: ""
+twitter_account: 
+location: Ye Kendall Inn
+address: Boerne, Texas
+---
+name: Christian Game Developers Conference
+start_date: [2012, 7, 19]
+end_date: [2012, 7, 21]
+main_url: "http://cgdc.org"
+twitter_hashtags: ""
+twitter_account: 
+location: Concordia University
+address: 2811 NE Holman Street, Portland, Oregon
+---
+name: Quo Vadis
+start_date: [2012, 4, 24]
+end_date: [2012, 4, 26]
+main_url: "http://www.die-entwicklerkonferenz.de/"
+twitter_hashtags: ""
+twitter_account: 
+location: Café Moskau
+address: Berlin, Germany
+---
+name: Browser Games Forum 2011
+start_date: [2011, 11, 18]
+end_date: [2011, 11, 19]
+main_url: "http://www.bgf2011.com/"
+twitter_hashtags: ""
+twitter_account: 
+location: Capitol
+address: Kaiserstrasse 106, Offenbach am Main, Germany
+---
+name: Web Game Conference
+start_date: [2012, 6, 21]
+end_date: [2012, 6, 21]
+main_url: "http://www.webgameconf.eu/"
+twitter_hashtags: ""
+twitter_account: webgameconf
+location: La Gaîté Lyrique
+address: Paris, France
+---
+name: Videogame Economics Forum
+start_date: [2012, 4, 5]
+end_date: [2012, 4, 6]
+main_url: "http://www.videogame-economics-forum.com/"
+twitter_hashtags: ""
+twitter_account: 
+location: Angoulême, France
+---
+name: "GameON: Finance 2012"
+start_date: [2012, 1, 17]
+end_date: [2012, 1, 18]
+main_url: "http://gameonfinance.com/"
+twitter_hashtags: ""
+twitter_account: 
+location: Design Exchange
+address: Toronto, Ontario, Canada
+---
+name: X-Summit
+start_date: [2011, 10, 24]
+end_date: [2011, 10, 26]
+main_url: "http://www.x-summit.com/"
+twitter_hashtags: ""
+twitter_account: IOnews
+location: The Carlu
+address: 444 Yonge Street, Toronto, Ontario

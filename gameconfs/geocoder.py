@@ -32,7 +32,7 @@ continents_per_country_code = {"AD":"Europe","AE":"Asia","AF":"Asia","AG":"North
 
 all_continents = list(set(continents_per_country_code.values()))
 countries_with_states = ["United States", "Australia", "Canada", "Brazil"]
-cities_without_countries = ["Singapore"]
+cities_without_states_or_countries = ["Singapore", "New York"]
 
 if __name__ == "__main__":
     script_dir = os.path.abspath(os.path.dirname(sys.argv[0])) + os.sep

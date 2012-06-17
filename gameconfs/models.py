@@ -131,13 +131,13 @@ class Event(db.Model):
     twitter_account = Column(String(250))
 
     # Location info
-    location_name = Column(String(250), nullable=False)
-    address_for_geocoding = Column(String(250), nullable=False)
+    location_name = Column(String(250), nullable=True)
+    address_for_geocoding = Column(String(250), nullable=True)
 
     location_lat = Column(String(32))
     location_long = Column(String(32))
 
-    city_id = Column(Integer, ForeignKey('cities.id'), nullable=False)
+    city_id = Column(Integer, ForeignKey('cities.id'), nullable=True)
     city = relationship('City')
 
     def __init__(self, _name):
@@ -151,24 +151,34 @@ class Event(db.Model):
         """
         self.location_name = _location_name
         self.address_for_geocoding = _address_for_geocoding
-        g = geocoder.GeocodeResults(self.address_for_geocoding)
-        if g.is_valid:
-            self.location_lat = g.latitude
-            self.location_long = g.longitude
-            (self.city, state, country, continent) = set_up_location_data(_db_session, g)
-        return g.is_valid
+        if self.location_name:
+            g = geocoder.GeocodeResults(self.address_for_geocoding)
+            if g.is_valid:
+                self.location_lat = g.latitude
+                self.location_long = g.longitude
+                (self.city, state, country, continent) = set_up_location_data(_db_session, g)
+            return g.is_valid
+        else:
+            return True
 
     @property
     def full_location(self):
-        return self.location_name + ", " + self.city_and_state_or_country
+        if self.city:
+            return self.location_name + ", " + self.city_and_state_or_country
+        else:
+            return "Online"
 
     @property
     def city_and_state_or_country(self):
-        loc = self.city.name
-        if self.city.country.name in geocoder.countries_with_states:
-            loc += ", " + self.city.state.name
-        elif self.city.name not in geocoder.cities_without_countries:
-            loc += ", " + self.city.country.name
+        if self.city:
+            loc = self.city.name
+            if self.city.country.name in geocoder.countries_with_states:
+                if self.city.name not in geocoder.cities_without_states_or_countries:
+                    loc += ", " + self.city.state.name
+            elif self.city.name not in geocoder.cities_without_states_or_countries:
+                loc += ", " + self.city.country.name
+        else:
+            loc = "Online"
         return loc
 
     def __repr__(self):
