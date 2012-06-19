@@ -730,3 +730,126 @@ twitter_hashtags: ""
 twitter_account: IOnews
 location: The Carlu
 address: 444 Yonge Street, Toronto, Ontario
+---
+name: New York Games Conference
+start_date: [2012, 9, 5]
+end_date: [2012, 9, 5]
+main_url: "http://www.nygamesconference.com/"
+twitter_hashtags: ""
+twitter_account: dmwevents
+location: Museum of Jewish Heritage
+address: 36 Battery Place, New York
+---
+name: LA Games Conference
+start_date: [2012, 4, 24]
+end_date: [2012, 4, 24]
+main_url: "http://www.lagamesconference.com/"
+twitter_hashtags: ""
+twitter_account: dmwnews
+location: Hollywood Roosevelt Hotel
+address: 7000 HOLLYWOOD BLVD, LOS ANGELES
+---
+name: Ottawa Game Conference
+start_date: [2012, 5, 29]
+end_date: [2012, 5, 29]
+main_url: "http://ottawagameconference.com/"
+twitter_hashtags: ""
+twitter_account: OttawaGames
+location: Ottawa Convention Centre
+address: Colonel By Drive, Ottawa, Ontario
+---
+name: Foundations of Digital Games 2012
+start_date: [2012, 5, 29]
+end_date: [2012, 6, 1]
+main_url: "http://www.fdg2012.org/"
+twitter_hashtags: ""
+twitter_account: 
+location: Raleigh Marriott City Center
+address: 500 Fayetteville Street, Raleigh, North Carolina
+---
+name: Festival of Games 2013
+start_date: [2013, 4, 25]
+end_date: [2013, 4, 26]
+main_url: "http://www.festivalofgames.nl/site/"
+twitter_hashtags: ""
+twitter_account: nlgd
+location: The Jaarbeurs Utrecht
+address: Jaarbeursplein, 3521 AL Utrecht, The Netherlands
+---
+name: Gotland Game Conference 2012
+start_date: [2012, 5, 25]
+end_date: [2012, 5, 26]
+main_url: "http://www.gotlandgameconference.com/2012/"
+twitter_hashtags: ""
+twitter_account: 
+location: Wisby Strand Congress & Event
+address: Visby, Sweden
+---
+name:  Origins Game Fair
+start_date: [2012, 5, 30]
+end_date: [2012, 6, 3]
+main_url: "http://www.originsgames.com/"
+twitter_hashtags: ""
+twitter_account: 
+location: Greater Columbus Convention Center
+address: Columbus, Ohio
+---
+name: Grassroots Game Conference
+start_date: [2012, 4, 23]
+end_date: [2012, 4, 29]
+main_url: "http://grassrootsgameconference.com/"
+twitter_hashtags: ""
+twitter_account: Phlgamelab
+location: Philadelphia
+---
+name: "DiGRA Conference: Think Design Play"
+start_date: [2011, 9, 14]
+end_date: [2011, 9, 17]
+main_url: "http://gamesconference.hku.nl/"
+twitter_hashtags: ""
+twitter_account: 
+location: Utrecht School of the Arts
+address: Oude Amersfoortseweg 131, 1212AA Hilversum
+---
+name: Gen Con Indy 2012
+start_date: [2012, 8, 16]
+end_date: [2012, 8, 19]
+main_url: "http://www.gencon.com/2012/indy/default.aspx"
+twitter_hashtags: ""
+twitter_account: Gen_Con
+location: Indiana Convention Center
+address: 100 South Capitol Ave., Indianapolis, Indiana
+---
+name: Escapist Expo
+start_date: [2012, 9, 14]
+end_date: [2012, 9, 16]
+main_url: "http://www.escapistexpo.com/"
+twitter_hashtags: ""
+twitter_account: 
+location: Durham Convention Center
+address: Durham, North Carolina 
+---
+name: New Game 2011
+start_date: [2012, 11, 1]
+end_date: [2012, 11, 2]
+main_url: "http://www.newgameconf.com/"
+twitter_hashtags: "#ngc11"
+twitter_account: newgameconf
+location: San Francisco
+---
+name: Games DevCon
+start_date: [2012, 10, 29]
+end_date: [2012, 10, 30]
+main_url: "http://gamesdevcon.de/"
+twitter_hashtags: ""
+twitter_account: 
+location: Rheingoldhalle Mainz
+address: Mainz, Germany
+---
+name: GaymerCon
+start_date: [2013, 8, 3]
+end_date: [2013, 8, 4]
+main_url: "http://www.gaymercon.org/"
+twitter_hashtags: ""
+twitter_account: gaymercon
+location:
