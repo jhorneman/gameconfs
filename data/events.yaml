@@ -853,3 +853,12 @@ main_url: "http://www.gaymercon.org/"
 twitter_hashtags: ""
 twitter_account: gaymercon
 location:
+---
+name: Rezzed
+start_date: [2012, 7, 6]
+end_date: [2012, 7, 7]
+main_url: "http://www.rezzed.com/"
+twitter_hashtags: ""
+twitter_account: rezzedgameshow
+location: Brighton Centre
+address: Brighton, United Kingdom
