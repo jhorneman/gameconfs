@@ -830,8 +830,8 @@ location: Durham Convention Center
 address: Durham, North Carolina 
 ---
 name: New Game 2011
-start_date: [2012, 11, 1]
-end_date: [2012, 11, 2]
+start_date: [2011, 11, 1]
+end_date: [2011, 11, 2]
 main_url: "http://www.newgameconf.com/"
 twitter_hashtags: "#ngc11"
 twitter_account: newgameconf
@@ -862,3 +862,12 @@ twitter_hashtags: ""
 twitter_account: rezzedgameshow
 location: Brighton Centre
 address: Brighton, United Kingdom
+---
+name: Mendeley AI in Gaming Seminar
+start_date: [2012, 7, 9]
+end_date: [2012, 7, 9]
+main_url: "http://mendeleygameai.eventbrite.co.uk/"
+twitter_hashtags: ""
+twitter_account: Mendeley_com
+location: Mendeley
+address: White Bear Yard, 144a Clerkenwell Road, EC1R 5DF London, United Kingdom
