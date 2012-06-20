@@ -12,7 +12,7 @@
 		    &nbsp;<span class="badge badge-today">TODAY</span>
 		    {% endif %}
 		  	</td>
-	    <tr>
+	    </tr>
 	    {% else %}
 	  	<tr>
 	  		<td>Dates</td>
@@ -21,10 +21,15 @@
 		    &nbsp;<span class="badge badge-today">TODAY</span>
 		    {% endif %}
 		  	</td>
-	    <tr>
+	    </tr>
 	    {% endif %}
+	    <tr>
 	      <td>Website</td>
+		  {% if event.main_url %}
 	      <td><a href="{{ event.main_url }}" target="_blank">{{ event.main_url }}</a></td>
+		  {% else %}
+	      <td>None</td>
+	      {% endif %}
 	    </tr>
 		{% if event.twitter_hashtags %}
 	    <tr>
