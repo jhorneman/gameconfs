@@ -1,0 +1,9 @@
+[x] Add support for serving static files in root
+[x] Add robots.txt
+[x] Add sitemap.xml
+[ ] Switch to gunicorn
+[ ] Work with foreman
+[ ] Add database migration support
+[ ] Add user management through Twitter / OAuth (Flask-Login, Flask-Social, etc.)
+[ ] Add event entry/editing form
+[ ] Add asset pipeline support
