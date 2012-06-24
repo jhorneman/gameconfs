@@ -1,5 +1,5 @@
-from flaskext.wtf import Form, TextField, TextAreaField, Required, ValidationError
-from flaskext.wtf.html5 import URLField, DateField
+from flask.ext.wtf import Form, TextField, TextAreaField, Required, ValidationError
+from flask.ext.wtf.html5 import URLField, DateField
 from datetime import date
 
 class EventForm(Form):
@@ -9,8 +9,8 @@ class EventForm(Form):
     main_url = URLField('URL')
     twitter_hashtags = TextField('Hashtags')
     twitter_account = TextField('Twitter account')
-    location = TextField('Venue')
-    address = TextAreaField('Address')
+    location = TextField('Location')
+    address = TextAreaField('City')
 
     def validate_end_date(form, field):
         if field.data < form.start_date.data:

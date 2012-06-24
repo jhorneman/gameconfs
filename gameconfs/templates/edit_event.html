@@ -33,10 +33,15 @@
     {{ form_control(form.twitter_account, "Official_GDC") }}
     {{ form_control(form.twitter_hashtags, "#gdc #gdc13") }}
     {{ form_control(form.location, "Moscone Conference Center") }}
-    {{ form_control(form.address, "747 Howard Street, San Francisco, CA") }}
+    {{ form_control(form.address, "San Francisco, USA") }}
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save</button>
     </div>
   </fieldset>
 </form>
+{% endblock %}
+
+{% block jscode %}
+<script src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/event-editing.js') }}"></script>
 {% endblock %}

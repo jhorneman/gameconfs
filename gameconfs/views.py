@@ -4,18 +4,20 @@ from datetime import datetime, date, timedelta
 import json
 import operator
 from flask import render_template, request, redirect, url_for, abort, send_from_directory
-#from flask_principal import Permission, RoleNeed
+from flask_principal import Permission, RoleNeed
 from sqlalchemy.sql.expression import *
 from sqlalchemy import func 
 from gameconfs import app, db
 from gameconfs.models import *
 from gameconfs.geocoder import all_continents
 from gameconfs.filters import definite_country
+from gameconfs.forms import EventForm
 
 
 @app.teardown_request
 def shutdown_session(exception=None):
     db.session.remove()
+
 
 def get_x_months_ago(_start_year, _start_month, _nr_months):
     final_month = _start_month - _nr_months
@@ -24,6 +26,7 @@ def get_x_months_ago(_start_year, _start_month, _nr_months):
     else:
         return _start_year - 1, final_month + 12
 
+
 def get_x_months_away(_start_year, _start_month, _nr_months):
     final_month = _start_month + _nr_months
     if final_month <= 12:
@@ -31,11 +34,13 @@ def get_x_months_away(_start_year, _start_month, _nr_months):
     else:
         return _start_year + 1, final_month - 12
 
+
 def get_month_period(_start_year, _start_month, _nr_months = 1):
     period_start = date(_start_year, _start_month, 1)
     end_year, end_month = get_x_months_away(_start_year, _start_month, _nr_months)
     period_end = date(end_year, end_month, 1)
     return period_start, period_end
+
 
 def filter_by_place(_query, _continent, _country, _state, _city):
     q = _query.filter(Country.continent_id == _continent.id)
@@ -47,19 +52,23 @@ def filter_by_place(_query, _continent, _country, _state, _city):
             q = q.filter(Event.city_id == _city.id)
     return q
 
+
 def filter_by_period(_query, _start_year, _start_month, _nr_months = 1):
     period_start, period_end = get_month_period(_start_year, _start_month, _nr_months)
     return filter_by_period_start_end(_query, period_start, period_end)
 
+
 def filter_by_period_start_end(_query, _period_start, _period_end):
     return _query.filter(or_(and_(Event.start_date >= _period_start, Event.start_date < _period_end),
         and_(Event.end_date >= _period_start, Event.end_date < _period_end)))
+
 
 def get_year_range():
     #TODO: Cache this
     min_year = db.session.query(func.min(Event.start_date)).one()[0].year
     max_year = db.session.query(func.max(Event.end_date)).one()[0].year
     return min_year, max_year
+
 
 @app.route('/', defaults={'year': None, 'continent_name': None, 'country_name': None, 'city_or_state_name': None, 'city_name': None})
 @app.route('/<int:year>', defaults={'continent_name': None, 'country_name': None, 'city_or_state_name': None, 'city_name': None})
@@ -231,40 +240,39 @@ def index(year, continent_name, country_name, city_or_state_name, city_name):
         continents=all_continents, countries=countries, states=states, cities=cities,
         show_states=show_states, show_cities=show_cities, title=title )
 
-# @app.route('/new', methods=("GET", "POST"))
-# def new_event():
-#     form = EventForm()
-#     if form.validate_on_submit():
-#         # user = User()
-#         # user.username = form.username.data
-#         # user.email = form.email.data
-#         # user.save()
-#         # redirect('register')
-#         logging.info("NEW EVENT")
-#     return render_template('edit_event.html', form=form)
+
+#    if not admin_permission.can():
+#        abort(403)
+
+admin_permission = Permission(RoleNeed('admin'))
+
+@app.route('/new', methods=("GET", "POST"))
+@admin_permission.require(403)
+def new_event():
+    form = EventForm()
+    if form.validate_on_submit():
+        logging.info("NEW EVENT")
+    return render_template('edit_event.html', form=form)
+
 
 @app.route('/event/<id>')
 def event(id):
     event = Event.query.filter(Event.id == id).one()
     return render_template('event.html', event=event, today=date.today())
 
+
 @app.route('/about')
 def about():
     return render_template('about.html')
+
 
 @app.route('/other')
 def other():
     return render_template('other.html')
 
 
-#admin_permission = Permission(RoleNeed('admin'))
-
 @app.route('/stats')
-#@admin_permission.require(403)
 def stats():
-#    if not admin_permission.can():
-#        abort(403)
-
     # Get time stats
     time_stats = {}
     
