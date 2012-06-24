@@ -1,0 +1,42 @@
+{% extends "layout.html" %}
+
+{% macro form_control(field, placeholder="", explanation=None, class="span4") %}
+    {% if field.errors %}
+    <div class="control-group error">
+    {% else %}
+    <div class="control-group">
+    {% endif %}
+      {{ field.label(class="control-label") }}
+      <div class="controls">
+      {{ field(class=class, placeholder=placeholder) }}
+      {% if field.errors %}
+      <span class="help-inline">{% for error in field.errors %}{{ error }} {% endfor %}</span>
+      {% else %}
+      {% if explanation %}
+      <span class="help-inline">{{ explanation }}</span>
+      {% endif %}
+      {% endif %}
+      </div>
+    </div>
+{% endmacro %}
+
+{% block title %}New event - Gameconfs{% endblock %}
+{% block content %}
+<form class="form-horizontal" method="POST" action="/new">
+  <legend>Enter data for a new event</legend>
+  <fieldset>
+    {{ form.hidden_tag() }}
+    {{ form_control(form.name, "Game Developers Conference 2013") }}
+    {{ form_control(form.start_date, class="span2 datepicker") }}
+    {{ form_control(form.end_date, class="span2 datepicker") }}
+    {{ form_control(form.main_url, "http://www.gdconf.com") }}
+    {{ form_control(form.twitter_account, "Official_GDC") }}
+    {{ form_control(form.twitter_hashtags, "#gdc #gdc13") }}
+    {{ form_control(form.location, "Moscone Conference Center") }}
+    {{ form_control(form.address, "747 Howard Street, San Francisco, CA") }}
+    <div class="form-actions">
+        <button type="submit" class="btn btn-primary">Save</button>
+    </div>
+  </fieldset>
+</form>
+{% endblock %}

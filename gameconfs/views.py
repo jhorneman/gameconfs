@@ -5,6 +5,7 @@ from flask import render_template, request, redirect, url_for
 from sqlalchemy.sql.expression import *
 from gameconfs import app, db
 from gameconfs.models import *
+from gameconfs.forms import EventForm
 import geocoder
 
 # http://flask.pocoo.org/snippets/33/
@@ -112,6 +113,18 @@ def index():
 
     return render_template('index.html', events=events, today=today) #, user_location=user_location)
 
+@app.route('/new', methods=("GET", "POST"))
+def new_event():
+    form = EventForm()
+    if form.validate_on_submit():
+        # user = User()
+        # user.username = form.username.data
+        # user.email = form.email.data
+        # user.save()
+        # redirect('register')
+        logging.info("NEW EVENT")
+    return render_template('edit_event.html', form=form)
+
 @app.route('/city/<city_id>')
 def city(city_id):
     today = date.today()
@@ -135,6 +148,22 @@ def event(id):
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+# @app.route('/favicon.ico')
+# def favicon():
+#     return send_from_directory(os.path.join(app.root_path, 'static'),
+#                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+@app.route('/robots.txt')
+def robots_txt():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'robots.txt', mimetype='text/plain')
+
+@app.route('/sitemap.xml')
+def sitemap():
+    url_root = request.url_root[:-1]
+    event_ids = [e[0] for e in db.session.query(Event.id).all()]
+    return render_template('sitemap.xml', url_root=url_root, event_ids=event_ids, mimetype='text/xml')
 
 @app.route('/search', methods=['POST'])
 def search():

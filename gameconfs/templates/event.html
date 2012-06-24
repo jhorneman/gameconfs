@@ -1,57 +1,57 @@
 {% extends "layout.html" %}
 {% block title %}{{ event.name }} - Gameconfs{% endblock %}
 {% block content %}
-	<h2>{{ event.name }}</h2>
-	<table class="table table-condensed event">
-	  <tbody>
-	  	{% if event.start_date == event.end_date %}
-	  	<tr>
-	  		<td>Date</td>
-	  		<td>{{ event.start_date|nice_date }}
-			{% if event.start_date == today %}
-		    &nbsp;<span class="badge badge-today">TODAY</span>
-		    {% endif %}
-		  	</td>
-	    </tr>
-	    {% else %}
-	  	<tr>
-	  		<td>Dates</td>
-	  		<td>{{ event.start_date|nice_date }} until {{ event.end_date|nice_date }}
-			{% if event.start_date <= today and today <= event.end_date %}
-		    &nbsp;<span class="badge badge-today">TODAY</span>
-		    {% endif %}
-		  	</td>
-	    </tr>
-	    {% endif %}
-	    <tr>
-	      <td>Website</td>
-		  {% if event.main_url %}
-	      <td><a href="{{ event.main_url }}" target="_blank">{{ event.main_url }}</a></td>
-		  {% else %}
-	      <td>None</td>
-	      {% endif %}
-	    </tr>
-		{% if event.twitter_hashtags %}
-	    <tr>
-	      <td>Twitter hashtags</td> 
-	      <td>
-	      	{% for tag in event.twitter_hashtags|split %}
-	      	<a href="http://twitter.com/#!/search/%23{{ tag[1:] }}" target="_blank">{{ tag }}</a> 
-	      	{% endfor %}
-	  	  </td>
-	    </tr>
-    	{% endif %}
-		{% if event.twitter_account %}
-	    <tr>
-	      <td>Twitter account</td>
-	      <td><a href="http://twitter.com/{{ event.twitter_account|urlencode }}" target="_blank">@{{ event.twitter_account }}</a></td>
-	    </tr>
-    	{% endif %}
-	    <tr>
-	      <td>Location</td>
-	      <td>{{ event.full_location }}</td>
-	    </tr>
-	  </tbody>
-	</table>
-	<a class="btn" href="{{ url_for('index') }}"><i class="icon-arrow-left"></i> Back to event list</a>
+  <h2>{{ event.name }}</h2>
+  <table class="table table-condensed event">
+    <tbody>
+      {% if event.start_date == event.end_date %}
+      <tr>
+        <td>Date</td>
+        <td>{{ event.start_date|nice_date }}
+        {% if event.start_date == today %}
+        &nbsp;<span class="badge badge-today">TODAY</span>
+        {% endif %}
+        </td>
+      </tr>
+      {% else %}
+      <tr>
+        <td>Dates</td>
+        <td>{{ event.start_date|nice_date }} until {{ event.end_date|nice_date }}
+        {% if event.start_date <= today and today <= event.end_date %}
+        &nbsp;<span class="badge badge-today">TODAY</span>
+        {% endif %}
+        </td>
+      </tr>
+      {% endif %}
+      <tr>
+        <td>Website</td>
+        {% if event.main_url %}
+        <td><a href="{{ event.main_url }}" target="_blank">{{ event.main_url }}</a></td>
+        {% else %}
+        <td>None</td>
+        {% endif %}
+      </tr>
+      {% if event.twitter_hashtags %}
+      <tr>
+        <td>Twitter hashtags</td> 
+        <td>
+          {% for tag in event.twitter_hashtags|split %}
+          <a href="http://twitter.com/#!/search/%23{{ tag[1:] }}" target="_blank">{{ tag }}</a> 
+          {% endfor %}
+        </td>
+      </tr>
+      {% endif %}
+      {% if event.twitter_account %}
+      <tr>
+        <td>Twitter account</td>
+        <td><a href="http://twitter.com/{{ event.twitter_account|urlencode }}" target="_blank">@{{ event.twitter_account }}</a></td>
+      </tr>
+      {% endif %}
+      <tr>
+        <td>Location</td>
+        <td>{{ event.full_location }}</td>
+      </tr>
+    </tbody>
+  </table>
+  <a class="btn" href="{{ url_for('index') }}"><i class="icon-arrow-left"></i> Back to event list</a>
 {% endblock %}
