@@ -4,70 +4,116 @@ from sqlalchemy.sql.expression import *
 from gameconfs import app, db
 from gameconfs.models import *
 from gameconfs.forms import EventForm
-import geocoder
 
 
 @app.teardown_request
 def shutdown_session(exception=None):
     db.session.remove()
 
+def get_x_months_ago(_start_year, _start_month, _nr_months):
+    final_month = _start_month - _nr_months
+    if final_month >= 1:
+        return _start_year, final_month
+    else:
+        return _start_year - 1, final_month + 12
+
+def get_x_months_away(_start_year, _start_month, _nr_months):
+    final_month = _start_month + _nr_months
+    if final_month <= 12:
+        return _start_year, final_month
+    else:
+        return _start_year + 1, final_month - 12
+
 def get_month_period(_start_year, _start_month, _nr_months = 1):
     period_start = date(_start_year, _start_month, 1)
-    final_month = _start_month + _nr_months
-    if final_month < 12:
-        period_end = date(_start_year, final_month, 1)
-    else:
-        period_end = date(_start_year + 1, final_month - 12, 1)
+    end_year, end_month = get_x_months_away(_start_year, _start_month, _nr_months)
+    period_end = date(end_year, end_month, 1)
     return period_start, period_end
 
-@app.route('/')
-def index():
+def find_place(_place):
+    city = City.query.\
+        filter(City.name.like(_place)).\
+        first()
+    if city is not None:
+        return city.country.continent, city.country, city.state, city
+
+    state = State.query.\
+        filter(State.name.like(_place)).\
+        first()
+    if state is not None:
+        return state.country.continent, state.country, state, None
+
+    country = Country.query.\
+        filter(Country.name.like(_place)).\
+        first()
+    if country is not None:
+        return country.continent, country, None, None
+
+    continent = Continent.query.\
+        filter(Continent.name.like(_place)).\
+        first()
+    if continent is not None:
+        return continent, None, None, None
+
+    return None, None, None, None
+
+def filter_by_place(_query, _place):
+    continent, country, state, city = find_place(_place)
+    if not continent:
+        return None
+    q = _query.filter(Country.continent_id == continent.id)
+    if country:
+        q = q.filter(City.country_id == country.id)
+        if state:
+            q = q.filter(City.state_id == state.id)
+        if city:
+            q = q.filter(Event.city_id == city.id)
+    return q
+
+def filter_by_period(_query, _start_year, _start_month, _nr_months = 1):
+    period_start, period_end = get_month_period(_start_year, _start_month, _nr_months)
+    return _query.filter(or_(and_(Event.start_date >= period_start, Event.start_date < period_end),
+                  and_(Event.end_date >= period_start, Event.end_date < period_end)))
+
+@app.route('/<place>')
+def place(place):
     today = date.today()
-
-    period_start, period_end = get_month_period(today.year, today.month, 3)
-
-    events = Event.query.\
-        filter(or_(and_(Event.start_date >= period_start, Event.start_date < period_end),
-                   and_(Event.end_date >= period_start, Event.end_date < period_end))).\
-        all()
-    return render_template('index.html', events=events, is_index=True, today=today)
+    q = Event.query.\
+        join(Event.city).\
+        join(City.country).\
+        join(Country.continent)
+    q = filter_by_place(q, place)
+    if not q:
+        #TODO: Show error message
+        return "Place not found"
+    q = filter_by_period(q, today.year, today.month, 3)
+    return render_template('place.html', events=q.all(), today=today)
 
 @app.route('/<int:year>/<int:month>')
 def month(year, month):
     #TODO: Check year and month are valid
-    period_start, period_end = get_month_period(year, month)
-    events = Event.query.\
-        filter(or_(and_(Event.start_date >= period_start, Event.start_date < period_end),
-                   and_(Event.end_date >= period_start, Event.end_date < period_end))).\
-        all()
-    return render_template('month.html', events=events, month=month, year=year, today=date.today())
+    q = Event.query
+    q = filter_by_period(q, year, month, 1)
+    return render_template('month.html', events=q.all(), month=month, year=year, today=date.today())
 
-@app.route('/new', methods=("GET", "POST"))
-def new_event():
-    form = EventForm()
-    if form.validate_on_submit():
-        # user = User()
-        # user.username = form.username.data
-        # user.email = form.email.data
-        # user.save()
-        # redirect('register')
-        logging.info("NEW EVENT")
-    return render_template('edit_event.html', form=form)
-
-@app.route('/city/<city_id>')
-def city(city_id):
+@app.route('/')
+def index():
     today = date.today()
+    q = Event.query
+    q = filter_by_period(q, today.year, today.month, 3)
+    return render_template('index.html', events=q.all(), today=today)
 
-    future_events = Event.query.\
-        filter(Event.city_id == city_id).\
-        filter(and_(Event.start_date > today, Event.start_date < today + timedelta(days=180))).\
-        filter(Event.start_date >= date.today()).\
-        all()
-    add_location_to_events(future_events)
-
-    location = nice_location_name(City.query.get(city_id))
-
-    return render_template('city.html', location=location, future_events=future_events)
+# @app.route('/new', methods=("GET", "POST"))
+# def new_event():
+#     form = EventForm()
+#     if form.validate_on_submit():
+#         # user = User()
+#         # user.username = form.username.data
+#         # user.email = form.email.data
+#         # user.save()
+#         # redirect('register')
+#         logging.info("NEW EVENT")
+#     return render_template('edit_event.html', form=form)
 
 @app.route('/event/<id>')
 def event(id):
