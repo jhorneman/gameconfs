@@ -33,6 +33,7 @@ import logging
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
+from filters import init_template_filters
 
 
 # Set to None so code will fail screaming if create_app or run_app haven't been called
@@ -105,6 +106,9 @@ def create_app(_run_mode):
     # Initialize application
     # Import the views, to apply the decorators which use the global app object.
     import gameconfs.views
+    
+    # Set up Jinja2 filters
+    init_template_filters(app)
 
     return (app, db)
 

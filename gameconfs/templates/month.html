@@ -1,14 +1,10 @@
 {% extends "layout.html" %}
 {% block content %}
 	{% if events %}
-	{% for year_group in events|sort(attribute='start_date')|groupby('start_date.year') %}
-	{% for month_group in year_group.list|groupby('start_date.month') %}
-	<h3>
-		<a href="/{{ year_group.grouper }}/{{ month_group.grouper }}">{{ month_group.grouper|nice_month }} {{ year_group.grouper }}</a>
-	</h3>
+	<h3>{{ month|nice_month }} {{ year }}</h3>
 	<table class="table table-condensed events">
 	  	<tbody>
-		{% for event in month_group.list %}
+		{% for event in events|sort(attribute='start_date') %}
     		<tr>
 			{% if event.start_date <= today and today <= event.end_date %}
 	      	<td><span class="badge badge-today">TODAY</span></td>
@@ -21,13 +17,11 @@
 			{% endfor %}
 	  	</tbody>
 	</table>
-	{% endfor %}
-	{% endfor %}
 	{% else %}
 	<h3>
-		<a href="/{{ period_start.year }}/{{ period_start.month }}">{{ period_start.month|nice_month }} {{ period_start.year }}</a>
+		<a href="/{{ year }}/{{ month }}">{{ month|nice_month }} {{ year }}</a> 
 	</h3>
 	<p>No events.</p>
 	{% endif %}
-	<p>Looking for game jams and compos? Check out <a href="http://compohub.net/" target="_blank">CompoHub</a>.</p>
+	<p><a class="btn" href="{{ url_for('index') }}"><i class="icon-arrow-left"></i> Back to event list</a></p>
 {% endblock %}
