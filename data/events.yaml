@@ -147,7 +147,7 @@ start_date: [2012, 11, 5]
 end_date: [2012, 11, 6]
 main_url: "http://www.gamesforhealtheurope.com/"
 twitter_hashtags: ""
-twitter_account:
+twitter_account: gfheu
 location: "Muziekgebouw aan 't IJ"
 address: "Piet Heinkade 1 1019 BR Amsterdam"
 ---
@@ -1052,3 +1052,282 @@ twitter_hashtags: ""
 twitter_account: 
 location: Caird Hall
 address: Dundee, United Kingdom
+---
+name: Smartphone & Tablet Games Summit
+start_date: [2012, 11, 15]
+end_date: [2012, 11, 15]
+main_url: "http://www.mediabistro.com/smartphonegamessummitlondon/"
+twitter_hashtags: ""
+twitter_account: socialtimes
+location: 200 Aldersgate - St Paul's
+address: London, United Kingdom
+---
+name: Social Gaming Summit
+start_date: [2012, 11, 15]
+end_date: [2012, 11, 15]
+main_url: "http://www.mediabistro.com/socialgamingsummit/"
+twitter_hashtags: "#sgsconf"
+twitter_account: socialtimes
+location: 200 Aldersgate - St Paul's
+address: London, United Kingdom
+---
+name: Games & App Fest
+start_date: [2012, 10, 4]
+end_date: [2012, 10, 4]
+main_url: "http://gappfest.com/"
+twitter_hashtags: "#gappfest"
+twitter_account: 
+location: Unknown
+address: London, United Kingdom
+---
+name: Mobile Games Forum
+start_date: [2012, 1, 25]
+end_date: [2012, 1, 26]
+main_url: "http://www.mobilegamesforum.co.uk/"
+twitter_hashtags: ""
+twitter_account: 
+location: Hilton Tower Bridge
+address: London, United Kingdom
+---
+name: London Games Conference
+start_date: [2012, 11, 21]
+end_date: [2012, 11, 21]
+main_url: "http://www.londongamesconference.com/"
+twitter_hashtags: "#londongamesconf"
+twitter_account: londongamesconference
+location: One Wimpole Street
+address: 1 Wimpole Street, London, United Kingdom
+---
+name: Apps World Europe
+start_date: [2012, 10, 2]
+end_date: [2012, 10, 3]
+main_url: "http://www.apps-world.net/europe/agenda/tracks/gaming-apps"
+twitter_hashtags: ""
+twitter_account: Apps_World
+location: Earls Court 2
+address: London, United Kingdom
+---
+name: QuakeCon 2012
+start_date: [2012, 8, 2]
+end_date: [2012, 8, 5]
+main_url: "http://www.quakecon.org/"
+twitter_hashtags: ""
+twitter_account: 
+location: Hilton Anatole
+address: Dallas, Texas, USA
+---
+name: Joue Le Jeu 2012
+start_date: [2012, 6, 21]
+end_date: [2012, 8, 21]
+main_url: "http://www.gaite-lyrique.net/en/theme/joue-le-jeu-play-along-summer-2012"
+twitter_hashtags: ""
+twitter_account: 
+location: La Gaîté Lyrique 
+address: Paris, France
+---
+name: Lunarcade Sydney 2012
+start_date: [2012, 8, 3]
+end_date: [2012, 8, 9]
+main_url: "https://www.facebook.com/events/373192322751391/"
+twitter_hashtags: ""
+twitter_account: 
+location: Serial Space
+address: Sydney, Australia
+---
+name: PlayPublik 2012
+start_date: [2012, 8, 9]
+end_date: [2012, 8, 12]
+main_url: "http://playpublik.de/en/"
+twitter_hashtags: ""
+twitter_account: 
+location: Computer Games Museum
+address: Karl-Marx-Allee 93a, Berlin, Germany
+---
+name: DGA Dag – PR
+start_date: [2012, 8, 30]
+end_date: [2012, 8, 30]
+main_url: "http://dgadag2012.eventbrite.com/"
+twitter_hashtags: ""
+twitter_account: DGA_online
+location: Zandfoort aan de Eem
+address: Eemlaan 100, Amersfoort, Netherlands
+---
+name: igfest 2012
+start_date: [2012, 9, 5]
+end_date: [2012, 9, 8]
+main_url: "http://igfest.org/"
+twitter_hashtags: ""
+twitter_account: igfest
+location: Castle Park
+address: Bristol, United Kingdom
+---
+name: The Hide&amp;Seek Weekender 2012
+start_date: [2012, 9, 14]
+end_date: [2012, 9, 16]
+main_url: "http://weekender.hideandseek.net/"
+twitter_hashtags: ""
+twitter_account: hidingseeking
+location: In or around South Bank Centre
+address: London, United Kingdom
+---
+name: Fantastic Arcade 2012
+start_date: [2012, 9, 20]
+end_date: [2012, 9, 28]
+main_url: "http://fantasticfest.com/arcade/"
+twitter_hashtags: ""
+twitter_account: 
+location: The Highball
+address: Austin, Texas, USA
+---
+name: Women in Games Conference 2012
+start_date: [2012, 9, 26]
+end_date: [2012, 9, 26]
+main_url: "http://www.womeningamesjobs.com/"
+twitter_hashtags: ""
+twitter_account: wigj
+location: TBA
+address: London, United Kingdom
+---
+name: "Wild Rumpus #3"
+start_date: [2012, 9, 27]
+end_date: [2012, 9, 27]
+main_url: "http://thewildrumpus.co.uk/"
+twitter_hashtags: ""
+twitter_account: WildRumpus
+location: Unknown
+address: London, United Kingdom
+---
+name: Indigo Showcase
+start_date: [2012, 9, 28]
+end_date: [2012, 9, 29]
+main_url: "http://www.indigoshowcase.nl/"
+twitter_hashtags: ""
+twitter_account: dutchgamegarden
+location: Utrecht City Hall
+address: Utrecht, The Netherlands
+---
+name: Playful 2012
+start_date: [2012, 10, 19]
+end_date: [2012, 10, 19]
+main_url: "http://www.thisisplayful.com/"
+twitter_hashtags: ""
+twitter_account: thisisplayful
+location: Conway Hall
+address: London, United Kingdom
+---
+name: Conférence Jeu Vidéo & Marketing (CJVM)
+start_date: [2012, 9, 13]
+end_date: [2012, 9, 13]
+main_url: "http://conferencejeuvideomarketing.com/"
+twitter_hashtags: 
+twitter_account: 
+location: Pôle Léonard de Vinci, La Défense
+address: Paris, France
+---
+name: Ludovia 2012
+start_date: [2012, 8, 27]
+end_date: [2012, 8, 30]
+main_url: "http://www.ludovia.org/2012/"
+twitter_hashtags: 
+twitter_account: 
+location: Various
+address: Ax-les-Thermes, France
+---
+name: Convention E-Learning et Serious Game KTM Advance
+start_date: [2012, 9, 20]
+end_date: [2012, 9, 20]
+main_url: "http://www.ktm-advance.com/viewArticle_fr.php?id=256"
+twitter_hashtags: 
+twitter_account: KTMAdvance
+location: Centquatre
+address: "54 Rue Curial, 104 rue d'Aubervilliers, 75019 Paris"
+---
+name: Luxembourg Gaming
+start_date: [2012, 11, 14]
+end_date: [2012, 11, 14]
+main_url: "http://www.luxembourg-gaming.com/"
+twitter_hashtags: 
+twitter_account: 
+location: Luxexpo
+address: 10 circuit de la Foire Internationale, L-1347, Luxembourg-Kirchberg, Luxembourg
+---
+name: Battle.net World Championship
+start_date: [2012, 11, 17]
+end_date: [2012, 11, 18]
+main_url: "http://us.battle.net/bwc"
+twitter_hashtags: 
+twitter_account: 
+location: Shanghai Expo Mart
+address: Shanghai, China
+---
+name: Game Paris
+start_date: [2012, 11, 23]
+end_date: [2012, 11, 30]
+main_url: "http://www.game-paris.com/"
+twitter_hashtags: 
+twitter_account: 
+location: Various
+address: Paris, France
+---
+name: Game Connection Europe
+start_date: [2012, 11, 28]
+end_date: [2012, 11, 30]
+main_url: "http://www.game-connection.com/gameconn/content/gameconnection-europe"
+twitter_hashtags: 
+twitter_account: The_GameCo
+location: Paris Expo - Porte de Versaille
+address: 1 Place Porte de Versailles, 75015 Paris, France
+---
+name: Mobile World Congress 2013
+start_date: [2013, 2, 25]
+end_date: [2013, 2, 28]
+main_url: "http://www.mobileworldcongress.com/index.html"
+twitter_hashtags: 
+twitter_account: GSMA
+location: Fira Gran Via
+address: Barcelona, Spain
+---
+name: Digital Spark 2012
+start_date: [2012, 9, 5]
+end_date: [2012, 9, 6]
+main_url: "http://www.digitalspark.abertay.ac.uk/"
+twitter_hashtags: 
+twitter_account: 
+location: Abertay University
+address: Kydd Building, Bell St, Dundee, United Kingdom
+---
+name: ExPlay 2012
+start_date: [2012, 11, 1]
+end_date: [2012, 11, 2]
+main_url: "http://www.explay.co.uk/"
+twitter_hashtags: 
+twitter_account: 
+location: Bath Assembly Rooms
+address: Bath, United Kingdom
+---
+name: International Conference on Entertainment Computing (ICEC)
+start_date: [2012, 9, 26]
+end_date: [2012, 9, 29]
+main_url: "http://icec2012.org/"
+twitter_hashtags: 
+twitter_account: icec2012
+location: GW2 building, University of Bremen campus
+address: Bremen, Germany
+---
+name: Game Design Conference
+start_date: [2012, 9, 17]
+end_date: [2012, 9, 17]
+main_url: "http://gamedesigncon.com/"
+twitter_hashtags: 
+twitter_account: gamedesigncon
+location: The Fairmont San Francisco
+address: San Francisco, California, USA
+---
+name: ITAG Conference 2012
+start_date: [2012, 10, 23]
+end_date: [2012, 10, 24]
+main_url: "http://itag.gamecity.org/"
+twitter_hashtags: 
+twitter_account: 
+location: Nottingham Trent University
+address: Nottingham, United Kingdom
