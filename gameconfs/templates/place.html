@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 {% block content %}
-	<h1>Game Events In {{ location }}</h1>
+	<h1>Game Events In {{ place_name }}</h1>
 	{% if events %}
 	{% for year_group in events|sort(attribute='start_date')|groupby('start_date.year') %}
 	{% for month_group in year_group.list|groupby('start_date.month') %}
@@ -17,7 +17,7 @@
 		     	<td><span class="date">{{ event.start_date|nice_date }}</span><span class="short_date">{{ event.start_date|short_date }}</span></td>
 	      	{% endif %}
 	      	<td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
-	      	<td>{{ event.city_and_state_or_country }}</td>
+	      	<td>{{ event.city|city_and_state_or_country }}</td>
 		  	</tr>
 			{% endfor %}
 	  	</tbody>

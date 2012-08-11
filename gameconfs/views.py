@@ -57,17 +57,14 @@ def find_place(_place):
 
     return None, None, None, None
 
-def filter_by_place(_query, _place):
-    continent, country, state, city = find_place(_place)
-    if not continent:
-        return None
-    q = _query.filter(Country.continent_id == continent.id)
-    if country:
-        q = q.filter(City.country_id == country.id)
-        if state:
-            q = q.filter(City.state_id == state.id)
-        if city:
-            q = q.filter(Event.city_id == city.id)
+def filter_by_place(_query, _continent, _country, _state, _city):
+    q = _query.filter(Country.continent_id == _continent.id)
+    if _country:
+        q = q.filter(City.country_id == _country.id)
+        if _state:
+            q = q.filter(City.state_id == _state.id)
+        if _city:
+            q = q.filter(Event.city_id == _city.id)
     return q
 
 def filter_by_period(_query, _start_year, _start_month, _nr_months = 1):
@@ -75,19 +72,42 @@ def filter_by_period(_query, _start_year, _start_month, _nr_months = 1):
     return _query.filter(or_(and_(Event.start_date >= period_start, Event.start_date < period_end),
                   and_(Event.end_date >= period_start, Event.end_date < period_end)))
 
+def place_name(_continent, _country, _state, _city):
+    if _city:
+        loc = _city.name + ", "
+    else:
+        loc = ""
+    if _state:
+        if _country.name in geocoder.countries_with_states:
+            if _city:
+                if _city.name not in geocoder.cities_without_states_or_countries:
+                    loc += _state.name + ", "
+            else:
+                loc += _state.name + ", "
+    if _country:
+        if _city:
+            if _city.name not in geocoder.cities_without_states_or_countries:
+                loc += _country.name + ", "
+        else:
+            loc += _country.name + ", "
+    loc += _continent.name
+    return loc
+
 @app.route('/<place>')
 def place(place):
-    today = date.today()
-    q = Event.query.\
-        join(Event.city).\
-        join(City.country).\
-        join(Country.continent)
-    q = filter_by_place(q, place)
-    if not q:
+    continent, country, state, city = find_place(place)
+    if continent:
+        q = Event.query.\
+            join(Event.city).\
+            join(City.country).\
+            join(Country.continent)
+        q = filter_by_place(q, continent, country, state, city)
+        today = date.today()
+        q = filter_by_period(q, today.year, today.month, 3)
+        return render_template('place.html', events=q.all(), place_name=place_name(continent, country, state, city), today=today)
+    else:
         #TODO: Show error message
         return "Place not found"
-    q = filter_by_period(q, today.year, today.month, 3)
-    return render_template('place.html', events=q.all(), today=today)
 
 @app.route('/<int:year>/<int:month>')
 def month(year, month):

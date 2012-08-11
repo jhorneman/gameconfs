@@ -161,26 +161,6 @@ class Event(db.Model):
         else:
             return True
 
-    @property
-    def full_location(self):
-        if self.city:
-            return self.location_name + ", " + self.city_and_state_or_country
-        else:
-            return "Online"
-
-    @property
-    def city_and_state_or_country(self):
-        if self.city:
-            loc = self.city.name
-            if self.city.country.name in geocoder.countries_with_states:
-                if self.city.name not in geocoder.cities_without_states_or_countries:
-                    loc += ", " + self.city.state.name
-            elif self.city.name not in geocoder.cities_without_states_or_countries:
-                loc += ", " + self.city.country.name
-        else:
-            loc = "Online"
-        return loc
-
     def __repr__(self):
         return '<Event %r>' % (self.name)
 

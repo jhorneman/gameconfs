@@ -3,6 +3,8 @@ import inspect
 from datetime import datetime, date, timedelta
 import urllib
 import codecs
+from gameconfs import geocoder
+
 
 def init_template_filters(_app):
     this_module = sys.modules[__name__]
@@ -59,6 +61,24 @@ def short_date(_datetime):
 def nice_month(_month):
     month = date(2012, _month, 1)   # Year is irrelevant
     return "{0}".format(month.strftime("%B"))
+
+def event_location(_event):
+    if _event.city:
+        return _event.location_name + ", " + city_and_state_or_country(_event.city)
+    else:
+        return "Online"
+
+def city_and_state_or_country(_city):
+    if _city:
+        loc = _city.name
+        if _city.country.name in geocoder.countries_with_states:
+            if _city.name not in geocoder.cities_without_states_or_countries:
+                loc += ", " + _city.state.name
+        elif _city.name not in geocoder.cities_without_states_or_countries:
+            loc += ", " + _city.country.name
+    else:
+        loc = "Online"
+    return loc
 
 def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
     return value.strftime(format)
