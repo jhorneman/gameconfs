@@ -16,6 +16,15 @@ twitter_account: Official_GDC
 location: "Moscone Conference Center"
 address: "747 Howard Street, San Francisco"
 ---
+name: Game Developers Conference 2012
+start_date: [2012, 3, 5]
+end_date: [2012, 3, 9]
+main_url: "http://www.gdconf.com"
+twitter_hashtags: "#gdc #gdc12"
+twitter_account: Official_GDC
+location: "Moscone Conference Center"
+address: "747 Howard Street, San Francisco"
+---
 name: Game Developers Conference Europe 2012
 start_date: [2012, 8, 13]
 end_date: [2012, 8, 15]
