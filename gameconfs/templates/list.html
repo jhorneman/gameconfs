@@ -1,0 +1,33 @@
+{% extends "layout.html" %}
+{% block content %}
+	{% if place_name %}
+	<p>Showing game events in {{ place_name }}
+	{% endif %}
+	from {{ month|nice_month }} {{ year }}</p>
+	{% if events %}
+	{% for year_group in events|sort(attribute='start_date')|groupby('start_date.year') %}
+	{% for month_group in year_group.list|groupby('start_date.month') %}
+	<h3>
+		<a href="/{{ year_group.grouper }}/{{ month_group.grouper }}">{{ month_group.grouper|nice_month }} {{ year_group.grouper }}</a>
+	</h3>
+	<table class="table table-condensed events">
+	  	<tbody>
+		{% for event in month_group.list %}
+    		<tr>
+			{% if event.start_date <= today and today <= event.end_date %}
+	      	<td><span class="badge badge-today">TODAY</span></td>
+	      	{% else %}
+		     	<td><span class="date">{{ event.start_date|nice_date }}</span><span class="short_date">{{ event.start_date|short_date }}</span></td>
+	      	{% endif %}
+	      	<td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
+	      	<td>{{ event.city|city_and_state_or_country }}</td>
+		  	</tr>
+			{% endfor %}
+	  	</tbody>
+	</table>
+	{% endfor %}
+	{% endfor %}
+	{% else %}
+	<p>There are no events in our database.</p>
+	{% endif %}
+{% endblock %}
