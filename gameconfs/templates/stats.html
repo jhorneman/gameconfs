@@ -1,12 +1,28 @@
 {% extends "layout.html" %}
 {% block content %}
-	<h1>Events per year</h1>
-	{% for year_stats in time_stats|dictsort %}
-		<h3>
-			{{ year_stats[0] }}
-		</h3>
-		{% for month in range(1, 12+1) %}
-			<p>Month: {{ month }}, events: {{ year_stats[1][month-1] }}</p>
-		{% endfor %}
-	{% endfor %}
+	<h1>Number of events per year</h1>
+	<table class="table table-condensed">
+		<thead>
+			<tr>
+				<td></td>
+				{% for year_stats in time_stats|dictsort %}
+				<td>
+					{{ year_stats[0] }}
+				</td>
+				{% endfor %}
+			</tr>
+		</thead>
+	  	<tbody>
+			{% for month in range(1, 12+1) %}
+			<tr>
+				<td>{{ month|nice_month }}</td>
+				{% for year_stats in time_stats|dictsort %}
+				<td>
+					{{ year_stats[1][month-1] }}
+				</td>
+				{% endfor %}
+			</tr>
+			{% endfor %}
+	</table>
+	<p>Total number of events: {{ total_nr_events }}. Events before May 2012 are patchy.</p>
 {% endblock %}

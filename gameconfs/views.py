@@ -178,7 +178,8 @@ def stats():
         else:
             time_stats[start_date.year] = [ 0 for i in range(0, 12) ]
             time_stats[start_date.year][start_date.month-1] = 1
-    return render_template('stats.html', time_stats=time_stats)
+    total_nr_events = Event.query.count()
+    return render_template('stats.html', time_stats=time_stats, total_nr_events=total_nr_events)
 
 @app.errorhandler(404)
 def page_not_found(error):
