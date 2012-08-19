@@ -1,5 +1,5 @@
 from datetime import datetime, date, timedelta
-from flask import render_template, request, redirect, url_for
+from flask import render_template, request, redirect, url_for, abort
 from sqlalchemy.sql.expression import *
 from gameconfs import app, db
 from gameconfs.models import *
@@ -72,7 +72,7 @@ def filter_by_period(_query, _start_year, _start_month, _nr_months = 1):
     return _query.filter(or_(and_(Event.start_date >= period_start, Event.start_date < period_end),
                   and_(Event.end_date >= period_start, Event.end_date < period_end)))
 
-def place_name(_continent, _country, _state, _city):
+def build_place_name(_continent, _country, _state, _city):
     if _city:
         loc = _city.name + ", "
     else:
@@ -93,6 +93,31 @@ def place_name(_continent, _country, _state, _city):
     loc += _continent.name
     return loc
 
+@app.route('/list')
+def list():
+    today = date.today()
+    place = request.args.get('place', None)
+    year = int(request.args.get('year', str(today.year)))
+    month = int(request.args.get('month', str(today.month)))
+    nr_months = int(request.args.get('nr_months', '3'))
+
+    q = Event.query.\
+        join(Event.city).\
+        join(City.country).\
+        join(Country.continent)
+
+    if place:
+        continent, country, state, city = find_place(place)
+        if not continent:
+            abort(404)
+        q = filter_by_place(q, continent, country, state, city)
+        place_name = build_place_name(continent, country, state, city)
+    else:
+        place_name = None
+
+    q = filter_by_period(q, year, month, nr_months)
+    return render_template('list.html', events=q.all(), place_name=place_name, today=today, year=year, month=month, nr_months=nr_months)
+
 @app.route('/<place>')
 def place(place):
     continent, country, state, city = find_place(place)
@@ -104,14 +129,13 @@ def place(place):
         q = filter_by_place(q, continent, country, state, city)
         today = date.today()
         q = filter_by_period(q, today.year, today.month, 3)
-        return render_template('place.html', events=q.all(), place_name=place_name(continent, country, state, city), today=today)
+        return render_template('place.html', events=q.all(), place_name=build_place_name(continent, country, state, city), today=today)
     else:
-        #TODO: Show error message
-        return "Place not found"
+        abort(404)
 
 @app.route('/<int:year>/<int:month>')
 def month(year, month):
-    #TODO: Check year and month are valid
+    #TODO: Check year and month are valid, abort(404) if not
     q = Event.query
     q = filter_by_period(q, year, month, 1)
     return render_template('month.html', events=q.all(), month=month, year=year, today=date.today())
@@ -143,6 +167,10 @@ def event(id):
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template('page_not_found.html'), 404
 
 # @app.route('/favicon.ico')
 # def favicon():
