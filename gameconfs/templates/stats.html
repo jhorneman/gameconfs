@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block content %}
+	<h1>Events per year</h1>
+	{% for year_stats in time_stats|dictsort %}
+		<h3>
+			{{ year_stats[0] }}
+		</h3>
+		{% for month in range(1, 12+1) %}
+			<p>Month: {{ month }}, events: {{ year_stats[1][month-1] }}</p>
+		{% endfor %}
+	{% endfor %}
+{% endblock %}

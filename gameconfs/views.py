@@ -168,6 +168,18 @@ def event(id):
 def about():
     return render_template('about.html')
 
+@app.route('/stats')
+def stats():
+    time_stats = {}
+    for d in db.session.query(Event.start_date).order_by(Event.start_date):
+        start_date = d.start_date
+        if time_stats.has_key(start_date.year):
+            time_stats[start_date.year][start_date.month-1] += 1
+        else:
+            time_stats[start_date.year] = [ 0 for i in range(0, 12) ]
+            time_stats[start_date.year][start_date.month-1] = 1
+    return render_template('stats.html', time_stats=time_stats)
+
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('page_not_found.html'), 404
