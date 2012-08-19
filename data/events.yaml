@@ -281,8 +281,8 @@ name: Games for Change Festival
 start_date: [2012, 6, 18]
 end_date: [2012, 6, 20]
 main_url: "http://gamesforchange.org/festival2012/"
-twitter_hashtags: ""
-twitter_account: 
+twitter_hashtags: "#G4C12"
+twitter_account: G4C
 location: NYU
 address: New York, NY
 ---
@@ -1161,7 +1161,7 @@ twitter_account: igfest
 location: Castle Park
 address: Bristol, United Kingdom
 ---
-name: The Hide&amp;Seek Weekender 2012
+name: "The Hide & Seek Weekender 2012"
 start_date: [2012, 9, 14]
 end_date: [2012, 9, 16]
 main_url: "http://weekender.hideandseek.net/"
@@ -1293,8 +1293,8 @@ end_date: [2012, 9, 6]
 main_url: "http://www.digitalspark.abertay.ac.uk/"
 twitter_hashtags: 
 twitter_account: 
-location: Abertay University
-address: Kydd Building, Bell St, Dundee, United Kingdom
+location: Abertay University, Kydd Building
+address: Bell St, Dundee, United Kingdom
 ---
 name: ExPlay 2012
 start_date: [2012, 11, 1]
@@ -1331,3 +1331,237 @@ twitter_hashtags:
 twitter_account: 
 location: Nottingham Trent University
 address: Nottingham, United Kingdom
+---
+name: GameCamp Paris
+start_date: [2012, 5, 26]
+end_date: [2012, 5, 26]
+main_url: "http://www.gamecamp-paris.org/"
+twitter_hashtags: 
+twitter_account: 
+location: Paris Region Innovation Nord-Express
+address: 110 rue des poissonniers, Paris, France
+---
+name: GaME 2012
+start_date: [2012, 5, 23]
+end_date: [2012, 5, 23]
+main_url: "http://www.doc.ic.ac.uk/game/"
+twitter_hashtags: ""
+twitter_account: 
+location: Huxley building, Imperial College
+address: London, United Kingdom
+---
+name: "Badgeville Summit: Engage 2012"
+start_date: [2012, 8, 8]
+end_date: [2012, 8, 9]
+main_url: "http://summit.badgeville.com/"
+twitter_hashtags: 
+twitter_account: badgeville
+location: The W Hotel San Francisco
+address: San Francisco, California, USA
+---
+name: GameLoop 12
+start_date: [2012, 8, 18]
+end_date: [2012, 8, 18]
+main_url: "http://www.bostongameloop.com/"
+twitter_hashtags: 
+twitter_account: 
+location: Microsoft NERD Center
+address: 1 Memorial Dr, Mid-Cambridge, Massachussets, USA
+---
+name: onGameStart
+start_date: [2012, 9, 19]
+end_date: [2012, 9, 21]
+main_url: "http://ongamestart.com/"
+twitter_hashtags: 
+twitter_account: onGameStart
+location: Unknown
+address: Warsaw, Poland
+---
+name: Meaningful Play 2012
+start_date: [2012, 10, 18]
+end_date: [2012, 10, 20]
+main_url: "http://meaningfulplay.msu.edu/"
+twitter_hashtags: 
+twitter_account: 
+location: Michigan State University
+address: East Lansing, Michigan, USA
+---
+name: Browser Games Forum 2012
+start_date: [2011, 11, 1]
+end_date: [2011, 11, 2]
+main_url: "http://www.bgf2012.com/"
+twitter_hashtags: ""
+twitter_account: 
+location: Capitol
+address: Kaiserstrasse 106, Offenbach am Main, Germany
+---
+name: No More Sweden 2012
+start_date: [2012, 7, 19]
+end_date: [2012, 7, 22]
+main_url: "http://www.nomoresweden.com/nms-2012/"
+twitter_hashtags: 
+twitter_account: 
+location: Stapelbäddsgatan 3
+address: Malmö, Sweden
+---
+name: "A MAZE. / Interact 2012"
+start_date: [2012, 8, 28]
+end_date: [2012, 9, 2]
+main_url: "http://www.amaze-festival.de/interact-2012"
+twitter_hashtags: 
+twitter_account: 
+location: Unknown
+address: Johannesburg, South Africa
+---
+name: Deutsche Gamestage 12
+start_date: [2012, 4, 24]
+end_date: [2012, 4, 28]
+main_url: "http://www.deutsche-gamestage.de/"
+twitter_hashtags: 
+twitter_account: 
+location: Various
+address: Berlin, Germany
+---
+name: Deutsche Gamestage 13
+start_date: [2013, 4, 23]
+end_date: [2013, 4, 27]
+main_url: "http://www.deutsche-gamestage.de/"
+twitter_hashtags: 
+twitter_account: 
+location: Various
+address: Berlin, Germany
+---
+name: "A MAZE. Indie Connect 2012"
+start_date: [2012, 4, 24]
+end_date: [2012, 4, 28]
+main_url: "http://www.deutsche-gamestage.de/maze/maze-indie-connect-2012"
+twitter_hashtags: 
+twitter_account: 
+location: Various
+address: Berlin, Germany
+---
+name: Gamesupply For Interactive Entertainment
+start_date: [2011, 2, 2]
+end_date: [2011, 2, 2]
+main_url: "http://www.gamesupplyacademy.com/2011/"
+twitter_hashtags: 
+twitter_account: 
+location: Los Angeles Marriott Burbank Airport
+address: 2500 North Hollywood Way, Burbank, California, USA
+---
+name: Las Vegas Licensing Expo 2012
+start_date: [2012, 6, 12]
+end_date: [2012, 6, 14]
+main_url: "http://www.licensingexpo.com/"
+twitter_hashtags: 
+twitter_account: licensingexpo
+location: Mandalay Bay Convention Center
+address: Las Vegas, Nevada, USA
+---
+name: Las Vegas Licensing Expo 2013
+start_date: [2013, 6, 18]
+end_date: [2013, 6, 20]
+main_url: "http://www.licensingexpo.com/"
+twitter_hashtags: 
+twitter_account: licensingexpo
+location: Mandalay Bay Convention Center
+address: Las Vegas, Nevada, USA
+---
+name: San Diego Comic-Con 2012
+start_date: [2012, 7, 11]
+end_date: [2012, 7, 15]
+main_url: "http://www.comic-con.org/cci/"
+twitter_hashtags: 
+twitter_account: comic_con
+location: San Diego Convention Center
+address: San Diego, California, USA
+---
+name: San Diego Comic-Con 2013
+start_date: [2013, 7, 18]
+end_date: [2013, 7, 21]
+main_url: "http://www.comic-con.org/cci/"
+twitter_hashtags: 
+twitter_account: comic_con
+location: San Diego Convention Center
+address: San Diego, California, USA
+---
+name: Canadian Gaming Summit 2012
+start_date: [2012, 6, 11]
+end_date: [2012, 6, 13]
+main_url: "http://www.canadiangamingsummit.com/2012/index.shtml"
+twitter_hashtags: 
+twitter_account: 
+location: Scotiabank Convention Centre
+address: 6815 Stanley Avenue, Niagara Falls, Ontario, Canada
+---
+name: Canadian Gaming Summit 2013
+start_date: [2013, 6, 17]
+end_date: [2013, 6, 19]
+main_url: "http://www.canadiangamingsummit.com/"
+twitter_hashtags: 
+twitter_account: 
+location: Palais des Congres
+address: Montréal, Quebec, Canada
+---
+name: Game Summmit Canada 2013
+start_date: [2013, 2, 2]
+end_date: [2013, 2, 3]
+main_url: "http://www.gamesummit.ca/event/gs2013/"
+twitter_hashtags: 
+twitter_account: gamesummit
+location: Palais des Congrès de Gatineau
+address: 50, Maisonneuve Blvd, Gatineau, Canada
+---
+name: Skirmish 2012
+start_date: [2012, 9, 9]
+end_date: [2012, 9, 9]
+main_url: "http://www.gamesummit.ca/event/skirmish2012/"
+twitter_hashtags: 
+twitter_account: 
+location: Nepean Sportplex
+address: Ottawa, Canada
+---
+name: Fan Expo 2012
+start_date: [2012, 8, 23]
+end_date: [2012, 8, 26]
+main_url: "http://www.gamesummit.ca/event/fanexpo2012/"
+twitter_hashtags: 
+twitter_account: 
+location: Metro Toronto Convention Centre
+address: Toronto, Canada
+---
+name: Canadian Games Conference
+start_date: [2011, 5, 19]
+end_date: [2011, 5, 20]
+main_url: "http://www.canadiangamesconference.com/"
+twitter_hashtags: 
+twitter_account: CdnGamesConf
+location: Vancouver Convention Centre
+address: Vancouver, British Columbia, Canada
+---
+name: "Digital Interactive & Gaming Conference London"
+start_date: [2012, 11, 14]
+end_date: [2012, 11, 14]
+main_url: "http://diglondon.ca/"
+twitter_hashtags: 
+twitter_account: DIGLondon
+location: Unknown
+address: London, Ontario, Canada
+---
+name: Evolve London 2011
+start_date: [2011, 1, 12]
+end_date: [2011, 1, 12]
+main_url: "http://www.evolveconference.com/"
+twitter_hashtags: 
+twitter_account: evolveconf
+location: DeVere West One
+address: 9-10 Portland Place, London, United Kingdom
+---
+name: Game Design Expo 2012
+start_date: [2012, 1, 21]
+end_date: [2012, 1, 21]
+main_url: "http://www.gamedesignexpo.com/"
+twitter_hashtags: 
+twitter_account: gamedesignexpo
+location: Vancity Theatre at Vancouver International Film Centre
+address: 1181 Seymour St., Vancouver, British Columbia, Canada
