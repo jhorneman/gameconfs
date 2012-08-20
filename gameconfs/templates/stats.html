@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block content %}
-	<h1>Number of events per year</h1>
-	<table class="table table-condensed">
+	<h1>Events by month</h1>
+	<table class="table table-condensed" id="time-stats">
 		<thead>
 			<tr>
 				<td></td>
@@ -23,6 +23,17 @@
 				{% endfor %}
 			</tr>
 			{% endfor %}
+		</tbody>
+		<tfoot>
+			<tr>
+				<td>Total</td>
+				{% for year_stats in time_stats|dictsort %}
+				<td>
+					{{ year_stats[1][12] }}
+				</td>
+				{% endfor %}
+			</tr>
+		</tfoot>
 	</table>
-	<p>Total number of events: {{ total_nr_events }}. Events before May 2012 are patchy.</p>
+	<p>Total number of events: <strong>{{ total_nr_events }}</strong>. Events before May 2012 are patchy.</p>
 {% endblock %}

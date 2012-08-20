@@ -95,3 +95,21 @@ table.event tr td:nth-child(2)
 {
     padding-right: 1em;
 }
+
+/* Time stats list */
+table#time-stats 
+{
+	table-layout: fixed;
+	width: auto;
+}
+
+table#time-stats tr td
+{
+	text-align: right;
+	padding-left: 1em;
+}
+
+table#time-stats tfoot tr
+{
+	font-weight: bold;
+}

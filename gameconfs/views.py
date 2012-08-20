@@ -171,14 +171,20 @@ def about():
 @app.route('/stats')
 def stats():
     time_stats = {}
+    
     for d in db.session.query(Event.start_date).order_by(Event.start_date):
         start_date = d.start_date
         if time_stats.has_key(start_date.year):
             time_stats[start_date.year][start_date.month-1] += 1
         else:
-            time_stats[start_date.year] = [ 0 for i in range(0, 12) ]
+            time_stats[start_date.year] = [ 0 for i in range(0, 13) ]
             time_stats[start_date.year][start_date.month-1] = 1
+
+    for year in time_stats.keys():
+        time_stats[year][12] = sum(time_stats[year][0:11])
+
     total_nr_events = Event.query.count()
+
     return render_template('stats.html', time_stats=time_stats, total_nr_events=total_nr_events)
 
 @app.errorhandler(404)
