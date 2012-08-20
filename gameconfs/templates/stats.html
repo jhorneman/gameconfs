@@ -1,39 +1,49 @@
 {% extends "layout.html" %}
 {% block content %}
-	<h1>Events by month</h1>
-	<table class="table table-condensed" id="time-stats">
+	<h2>Events by month</h2>
+	<table class="table table-condensed stats" id="time-stats">
 		<thead>
 			<tr>
 				<td></td>
-				{% for year_stats in time_stats|dictsort %}
-				<td>
-					{{ year_stats[0] }}
-				</td>
+				{% for month in range(1, 12+1) %}
+				<td>{{ month|short_month }}</td>
 				{% endfor %}
+				<td class="total">Total</td>
 			</tr>
 		</thead>
 	  	<tbody>
-			{% for month in range(1, 12+1) %}
+			{% for year_stats in time_stats|dictsort %}
 			<tr>
-				<td>{{ month|nice_month }}</td>
-				{% for year_stats in time_stats|dictsort %}
-				<td>
-					{{ year_stats[1][month-1] }}
-				</td>
+				<td>{{ year_stats[0] }}</td>
+				{% for month in range(1, 12+1) %}
+				<td>{{ year_stats[1][month-1] }}</td>
 				{% endfor %}
+				<td class="total">{{ year_stats[1][12] }}</td>
 			</tr>
 			{% endfor %}
 		</tbody>
-		<tfoot>
-			<tr>
-				<td>Total</td>
-				{% for year_stats in time_stats|dictsort %}
-				<td>
-					{{ year_stats[1][12] }}
-				</td>
-				{% endfor %}
-			</tr>
-		</tfoot>
 	</table>
 	<p>Total number of events: <strong>{{ total_nr_events }}</strong>. Events before May 2012 are patchy.</p>
+	<br/>
+	<h2>Top {{ country_stats|length }} countries</h2>
+	<table class="table table-condensed stats" id="country-stats">
+		{% for country_data in country_stats %}
+		<tr>
+			<td>{{ loop.index }}</td>
+			<td>{{ country_data[0] }}</td>
+			<td>{{ country_data[1] }}</td>
+		</tr>
+		{% endfor %}
+	</table>
+	<br/>
+	<h2>Top {{ city_stats|length }} cities</h2>
+	<table class="table table-condensed stats" id="city-stats">
+		{% for city_data in city_stats %}
+		<tr>
+			<td>{{ loop.index }}</td>
+			<td>{{ city_data[0] }}</td>
+			<td>{{ city_data[1] }}</td>
+		</tr>
+		{% endfor %}
+	</table>
 {% endblock %}

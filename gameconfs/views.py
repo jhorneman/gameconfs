@@ -1,4 +1,5 @@
 from datetime import datetime, date, timedelta
+import operator
 from flask import render_template, request, redirect, url_for, abort
 from sqlalchemy.sql.expression import *
 from gameconfs import app, db
@@ -181,6 +182,7 @@ def other():
 
 @app.route('/stats')
 def stats():
+    # Get time stats
     time_stats = {}
     
     for d in db.session.query(Event.start_date).order_by(Event.start_date):
@@ -194,9 +196,28 @@ def stats():
     for year in time_stats.keys():
         time_stats[year][12] = sum(time_stats[year][0:11])
 
+    # Get city stats
+    city_stats = []
+    for id, name in db.session.query(City.id, City.name):
+        city_stats.append((name, Event.query.filter(Event.city_id == id).count()))
+    city_stats = sorted(city_stats, key=operator.itemgetter(1), reverse=True)[:10]
+
+    # Get country stats
+    country_stats = []
+    for id, name in db.session.query(Country.id, Country.name):
+        count = db.session.query(Event).\
+             join(Event.city).\
+             join(City.country).\
+             filter(City.country_id == id).\
+             count()
+        country_stats.append((name, count))
+    country_stats = sorted(country_stats, key=operator.itemgetter(1), reverse=True)[:10]
+
+    # Get total number of events
     total_nr_events = Event.query.count()
 
-    return render_template('stats.html', time_stats=time_stats, total_nr_events=total_nr_events)
+    return render_template('stats.html', time_stats=time_stats, country_stats=country_stats,
+        city_stats=city_stats, total_nr_events=total_nr_events)
 
 @app.errorhandler(404)
 def page_not_found(error):

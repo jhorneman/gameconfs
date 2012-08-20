@@ -101,8 +101,8 @@ table.event tr td:nth-child(2)
     padding-right: 1em;
 }
 
-/* Time stats list */
-table#time-stats 
+/* Stats tables */
+table.stats 
 {
 	table-layout: fixed;
 	width: auto;
@@ -114,9 +114,41 @@ table#time-stats tr td
 	padding-left: 1em;
 }
 
-table#time-stats tfoot tr
+table#time-stats td.total
 {
 	font-weight: bold;
+}
+
+table#country-stats tr:nth-child(1) td
+{
+	border-top: none;
+}
+
+table#country-stats tr td:nth-child(1)
+{
+	text-align: right;
+}
+
+table#country-stats tr td:nth-child(3)
+{
+	text-align: right;
+	padding-left: 1em;
+}
+
+table#city-stats tr:nth-child(1) td
+{
+	border-top: none;
+}
+
+table#city-stats tr td:nth-child(1)
+{
+	text-align: right;
+}
+
+table#city-stats tr td:nth-child(3)
+{
+	text-align: right;
+	padding-left: 1em;
 }
 
 /* Month list */
