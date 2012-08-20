@@ -1574,3 +1574,12 @@ twitter_hashtags:
 twitter_account: gamedesignexpo
 location: Vancity Theatre at Vancouver International Film Centre
 address: 1181 Seymour St., Vancouver, British Columbia, Canada
+---
+name: GameX 2012 Istanbul
+start_date: [2012, 10, 4]
+end_date: [2012, 10, 7]
+main_url: "http://gamex.com.tr/"
+twitter_hashtags: 
+twitter_account: gamexist
+location: "Istanbul Convention & Exhibition Centre"
+address: Istanbul, Turkey
