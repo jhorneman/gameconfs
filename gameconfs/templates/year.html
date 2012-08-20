@@ -1,19 +1,5 @@
 {% extends "layout.html" %}
 {% block content %}
-	<ul class="months">
-		<li class="year">{{ today.year }}</li>
-		{% for month in range(1, 12+1) %}
-		{% if month < today.month %}
-		<li class="month past">
-		{% elif month == today.month %}
-		<li class="month today">
-		{% else %}
-		<li class="month">
-		{% endif %}
-			<a href="/{{ today.year }}/{{ month }}">{{ month|short_month }}</a>
-		</li>
-		{% endfor %}
-	</ul>
 	{% if events %}
 	{% for year_group in events|sort(attribute='start_date')|groupby('start_date.year') %}
 	{% for month_group in year_group.list|groupby('start_date.month') %}
@@ -40,5 +26,4 @@
 	{% else %}
 	<p>No events.</p>
 	{% endif %}
-	<p>Looking for game jams and compos? Check out <a href="http://compohub.net/" target="_blank">CompoHub</a> (run by someone else).</p>
 {% endblock %}

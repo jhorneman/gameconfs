@@ -140,6 +140,13 @@ def month(year, month):
     q = filter_by_period(q, year, month, 1)
     return render_template('month.html', events=q.all(), month=month, year=year, today=date.today())
 
+@app.route('/<int:year>')
+def year(year):
+    #TODO: Check year is valid, abort(404) if not
+    q = Event.query
+    q = filter_by_period(q, year, 1, 12)
+    return render_template('year.html', events=q.all(), month=1, year=year, today=date.today())
+
 @app.route('/')
 def index():
     today = date.today()
@@ -167,6 +174,10 @@ def event(id):
 @app.route('/about')
 def about():
     return render_template('about.html')
+
+@app.route('/other')
+def other():
+    return render_template('other.html')
 
 @app.route('/stats')
 def stats():

@@ -62,6 +62,10 @@ def nice_month(_month):
     month = date(2012, _month, 1)   # Year is irrelevant
     return "{0}".format(month.strftime("%B"))
 
+def short_month(_month):
+    month = date(2012, _month, 1)   # Year is irrelevant
+    return "{0}".format(month.strftime("%b"))
+
 def event_location(_event):
     if _event.city:
         return _event.location_name + ", " + city_and_state_or_country(_event.city)

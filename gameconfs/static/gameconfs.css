@@ -16,9 +16,9 @@ div.footer
 	margin-top: 30px;
 }
 
-.badge-today
+div.copyright p
 {
-	background: DarkSeaGreen;
+	padding-top: 10px;
 }
 
 /* Events list */
@@ -36,6 +36,11 @@ div.footer
 	{
 		display: none;
 	}
+}
+
+.badge-today
+{
+	background: DarkSeaGreen;
 }
 
 table.events
@@ -112,4 +117,37 @@ table#time-stats tr td
 table#time-stats tfoot tr
 {
 	font-weight: bold;
+}
+
+/* Month list */
+ul.months
+{
+	list-style-type: none;
+}
+
+ul.months li
+{
+	display: inline;
+	text-align: center;
+	padding: 1px 5px 2px 7px;
+}
+
+ul.months li.past
+{
+	font-style: italic;
+}
+
+ul.months li.today
+{
+	background: DarkSeaGreen;
+}
+
+ul.months li.today a
+{
+	color: white;
+}
+
+ul.months li.today a:visited
+{
+	color: white;
 }

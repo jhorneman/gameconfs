@@ -30,7 +30,21 @@
     </div>
     {% block content %}{% endblock %}
     <div class="footer">
-    	<p>Gameconfs &copy; 2012. <a href="{{ url_for('about') }}">About this site.</a></p>
+      <div class="navbar navbar-fixed-bottom">
+        <div class="navbar-inner">
+          <div class="container">
+            <ul class="nav">
+              <li><a href="{{ url_for('index') }}">Home</a></li>
+              <li><a href="{{ url_for('about') }}">About</a></li>
+              <li><a href="{{ url_for('other') }}">Other event directories</a></li>
+              <li><a href="{{ url_for('stats') }}">Stats</a></li>
+            </ul>
+            <div class="copyright pull-right">
+              <p>&copy; 2012 Jurie Horneman</p>
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
