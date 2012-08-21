@@ -6,6 +6,7 @@ from sqlalchemy import func
 from gameconfs import app, db
 from gameconfs.models import *
 from gameconfs.forms import EventForm
+from gameconfs.geocoder import all_continents
 
 
 @app.teardown_request
@@ -32,33 +33,6 @@ def get_month_period(_start_year, _start_month, _nr_months = 1):
     period_end = date(end_year, end_month, 1)
     return period_start, period_end
 
-def find_place(_place):
-    city = City.query.\
-        filter(City.name.like(_place)).\
-        first()
-    if city is not None:
-        return city.country.continent, city.country, city.state, city
-
-    state = State.query.\
-        filter(State.name.like(_place)).\
-        first()
-    if state is not None:
-        return state.country.continent, state.country, state, None
-
-    country = Country.query.\
-        filter(Country.name.like(_place)).\
-        first()
-    if country is not None:
-        return country.continent, country, None, None
-
-    continent = Continent.query.\
-        filter(Continent.name.like(_place)).\
-        first()
-    if continent is not None:
-        return continent, None, None, None
-
-    return None, None, None, None
-
 def filter_by_place(_query, _continent, _country, _state, _city):
     q = _query.filter(Country.continent_id == _continent.id)
     if _country:
@@ -79,55 +53,123 @@ def get_year_range():
     max_year = db.session.query(func.max(Event.end_date)).one()[0].year
     return min_year, max_year
 
-def build_place_parts(_continent, _country, _state, _city):
-    place_parts = [_continent.name]
-    if _country:
-        if _city:
-            if _city.name not in geocoder.cities_without_states_or_countries:
-                place_parts.append(_country.name)
-        else:
-            place_parts.append(_country.name)
-    if _state:
-        if _country.name in geocoder.countries_with_states:
-            if _city:
-                if _city.name not in geocoder.cities_without_states_or_countries:
-                    place_parts.append(_state.name)
-            else:
-                place_parts.append(_state.name)
-    if _city:
-        place_parts.append(_city.name)
-    return place_parts
+@app.route('/', defaults={'year': None, 'continent_name': None, 'country_name': None, 'city_or_state_name': None, 'city_name': None})
+@app.route('/<int:year>', defaults={'continent_name': None, 'country_name': None, 'city_or_state_name': None, 'city_name': None})
+@app.route('/<int:year>/<continent_name>', defaults={'country_name': None, 'city_or_state_name': None, 'city_name': None})
+@app.route('/<int:year>/<continent_name>/<country_name>', defaults={'city_or_state_name': None, 'city_name': None})
+@app.route('/<int:year>/<continent_name>/<country_name>/<city_or_state_name>', defaults={'city_name': None})
+@app.route('/<int:year>/<continent_name>/<country_name>/<city_or_state_name>/<city_name>')
+def index(year, continent_name, country_name, city_or_state_name, city_name):
+    # Per default, the year is the current year
+    today = date.today()
+    if year is None:
+        year = today.year
 
-@app.route('/<place>')
-def place(place):
-    continent, country, state, city = find_place(place)
-    if continent:
-        q = Event.query.\
-            join(Event.city).\
-            join(City.country).\
-            join(Country.continent)
-        q = filter_by_place(q, continent, country, state, city)
-        today = date.today()
-        q = filter_by_period(q, today.year, today.month, 3)
-
-        place_parts = build_place_parts(continent, country, state, city)
-        return render_template('place.html', events=q.all(), place_parts=place_parts, today=today)
-    else:
-        abort(404)
-
-@app.route('/<int:year>/<int:month>')
-def month(year, month):
-    #TODO: Check year and month are valid, abort(404) if not
-    q = Event.query
-    q = filter_by_period(q, year, month, 1)
-    return render_template('month.html', events=q.all(), month=month, year=year, today=date.today())
-
-@app.route('/<int:year>')
-def year(year):
+    # Make sure the year is valid (compared to our data)
     min_year, max_year = get_year_range()
     if year < min_year or year > max_year:
         abort(404)
 
+    state_name = None
+    continent = None
+    country = None
+    state = None
+    city = None
+    countries = []
+    states = []
+    cities = []
+    show_states = False
+    show_cities = True
+
+    if continent_name is None:
+        selection_level = "all"
+    else:
+        continent = Continent.query.\
+            filter(Continent.name.like(continent_name)).\
+            first()
+        if continent is None:
+            abort(404)
+
+        countries = db.session.query(Country.name).\
+            join(Country.continent).\
+            filter(Continent.id == continent.id).\
+            order_by(Country.name).\
+            all()
+        countries = [c[0] for c in countries]
+
+        if country_name is None:
+            selection_level = "continent"
+        else:
+            country = Country.query.\
+                filter(Country.name.like(country_name)).\
+                first()
+            if country is None:
+                abort(404)
+
+            if country_name in geocoder.countries_with_states:
+                states = db.session.query(State.name).\
+                    join(State.country).\
+                    filter(Country.id == country.id).\
+                    order_by(State.name).\
+                    all()
+                states = [c[0] for c in states]
+                show_states = True
+
+                if city_or_state_name is None:
+                    selection_level = "country"
+                    show_cities = False
+                else:
+                    state_name = city_or_state_name
+                    state = State.query.\
+                        join(State.country).\
+                        filter(and_(State.name.like(state_name), Country.id == State.country_id)).\
+                        first()
+                    if state is None:
+                        abort(404)
+
+                    cities = db.session.query(City.name).\
+                        join(City.state).\
+                        filter(State.id == state.id).\
+                        order_by(City.name).\
+                        all()
+                    cities = [c[0] for c in cities]
+
+                    if city_name is None:
+                        selection_level = "state"
+                    else:
+                        selection_level = "city"
+                        city = City.query.\
+                            join(City.state).\
+                            join(City.country).\
+                            filter(and_(City.name.like(city_name), State.id == City.state_id, Country.id == City.country_id)).\
+                            first()
+                        if city is None:
+                            abort(404)
+            else:
+                cities = db.session.query(City.name).\
+                    join(City.country).\
+                    filter(Country.id == country.id).\
+                    order_by(City.name).\
+                    all()
+                cities = [c[0] for c in cities]
+
+                if city_or_state_name is None:
+                    selection_level = "country"
+                    show_cities = country_name not in geocoder.countries_without_cities
+                else:
+                    if city_name is None:
+                        city_name = city_or_state_name
+
+                    selection_level = "city"
+                    city = City.query.\
+                        join(City.country).\
+                        filter(and_(City.name.like(city_name), Country.id == City.country_id)).\
+                        first()
+                    if city is None:
+                        abort(404)
+
+    # Get the number of events for each month
+    # We need this to set the status of the month buttons
     nr_events_by_month = [ 0 for i in range(0, 12) ]
     for month in range(1, 12+1):
         period_start = date(year, month, 1)
@@ -135,23 +177,30 @@ def year(year):
             period_end = date(year, month+1, 1)
         else:
             period_end = date(year+1, 1, 1)
+        #TODO: Add place filter
         nr_events_by_month[month-1] = Event.query.\
             filter(and_(Event.start_date >= period_start, Event.start_date < period_end)).\
             count()
 
-    q = Event.query
-    q = filter_by_period(q, year, 1, 12)
-    return render_template('year.html', events=q.all(), month=1, year=year, today=date.today(),
-        min_year=min_year, max_year=max_year, nr_events_by_month=nr_events_by_month)
+    # Get the events
+    if continent is None:
+        q = Event.query
+        q = filter_by_period(q, year, 1, 12)
+        events = q.all()
+    else:
+        q = Event.query.\
+            join(Event.city).\
+            join(City.country).\
+            join(Country.continent)
+        q = filter_by_place(q, continent, country, state, city)
+        q = filter_by_period(q, year, 1, 12)
+        events = q.all()
 
-@app.route('/')
-def index():
-    return year(date.today().year)
-    # today = date.today()
-    # min_year, max_year = get_year_range()
-    # q = Event.query
-    # q = filter_by_period(q, today.year, today.month, 3)
-    # return render_template('index.html', events=q.all(), today=today, min_year=min_year, max_year=max_year)
+    return render_template('index.html', events=events, year=year, today=today, selection_level=selection_level,
+        min_year=min_year, max_year=max_year, nr_events_by_month=nr_events_by_month,
+        selected_continent=continent_name, selected_country=country_name, selected_state=state_name, selected_city=city_name,
+        continents=all_continents, countries=countries, states=states, cities=cities,
+        show_states=show_states, show_cities=show_cities)
 
 # @app.route('/new', methods=("GET", "POST"))
 # def new_event():

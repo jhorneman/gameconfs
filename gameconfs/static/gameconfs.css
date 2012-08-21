@@ -152,41 +152,18 @@ table#city-stats tr td:nth-child(3)
 	padding-left: 1em;
 }
 
-/* Time controls */
-div#time-controls div.dropdown
+/* Place controls */
+div#place-controls div.btn-group
 {
+	position: relative;
 	float: left;
-}
+	margin-right: 0.5em;
+} 
 
-div#time-controls ul.months
+div#place-controls i
 {
+	position: relative;
 	float: left;
-	list-style-type: none;
-}
-
-ul.months li
-{
-	display: inline;
-	text-align: center;
-	padding: 1px 5px 2px 7px;
-}
-
-ul.months li.past
-{
-	font-style: italic;
-}
-
-ul.months li.today
-{
-	background: #5BB75B;
-}
-
-ul.months li.today a
-{
-	color: white;
-}
-
-ul.months li.today a:visited
-{
-	color: white;
+	margin-right: 0.5em;
+	margin-top: 6px;
 }
