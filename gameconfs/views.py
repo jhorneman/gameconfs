@@ -2,6 +2,7 @@ from datetime import datetime, date, timedelta
 import operator
 from flask import render_template, request, redirect, url_for, abort
 from sqlalchemy.sql.expression import *
+from sqlalchemy import func 
 from gameconfs import app, db
 from gameconfs.models import *
 from gameconfs.forms import EventForm
@@ -73,51 +74,29 @@ def filter_by_period(_query, _start_year, _start_month, _nr_months = 1):
     return _query.filter(or_(and_(Event.start_date >= period_start, Event.start_date < period_end),
                   and_(Event.end_date >= period_start, Event.end_date < period_end)))
 
-def build_place_name(_continent, _country, _state, _city):
-    if _city:
-        loc = _city.name + ", "
-    else:
-        loc = ""
+def get_year_range():
+    min_year = db.session.query(func.min(Event.start_date)).one()[0].year
+    max_year = db.session.query(func.max(Event.end_date)).one()[0].year
+    return min_year, max_year
+
+def build_place_parts(_continent, _country, _state, _city):
+    place_parts = [_continent.name]
+    if _country:
+        if _city:
+            if _city.name not in geocoder.cities_without_states_or_countries:
+                place_parts.append(_country.name)
+        else:
+            place_parts.append(_country.name)
     if _state:
         if _country.name in geocoder.countries_with_states:
             if _city:
                 if _city.name not in geocoder.cities_without_states_or_countries:
-                    loc += _state.name + ", "
+                    place_parts.append(_state.name)
             else:
-                loc += _state.name + ", "
-    if _country:
-        if _city:
-            if _city.name not in geocoder.cities_without_states_or_countries:
-                loc += _country.name + ", "
-        else:
-            loc += _country.name + ", "
-    loc += _continent.name
-    return loc
-
-@app.route('/list')
-def list():
-    today = date.today()
-    place = request.args.get('place', None)
-    year = int(request.args.get('year', str(today.year)))
-    month = int(request.args.get('month', str(today.month)))
-    nr_months = int(request.args.get('nr_months', '3'))
-
-    q = Event.query.\
-        join(Event.city).\
-        join(City.country).\
-        join(Country.continent)
-
-    if place:
-        continent, country, state, city = find_place(place)
-        if not continent:
-            abort(404)
-        q = filter_by_place(q, continent, country, state, city)
-        place_name = build_place_name(continent, country, state, city)
-    else:
-        place_name = None
-
-    q = filter_by_period(q, year, month, nr_months)
-    return render_template('list.html', events=q.all(), place_name=place_name, today=today, year=year, month=month, nr_months=nr_months)
+                place_parts.append(_state.name)
+    if _city:
+        place_parts.append(_city.name)
+    return place_parts
 
 @app.route('/<place>')
 def place(place):
@@ -130,7 +109,9 @@ def place(place):
         q = filter_by_place(q, continent, country, state, city)
         today = date.today()
         q = filter_by_period(q, today.year, today.month, 3)
-        return render_template('place.html', events=q.all(), place_name=build_place_name(continent, country, state, city), today=today)
+
+        place_parts = build_place_parts(continent, country, state, city)
+        return render_template('place.html', events=q.all(), place_parts=place_parts, today=today)
     else:
         abort(404)
 
@@ -143,17 +124,34 @@ def month(year, month):
 
 @app.route('/<int:year>')
 def year(year):
-    #TODO: Check year is valid, abort(404) if not
+    min_year, max_year = get_year_range()
+    if year < min_year or year > max_year:
+        abort(404)
+
+    nr_events_by_month = [ 0 for i in range(0, 12) ]
+    for month in range(1, 12+1):
+        period_start = date(year, month, 1)
+        if month < 12:
+            period_end = date(year, month+1, 1)
+        else:
+            period_end = date(year+1, 1, 1)
+        nr_events_by_month[month-1] = Event.query.\
+            filter(and_(Event.start_date >= period_start, Event.start_date < period_end)).\
+            count()
+
     q = Event.query
     q = filter_by_period(q, year, 1, 12)
-    return render_template('year.html', events=q.all(), month=1, year=year, today=date.today())
+    return render_template('year.html', events=q.all(), month=1, year=year, today=date.today(),
+        min_year=min_year, max_year=max_year, nr_events_by_month=nr_events_by_month)
 
 @app.route('/')
 def index():
-    today = date.today()
-    q = Event.query
-    q = filter_by_period(q, today.year, today.month, 3)
-    return render_template('index.html', events=q.all(), today=today)
+    return year(date.today().year)
+    # today = date.today()
+    # min_year, max_year = get_year_range()
+    # q = Event.query
+    # q = filter_by_period(q, today.year, today.month, 3)
+    # return render_template('index.html', events=q.all(), today=today, min_year=min_year, max_year=max_year)
 
 # @app.route('/new', methods=("GET", "POST"))
 # def new_event():
@@ -239,76 +237,3 @@ def sitemap():
     event_ids = [e[0] for e in db.session.query(Event.id).all()]
     return render_template('sitemap.xml', url_root=url_root, event_ids=event_ids, mimetype='text/xml')
 
-# @app.route('/search', methods=['POST'])
-# def search():
-#     query = request.form['q']
-#     results = {}
-
-#     def update_results(_events):
-#         for event in _events:
-#             id = event #[0]
-#             if results.has_key(id):
-#                 results[id] += 1
-#             else:
-#                 results.setdefault(id, 1)
-
-#     for search_term in query.split():
-#         search_term = search_term
-
-#         # Search continents
-#         events = db.session.query(Event.id).\
-#             join(Event.city).\
-#             join(City.country).\
-#             join(Country.continent).\
-#             filter(Continent.name.like(search_term))
-#         events = [e.id for e in events]
-#         update_results(events)
-
-#         # Search countries
-#         events = db.session.query(Event.id).\
-#             join(Event.city).\
-#             join(City.country).\
-#             filter(Country.name.like(search_term))
-#         events = [e.id for e in events]
-#         update_results(events)
-
-#         # Search states
-#         events = db.session.query(Event.id).\
-#             join(Event.city).\
-#             join(City.state).\
-#             filter(State.name.like(search_term))
-#         events = [e.id for e in events]
-#         update_results(events)
-
-#         # Search cities
-#         events = db.session.query(Event.id).\
-#             join(Event.city).\
-#             filter(City.name.like(search_term))
-#         events = [e.id for e in events]
-#         update_results(events)
-
-#         # Search events
-#         events = db.session.query(Event.id).\
-#             filter(Event.name.like(search_term))
-#         events = [e.id for e in events]
-#         update_results(events)
-
-#     # If anything was found, rank results by hits
-#     if (len(results)):
-#         # First get all event data we need from the database in one go
-#         # (This results in fewer SQL queries than using [db.session.query(Event).get(id) for id in event_ids] )
-#         events_from_db = db.session.query(Event.id, Event.name).\
-#             filter(Event.id.in_(results.keys())).\
-#             all()
-
-#         # Then build a map of events by id
-#         events_by_id = {}
-#         for event in events_from_db:
-#             events_by_id[event.id] = event
-
-#         # Then make a list of events sorted by search ranking
-#         events = [events_by_id[id] for id in sorted(results, key=results.get, reverse=True)]
-#     else:
-#         events = None
-
-#     return render_template('search.html', query=query, events=events)

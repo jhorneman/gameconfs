@@ -1,25 +1,25 @@
 {% extends "layout.html" %}
 {% block content %}
+	<div class="dropdown">
+	  <a class="dropdown-toggle" href="#" role="button" data-toggle="dropdown">{{ today.year }}</a>
+	  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+	  	{% for year in range(min_year, max_year+1) %}
+	    <li><a tabindex="-1" href="{{ url_for('year', year=year) }}">{{ year }}</a></li>
+	    {% endfor %}
+	  </ul>
+	</div>
 	<ul class="months">
-		<li class="year">{{ today.year }}</li>
 		{% for month in range(1, 12+1) %}
-		{% if month < today.month %}
-		<li class="month past">
-		{% elif month == today.month %}
-		<li class="month today">
-		{% else %}
 		<li class="month">
-		{% endif %}
-			<a href="/{{ today.year }}/{{ month }}">{{ month|short_month }}</a>
+			<a href="#{{ month }}">{{ month|short_month }}</a>
 		</li>
 		{% endfor %}
 	</ul>
 	{% if events %}
 	{% for year_group in events|sort(attribute='start_date')|groupby('start_date.year') %}
 	{% for month_group in year_group.list|groupby('start_date.month') %}
-	<h3>
-		<a href="/{{ year_group.grouper }}/{{ month_group.grouper }}">{{ month_group.grouper|nice_month }} {{ year_group.grouper }}</a>
-	</h3>
+	<a name="{{ month_group.grouper }}"></a>
+	<h3>{{ month_group.grouper|nice_month }} {{ year_group.grouper }}</h3>
 	<table class="table table-condensed events">
 	  	<tbody>
 		{% for event in month_group.list %}
@@ -40,6 +40,4 @@
 	{% else %}
 	<p>No events.</p>
 	{% endif %}
-	<br/>
-	<br/>
 {% endblock %}

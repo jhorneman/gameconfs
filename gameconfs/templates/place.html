@@ -1,6 +1,18 @@
 {% extends "layout.html" %}
 {% block content %}
-	<h1>Game Events In {{ place_name }}</h1>
+	<ul class="breadcrumb">
+		<li>
+			<a href="{{ url_for('index') }}">All</a> <span class="divider">/</span>
+		</li>
+		{% for place_part in place_parts[:-1] %}
+		<li>
+			<a href="{{ url_for('place', place=place_part) }}">{{ place_part }}</a> <span class="divider">/</span>
+		</li>
+		{% endfor %}
+		<li class="active">{{ place_parts[-1] }}</li>
+	</ul>
+
+	<h2>Game events in {{ place_parts[-1] }}</h2>
 	{% if events %}
 	{% for year_group in events|sort(attribute='start_date')|groupby('start_date.year') %}
 	{% for month_group in year_group.list|groupby('start_date.month') %}
@@ -27,5 +39,4 @@
 	{% else %}
 	<p>No events.</p>
 	{% endif %}
-	<p>Looking for game jams and compos? Check out <a href="http://compohub.net/" target="_blank">CompoHub</a>.</p>
 {% endblock %}

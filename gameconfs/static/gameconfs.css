@@ -19,6 +19,7 @@ div.footer
 div.copyright p
 {
 	padding-top: 10px;
+	margin-right: 1em;
 }
 
 /* Events list */
@@ -40,7 +41,7 @@ div.copyright p
 
 .badge-today
 {
-	background: DarkSeaGreen;
+	background: #5BB75B;
 }
 
 table.events
@@ -151,9 +152,15 @@ table#city-stats tr td:nth-child(3)
 	padding-left: 1em;
 }
 
-/* Month list */
-ul.months
+/* Time controls */
+div#time-controls div.dropdown
 {
+	float: left;
+}
+
+div#time-controls ul.months
+{
+	float: left;
 	list-style-type: none;
 }
 
@@ -171,7 +178,7 @@ ul.months li.past
 
 ul.months li.today
 {
-	background: DarkSeaGreen;
+	background: #5BB75B;
 }
 
 ul.months li.today a

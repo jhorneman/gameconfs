@@ -1,14 +1,33 @@
 {% extends "layout.html" %}
 {% block content %}
-	{% if events %}
-	{% for year_group in events|sort(attribute='start_date')|groupby('start_date.year') %}
-	{% for month_group in year_group.list|groupby('start_date.month') %}
-	<h3>
-		<a href="/{{ year_group.grouper }}/{{ month_group.grouper }}">{{ month_group.grouper|nice_month }} {{ year_group.grouper }}</a>
-	</h3>
+	<div id="time-controls" class="btn-toolbar clearfix">
+		<div class="dropdown btn-group">
+		  <a class="dropdown-toggle btn btn-primary" href="#" role="button" data-toggle="dropdown">{{ year }}</a>
+		  <ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
+		  	{% for year in range(min_year, max_year+1) %}
+		    <li><a tabindex="-1" href="{{ url_for('year', year=year) }}">{{ year }}</a></li>
+		    {% endfor %}
+		  </ul>
+		</div>
+		<div class="btn-group">
+			{% for month in range(1, 12+1) %}
+			{% set btn_class = "btn" %}
+			{% if year == today.year and month == today.month %}
+				{% set btn_class = btn_class + " btn-success" %}
+			{% endif %}
+			{% if nr_events_by_month[month-1] == 0 %}
+				{% set btn_class = btn_class + " disabled" %}
+			{% endif %}
+			<a class="{{ btn_class }}" href="#{{ month }}">{{ month|short_month }}</a>
+			{% endfor %}
+		</div>
+	</div>
+	{% for month_group in events|sort(attribute='start_date')|groupby('start_date.month') %}
+	<a name="{{ month_group.grouper }}"></a>
+	<h3>{{ month_group.grouper|nice_month }} {{ year }}</h3>
 	<table class="table table-condensed events">
 	  	<tbody>
-		{% for event in month_group.list %}
+			{% for event in month_group.list %}
     		<tr>
 			{% if event.start_date <= today and today <= event.end_date %}
 	      	<td><span class="badge badge-today">TODAY</span></td>
@@ -21,9 +40,7 @@
 			{% endfor %}
 	  	</tbody>
 	</table>
-	{% endfor %}
-	{% endfor %}
 	{% else %}
-	<p>No events.</p>
-	{% endif %}
+	<p>Gameconfs contains no events for this year.</p>
+	{% endfor %}
 {% endblock %}
