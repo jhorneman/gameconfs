@@ -1691,3 +1691,147 @@ twitter_hashtags: #bdc12
 twitter_account: bcndevcon
 location: Museu Maritim de Barcelona
 address: Av. de les Drassanes s/n, 08001, Barcelona, Spain
+---
+name: "Games For Change Australia & New Zealand"
+start_date: [2012, 11, 15]
+end_date: [2012, 11, 17]
+main_url: "http://www.gamesforchange.org.au/"
+twitter_hashtags: 
+twitter_account: G4C_ANZ
+location: Unknown
+address: Melbourne, Australia
+---
+name: Gamelab 2012
+start_date: [2012, 6, 27]
+end_date: [2012, 7, 1]
+main_url: "http://www.gamelab.es/2012/"
+twitter_hashtags: 
+twitter_account: 
+location: Fira Barcelona, Montjuïc
+address: Av. Reina María Cristina s/n 08004 Barcelona, Barcelona, Spain
+---
+name: Dutch Game Awards
+start_date: [2012, 11, 22]
+end_date: [2012, 11, 22]
+main_url: "http://gameinthecity.nl/2012/control-industry-dinner/"
+twitter_hashtags: 
+twitter_account: 
+location: De Rijtuigenloods
+address: Amersfoort, The Netherlands
+---
+name: ARGFest-o-Con 2012
+start_date: [2012, 7, 26]
+end_date: [2012, 7, 28]
+main_url: "http://2012.argfestocon.com/"
+twitter_hashtags: argfest
+twitter_account: 
+location: Ryerson University
+address: Toronto, Ontario, Canada
+---
+name: Social Gaming Summit West 2012
+start_date: [2012, 12, 13]
+end_date: [2012, 12, 14]
+main_url: "http://www.mediabistro.com/socialgamingsummitwest/"
+twitter_hashtags: #sgsconf
+twitter_account: socialtimes
+location: Marina del Rey Marriot
+address: 4100 Admiralty Way, Marina del Rey, California, United States
+---
+name: Sociality Rocks
+start_date: [2012, 9, 27]
+end_date: [2012, 9, 28]
+main_url: "http://en.socialityrocks.com/"
+twitter_hashtags: 
+twitter_account: socialityrocks
+location: "Rus Hotel"
+address: "4, Hospitalna Street Kiev, 01601, Ukraine"
+---
+name: Game Sound Conference
+start_date: [2012, 10, 24]
+end_date: [2012, 10, 25]
+main_url: "http://www.gamesoundcon.com/"
+twitter_hashtags: 
+twitter_account: 
+location: Pyramind Studios
+address: San Francisco, California, United States
+---
+name: GameSym 2012
+start_date: [2012, 11, 8]
+end_date: [2012, 11, 9]
+main_url: "http://www.gamesym.com/"
+twitter_hashtags: 
+twitter_account: gamesym
+location: Renaissance Boston Waterfront Hotel (Marriott)
+address: 606 Congress Street, Boston, Massachussets, United States
+---
+name: Games Week 2012
+start_date: [2012, 11, 9]
+end_date: [2012, 11, 11]
+main_url: "http://www.gamesweek.it/gamesweek2012/"
+twitter_hashtags: 
+twitter_account: 
+location: Milano Congressi
+address: Milan, Italy
+---
+name: Dubai World Game Expo 2012
+start_date: [2012, 11, 27]
+end_date: [2012, 11, 28]
+main_url: "http://www.gameexpo.ae/index.php"
+twitter_hashtags: 
+twitter_account: 
+location: "Dubai International Convention & Exhibition Center"
+address: Dubai, United Arab Emirates
+---
+name: Game Connection USA
+start_date: [2012, 3, 25]
+end_date: [2012, 3, 27]
+main_url: "http://www.game-connection.com/gameconn/content/gameconnection-america"
+twitter_hashtags: 
+twitter_account: The_GameCo
+location: Unknown
+address: San Francisco, United States
+---
+name: Develop Conference 2013
+start_date: [2013, 7, 9]
+end_date: [2013, 7, 11]
+main_url: "http://www.developconference.com/"
+twitter_hashtags: "#developconf #evolveconf"
+twitter_account: DevelopConf
+location: "Hilton Brighton Metropole"
+address: "Kings Road, Brighton"
+---
+name: "Social Games & Virtual Goods Forum 2012"
+start_date: [2012, 1, 26]
+end_date: [2012, 1, 26]
+main_url: "http://virtualgoodsforum.co.uk/"
+twitter_hashtags: 
+twitter_account: 
+location: Hilton Tower Bridge
+address: London, United Kingdom
+---
+name: 2013 Taipei Game Show
+start_date: [2013, 1, 31]
+end_date: [2013, 2, 4]
+main_url: "http://tgs.tca.org.tw/index.php?lang=e"
+twitter_hashtags: 
+twitter_account: 
+location: Nangang Exhibition Hall
+address: Taipei, Taiwan
+---
+name: Carolina Games Summit
+start_date: [2013, 2, 2]
+end_date: [2013, 2, 2]
+main_url: "http://www.carolinagamessummit.com/index.php/"
+twitter_hashtags: 
+twitter_account: 
+location: Wayne Community College
+address: Goldsboro, North Carolina, United States
+---
+name: Casual Connect Hamburg
+start_date: [2012, 2, 7]
+end_date: [2012, 2, 9]
+main_url: "http://europe.casualconnect.org/"
+twitter_hashtags: 
+twitter_account: 
+location: Congress Center
+address: Marseiller Straße 1, 20355, Hamburg, Germany
