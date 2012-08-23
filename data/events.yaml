@@ -133,7 +133,7 @@ twitter_account:
 location: "Rus Hotel"
 address: "4, Hospitalna Street Kiev, 01601, Ukraine"
 ---
-name: E3
+name: E3 2012
 start_date: [2012, 6, 5]
 end_date: [2012, 6, 7]
 main_url: "http://www.e3expo.com/"
@@ -930,7 +930,7 @@ name: Turing Festival
 start_date: [2012, 8, 23]
 end_date: [2012, 8, 25]
 main_url: "http://www.turingfestival.com/"
-twitter_hashtags: ""
+twitter_hashtags: "#tfest"
 twitter_account: turingfestival
 location: Various
 address: Edinburgh, United Kingdom
@@ -1583,3 +1583,111 @@ twitter_hashtags:
 twitter_account: gamexist
 location: "Istanbul Convention & Exhibition Centre"
 address: Istanbul, Turkey
+---
+name: Play:Vienna
+start_date: [2012, 9, 7]
+end_date: [2012, 9, 9]
+main_url: "http://playvienna.com/"
+twitter_hashtags: 
+twitter_account: playvienna
+location: Various
+address: Vienna, Austria
+---
+name: E3 2013
+start_date: [2013, 6, 11]
+end_date: [2013, 6, 13]
+main_url: "http://www.e3expo.com/"
+twitter_hashtags: ""
+twitter_account: e3expo
+location: "Los Angeles Convention Center"
+address: "1201 South Figueroa Street  Los Angeles, CA 90015"
+---
+name: Art to Play 2012
+start_date: [2012, 11, 24]
+end_date: [2012, 11, 25]
+main_url: "http://www.art-to-play.fr/"
+twitter_hashtags: 
+twitter_account: 
+location: Parc des Expositions de Nantes
+address: Nantes, France
+---
+name: Monetising Mobile 2012
+start_date: [2012, 7, 12]
+end_date: [2012, 7, 12]
+main_url: "http://www.develop-online.net/events/363/Monetising-Mobile-2012"
+twitter_hashtags: 
+twitter_account: 
+location: One Wimpole Street
+address: 1 Wimpole Street, London, United Kingdom
+---
+name: XOXO Arcade
+start_date: [2012, 9, 14]
+end_date: [2012, 9, 14]
+main_url: "http://www.kickstarter.com/projects/waxpancake/xoxo-festival/"
+twitter_hashtags: 
+twitter_account: 
+location: Union/Pine
+address: Portland, Oregon, United States
+---
+name: GAME Exhibition
+start_date: [2012, 10, 26]
+end_date: [2013, 1, 18]
+main_url: "http://sciencegallery.com/game"
+twitter_hashtags: 
+twitter_account: ScienceGallery
+location: Science Gallery
+address: Pearse Street, Dublin, Ireland
+---
+name: Mozilla Festival 2012
+start_date: [2012, 11, 9]
+end_date: [2012, 11, 11]
+main_url: "https://mozillafestival.org/"
+twitter_hashtags: #mozfest
+twitter_account: mozilla
+location: Unknown
+address: London, United Kingdom
+---
+name: GEEK Game Expo East Kent 2013
+start_date: [2013, 2, 21]
+end_date: [2013, 2, 24]
+main_url: "http://geek2013.co.uk/"
+twitter_hashtags: #GEEK2013
+twitter_account: GEEK_2013
+location: Unknown
+address: Margate, Kent, United Kingdom
+---
+name: GEEK Game Expo East Kent 2012
+start_date: [2012, 2, 15]
+end_date: [2012, 2, 19]
+main_url: "http://geek2012.co.uk/"
+twitter_hashtags: #GEEK2012
+twitter_account: 
+location: Winter Gardens
+address: Margate, Kent, United Kingdom
+---
+name: Game Industry Trends 2012
+start_date: [2012, 9, 17]
+end_date: [2012, 9, 18]
+main_url: "http://www.git2012.pl/"
+twitter_hashtags: 
+twitter_account: nonoobspl
+location: Miejsce Konferencji
+address: Warsaw, Poland
+---
+name: SCREENS 2012
+start_date: [2012, 9, 27]
+end_date: [2012, 9, 28]
+main_url: "http://www.fitc.ca/events/about/?event=134"
+twitter_hashtags: 
+twitter_account: 
+location: Metro Toronto Convention Centre (MTCC)
+address: 255 Front Street West, Toronto, Ontario
+---
+name: Barcelona Developers Conference 2012
+start_date: [2012, 12, 6]
+end_date: [2012, 12, 8]
+main_url: "http://bcndevcon.org/"
+twitter_hashtags: #bdc12
+twitter_account: bcndevcon
+location: Museu Maritim de Barcelona
+address: Av. de les Drassanes s/n, 08001, Barcelona, Spain
