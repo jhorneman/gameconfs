@@ -36,6 +36,11 @@ countries_with_states = ["United States", "Australia", "Canada", "Brazil"]
 cities_without_states_or_countries = ["Singapore", "New York"]
 countries_without_cities = ["Singapore"]
 
+default_city_component_type = "locality"
+city_component_types_per_country = {"Vietnam": "administrative_area_level_1", "Japan": "administrative_area_level_1",
+    "Singapore": "country", "Taiwan": "administrative_area_level_2"}
+
+
 if __name__ == "__main__":
     script_dir = os.path.abspath(os.path.dirname(sys.argv[0])) + os.sep
 else:
@@ -155,34 +160,43 @@ class GeocodeResults(object):
                 self.latitude = self.result["geometry"]["location"]["lat"]
                 self.longitude = self.result["geometry"]["location"]["lng"]
 
-                for component in self.result["address_components"]:
-                    if u"locality" in component["types"]:
-                        self.city = component["long_name"]
+                component = self.find_address_component(u"country")
+                self.country = component["long_name"]
+                self.continent = continents_per_country_code[component["short_name"]]
 
-                    # Get state info
-                    if u"administrative_area_level_1" in component["types"]:
-                        self.state = component["long_name"]
-                        # Get state abbreviation if the short name is different from the long name
-                        if (self.state != component["short_name"]):
-                            self.state_abbr = component["short_name"]
+                if self.country in countries_with_states:
+                    component = self.find_address_component(u"administrative_area_level_1")
+                    self.state = component["long_name"]
+                    # Get state abbreviation if the short name is different from the long name
+                    if (self.state != component["short_name"]):
+                        self.state_abbr = component["short_name"]
 
-                    if u"country" in component["types"]:
-                        self.country = component["long_name"]
-                        self.continent = continents_per_country_code[component["short_name"]]
-
-                # Fix for Tokyo and Singapore, where not all expected components are sent
-                if self.city == "<Unknown>":
-                    if self.state:
-                        self.city = self.state
-                    else:
-                        self.city = self.country
-
-                # Reset state data if we don't support state for this country
-                if self.country not in countries_with_states:
-                    self.state = None
-                    self.state_abbr = ""
+                component = self.find_address_component(city_component_types_per_country.get(self.country, default_city_component_type))
+                if not component:
+                    # Needed for Hull, Quebec...
+                    component = self.find_address_component("sublocality")
+                self.city = component["long_name"]
         else:
             logger.error("Geocoding query '%s': Status was '%s' instead of 'OK'" % (self.query.decode('ascii', 'replace'), results["status"]))
+
+    def find_address_component(self, _type):
+        result = [c for c in self.result["address_components"] if _type in c["types"]]
+        if len(result) > 1:
+            self.log_warning("More than 1 address component of type %s" % _type)
+        if len(result) > 0:
+            return result[0]
+        else:
+            self.log_warning("Couldn't find an address component of type %s" % _type)
+            return None
+
+    def log_warning(self, _msg):
+        self.log(logging.WARNING, _msg)
+
+    def log_error(self, _msg):
+        self.log(logging.ERROR, _msg)
+
+    def log(self, _level, _msg):
+        logger.log(_level, "Geocoding query '{0}': {1}".format(self.query.decode('ascii', 'replace'), _msg))
 
     @property
     def is_in_a_state(self):
