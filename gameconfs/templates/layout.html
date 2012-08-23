@@ -27,7 +27,7 @@
   <div class="navbar">
     <div class="navbar-inner">
       <div class="container">
-        <a class="brand" href="{{ url_for('index') }}">Gameconfs</a>
+        <div class="brand"><strong>Gameconfs</strong> - a directory of game industry events.</div>
       </div>
     </div>
   </div>
@@ -36,21 +36,22 @@
     {% block content %}{% endblock %}
   </div>
 
-  <div class="navbar navbar-fixed-bottom">
-    <div class="navbar-inner">
-      <div class="container">
-        <ul class="nav">
-          <li><a href="{{ url_for('index') }}">Home</a></li>
-          <li><a href="{{ url_for('other') }}">Other event directories</a></li>
-          <li><a href="{{ url_for('stats') }}">Stats</a></li>
-          <li><a href="{{ url_for('about') }}">About</a></li>
-        </ul>
-        <div class="copyright pull-right">
-          <p>&copy; 2012 Jurie Horneman</p>
+  <footer class"footer">
+    <div class="navbar">
+      <div class="navbar-inner">
+        <div class="container">
+          <ul class="nav">
+            <li><a href="{{ url_for('other') }}">Other event directories</a></li>
+            <li><a href="{{ url_for('stats') }}">Stats</a></li>
+            <li><a href="{{ url_for('about') }}">About</a></li>
+          </ul>
+          <div class="copyright pull-right">
+            <p>&copy; 2012 Jurie Horneman</p>
+          </div>
         </div>
       </div>
     </div>
-  </div>
+  </footer>
 
   <script src="//ajax.googleapis.com/ajax/libs/jquery/1.7.2/jquery.min.js" type="text/javascript"></script>
   <script src="{{ url_for('static', filename='js/bootstrap.js') }}" type="text/javascript"></script>
