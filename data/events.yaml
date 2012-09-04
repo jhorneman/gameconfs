@@ -454,7 +454,7 @@ main_url: "http://mtldgtl.com/2012/en/"
 twitter_hashtags: ""
 twitter_account:
 location: Hilton Montreal Bonaventure
-address: Montréal, Canada
+address: Montreal, Canada
 ---
 name: DigiWorld Summit 2012
 start_date: [2012, 11, 14]
@@ -943,14 +943,22 @@ twitter_hashtags: ""
 twitter_account: F2PSummit
 location: Venues 1 & 2, 4th Floor, Rich Mix
 address: 35 – 47 Bethnal Green Road, London, United Kingdom
-
 ---
 name: Games Invest 2012
 start_date: [2012, 9, 27]
 end_date: [2012, 9, 27]
-main_url: "https://gamesinvest2012.eventbrite.com/?nomo=1"
+main_url: "https://gamesinvest2012.eventbrite.com/"
 twitter_hashtags: ""
-twitter_account: 
+twitter_account: gibiz
+location: Earls Court Brompton Hall entrance, Meeting Room 3
+address: London, United Kingdom
+---
+name: Games Invest 2011
+start_date: [2011, 9, 22]
+end_date: [2011, 9, 22]
+main_url: "https://gamesinvest2011.eventbrite.com/"
+twitter_hashtags: ""
+twitter_account: gibiz
 location: Earls Court Brompton Hall entrance, Meeting Room 3
 address: London, United Kingdom
 ---
@@ -1346,7 +1354,7 @@ start_date: [2012, 5, 26]
 end_date: [2012, 5, 26]
 main_url: "http://www.gamecamp-paris.org/"
 twitter_hashtags: 
-twitter_account: 
+twitter_account: gamecampparis
 location: Paris Region Innovation Nord-Express
 address: 110 rue des poissonniers, Paris, France
 ---
@@ -1510,7 +1518,7 @@ main_url: "http://www.canadiangamingsummit.com/"
 twitter_hashtags: 
 twitter_account: 
 location: Palais des Congres
-address: Montréal, Quebec, Canada
+address: Montreal, Quebec, Canada
 ---
 name: Game Summmit Canada 2013
 start_date: [2013, 2, 2]
@@ -1835,3 +1843,129 @@ twitter_hashtags:
 twitter_account: 
 location: Congress Center
 address: Marseiller Straße 1, 20355, Hamburg, Germany
+---
+name: The Story 2012
+start_date: [2012, 2, 17]
+end_date: [2012, 2, 17]
+main_url: "http://thestory.org.uk/"
+twitter_hashtags: 
+twitter_account: 
+location: Conway Hall
+address: 25, Red Lion Square, London, United Kingdom
+---
+name: Korea Game Conference (KGC) 2012
+start_date: [2012, 10, 8]
+end_date: [2012, 10, 10]
+main_url: "http://www.kgconf.com/eng/html/kgc01.html"
+twitter_hashtags: 
+twitter_account: kgconf
+location: COEX
+address: Seoul, South Korea
+---
+name: Inside Social Apps 2012
+start_date: [2012, 12, 3]
+end_date: [2012, 12, 3]
+main_url: "http://insidesocialapps.com/index.php"
+twitter_hashtags: #ISANYC
+twitter_account: 
+location: The New Yorker Hotel
+address: 481 Eighth Avenue, New York, United States
+---
+name: "Made in Brighton: Games Gone Global"
+start_date: [2012, 9, 6]
+end_date: [2012, 9, 6]
+main_url: "http://madeinbrighton.net/games-gone-global/"
+twitter_hashtags: #madeinbrighton
+twitter_account: MadeInBrighton
+location: Brighton Ballrooms
+address: Brighton, United Kingdom
+---
+name:  The History of Games International Conference
+start_date: [2013, 6, 21]
+end_date: [2013, 6, 23]
+main_url: "http://www.stanford.edu/group/htgg/cgi-bin/drupal/?q=node/1153"
+twitter_hashtags: 
+twitter_account: 
+location: Unknown
+address: Montreal, Canada
+---
+name: SocialPLAY
+start_date: [2012, 12, 4]
+end_date: [2012, 12, 5]
+main_url: "http://www.terrapinn.com/conference/social-play/"
+twitter_hashtags: 
+twitter_account: mobileshowteam
+location: The Bloomsbury Hotel
+address: London, United Kingdom
+---
+name: Gamercamp 2012
+start_date: [2012, 11, 3]
+end_date: [2012, 11, 4]
+main_url: "http://www.gamercamp.ca/"
+twitter_hashtags: 
+twitter_account: Gamercamp
+location: Various
+address: Toronto, Canada
+---
+name: FROG 2012
+start_date: [2012, 10, 12]
+end_date: [2012, 10, 13]
+main_url: "http://bupp.at/service/frog/frog-2012/"
+twitter_hashtags: 
+twitter_account: 
+location: Wiener Rathaus
+address: Vienna, Austria
+---
+name: playARK
+start_date: [2012, 7, 7]
+end_date: [2012, 7, 7]
+main_url: "http://www.playark.co.uk/"
+twitter_hashtags: 
+twitter_account: 
+location: Chapter Arts
+address: Cardiff, United Kingdom
+---
+name: Content Conference Hamburg
+start_date: [2012, 9, 20]
+end_date: [2012, 9, 20]
+main_url: "http://www.content-conference.com/"
+twitter_hashtags: 
+twitter_account: 
+location: EMPORIO Building
+address: Hamburg, Germany
+---
+name: "GameDays 2012 / Edutainment 2012"
+start_date: [2012, 9, 18]
+end_date: [2012, 9, 20]
+main_url: "http://www.gamedays2012.de/"
+twitter_hashtags: 
+twitter_account: 
+location: Unknown
+address: Darmstadt, Germany
+---
+name: GameCamp 5
+start_date: [2012, 5, 12]
+end_date: [2012, 5, 12]
+main_url: "http://gamecamp.org.uk/"
+twitter_hashtags: 
+twitter_account: gamecamp
+location: London South Bank University
+address: Keyworth Centre, Keyworth Street, London, United Kingdom
+---
+name: IGDA Leadership Forum
+start_date: [2011, 10, 27]
+end_date: [2011, 10, 28]
+main_url: "http://www.igda.org/leadership/"
+twitter_hashtags: 
+twitter_account: 
+location: Sheraton Gateway Hotel LAX
+address: 6101 W. Century Boulevard, Los Angeles, United States
+---
+name: London Comic Con
+start_date: [2012, 10, 26]
+end_date: [2012, 10, 28]
+main_url: "http://www.londonexpo.com/"
+twitter_hashtags: 
+twitter_account: mcmexpo
+location: Excel London
+address: Royal Victoria Dock, London, United Kingdom
