@@ -463,7 +463,7 @@ main_url: "http://www.digiworldsummit.com/2011/pages/?all=actualites&id=79&idl=2
 twitter_hashtags: ""
 twitter_account: DigiWorldDATE
 location: Le Corum
-address: Montpellier, France
+address: Esplanade Charles De Gaulle, Montpellier, France
 ---
 name: ParisFx
 start_date: [2012, 11, 26]
@@ -481,7 +481,7 @@ main_url:
 twitter_hashtags: ""
 twitter_account:
 location: San Francisco Airport Marriott Waterfront
-address: 1800 Old Bayshore Highway · Burlingame, California 94010 USA
+address: 1800 Old Bayshore Highway · Burlingame, California, United States
 ---
 name: Games & Interactive Entertainment Conference
 start_date: [2012, 06, 19]
@@ -508,7 +508,7 @@ main_url: "http://www.gamesbritannia.com/"
 twitter_hashtags: ""
 twitter_account:
 location: Magna Science Adventure Centre
-address: Templeborough, United Kingdom
+address: Sheffield Road, Rotherham, United Kingdom
 ---
 name: IGDA Summit Seattle
 start_date: [2012, 07, 23]
@@ -987,7 +987,7 @@ main_url: "http://venturebeat.com/events/gamesbeat2012/"
 twitter_hashtags: ""
 twitter_account: 
 location: The Palace Hotel
-address: San Francisco, California, USA
+address: San Francisco, California, United States
 ---
 name: GDC Taipei Summit
 start_date: [2012, 6, 26]
@@ -1005,7 +1005,7 @@ main_url: "http://www.gameinvestmentconference.com/index.php"
 twitter_hashtags: ""
 twitter_account: 
 location: Atlanta Marriott Northwest
-address: 200 Interstate North Parkway, Atlanta, Georgia, USA
+address: 200 Interstate North Parkway, Atlanta, Georgia, United States
 ---
 name: Southern Interactive Entertainment & Game Expo (SIEGE) 2012
 start_date: [2012, 10, 4]
@@ -1014,7 +1014,7 @@ main_url: "http://www.siegecon.net/SIEGE2012/"
 twitter_hashtags: ""
 twitter_account: 
 location: Atlanta Marriott Northwest
-address: 200 Interstate North Parkway, Atlanta, Georgia, USA
+address: 200 Interstate North Parkway, Atlanta, Georgia, United States
 ---
 name: Gamification Summit
 start_date: [2012, 6, 19]
@@ -1023,7 +1023,7 @@ main_url: "http://www.gsummit.com/"
 twitter_hashtags: ""
 twitter_account: gamificationco
 location: Concourse Exhibition Center
-address: 635 8th Street, San Francisco, California, USA
+address: 635 8th Street, San Francisco, California, United States
 ---
 name: Role Play Convention
 start_date: [2012, 5, 5]
@@ -1131,7 +1131,7 @@ main_url: "http://www.quakecon.org/"
 twitter_hashtags: ""
 twitter_account: 
 location: Hilton Anatole
-address: Dallas, Texas, USA
+address: Dallas, Texas, United States
 ---
 name: Joue Le Jeu 2012
 start_date: [2012, 6, 21]
@@ -1194,7 +1194,7 @@ main_url: "http://fantasticfest.com/arcade/"
 twitter_hashtags: ""
 twitter_account: 
 location: The Highball
-address: Austin, Texas, USA
+address: Austin, Texas, United States
 ---
 name: Women in Games Conference 2012
 start_date: [2012, 9, 26]
@@ -1318,7 +1318,7 @@ start_date: [2012, 11, 1]
 end_date: [2012, 11, 2]
 main_url: "http://www.explay.co.uk/"
 twitter_hashtags: 
-twitter_account: 
+twitter_account: explayuk
 location: Bath Assembly Rooms
 address: Bath, United Kingdom
 ---
@@ -1338,7 +1338,7 @@ main_url: "http://gamedesigncon.com/"
 twitter_hashtags: 
 twitter_account: gamedesigncon
 location: The Fairmont San Francisco
-address: San Francisco, California, USA
+address: San Francisco, California, United States
 ---
 name: ITAG Conference 2012
 start_date: [2012, 10, 23]
@@ -1969,3 +1969,174 @@ twitter_hashtags:
 twitter_account: mcmexpo
 location: Excel London
 address: Royal Victoria Dock, London, United Kingdom
+---
+name: Montpellier In Game
+start_date: [2012, 11, 15]
+end_date: [2012, 11, 18]
+main_url: "http://www.montpellieringame.com/"
+twitter_hashtags: 
+twitter_account: 
+location: Le Corum
+address: Esplanade Charles De Gaulle, Montpellier, France
+---
+name: "The Hide&Seek Weekender Conference"
+start_date: [2012, 9, 17]
+end_date: [2012, 9, 17]
+main_url: "http://weekender.hideandseek.net/conference/"
+twitter_hashtags: 
+twitter_account: hidingseeking
+location: The Queen Elizabeth Hall
+address: London, United Kingdom
+---
+name: "Utopiales: Festival International de Science Fiction"
+start_date: [2012, 11, 7]
+end_date: [2012, 11, 12]
+main_url: "http://www.utopiales.org/"
+twitter_hashtags: 
+twitter_account: 
+location: La Cité, le Centre des Congrès de Nantes
+address: 5 rue de Valmy 44000 Nantes, France
+---
+name: dConstruct 2012
+start_date: [2012, 9, 7]
+end_date: [2012, 9, 7]
+main_url: "http://2012.dconstruct.org/"
+twitter_hashtags: 
+twitter_account: dconstruct
+location: Brighton Dome
+address: Church Street, Brighton, United Kingdom
+---
+name: GAMEfest
+start_date: [2011, 9, 16]
+end_date: [2011, 9, 18]
+main_url: "http://events.game.co.uk/gamefest/"
+twitter_hashtags: 
+twitter_account: 
+location: National Exhibition Centre
+address: Birmingham, United Kingdom
+---
+name: RuneFest
+start_date: [2011, 10, 29]
+end_date: [2011, 10, 30]
+main_url: "http://www.runefest.com/"
+twitter_hashtags: 
+twitter_account: runefest
+location: Old Billingsgate
+address: 1 Old Billingsgate Walk, London, United Kindom
+---
+name: Bradford Animation Festival 2012
+start_date: [2012, 11, 13]
+end_date: [2012, 11, 17]
+main_url: "http://www.nationalmediamuseum.org.uk/bradfordanimationfestival"
+twitter_hashtags: 
+twitter_account: osgoodbaf
+location: Various
+address: Bradford, United Kingdom
+---
+name: Bit of Alright
+start_date: [2012, 2, 3]
+end_date: [2012, 2, 3]
+main_url: "http://bit-of-alright.com/"
+twitter_hashtags: 
+twitter_account: 
+location: Battersea Arts Centre
+address: 31 Town Hall Rd, London, United Kingdom
+---
+name: Platform Doha 2012
+start_date: [2012, 4, 18]
+end_date: [2012, 4, 18]
+main_url: "http://www.platformexpos.com/expos/platform-doha/"
+twitter_hashtags: 
+twitter_account: PlatformExpos
+location: Qatar University
+address: Al Tarfa, Doha, Qatar
+---
+name: Platform 2012
+start_date: [2012, 3, 17]
+end_date: [2012, 3, 18]
+main_url: "http://www.platformexpos.com/expos/platform-2012/"
+twitter_hashtags: 
+twitter_account: PlatformExpos
+location: University of Hull
+address: Hull, United Kingdom
+---
+name: 4th International Conference on Games and Virtual Worlds for Serious Applications (VS-GAMES) 2012
+start_date: [2012, 10, 29]
+end_date: [2012, 10, 31]
+main_url: "www.vs-games2012.org"
+twitter_hashtags: 
+twitter_account: 
+location: Unknown
+address: Genoa, Italy
+---
+name: "BUSINESS PLAY 2012 Enterprise Gamification Symposium & Workshop"
+start_date: [2012, 9, 27]
+end_date: [2012, 9, 27]
+main_url: "http://bizplay.org/"
+twitter_hashtags: 
+twitter_account: 
+location: Kreativpark Alter Schlachthof Karlsruhe
+address: Durlacher Allee 62, Karlsruhe, Germany
+---
+name: Social Gaming 2012
+start_date: [2012, 9, 27]
+end_date: [2012, 9, 27]
+main_url: "http://www.cecileparkconferences.com/social-gaming-2012"
+twitter_hashtags: #SocialGaming
+twitter_account: CPconferences
+location: America Square Conference Centre
+address: 1 America Square, London, United Kingdom
+---
+name: HPX Digital
+start_date: [2012, 10, 17]
+end_date: [2012, 10, 19]
+main_url: "http://halifaxpopexplosion.com/digital/"
+twitter_hashtags: #HPXdigital
+twitter_account: HPXdigital
+location: Atlantica Hotel
+address: 1980 Robie Street, Halifax, Canada
+---
+name: 6th European Conference on Games Based Learning (ECGBL)
+start_date: [2012, 10, 4]
+end_date: [2012, 10, 5]
+main_url: "http://academic-conferences.org/ecgbl/ecgbl2012/ecgbl12-home.htm"
+twitter_hashtags: #ECGBL
+twitter_account: 
+location: The River Lee Hotel
+address: Cork, Ireland
+---
+name: iSummit 2012
+start_date: [2012, 9, 17]
+end_date: [2012, 9, 18]
+main_url: "http://www.isummit.com/"
+twitter_hashtags: #isummit
+twitter_account: iSummit2012
+location: Orange County Convention Center
+address: Orlando, Florida, United States
+---
+name: StoryDrive
+start_date: [2012, 10, 11]
+end_date: [2012, 10, 12]
+main_url: "http://www.buchmesse.de/de/im_Fokus/SPARKS/story_drive/storydrivekonferenz/index.html"
+twitter_hashtags: 
+twitter_account: book_fair
+location: Saal Europa, Messe Frankfurt
+address: Messegelände, Ludwig-Erhard-Anlage 1, Frankfurt am Main, Germany
+---
+name: KEEP Final Conference 2012
+start_date: [2012, 2, 17]
+end_date: [2012, 2, 17]
+main_url: "http://www.egdf.eu/17-2-2012-keep-final-conference/"
+twitter_hashtags: 
+twitter_account: 
+location: Bibliothèque Nationale De France
+address: Paris
+---
+name: "State of Play: The Thriving Game Industry in Massachusetts"
+start_date: [2012, 10, 2]
+end_date: [2012, 10, 2]
+main_url: "http://stateofplay.eventbrite.com/"
+twitter_hashtags: 
+twitter_account: 
+location: Microsoft NERD Center
+address: 1 Memorial Dr, Mid-Cambridge, Massachussets, United States
