@@ -70,7 +70,7 @@ twitter_account: DevelopConf
 location: "Hilton Brighton Metropole"
 address: "Kings Road, Brighton"
 ---
-name: GameHorizon Conference 2013
+name: GameHorizon Conference 2012
 start_date: [2012, 6, 27]
 end_date: [2012, 6, 28]
 main_url: "http://www.gamehorizonconference.com/"
@@ -2140,3 +2140,102 @@ twitter_hashtags:
 twitter_account: 
 location: Microsoft NERD Center
 address: 1 Memorial Dr, Mid-Cambridge, Massachussets, United States
+---
+name: Game Monetization USA
+start_date: [2012, 12, 5]
+end_date: [2012, 12, 6]
+main_url: "http://www.videogamesintelligence.com/monetization/"
+twitter_hashtags: 
+twitter_account: 
+location: Hotel Kabuki
+address: San Francisco, USA
+---
+name: "Practice: Game Design In Detail"
+start_date: [2012, 11, 9]
+end_date: [2012, 11, 11]
+main_url: "http://gamecenter.nyu.edu/practice/index.html"
+twitter_hashtags: 
+twitter_account: 
+location: NYU Game Center
+address: New York City, USA
+---
+name: BAFTA Annual Games Lecture 2012
+start_date: [2012, 9, 28]
+end_date: [2012, 9, 28]
+main_url: "http://www.bafta.org/public-event.html?Pevent=com.othermedia.bafta.model.BaftaEvent-L-6203660"
+twitter_hashtags: 
+twitter_account: 
+location: BAFTA
+address: London, United Kingdom
+---
+name: "European Game Executive's Summit"
+start_date: [2012, 9, 12]
+end_date: [2012, 9, 14]
+main_url: "http://www.egesummit.com/"
+twitter_hashtags: 
+twitter_account: 
+location: Lindner Resort
+address: Portals Nous, Mallorca, Spain
+---
+name: MIT Game Lab
+start_date: [2012, 9, 21]
+end_date: [2012, 9, 21]
+main_url: "http://gamelab.mit.edu/"
+twitter_hashtags: 
+twitter_account: 
+location: Wong Auditorium, Tang Center at MIT 
+address: 70 Memorial Drive, Cambridge, USA
+---
+name: Freeplay Independent Games Festival 2012
+start_date: [2012, 9, 19]
+end_date: [2012, 9, 23]
+main_url: "http://www.freeplay.net.au/"
+twitter_hashtags: #freeplay12
+twitter_account: free_play
+location: Various
+address: Melbourne, Australia
+---
+name: Athens Plaython
+start_date: [2012, 9, 29]
+end_date: [2012, 9, 30]
+main_url: "http://athensplaython.org/en"
+twitter_hashtags: 
+twitter_account: athensplaython
+location: Various
+address: Athens, Greece
+---
+name: Poznań Game Arena 2012
+start_date: [2012, 10, 26]
+end_date: [2012, 10, 28]
+main_url: "http://www.gamearena.pl/"
+twitter_hashtags: 
+twitter_account: 
+location: Poznań Congress Centre
+address: Poznań, Poland
+---
+name: rAge 2012
+start_date: [2012, 10, 5]
+end_date: [2012, 10, 7]
+main_url: "http://www.rageexpo.co.za/"
+twitter_hashtags: 
+twitter_account: 
+location: The Coca-Cola Dome
+address: Johannesburg, South Africa
+---
+name: 
+start_date: [2012, 1, 1]
+end_date: [2012, 1, 1]
+main_url: ""
+twitter_hashtags: 
+twitter_account: 
+location: 
+address: 
+---
+name: 
+start_date: [2012, 1, 1]
+end_date: [2012, 1, 1]
+main_url: ""
+twitter_hashtags: 
+twitter_account: 
+location: 
+address: 
