@@ -26,6 +26,12 @@ if __name__ == "__main__":
         # Load events
         with codecs.open('data/events.yaml', 'r', 'utf-8') as f:
             for data in yaml.load_all(f):
+                if "name" not in data:
+                    continue
+                name = data["name"]
+                if not name:
+                    continue
+                    
                 new_event = Event(data["name"])
                 d = [int(i) for i in data["start_date"]]
                 new_event.start_date = date(d[0], d[1], d[2])
