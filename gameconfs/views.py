@@ -248,6 +248,7 @@ def stats():
     for id, name in db.session.query(City.id, City.name):
         city_stats.append((name, Event.query.filter(Event.city_id == id).count()))
     city_stats = sorted(city_stats, key=operator.itemgetter(1), reverse=True)[:10]
+    total_nr_cities = City.query.count()
 
     # Get country stats
     country_stats = []
@@ -259,12 +260,14 @@ def stats():
              count()
         country_stats.append((name, count))
     country_stats = sorted(country_stats, key=operator.itemgetter(1), reverse=True)[:10]
+    total_nr_countries = Country.query.count()
 
     # Get total number of events
     total_nr_events = Event.query.count()
 
     return render_template('stats.html', time_stats=time_stats, country_stats=country_stats,
-        city_stats=city_stats, total_nr_events=total_nr_events)
+        city_stats=city_stats, total_nr_events=total_nr_events, total_nr_cities=total_nr_cities,
+        total_nr_countries=total_nr_countries)
 
 @app.errorhandler(404)
 def page_not_found(error):

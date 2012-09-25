@@ -7,7 +7,7 @@
       {% if event.start_date == event.end_date %}
       <tr>
         <td>Date</td>
-        <td>{{ event.start_date|nice_date }}
+        <td>{{ event.start_date|nice_date }} {{ event.start_date.year }}
         {% if event.start_date == today %}
         &nbsp;<span class="badge badge-today">TODAY</span>
         {% endif %}
@@ -16,7 +16,7 @@
       {% else %}
       <tr>
         <td>Dates</td>
-        <td>{{ event.start_date|nice_date }} until {{ event.end_date|nice_date }}
+        <td>{{ event.start_date|nice_date }} until {{ event.end_date|nice_date }} {{ event.start_date.year }}
         {% if event.start_date <= today and today <= event.end_date %}
         &nbsp;<span class="badge badge-today">TODAY</span>
         {% endif %}

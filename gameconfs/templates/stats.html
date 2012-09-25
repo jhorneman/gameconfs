@@ -35,6 +35,7 @@
 		</tr>
 		{% endfor %}
 	</table>
+	<p>Total number of countries: <strong>{{ total_nr_countries }}</strong>.</p>
 	<br/>
 	<h2>Top {{ city_stats|length }} cities</h2>
 	<table class="table table-condensed stats" id="city-stats">
@@ -46,4 +47,5 @@
 		</tr>
 		{% endfor %}
 	</table>
+	<p>Total number of cities: <strong>{{ total_nr_cities }}</strong>.</p>
 {% endblock %}
