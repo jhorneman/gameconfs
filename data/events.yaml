@@ -88,7 +88,7 @@ twitter_account: EdiInteractive
 location: "The Radisson Blu Hotel"
 address: "80 High St, The Royal Mile, EH1 1TH"
 ---
-name: East Coast Game Conference
+name: East Coast Game Conference 2012
 start_date: [2012, 4, 25]
 end_date: [2012, 4, 26]
 main_url: "http://www.ecgconf.com/"
@@ -568,7 +568,7 @@ name: LOGIN Conference 2012
 start_date: [2012, 09, 26]
 end_date: [2012, 09, 27]
 main_url: "http://www.loginconference.com/"
-twitter_hashtags: ""
+twitter_hashtags: "#login2012"
 twitter_account: loginconference
 location: Bently Reserve
 address: San Francisco, California
@@ -939,7 +939,7 @@ name: Free to Play Summit
 start_date: [2012, 9, 26]
 end_date: [2012, 9, 26]
 main_url: "http://www.f2p-summit.com/"
-twitter_hashtags: ""
+twitter_hashtags: "#f2psummit"
 twitter_account: F2PSummit
 location: Venues 1 & 2, 4th Floor, Rich Mix
 address: 35 – 47 Bethnal Green Road, London, United Kingdom
@@ -1200,7 +1200,7 @@ name: Women in Games Conference 2012
 start_date: [2012, 9, 26]
 end_date: [2012, 9, 26]
 main_url: "http://www.womeningamesjobs.com/"
-twitter_hashtags: ""
+twitter_hashtags: "#wigj"
 twitter_account: wigj
 location: TBA
 address: London, United Kingdom
@@ -1977,7 +1977,7 @@ main_url: "http://www.montpellieringame.com/"
 twitter_hashtags: ""
 twitter_account: 
 location: Le Corum
-address: Esplanade Charles De Gaulle, Montpellier, France
+address: Montpellier, France
 ---
 name: "The Hide&Seek Weekender Conference"
 start_date: [2012, 9, 17]
@@ -2581,8 +2581,8 @@ location: Academy of Fine Arts Saar
 address: Saarbruecken, Germany
 ---
 name: "GDC Next"
-start_date: [2012, 11, 5]
-end_date: [2012, 11, 7]
+start_date: [2013, 11, 5]
+end_date: [2013, 11, 7]
 main_url: "http://www.gdcnext.com/"
 twitter_hashtags: ""
 twitter_account: 
@@ -2805,6 +2805,15 @@ twitter_account:
 location: Technological Park
 address: San Sebastián, Spain
 ---
+name: East Coast Game Conference 2013
+start_date: [2013, 4, 24]
+end_date: [2013, 4, 25]
+main_url: "http://www.ecgconf.com/"
+twitter_hashtags: ""
+twitter_account: ECGameCon
+location: "Raleigh Convention Center"
+address: Raleigh, North Carolina, USA
+---
 name: 
 start_date: [2012, 1, 1]
 end_date: [2012, 1, 1]
@@ -2813,4 +2822,3 @@ twitter_hashtags: ""
 twitter_account: 
 location: 
 address: 
-
