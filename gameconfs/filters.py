@@ -72,6 +72,12 @@ def event_location(_event):
     else:
         return "Online"
 
+def definite_country(_country):
+    if _country in ["Netherlands", "United Kingdom", "United States"]:
+        return "the " + _country
+    else:
+        return _country
+
 def city_and_state_or_country(_city):
     if _city:
         loc = _city.name

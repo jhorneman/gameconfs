@@ -8,6 +8,7 @@ from gameconfs import app, db
 from gameconfs.models import *
 from gameconfs.forms import EventForm
 from gameconfs.geocoder import all_continents
+from gameconfs.filters import definite_country
 
 
 @app.teardown_request
@@ -82,8 +83,10 @@ def index(year, continent_name, country_name, city_or_state_name, city_name):
     show_states = False
     show_cities = True
 
+    location_title = None
     if continent_name is None:
         selection_level = "all"
+        location_title = u"all over the world"
     else:
         continent = Continent.query.\
             filter(Continent.name.like(continent_name)).\
@@ -100,6 +103,7 @@ def index(year, continent_name, country_name, city_or_state_name, city_name):
 
         if country_name is None:
             selection_level = "continent"
+            location_title = u"in " + continent_name
         else:
             country = Country.query.\
                 filter(Country.name.like(country_name)).\
@@ -118,6 +122,7 @@ def index(year, continent_name, country_name, city_or_state_name, city_name):
 
                 if city_or_state_name is None:
                     selection_level = "country"
+                    location_title = u"in " + definite_country(country_name)
                     show_cities = False
                 else:
                     state_name = city_or_state_name
@@ -137,6 +142,7 @@ def index(year, continent_name, country_name, city_or_state_name, city_name):
 
                     if city_name is None:
                         selection_level = "state"
+                        location_title = u"in " + state_name
                     else:
                         selection_level = "city"
                         city = City.query.\
@@ -146,6 +152,7 @@ def index(year, continent_name, country_name, city_or_state_name, city_name):
                             first()
                         if city is None:
                             abort(404)
+                        location_title = u"in " + city_name
             else:
                 cities = db.session.query(City.name).\
                     join(City.country).\
@@ -156,6 +163,7 @@ def index(year, continent_name, country_name, city_or_state_name, city_name):
 
                 if city_or_state_name is None:
                     selection_level = "country"
+                    location_title = u"in " + definite_country(country_name)
                     show_cities = country_name not in geocoder.countries_without_cities
                 else:
                     if city_name is None:
@@ -168,6 +176,7 @@ def index(year, continent_name, country_name, city_or_state_name, city_name):
                         first()
                     if city is None:
                         abort(404)
+                    location_title = u"in " + city_name
 
     # Get the number of events for each month
     # We need this to set the status of the month buttons
@@ -197,11 +206,18 @@ def index(year, continent_name, country_name, city_or_state_name, city_name):
         q = filter_by_period(q, year, 1, 12)
         events = q.all()
 
+    # Get stats for header
+    # total_nr_countries = Country.query.count()
+    # total_nr_events = Event.query.count()
+
+    title = u"Game events {0} in {1}".format(location_title, unicode(year))
+
+    #TODO: Find a nicer way to pass all of these parameters
     return render_template('index.html', events=events, year=year, today=today, selection_level=selection_level,
         min_year=min_year, max_year=max_year, nr_events_by_month=nr_events_by_month,
         selected_continent=continent_name, selected_country=country_name, selected_state=state_name, selected_city=city_name,
         continents=all_continents, countries=countries, states=states, cities=cities,
-        show_states=show_states, show_cities=show_cities)
+        show_states=show_states, show_cities=show_cities, title=title )
 
 # @app.route('/new', methods=("GET", "POST"))
 # def new_event():
