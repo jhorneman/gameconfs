@@ -577,7 +577,7 @@ name: Eurogamer Expo 2012
 start_date: [2012, 09, 27]
 end_date: [2012, 09, 30]
 main_url: "http://www.eurogamer.net/expo/"
-twitter_hashtags: ""
+twitter_hashtags: "#eurogamerexpo #egxp #EGExpo"
 twitter_account:
 location: Earls Court
 address: London, United Kingdom
@@ -1189,7 +1189,7 @@ address: London, United Kingdom
 ---
 name: Fantastic Arcade 2012
 start_date: [2012, 9, 20]
-end_date: [2012, 9, 28]
+end_date: [2012, 9, 23]
 main_url: "http://fantasticfest.com/arcade/"
 twitter_hashtags: ""
 twitter_account: 
@@ -1686,7 +1686,7 @@ name: SCREENS 2012
 start_date: [2012, 9, 27]
 end_date: [2012, 9, 28]
 main_url: "http://www.fitc.ca/events/about/?event=134"
-twitter_hashtags: ""
+twitter_hashtags: "#screens12"
 twitter_account: 
 location: Metro Toronto Convention Centre (MTCC)
 address: 255 Front Street West, Toronto, Ontario
@@ -2499,7 +2499,7 @@ twitter_account: GamiWorldCon
 location: Feria Valencia
 address: Valencia, Spain
 ---
-name: VCON Festival de Video juegos
+name: VCON Festival de Video Juegos
 start_date: [2012, 11, 16]
 end_date: [2012, 11, 18]
 main_url: "http://vcon.mx/"
@@ -2813,6 +2813,42 @@ twitter_hashtags: ""
 twitter_account: ECGameCon
 location: "Raleigh Convention Center"
 address: Raleigh, North Carolina, USA
+---
+name: "Media & Learning Brussels 2012"
+start_date: [2012, 11, 14]
+end_date: [2012, 11, 15]
+main_url: "http://www.media-and-learning.eu/"
+twitter_hashtags: ""
+twitter_account: 
+location: Flemish Ministry of Education HQ
+address: Brussels, Belgium
+---
+name: PAX Australia
+start_date: [2013, 7, 19]
+end_date: [2013, 7, 21]
+main_url: "http://www.paxaustralia.com.au/"
+twitter_hashtags: "#PAXAus"
+twitter_account: PAXAus
+location: Melbourne Showgrounds
+address: Melbourne, Australia
+---
+name: Playing The Game 2012
+start_date: [2012, 10, 27]
+end_date: [2012, 10, 28]
+main_url: "http://www.playing.vg/"
+twitter_hashtags: ""
+twitter_account: 
+location: Spazio O' Artoteca
+address: Milan, Italy
+---
+name: Arse Elektronika 2012
+start_date: [2012, 9, 27]
+end_date: [2012, 9, 30]
+main_url: "http://www.monochrom.at/arse-elektronika/"
+twitter_hashtags: ""
+twitter_account: johannes_mono
+location: Center for Sex and Culture
+address: San Francisco, California, USA
 ---
 name: 
 start_date: [2012, 1, 1]
