@@ -76,7 +76,7 @@ def create_app(_run_mode):
         # toolbar = DebugToolbarExtension(app)
 
     # Test run mode
-    elif _run_mode == 'test':
+    elif _run_mode == "test":
         app.config["DEBUG"] = True
         app.config["TESTING"] = True
         app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
@@ -120,3 +120,6 @@ def run_app():
     # If the debug parameter is not set, Flask does not change app.debug, which is set from
     # the DEBUG app config variable, which we've set in create_app().
     app.run(**app_run_args)
+
+# For gunicorn
+# create_app("dev")
