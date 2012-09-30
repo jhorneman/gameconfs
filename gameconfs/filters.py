@@ -52,11 +52,14 @@ def friendly_time(dt, past_="ago",
 
     return default
 
-def nice_date(_datetime):
-    return "{0} {1}".format(_datetime.strftime("%B"), _datetime.day)
+def nice_date(_date):
+    return "{0} {1}".format(_date.strftime("%B"), _date.day)
 
-def short_date(_datetime):
-    return "{0} {1}".format(_datetime.strftime("%b"), _datetime.day)
+def short_date(_date):
+    return "{0} {1}".format(_date.strftime("%b"), _date.day)
+
+def microdata_date(_date):
+    return _date.isoformat()
 
 def nice_month(_month):
     month = date(2012, _month, 1)   # Year is irrelevant
