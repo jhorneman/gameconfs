@@ -1,1 +1,1 @@
-web: python manage.py run_server -r production
+web: gunicorn gameconfs.gunicorn:app -b 0.0.0.0:$PORT -w 3
