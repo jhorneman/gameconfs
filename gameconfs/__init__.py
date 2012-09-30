@@ -120,6 +120,3 @@ def run_app():
     # If the debug parameter is not set, Flask does not change app.debug, which is set from
     # the DEBUG app config variable, which we've set in create_app().
     app.run(**app_run_args)
-
-# For gunicorn
-# create_app("dev")
