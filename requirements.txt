@@ -25,3 +25,5 @@ requests==0.13.1
 rsa==3.0.1
 six==1.1.0
 wsgiref==0.1.2
+blinker==1.2
+gunicorn==0.14.6
