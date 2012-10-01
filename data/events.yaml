@@ -2845,10 +2845,73 @@ name: Arse Elektronika 2012
 start_date: [2012, 9, 27]
 end_date: [2012, 9, 30]
 main_url: "http://www.monochrom.at/arse-elektronika/"
-twitter_hashtags: ""
+twitter_hashtags: "#arse2012"
 twitter_account: johannes_mono
 location: Center for Sex and Culture
 address: San Francisco, California, USA
+---
+name: AdventureX 2012
+start_date: [2012, 12, 15]
+end_date: [2012, 12, 16]
+main_url: "http://www.screen7.co.uk/adventurex/"
+twitter_hashtags: ""
+twitter_account: Screen7UK
+location: University of East Anglia
+address: London, United Kingdom
+---
+name: SPIEL 2012
+start_date: [2012, 10, 18]
+end_date: [2012, 10, 21]
+main_url: "http://www.internationalespieltage.de/e000.php4"
+twitter_hashtags: "#spiel2012"
+twitter_account: 
+location: Messe Essen
+address: Essen, Germany
+---
+name: Dragonmeet 2012
+start_date: [2012, 12, 1]
+end_date: [2012, 12, 1]
+main_url: "http://www.dragonmeet.co.uk/"
+twitter_hashtags: ""
+twitter_account: 
+location: Kensington Town Hall
+address: London, United Kingdom
+---
+name: Start of Play
+start_date: [2012, 10, 27]
+end_date: [2012, 10, 27]
+main_url: "http://startofplay.eventbrite.com/"
+twitter_hashtags: ""
+twitter_account: 
+location: Mozilla
+address: London, United Kingdom
+---
+name: Northern Game Summit
+start_date: [2012, 9, 27]
+end_date: [2012, 9, 28]
+main_url: "http://www.kajak3d.com/en/ngs-en"
+twitter_hashtags: ""
+twitter_account: 
+location: Kajaani University of Applied Sciences
+address: Kajaani, Finland
+---
+name: The Story 2013
+start_date: [2013, 2, 22]
+end_date: [2013, 2, 22]
+main_url: "http://thestory.org.uk/"
+twitter_hashtags: ""
+twitter_account: thestory2013
+location: The Conway Hall
+address: London, United Kingdom
+---
+name: 
+start_date: [2012, 1, 1]
+end_date: [2012, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account: 
+location: 
+address: 
 ---
 name: 
 start_date: [2012, 1, 1]
