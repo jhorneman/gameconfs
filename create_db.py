@@ -65,14 +65,14 @@ if __name__ == "__main__":
         GeocodeResults.save_cache("geocoder_cache.json")
 
         # Load users
-        with codecs.open('data/users.yaml', 'r', 'utf-8') as f:
-            for data in yaml.load_all(f):
-                new_user = User(data["first_name"], data["last_name"], data["email"])
-                db_session.add(new_user)
-        db_session.commit()
+#        with codecs.open('data/users.yaml', 'r', 'utf-8') as f:
+#            for data in yaml.load_all(f):
+#                new_user = User(data["first_name"], data["last_name"], data["email"])
+#                db_session.add(new_user)
+#        db_session.commit()
 
         # Report
         print db_session.query(Country).count(), "countries"
         print db_session.query(City).count(), "cities"
         print db_session.query(Event).count(), "events"
-        print db_session.query(User).count(), "users"
+#        print db_session.query(User).count(), "users"
