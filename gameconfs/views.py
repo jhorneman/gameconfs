@@ -51,6 +51,7 @@ def filter_by_period(_query, _start_year, _start_month, _nr_months = 1):
                   and_(Event.end_date >= period_start, Event.end_date < period_end)))
 
 def get_year_range():
+    #TODO: Cache this
     min_year = db.session.query(func.min(Event.start_date)).one()[0].year
     max_year = db.session.query(func.max(Event.end_date)).one()[0].year
     return min_year, max_year
@@ -178,6 +179,7 @@ def index(year, continent_name, country_name, city_or_state_name, city_name):
                         abort(404)
                     location_title = u"in " + city_name
 
+    #TODO: Cache this
     # Get the number of events for each month
     # We need this to set the status of the month buttons
     nr_events_by_month = [ 0 for i in range(0, 12) ]

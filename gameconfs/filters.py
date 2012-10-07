@@ -84,9 +84,9 @@ def definite_country(_country):
 def city_and_state_or_country(_city):
     if _city:
         loc = _city.name
-        if _city.country.name in geocoder.countries_with_states:
+        if _city.country.name in geocoder.countries_with_states:        #TODO: Eliminate SQL call!
             if _city.name not in geocoder.cities_without_states_or_countries:
-                loc += ", " + _city.state.name
+                loc += ", " + _city.state.name     #TODO: Eliminate SQL call!
         elif _city.name not in geocoder.cities_without_states_or_countries:
             loc += ", " + _city.country.name
     else:
