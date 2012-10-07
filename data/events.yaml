@@ -38,7 +38,7 @@ name: PIXEL 7
 start_date: [2012, 10, 5]
 end_date: [2012, 10, 7]
 main_url: "http://www.pixelvienna.com/7"
-twitter_hashtags: ""
+twitter_hashtags: "#pixel7"
 twitter_account: PixelVienna
 location: "Österreichische Akademie der Wissenschaften (ÖAW)"
 address: "Dr. Ignaz Seipel-Platz 2, 1010 Vienna"
@@ -1940,7 +1940,7 @@ end_date: [2012, 9, 20]
 main_url: "http://www.gamedays2012.de/"
 twitter_hashtags: ""
 twitter_account: 
-location: Unknown
+location: Fraunhofer Institut für Graphische Datenverarbeitung
 address: Darmstadt, Germany
 ---
 name: GameCamp 5
@@ -2904,20 +2904,101 @@ twitter_account: thestory2013
 location: The Conway Hall
 address: London, United Kingdom
 ---
-name: 
+name: GamesBusiness 2012
 start_date: [2012, 1, 1]
 end_date: [2012, 1, 1]
-main_url: ""
-twitter_hashtags: ""
+main_url: "http://www.brainsbusiness.dk/dk/arrangementer/gamesbusiness_2012.htm"
+twitter_hashtags: "#gbiz12"
 twitter_account: 
-location: 
-address: 
+location: "Aalborg Congress & Culture Centre"
+address: Aalborg, Denmark
 ---
-name: 
+name: "Interactive Technologies and Games: Education, Health and Disability"
+start_date: [2012, 10, 27]
+end_date: [2012, 10, 27]
+main_url: "http://www.ntu.ac.uk/cels/outreach/events/61435.html"
+twitter_hashtags: ""
+twitter_account:
+location: The Council House
+address: Nottingham, United Kingdom
+---
+name: Copenhagen Games 2013
+start_date: [2013, 3, 27]
+end_date: [2013, 3, 31]
+main_url: "http://www.CopenhagenGames.com/"
+twitter_hashtags: ""
+twitter_account:
+location: Øksnehalen
+address: Copenhagen, Denmark
+---
+name: Copenhagen Games 2014
+start_date: [2014, 4, 16]
+end_date: [2014, 4, 20]
+main_url: "http://www.CopenhagenGames.com/"
+twitter_hashtags: ""
+twitter_account:
+location: Øksnehalen
+address: Copenhagen, Denmark
+---
+name: Serious Game Expo
+start_date: [2012, 10, 22]
+end_date: [2012, 10, 23]
+main_url: "http://www.seriousgameexpo.com/en"
+twitter_hashtags: ""
+twitter_account: SeriousGameExpo
+location: "Cité Centre des Congrès – Cité Internationale de Lyon"
+address: Lyon, France
+---
+name: Play Expo
+start_date: [2012, 10, 13]
+end_date: [2012, 10, 14]
+main_url: "http://www.playexpo.net/"
+twitter_hashtags: "#PlayExpo"
+twitter_account: ReplayEvents
+location: EventCity
+address: Manchester, United Kingdom
+---
+name: Gamer Technology Law
+start_date: [2012, 10, 3]
+end_date: [2012, 10, 4]
+main_url: "http://www.lawseminars.com/detail.php?SeminarCode=11GAMEWA"
+twitter_hashtags: "#LSIGame"
+twitter_account:
+location: Washington State Convention Center
+address: Seattle, Washington, USA
+---
+name: onGameStart US
+start_date: [2013, 3, 22]
+end_date: [2013, 3, 22]
+main_url: "http://ongamestart.us/"
+twitter_hashtags: "#ogsus"
+twitter_account: onGameStart
+location: Unknown
+address: New York, USA
+---
+name: PIXEL 8
+start_date: [2013, 10, 25]
+end_date: [2013, 10, 27]
+main_url: "http://www.pixelvienna.com/"
+twitter_hashtags: "#pixel8"
+twitter_account: PixelVienna
+location: "Österreichische Akademie der Wissenschaften (ÖAW)"
+address: "Dr. Ignaz Seipel-Platz 2, 1010 Vienna"
+---
+name:
 start_date: [2012, 1, 1]
 end_date: [2012, 1, 1]
 main_url: ""
 twitter_hashtags: ""
-twitter_account: 
-location: 
-address: 
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2012, 1, 1]
+end_date: [2012, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
