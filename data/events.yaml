@@ -2985,6 +2985,86 @@ twitter_account: PixelVienna
 location: "Österreichische Akademie der Wissenschaften (ÖAW)"
 address: "Dr. Ignaz Seipel-Platz 2, 1010 Vienna"
 ---
+name: HTML 5 Developer Conference
+start_date: [2012, 10, 15]
+end_date: [2012, 10, 16]
+main_url: "http://www.html5devconf.com/"
+twitter_hashtags: ""
+twitter_account:
+location: Palace Hotel San Francisco
+address: San Francisco, California, USA
+---
+name: "Mobile Games Forum (MGF) 2013"
+start_date: [2013, 1, 23]
+end_date: [2013, 1, 24]
+main_url: "http://www.mobilegamesforum.co.uk/mobile-games/"
+twitter_hashtags: ""
+twitter_account: gamesforum
+location: Dexter House
+address: London, United Kingdom
+---
+name: "Mobile Games Forum (MGF) 2012"
+start_date: [2012, 1, 25]
+end_date: [2012, 1, 26]
+main_url: "http://www.mobilegamesforum.co.uk/mobile-games/"
+twitter_hashtags: ""
+twitter_account: gamesforum
+location: Hilton Tower Bridge
+address: London, United Kingdom
+---
+name: "Social Games & Virtual Goods Forum 2013"
+start_date: [2013, 1, 23]
+end_date: [2013, 1, 24]
+main_url: "http://virtualgoodsforum.co.uk/"
+twitter_hashtags: ""
+twitter_account: gamesforum
+location: Dexter House
+address: London, United Kingdom
+---
+name: "Indie+"
+start_date: [2012, 10, 29]
+end_date: [2012, 11, 4]
+main_url: "http://indieplus.org/doku.php"
+twitter_hashtags: ""
+twitter_account:
+location:
+---
+name: Conpulsion 2013
+start_date: [2013, 4, 12]
+end_date: [2013, 4, 14]
+main_url: "http://www.geas.org.uk/conpulsion/"
+twitter_hashtags: ""
+twitter_account: Conpulsion
+location: Teviot Row Student Union
+address: Edinburgh, United Kingdom
+---
+name: Dutch Society for Simulation in Healthcare (DSSH) 2012
+start_date: [2012, 3, 28]
+end_date: [2012, 3, 28]
+main_url: "http://www.dssh.nl/en/dssh-congress-2012"
+twitter_hashtags: ""
+twitter_account: dutchsimulation
+location: Jaarbeurs
+address: Utrecht, The Netherlands
+---
+name: Dutch Society for Simulation in Healthcare (DSSH) 2013
+start_date: [2013, 3, 20]
+end_date: [2013, 3, 20]
+main_url: "http://www.dssh.nl/en/dssh-congress-2013"
+twitter_hashtags: ""
+twitter_account: dutchsimulation
+location: Academic Medical Center
+address: Amsterdam, The Netherlands
+---
+name:
+start_date: [2012, 1, 1]
+end_date: [2012, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
 name:
 start_date: [2012, 1, 1]
 end_date: [2012, 1, 1]
