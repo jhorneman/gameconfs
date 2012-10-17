@@ -196,7 +196,7 @@ twitter_account:
 location: "Shanghai Exhibition Center"
 address: "1333 West Nanjing Road, Shanghai, China"
 ---
-name: PAX East
+name: PAX East 2012
 start_date: [2012, 4, 6]
 end_date: [2012, 4, 8]
 main_url: "http://east.paxsite.com/"
@@ -1097,15 +1097,6 @@ twitter_account:
 location: Unknown
 address: London, United Kingdom
 ---
-name: Mobile Games Forum
-start_date: [2012, 1, 25]
-end_date: [2012, 1, 26]
-main_url: "http://www.mobilegamesforum.co.uk/"
-twitter_hashtags: ""
-twitter_account: 
-location: Hilton Tower Bridge
-address: London, United Kingdom
----
 name: London Games Conference
 start_date: [2012, 11, 21]
 end_date: [2012, 11, 21]
@@ -1791,8 +1782,8 @@ location: "Dubai International Convention & Exhibition Center"
 address: Dubai, United Arab Emirates
 ---
 name: Game Connection USA
-start_date: [2012, 3, 25]
-end_date: [2012, 3, 27]
+start_date: [2012, 3, 5]
+end_date: [2012, 3, 7]
 main_url: "http://www.game-connection.com/gameconn/content/gameconnection-america"
 twitter_hashtags: ""
 twitter_account: The_GameCo
@@ -1817,7 +1808,7 @@ twitter_account:
 location: Hilton Tower Bridge
 address: London, United Kingdom
 ---
-name: 2013 Taipei Game Show
+name: Taipei Game Show 2013
 start_date: [2013, 1, 31]
 end_date: [2013, 2, 4]
 main_url: "http://tgs.tca.org.tw/index.php?lang=e"
@@ -2905,9 +2896,9 @@ location: The Conway Hall
 address: London, United Kingdom
 ---
 name: GamesBusiness 2012
-start_date: [2012, 1, 1]
-end_date: [2012, 1, 1]
-main_url: "http://www.brainsbusiness.dk/dk/arrangementer/gamesbusiness_2012.htm"
+start_date: [2012, 10, 2]
+end_date: [2012, 10, 3]
+main_url: "http://www.brainsbusiness.dk/dk/arrangementer/tidligere_arrangementer/gamesbusiness_2012.htm"
 twitter_hashtags: "#gbiz12"
 twitter_account: 
 location: "Aalborg Congress & Culture Centre"
@@ -3056,23 +3047,59 @@ twitter_account: dutchsimulation
 location: Academic Medical Center
 address: Amsterdam, The Netherlands
 ---
-name:
-start_date: [2012, 1, 1]
-end_date: [2012, 1, 1]
-main_url: ""
+name: "GameON: Finance 2013"
+start_date: [2013, 1, 29]
+end_date: [2013, 1, 30]
+main_url: "http://gameonfinance.com/"
 twitter_hashtags: ""
 twitter_account:
-location:
-address:
+location: Toronto Reference Library
+address: Toronto, Ontario, Canada
 ---
-name:
-start_date: [2012, 1, 1]
-end_date: [2012, 1, 1]
-main_url: ""
+name: Game Design Expo 2013
+start_date: [2013, 1, 19]
+end_date: [2013, 1, 20]
+main_url: "http://www.gamedesignexpo.com/"
+twitter_hashtags: ""
+twitter_account: gamedesignexpo
+location: Unknown
+address: Vancouver, British Columbia, Canada
+---
+name: Taipei Game Show 2012
+start_date: [2012, 2, 2]
+end_date: [2012, 2, 6]
+main_url: "http://tgs.tca.org.tw/index.php?lang=e"
 twitter_hashtags: ""
 twitter_account:
-location:
-address:
+location: Nangang Exhibition Hall
+address: Taipei, Taiwan
+---
+name: PAX East 2013
+start_date: [2013, 3, 22]
+end_date: [2013, 3, 24]
+main_url: "http://east.paxsite.com/"
+twitter_hashtags: ""
+twitter_account: Official_PAX
+location: "Boston Convention & Exhibition Center"
+address: Boston, USA
+---
+name: Game Connection USA
+start_date: [2013, 3, 25]
+end_date: [2013, 3, 27]
+main_url: "http://www.game-connection.com/gameconn/content/gameconnection-america"
+twitter_hashtags: ""
+twitter_account: The_GameCo
+location: Unknown
+address: San Francisco, United States
+---
+name: "Imagina 2012"
+start_date: [2012, 2, 7]
+end_date: [2012, 2, 9]
+main_url: "http://www.imagina.mc/2012/content/Home/homeUK.php"
+twitter_hashtags: ""
+twitter_account:
+location: Grimaldi Forum
+address: 10, avenue Princesse Grace MC 9801 MONACO
 ---
 name:
 start_date: [2012, 1, 1]
