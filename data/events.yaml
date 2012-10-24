@@ -223,7 +223,7 @@ twitter_account: Official_PAX
 location: "Seattle Westin Hotel"
 address: "1400 6th Avenue, Seattle, WA 98101"
 ---
-name: D.I.C.E. Summit
+name: D.I.C.E. Summit 2012
 start_date: [2012, 2, 7]
 end_date: [2012, 2, 10]
 main_url: "http://www.dicesummit.org/"
@@ -1970,7 +1970,7 @@ twitter_account:
 location: Le Corum
 address: Montpellier, France
 ---
-name: "The Hide&Seek Weekender Conference"
+name: "The Hide & Seek Weekender Conference"
 start_date: [2012, 9, 17]
 end_date: [2012, 9, 17]
 main_url: "http://weekender.hideandseek.net/conference/"
@@ -2712,7 +2712,7 @@ end_date: [2013, 2, 2]
 main_url: "http://www.igexpo.eu/"
 twitter_hashtags: ""
 twitter_account: NorthExpo
-location: Eesti Näitused
+location: Estonian Fairs Centre
 address: Tallinn, Estonia
 ---
 name: Gamescom 2013
@@ -3100,6 +3100,78 @@ twitter_hashtags: ""
 twitter_account:
 location: Grimaldi Forum
 address: 10, avenue Princesse Grace MC 9801 MONACO
+---
+name: Konsoll
+start_date: [2012, 10, 18]
+end_date: [2012, 10, 21]
+main_url: "http://www.konsoll.org/en/index.php"
+twitter_hashtags: "#konsoll"
+twitter_account:
+location: Bryggens Museum
+address: Bergen, Norway
+---
+name: D.I.C.E. Summit 2103
+start_date: [2013, 2, 5]
+end_date: [2013, 2, 8]
+main_url: "http://www.dicesummit.org/"
+twitter_hashtags: ""
+twitter_account:
+location: "Hard Rock Hotel"
+address: Las Vegas, Nevada, USA
+---
+name: SIGGRAPH 2013
+start_date: [2013, 7, 21]
+end_date: [2013, 7, 25]
+main_url: "http://s2013.siggraph.org/"
+twitter_hashtags: "#SIGGRAPH"
+twitter_account: siggraph
+location: Anaheim Convention Center
+address: Los Angeles, California
+---
+name: Brand Licensing Europe 2012
+start_date: [2012, 10, 16]
+end_date: [2012, 10, 18]
+main_url: "http://www.brandlicensing.eu/"
+twitter_hashtags: "#BLE12"
+twitter_account: bleurope
+location: Olympia
+address: London, United Kingdom
+---
+name: Russian Mobile Congress 2012
+start_date: [2012, 11, 21]
+end_date: [2012, 11, 22]
+main_url: "http://digitaloctober.com/events/livemobile_russian_mobile_congress"
+twitter_hashtags: ""
+twitter_account:
+location: Digital October Center
+address: Moscow, Russia
+---
+name: Winter Nights Mobile Game Conference 2013
+start_date: [2013, 2, 8]
+end_date: [2013, 2, 9]
+main_url: "http://www.wnconf.com/en/"
+twitter_hashtags: ""
+twitter_account:
+location: Sokos Hotel Palace Bridge
+address: St. Petersburg, Russia
+---
+name: Russian Game Developers Conference (KRI) 2012
+start_date: [2012, 5, 18]
+end_date: [2012, 5, 20]
+main_url: "http://rgdconf.com/2012/"
+twitter_hashtags: ""
+twitter_account:
+location: Cosmos Hotel
+address: Moscow, Russia
+---
+name: Igromir 2012
+start_date: [2012, 10, 4]
+end_date: [2012, 10, 7]
+main_url: "http://igromir-expo.ru/"
+twitter_hashtags: ""
+twitter_account: igromir
+location: Crocus Expo
+address: Moscow, Russia
 ---
 name:
 start_date: [2012, 1, 1]
