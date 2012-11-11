@@ -188,8 +188,8 @@ location: "Austin Convention Center"
 address: "500 East Cesar Chavez Street  Austin, TX 78701"
 ---
 name: GDC China
-start_date: [2012, 11, 7]
-end_date: [2012, 11, 12]
+start_date: [2012, 11, 17]
+end_date: [2012, 11, 19]
 main_url: "http://www.gdcchina.com/"
 twitter_hashtags: ""
 twitter_account:
@@ -460,7 +460,7 @@ name: DigiWorld Summit 2012
 start_date: [2012, 11, 14]
 end_date: [2012, 11, 15]
 main_url: "http://www.digiworldsummit.com/2011/pages/?all=actualites&id=79&idl=22"
-twitter_hashtags: ""
+twitter_hashtags: "#DWGS12"
 twitter_account: DigiWorldDATE
 location: Le Corum
 address: Montpellier, France
@@ -777,13 +777,13 @@ location: Raleigh Marriott City Center
 address: 500 Fayetteville Street, Raleigh, North Carolina
 ---
 name: Festival of Games 2013
-start_date: [2013, 4, 25]
-end_date: [2013, 4, 26]
+start_date: [2013, 4, 24]
+end_date: [2013, 4, 25]
 main_url: "http://www.festivalofgames.nl/site/"
 twitter_hashtags: ""
 twitter_account: nlgd
-location: The Jaarbeurs Utrecht
-address: Jaarbeursplein, 3521 AL Utrecht, The Netherlands
+location: De Overkant
+address: Amsterdam, The Netherlands
 ---
 name: Gotland Game Conference 2012
 start_date: [2012, 5, 25]
@@ -2145,7 +2145,7 @@ name: "Practice: Game Design In Detail"
 start_date: [2012, 11, 9]
 end_date: [2012, 11, 11]
 main_url: "http://gamecenter.nyu.edu/practice/index.html"
-twitter_hashtags: ""
+twitter_hashtags: "#PRACTICE2012"
 twitter_account: 
 location: NYU Game Center
 address: New York City, USA
@@ -3172,6 +3172,24 @@ twitter_hashtags: ""
 twitter_account: igromir
 location: Crocus Expo
 address: Moscow, Russia
+---
+name: Toulouse Game Show
+start_date: [2012, 12, 1]
+end_date: [2012, 12, 2]
+main_url: "http://www.toulouse-game-show.fr/fr/accueil.html"
+twitter_hashtags: ""
+twitter_account: tgstoulouse
+location: Parc des Expositions de Toulouse
+address: Toulouse, France
+---
+name: Devmania 2012
+start_date: [2012, 10, 6]
+end_date: [2012, 10, 7]
+main_url: "http://www.devmania.org/"
+twitter_hashtags: ""
+twitter_account:
+location: Haus der Jugend
+address: Mainz, Germany
 ---
 name:
 start_date: [2012, 1, 1]
