@@ -1,22 +1,39 @@
 /* Layout styling */
-div.header h1
+.header h1
 {
 	margin-top: 15px;
 	margin-bottom: 10px;
 }
 
-div.container
+.container
 {
 	padding-left: 1em;
 	padding-right: 1em;
 }
 
-div.footer
+.social .facebook-widget
+{
+    float: right;
+    display: inline-block;
+    margin-top: 7px;
+    height: 22px;
+}
+
+.social .g-plus-widget
+{
+    float: right;
+    display: inline-block;
+    margin-top: 7px;
+    margin-left: 10px;
+    height: 22px;
+}
+
+.footer
 {
 	margin-top: 30px;
 }
 
-div.copyright p
+.copyright p
 {
 	padding-top: 10px;
 	margin-right: 1em;
@@ -40,6 +57,11 @@ div.copyright p
 
 @media (min-width: 481px)
 {
+    body
+    {
+        text-rendering: optimizeLegibility;
+    }
+
 	.short_date
 	{
 		display: none;
