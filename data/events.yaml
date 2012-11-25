@@ -3191,6 +3191,150 @@ twitter_account:
 location: Haus der Jugend
 address: Mainz, Germany
 ---
+name: Minecon 2012
+start_date: [2012, 11, 24]
+end_date: [2012, 11, 25]
+main_url: "https://minecon.mojang.com/"
+twitter_hashtags: "#minecon"
+twitter_account:
+location: Disneyland Resort Paris
+address: Paris, France
+---
+name: PAN Vision Playground 2012
+start_date: [2012, 8, 30]
+end_date: [2012, 8, 30]
+main_url: "http://www.playgroundcph.com/"
+twitter_hashtags: ""
+twitter_account:
+location: Docken
+address: Copenhagen, Denmark
+---
+name: Next Level Conference
+start_date: [2012, 11, 15]
+end_date: [2012, 11, 16]
+main_url: "http://www.nextlevel-conference.org/"
+twitter_hashtags: ""
+twitter_account: nextlevelconf
+location: Various
+address: Cologne, Germany
+---
+name: Mobile Gaming Summit Europe
+start_date: [2012, 12, 6]
+end_date: [2012, 12, 7]
+main_url: "http://www.videogamesintelligence.com/mobile/index.php"
+twitter_hashtags: ""
+twitter_account:
+location: Regents Park Marriott Hotel
+address: London, United Kingdom
+---
+name: NOTGAMES FEST
+start_date: [2011, 8, 15]
+end_date: [2011, 8, 16]
+main_url: "http://www.notgames.colognegamelab.com/"
+twitter_hashtags: ""
+twitter_account: colognegamelab
+location: Cologne Game Lab
+address: Cologne, Germany
+---
+name: Dreamhack Winter 2012
+start_date: [2012, 11, 22]
+end_date: [2012, 11, 25]
+main_url: "http://www.dreamhack.se/dhw12/"
+twitter_hashtags: ""
+twitter_account:
+location: Elmia
+address: Jönköping, Sweden
+---
+name: Deutscher Entwicklerpreis
+start_date: [2012, 12, 12]
+end_date: [2012, 12, 12]
+main_url: "http://www.deutscher-entwicklerpreis.de/"
+twitter_hashtags: ""
+twitter_account:
+location: Altes Kesselhaus
+address: Düsseldorf, Germany
+---
+name: Play12 Potsdam
+start_date: [2012, 12, 6]
+end_date: [2012, 12, 7]
+main_url: "http://creative-gaming.eu/category/play12/play12-potsdam/"
+twitter_hashtags: ""
+twitter_account:
+location: Various
+address: Potsdam, Germany
+---
+name: Playhamburg 12
+start_date: [2012, 6, 19]
+end_date: [2012, 6, 19]
+main_url: "http://creative-gaming.eu/category/play12/playhamburg12/"
+twitter_hashtags: ""
+twitter_account:
+location: Kolbenschmidt Halle 5
+address: Hamburg, Germany
+---
+name: "Videogames and Society Workshop @ CYBERSPACE conference"
+start_date: [2012, 12, 1]
+end_date: [2012, 12, 1]
+main_url: "http://ksvi.mff.cuni.cz/~brom/games.html"
+twitter_hashtags: ""
+twitter_account:
+location: Faculty of Law, Masaryk University
+address: Brno, Czech Republic
+---
+name: Fun and Serious Game Festival 2012
+start_date: [2012, 11, 26]
+end_date: [2012, 12, 2]
+main_url: "http://www.funandseriousgamefestival.com/english/"
+twitter_hashtags: ""
+twitter_account: funandserious
+location: Various
+address: Bilbao, Spain
+---
+name: hóPLAY 2012
+start_date: [2012, 11, 26]
+end_date: [2012, 12, 2]
+main_url: "http://www.alhondigabilbao.com/en/hoplay"
+twitter_hashtags: ""
+twitter_account:
+location: Various
+address: Bilbao, Spain
+---
+name: Artgame Weekend 3
+start_date: [2012, 11, 9]
+end_date: [2012, 11, 11]
+main_url: "http://artgameweekend.com/"
+twitter_hashtags: ""
+twitter_account:
+location: Plaine Images
+address: Tourcoing, France
+---
+name:
+start_date: [2012, 1, 1]
+end_date: [2012, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2012, 1, 1]
+end_date: [2012, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2012, 1, 1]
+end_date: [2012, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
 name:
 start_date: [2012, 1, 1]
 end_date: [2012, 1, 1]
