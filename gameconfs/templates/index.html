@@ -146,6 +146,7 @@
 			{% endfor %}
 		</div>
 	</div>
+    {% if events %}
 	{% for month_group in events|sort(attribute='start_date')|groupby('start_date.month') %}
 	<a name="{{ month_group.grouper }}"></a>
 	<h3>{{ month_group.grouper|nice_month }} {{ year }}</h3>
@@ -164,7 +165,8 @@
 			{% endfor %}
 	  	</tbody>
 	</table>
+    {% endfor %}
 	{% else %}
-	<p>Our database contains no events fulfilling these criteria.</p>
-	{% endfor %}
+    <p>The Gameconfs database contains no events satisfying these criteria.</p>
+    {% endif %}
 {% endblock %}
