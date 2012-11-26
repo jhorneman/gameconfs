@@ -50,6 +50,7 @@
             css_link.appendTo('head');
 
             /******* Load HTML *******/
+            var userId = jQuery("#gameconfs-widget-container").data('user-id');
             var place = jQuery("#gameconfs-widget-container").data('place');
             var nrMonths = jQuery("#gameconfs-widget-container").data('nr-months');
             if (nrMonths === undefined) {
@@ -57,6 +58,9 @@
             }
             console.log(nrMonths);
             var jsonp_url = "widget/v1/data.json?nr-months=" + encodeURIComponent(nrMonths);
+            if (userId) {
+                jsonp_url += "&user-id=" + encodeURIComponent(userId);
+            }
             if (place) {
                 jsonp_url += "&place=" + encodeURIComponent(place);
             }

@@ -1,3 +1,4 @@
+import re
 import os.path
 from datetime import datetime, date, timedelta
 import json
@@ -337,10 +338,40 @@ def filter_by_place(_query, _place_name):
 
 @app.route('/widget/v<int:version>/data.json')
 def widget_data(version):
+    #TODO: Move this to a database or text file or something
+    widget_users = {
+        '2467750341': 'www.gameconfs.com'
+    }
+
+    # Get widget user ID
+    user_id = request.args.get('user-id', None)
+
+    # Fail if no user ID was given
+    if user_id is None:
+        abort(400)
+
+    # Fail if user ID is unknown
+    if user_id not in widget_users:
+        abort(403)
+
+    # Extract domain from request URL
+    regex = re.match("https?://([\w\.:]*)/?", request.url_root)
+    if regex:
+        domain = regex.group(1)
+    else:
+        domain = ""
+
+    # Fail if domain doesn't match UNLESS we're in debug mode and requesting from local machine
+    if not app.debug or domain != '127.0.0.1:5000':
+        if domain != widget_users[user_id]:
+          abort(403)
+
+    # Fail is no JSONP callback name was given
     callback = request.args.get('callback', None)
     if callback is None:
-        abort(404)
+        abort(400)
 
+    # Get number of months, make sure it's a reasonable value
     nr_months = int(request.args.get('nr-months', 3))
     if nr_months < 1:
         nr_months = 1
