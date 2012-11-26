@@ -1628,15 +1628,6 @@ twitter_account:
 location: Union/Pine
 address: Portland, Oregon, United States
 ---
-name: GAME Exhibition
-start_date: [2012, 10, 26]
-end_date: [2013, 1, 18]
-main_url: "http://sciencegallery.com/game"
-twitter_hashtags: ""
-twitter_account: ScienceGallery
-location: Science Gallery
-address: Pearse Street, Dublin, Ireland
----
 name: Mozilla Festival 2012
 start_date: [2012, 11, 9]
 end_date: [2012, 11, 11]
