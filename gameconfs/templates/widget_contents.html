@@ -1,0 +1,34 @@
+{% if place_name %}
+<h2>Game events in the next {{ nr_months }} months in {{ place_name|definite_country }}</h2>
+{% else %}
+<h2>Game events in the next {{ nr_months }} months</h2>
+{% endif %}
+
+{% if events %}
+{% for year_group in events|sort(attribute='start_date')|groupby('start_date.year') %}
+{% for month_group in year_group.list|sort(attribute='start_date')|groupby('start_date.month') %}
+<h3>{{ month_group.grouper|nice_month }} {{ year_group.grouper }}</h3>
+<table class="table table-condensed events">
+    <tbody>
+    {% for event in month_group.list %}
+        {% if event.start_date <= today and today <= event.end_date %}
+        <tr class="today">
+        {% else %}
+        <tr>
+        {% endif %}
+        {% if event.start_date == event.end_date %}
+        <td>{{ event.start_date|short_date }}</td>
+        {% else %}
+        <td>{{ event.start_date|short_date }} - {{ event.end_date|short_date }}</td>
+        {% endif %}
+        <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% endfor %}
+{% endfor %}
+{% else %}
+<p>The Gameconfs database contains no events satisfying these criteria.</p>
+{% endif %}
+<p>Event data provided by <a href="{{ url_for('index') }}">Gameconfs</a>.</p>

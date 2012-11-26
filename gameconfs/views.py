@@ -1,12 +1,12 @@
 import os.path
 from datetime import datetime, date, timedelta
+import json
 import operator
 from flask import render_template, request, redirect, url_for, abort, send_from_directory
 from sqlalchemy.sql.expression import *
 from sqlalchemy import func 
 from gameconfs import app, db
 from gameconfs.models import *
-from gameconfs.forms import EventForm
 from gameconfs.geocoder import all_continents
 from gameconfs.filters import definite_country
 
@@ -47,8 +47,11 @@ def filter_by_place(_query, _continent, _country, _state, _city):
 
 def filter_by_period(_query, _start_year, _start_month, _nr_months = 1):
     period_start, period_end = get_month_period(_start_year, _start_month, _nr_months)
-    return _query.filter(or_(and_(Event.start_date >= period_start, Event.start_date < period_end),
-                  and_(Event.end_date >= period_start, Event.end_date < period_end)))
+    return filter_by_period_start_end(_query, period_start, period_end)
+
+def filter_by_period_start_end(_query, _period_start, _period_end):
+    return _query.filter(or_(and_(Event.start_date >= _period_start, Event.start_date < _period_end),
+        and_(Event.end_date >= _period_start, Event.end_date < _period_end)))
 
 def get_year_range():
     #TODO: Cache this
@@ -63,10 +66,14 @@ def get_year_range():
 @app.route('/<int:year>/<continent_name>/<country_name>/<city_or_state_name>', defaults={'city_name': None})
 @app.route('/<int:year>/<continent_name>/<country_name>/<city_or_state_name>/<city_name>')
 def index(year, continent_name, country_name, city_or_state_name, city_name):
-    # Per default, the year is the current year
     today = date.today()
+
+    # Per default, the year is the current year
+    title = None
     if year is None:
         year = today.year
+        # If no year is set, set a different title
+        title = "Game events all over the world"
 
     # Make sure the year is valid (compared to our data)
     min_year, max_year = get_year_range()
@@ -212,7 +219,8 @@ def index(year, continent_name, country_name, city_or_state_name, city_name):
     # total_nr_countries = Country.query.count()
     # total_nr_events = Event.query.count()
 
-    title = u"Game events {0} in {1}".format(location_title, unicode(year))
+    if not title:
+        title = u"Game events {0} in {1}".format(location_title, unicode(year))
 
     #TODO: Find a nicer way to pass all of these parameters
     return render_template('index.html', events=events, year=year, today=today, selection_level=selection_level,
@@ -287,6 +295,86 @@ def stats():
     return render_template('stats.html', time_stats=time_stats, country_stats=country_stats,
         city_stats=city_stats, total_nr_events=total_nr_events, total_nr_cities=total_nr_cities,
         total_nr_countries=total_nr_countries)
+
+
+@app.route('/widget/v<int:version>/script.js')
+def widget_script(version):
+    return send_from_directory(os.path.join(app.root_path, 'widget'), 'script.js', mimetype='text/javascript')
+
+
+@app.route('/widget/v<int:version>/<filename>.css')
+def widget_css(version, filename):
+    return send_from_directory(os.path.join(app.root_path, 'widget'), filename + '.css', mimetype='text/css')
+
+
+def filter_by_place(_query, _place_name):
+    continent = Continent.query.\
+        filter(Continent.name.like(_place_name)).\
+        first()
+    if continent:
+        return _query.filter(Continent.id == continent.id)
+
+    country = Country.query.\
+        filter(Country.name.like(_place_name)).\
+        first()
+    if country:
+        return _query.filter(Country.id == country.id)
+
+    state = State.query.\
+    filter(State.name.like(_place_name)).\
+    first()
+    if state:
+        return _query.filter(City.state_id == state.id)
+
+    city = City.query.\
+    filter(City.name.like(_place_name)).\
+    first()
+    if city:
+        return _query.filter(City.id == city.id)
+
+    return _query
+
+
+@app.route('/widget/v<int:version>/data.json')
+def widget_data(version):
+    callback = request.args.get('callback', None)
+    if callback is None:
+        abort(404)
+
+    nr_months = int(request.args.get('nr-months', 3))
+    if nr_months < 1:
+        nr_months = 1
+    elif nr_months > 12:
+        nr_months = 12
+
+    place_name = request.args.get('place', None)
+
+    today = date.today()
+    year = today.year
+
+    period_start, period_end = get_month_period(year, today.month, nr_months)
+
+    if place_name:
+        q = Event.query.\
+            join(Event.city).\
+            join(City.country).\
+            join(Country.continent)
+        q = filter_by_place(q, place_name)
+    else:
+        q = Event.query
+    q = filter_by_period_start_end(q, period_start, period_end)
+    events = q.all()
+
+    html = render_template('widget_contents.html', events=events, year=year, today=today,
+        period_start=period_start, period_end=period_end,
+        nr_months=nr_months, place_name=place_name)
+    return "%s ( {'html': %s } )" % (callback, json.dumps(html))
+
+
+@app.route('/widget_test')
+def widget_test():
+    return render_template('widget_test.html')
+
 
 @app.errorhandler(404)
 def page_not_found(error):

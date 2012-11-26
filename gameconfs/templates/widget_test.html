@@ -1,4 +1,20 @@
-{% extends "layout.html" %}
-{% block title %}Widget test{% endblock %}
-{% block content %}
-{% endblock %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Widget test</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="The world's most comprehensive directory of conferences, trade shows and events related to electronic games.">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-responsive.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/datepicker.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/gameconfs.css') }}">
+</head>
+<body>
+<div class="container">
+<p>This is a demonstration of a Gameconfs widget:</p>
+<div id="gameconfs-widget-container" data-nr-months="3" data-place="United Kingdom"></div>
+</div>
+<script src="widget/v1/script.js" type="text/javascript"></script>
+</body>
+</html>
