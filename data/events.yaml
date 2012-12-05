@@ -2437,8 +2437,8 @@ location: Museum of Image and Sound (MIS)
 address: Sao Paulo, Brazil
 ---
 name: Evolve London 2012
-start_date: [2012, 11, 12]
-end_date: [2012, 11, 12]
+start_date: [2012, 12, 11]
+end_date: [2012, 12, 11]
 main_url: "http://www.evolveconference.com/"
 twitter_hashtags: "#evolveconf"
 twitter_account: evolveconf
@@ -3298,6 +3298,42 @@ twitter_hashtags: ""
 twitter_account:
 location: Plaine Images
 address: Tourcoing, France
+---
+name: Adobe Gaming Conference
+start_date: [2012, 12, 5]
+end_date: [2012, 12, 5]
+main_url: "http://www.adobetraining.pro/gamejam/"
+twitter_hashtags: ""
+twitter_account:
+location: Cinema City
+address: Tel Aviv, Israel
+---
+name: Feminists In Games Workshop 2013
+start_date: [2013, 5, 31]
+end_date: [2013, 6, 2]
+main_url: "http://www.feministsingames.com/call-for-papers-feminists-in-games-workshop-2013/"
+twitter_hashtags: ""
+twitter_account:
+location: Center for Digital Media at Simon Fraser University
+address: Vancouver, Canada
+---
+name: BBC Academy Fusion Summit
+start_date: [2012, 11, 27]
+end_date: [2012, 11, 28]
+main_url: "http://www.bbc.co.uk/academy/news/view/academy_fusion_gaming_summit_2012"
+twitter_hashtags: "#fusiongames"
+twitter_account:
+location: Unversity of Salford's Digital Learning Space
+address: Manchester, United Kingdom
+---
+name: International Conference on Serious Games and Applications for Health (SeGAH) 2013
+start_date: [2013, 5, 2]
+end_date: [2013, 5, 3]
+main_url: "http://web.ipca.pt/segah2013/index/"
+twitter_hashtags: ""
+twitter_account:
+location: Vila Galé Marina Hotel
+address: Vilamoura, Portugal
 ---
 name:
 start_date: [2012, 1, 1]
