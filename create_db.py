@@ -2,7 +2,8 @@ import os.path
 import codecs
 import logging
 import yaml
-from gameconfs import create_app, run_app
+from sqlalchemy import MetaData
+from gameconfs import create_app
 from gameconfs.models import *
 from gameconfs.geocoder import GeocodeResults
 from datetime import date
@@ -13,7 +14,12 @@ if __name__ == "__main__":
     (app, db) = create_app("dev")
 
     with app.test_request_context():
-        db.drop_all()
+        # Drop all tables with cascade
+        meta = MetaData(db.engine)
+        meta.reflect()
+        meta.drop_all()
+
+#        db.drop_all()
         db.create_all()
         initialize_continents(db)
 
@@ -64,7 +70,10 @@ if __name__ == "__main__":
         # Save geocoder cache
         GeocodeResults.save_cache("geocoder_cache.json")
 
-        # Load users
+        # Create users
+        app.user_datastore.create_user(email='admin@gameconfs.com', password='password')
+        db.session.commit()
+
 #        with codecs.open('data/users.yaml', 'r', 'utf-8') as f:
 #            for data in yaml.load_all(f):
 #                new_user = User(data["first_name"], data["last_name"], data["email"])
@@ -75,4 +84,4 @@ if __name__ == "__main__":
         print db_session.query(Country).count(), "countries"
         print db_session.query(City).count(), "cities"
         print db_session.query(Event).count(), "events"
-#        print db_session.query(User).count(), "users"
+        print db_session.query(User).count(), "users"
