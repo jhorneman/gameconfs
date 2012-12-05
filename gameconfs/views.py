@@ -4,6 +4,7 @@ from datetime import datetime, date, timedelta
 import json
 import operator
 from flask import render_template, request, redirect, url_for, abort, send_from_directory
+#from flask_principal import Permission, RoleNeed
 from sqlalchemy.sql.expression import *
 from sqlalchemy import func 
 from gameconfs import app, db
@@ -255,8 +256,15 @@ def about():
 def other():
     return render_template('other.html')
 
+
+#admin_permission = Permission(RoleNeed('admin'))
+
 @app.route('/stats')
+#@admin_permission.require(403)
 def stats():
+#    if not admin_permission.can():
+#        abort(403)
+
     # Get time stats
     time_stats = {}
     
@@ -308,7 +316,7 @@ def widget_css(version, filename):
     return send_from_directory(os.path.join(app.root_path, 'widget'), filename + '.css', mimetype='text/css')
 
 
-def filter_by_place(_query, _place_name):
+def filter_by_place_name(_query, _place_name):
     continent = Continent.query.\
         filter(Continent.name.like(_place_name)).\
         first()
@@ -390,7 +398,7 @@ def widget_data(version):
             join(Event.city).\
             join(City.country).\
             join(Country.continent)
-        q = filter_by_place(q, place_name)
+        q = filter_by_place_name(q, place_name)
     else:
         q = Event.query
     q = filter_by_period_start_end(q, period_start, period_end)

@@ -33,6 +33,8 @@ import logging
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
+from flask_principal import Principal
+from flask.ext.security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
 from filters import init_template_filters
 
 
@@ -103,7 +105,14 @@ def create_app(_run_mode):
     import gameconfs.models
     db.init_app(app)
 
-    # Initialize application
+    # Set up Flask-Security
+    # (Hang new variables off app to avoid terrible circular import issues.)
+    app.user_datastore = SQLAlchemyUserDatastore(db, models.User, models.Role)
+    app.security = Security(app, app.user_datastore)
+
+    # Load the Principal extension
+    app.principals = Principal(app)
+
     # Import the views, to apply the decorators which use the global app object.
     import gameconfs.views
     

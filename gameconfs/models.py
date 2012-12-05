@@ -2,30 +2,53 @@ import logging
 from sqlalchemy import Column, Integer, String, ForeignKey, Date, Boolean
 from sqlalchemy.orm import relationship, backref
 import sqlalchemy.orm
+from flask.ext.security import UserMixin, RoleMixin
 from gameconfs import db
 from gameconfs import geocoder
+
 
 logger = logging.getLogger(__name__)
 
 
-class User(db.Model):
-    __tablename__ = 'users'
-    id = Column(Integer, primary_key=True)
-    first_name = Column(String(250), nullable=False)
-    last_name = Column(String(250), nullable=False)
-    email = Column(String(250), unique=True, nullable=False)
+roles_users = db.Table('roles_users',
+    db.Column('user_id', db.Integer(), db.ForeignKey('user.id')),
+    db.Column('role_id', db.Integer(), db.ForeignKey('role.id')))
 
-    def __init__(self, _first_name, _last_name, _email):
-        self.first_name = _first_name
-        self.last_name = _last_name
-        self.email = _email
 
-    @property
-    def display_name(self):
-        return self.first_name + " " + self.last_name
+class Role(db.Model, RoleMixin):
+    id = db.Column(db.Integer(), primary_key=True)
+    name = db.Column(db.String(80), unique=True)
+    description = db.Column(db.String(255))
 
-    def __repr__(self):
-        return '<User %r (%r %r)>' % (self.user_name, self.first_name, self.last_name)
+
+class User(db.Model, UserMixin):
+    id = db.Column(db.Integer, primary_key=True)
+    email = db.Column(db.String(255), unique=True)
+    password = db.Column(db.String(255))
+    active = db.Column(db.Boolean())
+    confirmed_at = db.Column(db.DateTime())
+    roles = db.relationship('Role', secondary=roles_users,
+        backref=db.backref('users', lazy='dynamic'))
+
+
+#class User(db.Model):
+#    __tablename__ = 'users'
+#    id = Column(Integer, primary_key=True)
+#    first_name = Column(String(250), nullable=False)
+#    last_name = Column(String(250), nullable=False)
+#    email = Column(String(250), unique=True, nullable=False)
+#
+#    def __init__(self, _first_name, _last_name, _email):
+#        self.first_name = _first_name
+#        self.last_name = _last_name
+#        self.email = _email
+#
+#    @property
+#    def display_name(self):
+#        return self.first_name + " " + self.last_name
+#
+#    def __repr__(self):
+#        return '<User %r (%r %r)>' % (self.user_name, self.first_name, self.last_name)
 
 
 class City(db.Model):
