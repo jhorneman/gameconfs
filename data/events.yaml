@@ -1813,7 +1813,7 @@ start_date: [2013, 2, 2]
 end_date: [2013, 2, 2]
 main_url: "http://www.carolinagamessummit.com/index.php/"
 twitter_hashtags: ""
-twitter_account: 
+twitter_account: cgsummit
 location: Wayne Community College
 address: Goldsboro, North Carolina, United States
 ---
@@ -3344,9 +3344,99 @@ twitter_account: playfulartsfest
 location: "Art@DeBoo"
 address: Den Bosch, The Netherlands
 ---
+name: Game Marketing Summit
+start_date: [2013, 4, 17]
+end_date: [2013, 4, 17]
+main_url: "http://www.gamemarketingsummit.com"
+twitter_hashtags: ""
+twitter_account:
+location: Yerba Buena Center For The Arts
+address: San Francisco, USA
+---
+name: Adobe MAX 2013
+start_date: [2013, 5, 4]
+end_date: [2013, 5, 8]
+main_url: "http://max.adobe.com"
+twitter_hashtags: "#adobemax"
+twitter_account: AdobeMAX
+location: Los Angeles Convention Center
+address: Los Angeles, USA
+---
+name: Game Paris Talents
+start_date: [2012, 11, 23]
+end_date: [2012, 11, 23]
+main_url: "http://www.game-paris.com/en/games-paris-talents/"
+twitter_hashtags: ""
+twitter_account:
+location: La Gaîté Lyrique
+address: Paris, France
+---
+name: Indiecade East
+start_date: [2013, 2, 16]
+end_date: [2013, 2, 17]
+main_url: "http://www.indiecade.com/2013/east_info/"
+twitter_hashtags: ""
+twitter_account: IndieCade
+location: Museum of the Moving Image and others
+address: New York City, USA
+---
+name: Entertainment Software and Cognitive Neurotherapeutics Society (ESCoNS) 2
+start_date: [2013, 3, 15]
+end_date: [2013, 3, 17]
+main_url: "http://www.escons.org"
+twitter_hashtags: ""
+twitter_account: esconsmtg
+location: USC School of Cinematic Arts
+address: Los Angeles, USA
+---
+name: CHI 2013 Workshop Designing Gamification
+start_date: [2013, 4, 28]
+end_date: [2013, 4, 28]
+main_url: "http://gamification-research.org/chi2013/"
+twitter_hashtags: "#chi2013"
+twitter_account: gamifyresearch
+location: Palais de Congrès de Paris
+address: Paris, France
+---
+name: GameHorizon Conference 2013
+start_date: [2013, 5, 8]
+end_date: [2013, 5, 9]
+main_url: "http://www.gamehorizonconference.com"
+twitter_hashtags: ""
+twitter_account: gamehorizon
+location: Unknown
+address: Newcastle, United Kingdom
+---
+name: Cloud Gaming Europe 2013
+start_date: [2013, 2, 21]
+end_date: [2013, 2, 22]
+main_url: "http://www.cgconfeurope.com/"
+twitter_hashtags: ""
+twitter_account:
+location: Thistle Marble Arch
+address: London, United Kingdom
+---
+name: Eurogamer Expo 2013
+start_date: [2013, 09, 26]
+end_date: [2013, 09, 29]
+main_url: "http://www.eurogamer.net/expo/"
+twitter_hashtags: "#eurogamerexpo #egxp #EGExpo"
+twitter_account:
+location: Earls Court
+address: London, United Kingdom
+---
+name: Learning Without Frontiers 13
+start_date: [2013, 6, 17]
+end_date: [2013, 6, 21]
+main_url: "http://www.learningwithoutfrontiers.com/lwf13/"
+twitter_hashtags: "#lwf13"
+twitter_account:
+location: The Barbican
+address: London, United Kingdom
+---
 name:
-start_date: [2012, 1, 1]
-end_date: [2012, 1, 1]
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
 main_url: ""
 twitter_hashtags: ""
 twitter_account:
@@ -3354,8 +3444,8 @@ location:
 address:
 ---
 name:
-start_date: [2012, 1, 1]
-end_date: [2012, 1, 1]
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
 main_url: ""
 twitter_hashtags: ""
 twitter_account:
@@ -3363,8 +3453,17 @@ location:
 address:
 ---
 name:
-start_date: [2012, 1, 1]
-end_date: [2012, 1, 1]
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
 main_url: ""
 twitter_hashtags: ""
 twitter_account:
