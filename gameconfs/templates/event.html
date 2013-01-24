@@ -1,6 +1,5 @@
 {% extends "layout.html" %}
 {% block title %}{{ event.name }} - Gameconfs{% endblock %}
-{% block head_css %}    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap-editable.css') }}">{% endblock %}
 {% block content %}
   <div itemscope itemtype="http://schema.org/Event">
     <h2 itemprop="name" id="event_name">{{ event.name }}</h2>
@@ -58,4 +57,3 @@
     </table>
   </div>
 {% endblock %}
-{% block jscode %}  <script src="{{ url_for('static', filename='js/bootstrap-editable.js') }}" type="text/javascript"></script>{% endblock %}
