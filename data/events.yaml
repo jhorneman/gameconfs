@@ -2941,8 +2941,8 @@ location: EventCity
 address: Manchester, United Kingdom
 ---
 name: Gamer Technology Law
-start_date: [2012, 10, 3]
-end_date: [2012, 10, 4]
+start_date: [2011, 10, 3]
+end_date: [2011, 10, 4]
 main_url: "http://www.lawseminars.com/detail.php?SeminarCode=11GAMEWA"
 twitter_hashtags: "#LSIGame"
 twitter_account:
@@ -2980,7 +2980,7 @@ name: "Mobile Games Forum (MGF) 2013"
 start_date: [2013, 1, 23]
 end_date: [2013, 1, 24]
 main_url: "http://www.mobilegamesforum.co.uk/mobile-games/"
-twitter_hashtags: ""
+twitter_hashtags: "#MGF2013"
 twitter_account: gamesforum
 location: Dexter House
 address: London, United Kingdom
@@ -3433,6 +3433,150 @@ twitter_hashtags: "#lwf13"
 twitter_account:
 location: The Barbican
 address: London, United Kingdom
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
 ---
 name:
 start_date: [2013, 1, 1]
