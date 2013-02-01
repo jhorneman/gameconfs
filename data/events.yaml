@@ -97,14 +97,14 @@ twitter_account: ECGameCon
 location: "Raleigh Convention Center"
 address: "500 S. Salisbury St. Raleigh, NC 27601"
 ---
-name: Social Gaming Summit
+name: Social Gaming Summit Berlin
 start_date: [2012, 5, 23]
 end_date: [2012, 5, 24]
 main_url: "http://www.mediabistro.com/socialgamingsummit/"
 twitter_hashtags: "#sgsconf"
 twitter_account: socialtimes
-location: "Kalkscheine"
-address: "Johannisstr. 2, 10117 Berlin"
+location: Kalkscheune
+address: Berlin, Germany
 ---
 name: Casual Connect Asia 2012
 start_date: [2012, 5, 22]
@@ -1766,7 +1766,7 @@ address: Milan, Italy
 name: Dubai World Game Expo 2012
 start_date: [2012, 11, 27]
 end_date: [2012, 11, 28]
-main_url: "http://www.gameexpo.ae/index.php"
+main_url: "http://www.gameexpo.ae/p"
 twitter_hashtags: ""
 twitter_account: 
 location: "Dubai International Convention & Exhibition Center"
@@ -2754,10 +2754,10 @@ address: Stockholm, Sweden
 name: Games for Health Conference 2013
 start_date: [2013, 6, 26]
 end_date: [2013, 6, 28]
-main_url: "http://www.gamesforhealth.org/index.php"
+main_url: "http://gamesforhealthblog.wordpress.com/conferences/conf-2013/"
 twitter_hashtags: ""
 twitter_account:
-location: Unknown
+location: Back Bay Events Center
 address: Boston, Massachusetts, USA
 ---
 name: AIIDE 2012
@@ -3101,7 +3101,7 @@ twitter_account:
 location: Bryggens Museum
 address: Bergen, Norway
 ---
-name: D.I.C.E. Summit 2103
+name: D.I.C.E. Summit 2013
 start_date: [2013, 2, 5]
 end_date: [2013, 2, 8]
 main_url: "http://www.dicesummit.org/"
@@ -3372,7 +3372,7 @@ location: La Gaîté Lyrique
 address: Paris, France
 ---
 name: Indiecade East
-start_date: [2013, 2, 16]
+start_date: [2013, 2, 15]
 end_date: [2013, 2, 17]
 main_url: "http://www.indiecade.com/2013/east_info/"
 twitter_hashtags: ""
@@ -3596,15 +3596,6 @@ twitter_account: MCVawards
 location: Lancaster London Hotel
 address: London, United Kingdom
 ---
-name: Lift Conference 2013
-start_date: [2013, 2, 6]
-end_date: [2013, 2, 8]
-main_url: "http://liftconference.com/lift13"
-twitter_hashtags: "#lift13"
-twitter_account: liftconference
-location: CICG
-address: Geneva, Switzerland
----
 name: SaltCON
 start_date: [2013, 2, 15]
 end_date: [2013, 2, 17]
@@ -3776,32 +3767,311 @@ twitter_account: Apps_World
 location: Earls Court
 address: London, United Kingdom
 ---
-name:
-start_date: [2013, 1, 1]
-end_date: [2013, 1, 1]
-main_url: ""
+name: Audio For Games
+start_date: [2013, 2, 6]
+end_date: [2013, 2, 8]
+main_url: "http://www.audioforgames.net"
 twitter_hashtags: ""
-twitter_account:
-location:
-address:
+twitter_account: aesgames
+location: 2 Carlton House Terrace
+address: London, United Kingdom
 ---
-name:
-start_date: [2013, 1, 1]
-end_date: [2013, 1, 1]
-main_url: ""
+name: Norwegian Games Conference
+start_date: [2013, 2, 7]
+end_date: [2013, 2, 7]
+main_url: "http://www.norwegiangameconference.no"
 twitter_hashtags: ""
 twitter_account:
-location:
-address:
+location: Hedmark University College
+address: Hamar, Norway
 ---
-name:
-start_date: [2013, 1, 1]
-end_date: [2013, 1, 1]
-main_url: ""
+name: Play4Agile 2013
+start_date: [2013, 2, 22]
+end_date: [2013, 2, 25]
+main_url: "http://p4a13.wordpress.com"
+twitter_hashtags: ""
+twitter_account: play4agile
+location: Seminarzentrum Rückersbach
+address: Rückersbach, Germany
+---
+name: Flash Gaming Summit (FGS) 5
+start_date: [2013, 3, 24]
+end_date: [2013, 3, 24]
+main_url: "http://www.flashgamingsummit.com"
+twitter_hashtags: "#FGS5"
+twitter_account: FGSummit
+location: Julia Morgan Ballroom
+address: San Francisco, USA
+---
+name: Guangzhou Game Show 2013
+start_date: [2013, 4, 3]
+end_date: [2013, 4, 5]
+main_url: "http://en.gzgameshow.com/index.asp"
 twitter_hashtags: ""
 twitter_account:
-location:
-address:
+location: China Import and Export Fair pazhou
+address: Guangzhou, China
+---
+name: DMW Games
+start_date: [2013, 4, 18]
+end_date: [2013, 4, 19]
+main_url: "http://dmwgames.com"
+twitter_hashtags: ""
+twitter_account: dmwnews
+location: Hollywood Roosevelt Hotel
+address: Los Angeles, USA
+---
+name: Mobile Gaming USA West
+start_date: [2013, 5, 14]
+end_date: [2013, 5, 15]
+main_url: "http://www.videogamesintelligence.com/mobile-gaming-west/"
+twitter_hashtags: ""
+twitter_account:
+location: The Hotel Kabuki
+address: San Francisco, USA
+---
+name: "[a]list summit San Francisco"
+start_date: [2013, 5, 13]
+end_date: [2013, 5, 13]
+main_url: "http://www.videogamesintelligence.com/mobile-gaming-west/a-list.php"
+twitter_hashtags: ""
+twitter_account: alistdaily
+location: The Hotel Kabuki
+address: San Francisco, USA
+---
+name: AnDevCon Boston
+start_date: [2013, 5, 28]
+end_date: [2013, 5, 31]
+main_url: "http://www.andevcon.com/AndevCon_boston/"
+twitter_hashtags: ""
+twitter_account: AnDevCon
+location: Westin Waterfront Hotel
+address: Boston, USA
+---
+name: "Social Gaming & Gambling Summit Berlin"
+start_date: [2013, 5, 14]
+end_date: [2013, 5, 15]
+main_url: "http://socialgamingsummit.de"
+twitter_hashtags: "#sgsconf"
+twitter_account: socialtimes
+location: Kalkscheune
+address: Berlin, Germany
+---
+name: Web Game Conference
+start_date: [2013, 6, 19]
+end_date: [2013, 6, 20]
+main_url: "http://www.webgameconf.eu/"
+twitter_hashtags: ""
+twitter_account: webgameconf
+location: La Gaîté Lyrique
+address: Paris, France
+---
+name: Games for Change Festival
+start_date: [2013, 6, 17]
+end_date: [2013, 6, 19]
+main_url: "http://gamesforchange.org/festival2013/"
+twitter_hashtags: "#G4C13"
+twitter_account: G4C
+location: New World Stages
+address: New York, NY
+---
+name: "Videogame Cultures and the Future of Interactive Entertainment"
+start_date: [2013, 7, 14]
+end_date: [2013, 7, 16]
+main_url: "http://www.inter-disciplinary.net/critical-issues/cyber/videogame-cultures-the-future-of-interactive-entertainment/"
+twitter_hashtags: ""
+twitter_account:
+location: Mansfield College
+address: Oxford, United Kingdom
+---
+name: CGAMES USA 2013
+start_date: [2013, 7, 30]
+end_date: [2013, 8, 1]
+main_url: "http://cgamesusa.com"
+twitter_hashtags: ""
+twitter_account:
+location: The Galt House Hotel
+address: Louisville, Kentucky, USA
+---
+ame: China Joy
+start_date: [2013, 7, 25]
+end_date: [2013, 7, 28]
+main_url: "http://en.chinajoy.net/"
+twitter_hashtags: ""
+twitter_account:
+location: Kerry Hotel Pudong
+address: Shanghai, China
+---
+name: CGDC China Game Developers Conference
+start_date: [2013, 7, 24]
+end_date: [2013, 7, 26]
+main_url: "http://en.chinagdc.com.cn"
+twitter_hashtags: ""
+twitter_account:
+location: Kerry Hotel Pudong
+address: Shanghai, China
+---
+name: PLAY
+start_date: [2013, 8, 15]
+end_date: [2013, 8, 18]
+main_url: "http://play.com.ec"
+twitter_hashtags: ""
+twitter_account: FeriaPlay2013
+location: Guayaquil Convention Center
+address: Guayaquil, Ecuador
+---
+name: Serious Play Conference
+start_date: [2013, 8, 20]
+end_date: [2013, 8, 22]
+main_url: "http://www.seriousplayconference.com/"
+twitter_hashtags: ""
+twitter_account:
+location: DigiPen Institute of Technology
+address: Redmond, USA
+---
+name: 5th International Conference on Games and Virtual Worlds for Serious Applications (VS-Games) 2013
+start_date: [2013, 9, 11]
+end_date: [2013, 9, 13]
+main_url: "http://www.vsgames2013.org"
+twitter_hashtags: ""
+twitter_account:
+location: Bournemouth University
+address: Bournemouth, United Kingdom
+---
+name: Boston Festival of Indie Games
+start_date: [2013, 9, 14]
+end_date: [2013, 9, 14]
+main_url: "http://bostonfig.com/"
+twitter_hashtags: "#bostonFIG"
+twitter_account: bostonfig
+location: "MIT Stratton Student Center"
+address: Cambridge, Massachusetts, USA
+---
+name: International Games Innovation Conference (IGIC) 2013
+start_date: [2013, 9, 23]
+end_date: [2013, 9, 25]
+main_url: "http://ice-gic.ieee-cesoc.org/2010/index.php"
+twitter_hashtags: ""
+twitter_account:
+location: Unknown
+address: Vancouver, Canada
+---
+name: LOGIN Conference 2013
+start_date: [2012, 9, 26]
+end_date: [2012, 9, 27]
+main_url: "http://www.loginconference.com/"
+twitter_hashtags: "#login2013"
+twitter_account: loginconference
+location: The Regency Center
+address: San Francisco, California
+---
+name: Sociality Rocks Kyiv
+start_date: [2013, 9, 25]
+end_date: [2013, 9, 26]
+main_url: "http://en.socialityrocks.com/"
+twitter_hashtags: ""
+twitter_account: socialityrocks
+location: "Rus Hotel"
+address: Kiev, Ukraine
+---
+name: China Game Business COnference
+start_date: [2013, 7, 24]
+end_date: [2013, 7, 26]
+main_url: "http://en.chinagbc.com.cn"
+twitter_hashtags: ""
+twitter_account:
+location: Jumeirah Himarayas Hotel Shanghai
+address: Shanghai, China
+---
+name: GAMEFEST feria videjuegos Madrid 2013
+start_date: [2013, 9, 25]
+end_date: [2013, 9, 29]
+main_url: "http://www.gamefest.es/"
+twitter_hashtags: ""
+twitter_account:
+location: Unknown
+address: Madrid, Spain
+---
+name: Brasil Game Show
+start_date: [2013, 10, 25]
+end_date: [2013, 10, 29]
+main_url: "http://www.brasilgameshow.com.br/"
+twitter_hashtags: ""
+twitter_account:
+location: Expo Center Norte
+address: São Paulo
+---
+name: Games For Health Europe
+start_date: [2013, 10, 28]
+end_date: [2013, 10, 29]
+main_url: "http://www.gamesforhealtheurope.com/"
+twitter_hashtags: ""
+twitter_account: gfheu
+location: "Muziekgebouw aan 't IJ"
+address: Amsterdam, Netherlands
+---
+name: 3D Gaming Summit
+start_date: [2012, 9, 19]
+end_date: [2012, 9, 20]
+main_url: "http://www.3dgamingsummit.com"
+twitter_hashtags: ""
+twitter_account:
+location: "Hollywood & Highland Center"
+address: Hollywood, USA
+---
+name: GamesBeat 2013
+start_date: [2013, 10, 29]
+end_date: [2013, 10, 30]
+main_url: "http://venturebeat.com/events/gamesbeat2013/"
+twitter_hashtags: ""
+twitter_account:
+location: Hotel Sofitel
+address: Redwood City, USA
+---
+name: Jakarta Game Show 2012
+start_date: [2012, 10, 31]
+end_date: [2012, 11, 4]
+main_url: "http://www.jakartagameshow.com/2012/"
+twitter_hashtags: ""
+twitter_account: GamesExpo
+location: Jakarta Convention Center
+address: Jakarta, Indonesia
+---
+name: Swedish Game Conference 2012
+start_date: [2012, 10, 3]
+end_date: [2012, 10, 5]
+main_url: "http://www.tgin.se/node/21"
+twitter_hashtags: ""
+twitter_account:
+location: Gothia Science Park and the University of Skövde
+address: Skövde, Sweden
+---
+name: Dubai World Game Expo
+start_date: [2013, 11, 18]
+end_date: [2013, 11, 19]
+main_url: "http://www.gameexpo.ae"
+twitter_hashtags: ""
+twitter_account:
+location: "Dubai International Convention & Exhibition Center"
+address: Dubai, United Arab Emirates
+---
+name: SIGGRAPH ASIA 2013
+start_date: [2013, 11, 19]
+end_date: [2013, 11, 22]
+main_url: "http://www.siggraph.org/asia2013/"
+twitter_hashtags: "#SIGGRAPH"
+twitter_account: siggraph
+location: Hong Kong Convention and Exhibition Centre
+address: Hongkong, China
+---
+name: Digital Kids Conference
+start_date: [2013, 2, 12]
+end_date: [2013, 2, 13]
+main_url: "http://digitalkidscon.com"
+twitter_hashtags: ""
+twitter_account:
+location: Javits Convention Center
+address: New York, USA
 ---
 name:
 start_date: [2013, 1, 1]
