@@ -1,5 +1,5 @@
-from flaskext.wtf import Form, TextField, TextAreaField, Required, ValidationError
-from flaskext.wtf.html5 import URLField, DateField
+from flask.ext.wtf import Form, TextField, TextAreaField, Required, ValidationError
+from flask.ext.wtf.html5 import URLField, DateField
 from datetime import date
 
 class EventForm(Form):
