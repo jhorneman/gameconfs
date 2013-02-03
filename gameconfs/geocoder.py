@@ -173,8 +173,12 @@ class GeocodeResults(object):
 
                 component = self.find_address_component(city_component_types_per_country.get(self.country, default_city_component_type))
                 if not component:
-                    # Needed for Hull, Quebec...
-                    component = self.find_address_component("sublocality")
+                    # Needed for Hull, Quebec and Hong Kong
+                    # TODO: Refactor - can this loop and the dictionary above be combined?
+                    for type in ["sublocality", "political"]:
+                        component = self.find_address_component(type)
+                        if component:
+                            break
                 self.city = component["long_name"]
         else:
             logger.error("Geocoding query '%s': Status was '%s' instead of 'OK'" % (self.query.decode('ascii', 'replace'), results["status"]))
