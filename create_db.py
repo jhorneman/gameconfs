@@ -71,7 +71,9 @@ if __name__ == "__main__":
         GeocodeResults.save_cache("geocoder_cache.json")
 
         # Create users
-        app.user_datastore.create_user(email='admin@gameconfs.com', password='password')
+        admin_role = app.user_datastore.create_role(name='admin')
+        user = app.user_datastore.create_user(name='Jurie', email='admin@gameconfs.com', password='password')
+        app.user_datastore.add_role_to_user(user, admin_role)
         db.session.commit()
 
 #        with codecs.open('data/users.yaml', 'r', 'utf-8') as f:
