@@ -76,8 +76,8 @@ end_date: [2012, 6, 28]
 main_url: "http://www.gamehorizonconference.com/"
 twitter_hashtags: ""
 twitter_account: gamehorizon
-location: "The Sage Gateshead"
-address: "St Mary's Square, Gateshead Quays, Gateshead"
+location: "The Sage"
+address: Newcastle, United Kingdom
 ---
 name: Edinburgh Interactive 2012
 start_date: [2012, 8, 9]
@@ -3663,7 +3663,7 @@ name: Mobile Gaming USA East
 start_date: [2013, 1, 30]
 end_date: [2013, 1, 31]
 main_url: "http://www.mobilegamingusa.com/mobile-gaming-east/"
-twitter_hashtags: ""
+twitter_hashtags: "#MGEast"
 twitter_account:
 location: The New Yorker Hotel
 address: New York, USA
@@ -3734,10 +3734,10 @@ address: Singapore
 name: "Animex International Festival of Animation & Computer Games 2013"
 start_date: [2013, 2, 18]
 end_date: [2013, 2, 22]
-main_url: ""
+main_url: "http://animex.tees.ac.uk"
 twitter_hashtags: ""
 twitter_account: AnimexFestival
-location: Unknown
+location: Teesside University
 address: Middlesbrough, United Kingdom
 ---
 name: Multiplay Insomnia Gaming Festival
@@ -4072,6 +4072,96 @@ twitter_hashtags: ""
 twitter_account:
 location: Javits Convention Center
 address: New York, USA
+---
+name: LOGIN Conference 2013
+start_date: [2013, 09, 26]
+end_date: [2013, 09, 27]
+main_url: "http://www.loginconference.com/"
+twitter_hashtags: "#login2013"
+twitter_account: loginconference
+location: The Lodge at The Regency Center
+address: San Francisco, California
+---
+name: GameHorizon Conference 2013
+start_date: [2013, 5, 8]
+end_date: [2013, 5, 9]
+main_url: "http://www.gamehorizonconference.com/"
+twitter_hashtags: ""
+twitter_account: gamehorizon
+location: "The Sage"
+address: Newcastle, United Kingdom
+---
+name: KublaCon
+start_date: [2013, 5, 24]
+end_date: [2013, 5, 27]
+main_url: "http://www.kublacon.com"
+twitter_hashtags: ""
+twitter_account: kublacon
+location: Hyatt Regency SFO
+address: San Francisco, USA
+---
+name: Eurographics 2013
+start_date: [2013, 5, 6]
+end_date: [2013, 5, 10]
+main_url: "http://eg2013.udg.edu/"
+twitter_hashtags: "#EG2013"
+twitter_account:
+location: The Technological Parc of the Universitat de Girona
+address: Girona, Spain
+---
+name: Digital Content Monetisation Europe
+start_date: [2013, 1, 29]
+end_date: [2013, 1, 31]
+main_url: "http://www.dcm-eu.com"
+twitter_hashtags: ""
+twitter_account: clariondcm
+location: Jumeirah Carlton Tower
+address: London, United Kingdom
+---
+name: Game In Scotland 2013
+start_date: [2013, 3, 9]
+end_date: [2013, 3, 9]
+main_url: "http://www.gameinscotland.com/"
+twitter_hashtags: ""
+twitter_account:
+location: Fat Sams Nightclub
+address: Dundee, United Kingdom
+---
+name: Learning Without Frontiers
+start_date: [2013, 6, 19]
+end_date: [2013, 6, 21]
+main_url: "https://www.barbican.org.uk/eticketing/event-detail.asp?ID=14654"
+twitter_hashtags: ""
+twitter_account:
+location: Barbican Hall
+address: London, United Kingdom
+---
+name: London Games Conference
+start_date: [2013, 11, 13]
+end_date: [2013, 11, 13]
+main_url: "http://www.londongamesconference.com/"
+twitter_hashtags: "#londongamesconf"
+twitter_account: londongamesconference
+location: One Wimpole Street
+address: 1 Wimpole Street, London, United Kingdom
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
 ---
 name:
 start_date: [2013, 1, 1]
