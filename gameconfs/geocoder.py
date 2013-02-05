@@ -38,7 +38,7 @@ countries_without_cities = ["Singapore"]
 
 default_city_component_type = "locality"
 city_component_types_per_country = {"Vietnam": "administrative_area_level_1", "Japan": "administrative_area_level_1",
-    "Singapore": "country", "Taiwan": "administrative_area_level_2"}
+                                    "Singapore": "country", "Taiwan": "administrative_area_level_2"}
 
 
 if __name__ == "__main__":
@@ -85,7 +85,7 @@ class GeocodeResults(object):
             self.query = _query.encode('utf-8', 'replace')
         else:
             self.query = _query
-        #: True if geocoding succeeded
+            #: True if geocoding succeeded
         self.is_valid = False
         #: the full formatted address
         self.formatted_address = "<Unknown>"
@@ -171,10 +171,16 @@ class GeocodeResults(object):
                     if (self.state != component["short_name"]):
                         self.state_abbr = component["short_name"]
 
-                component = self.find_address_component(city_component_types_per_country.get(self.country, default_city_component_type))
+                city_component_type = city_component_types_per_country.get(self.country, default_city_component_type)
+                component = self.find_address_component(city_component_type)
                 if not component:
-                    # Needed for Hull, Quebec...
-                    component = self.find_address_component("sublocality")
+                    # Needed for very special cases (Hull, Quebec, Vilamoura, Portgual, and Hong Kong)
+                    for type in ["sublocality", "political"]:
+                        component = self.find_address_component(type)
+                        if component:
+                            break
+                    else:
+                        self.log_warning("Couldn't find an address component")
                 self.city = component["long_name"]
         else:
             logger.error("Geocoding query '%s': Status was '%s' instead of 'OK'" % (self.query.decode('ascii', 'replace'), results["status"]))
@@ -186,7 +192,6 @@ class GeocodeResults(object):
         if len(result) > 0:
             return result[0]
         else:
-            self.log_warning("Couldn't find an address component of type %s" % _type)
             return None
 
     def log_warning(self, _msg):
@@ -219,9 +224,9 @@ class GeocodeResults(object):
 
 if __name__ == "__main__":
     for query in ["Naturhistorisches Museum in Vienna, Austria", "One Wimpole Street, London",
-        "Luftkastellet, Malmö", "Moscone, 747 Howard Street, San Francisco", "Maceió, Alagoas, Brazil",
-        "Shanghai International Convention Center, Shanghai", "Adelaide Convention Centre, Adelaide",
-        "Koelnmesse, Köln, Germany"]:
+                  "Luftkastellet, Malmö", "Moscone, 747 Howard Street, San Francisco", "Maceió, Alagoas, Brazil",
+                  "Shanghai International Convention Center, Shanghai", "Adelaide Convention Centre, Adelaide",
+                  "Koelnmesse, Köln, Germany"]:
         g = GeocodeResults(query)
         print unicode(g)
         print
