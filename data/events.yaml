@@ -3401,10 +3401,10 @@ address: Paris, France
 name: GameHorizon Conference 2013
 start_date: [2013, 5, 8]
 end_date: [2013, 5, 9]
-main_url: "http://www.gamehorizonconference.com"
+main_url: "http://www.gamehorizonconference.com/"
 twitter_hashtags: ""
 twitter_account: gamehorizon
-location: Unknown
+location: "The Sage"
 address: Newcastle, United Kingdom
 ---
 name: Cloud Gaming Europe 2013
@@ -4082,14 +4082,14 @@ twitter_account: loginconference
 location: The Lodge at The Regency Center
 address: San Francisco, California
 ---
-name: GameHorizon Conference 2013
-start_date: [2013, 5, 8]
-end_date: [2013, 5, 9]
-main_url: "http://www.gamehorizonconference.com/"
+name: Russian Game Developers Conference (KRI) 2013
+start_date: [2013, 5, 15]
+end_date: [2013, 5, 17]
+main_url: "http://rgdconf.com/2013/"
 twitter_hashtags: ""
-twitter_account: gamehorizon
-location: "The Sage"
-address: Newcastle, United Kingdom
+twitter_account:
+location: Cosmos Hotel
+address: Moscow, Russia
 ---
 name: KublaCon
 start_date: [2013, 5, 24]
@@ -4233,15 +4233,6 @@ twitter_hashtags: ""
 twitter_account:
 location: Unknown
 address: San Francisco
----
-name: Russian Game Developers Conference (KRI) 2013
-start_date: [2013, 5, 15]
-end_date: [2013, 5, 17]
-main_url: "http://rgdconf.com/2013/"
-twitter_hashtags: ""
-twitter_account:
-location: Cosmos Hotel
-address: Moscow, Russia
 ---
 name:
 start_date: [2013, 1, 1]
