@@ -110,7 +110,7 @@ name: Casual Connect Asia 2012
 start_date: [2012, 5, 22]
 end_date: [2012, 5, 24]
 main_url: "http://asia.casualconnect.org/"
-twitter_hashtags: ""
+twitter_hashtags: "#casualconnect"
 twitter_account:
 location: "Suntec 3rd Floor"
 address: "1 Raffles Boulevard, Suntec City, Singapore"
@@ -119,7 +119,7 @@ name: Casual Connect Seattle 2012
 start_date: [2012, 7, 24]
 end_date: [2012, 7, 26]
 main_url: "http://seattle.casualconnect.org/"
-twitter_hashtags: ""
+twitter_hashtags: "#casualconnect"
 twitter_account:
 location: "Benaroya Hall & Triple Door"
 address: "200 University St, Seattle, WA 98101"
@@ -128,7 +128,7 @@ name: Casual Connect Kyiv 2012
 start_date: [2012, 10, 24]
 end_date: [2012, 10, 26]
 main_url: "http://kyiv.casualconnect.org/"
-twitter_hashtags: ""
+twitter_hashtags: "#casualconnect"
 twitter_account:
 location: "Rus Hotel"
 address: "4, Hospitalna Street Kiev, 01601, Ukraine"
@@ -1821,7 +1821,7 @@ name: Casual Connect Europe 2012
 start_date: [2012, 2, 7]
 end_date: [2012, 2, 9]
 main_url: "http://europe.casualconnect.org/"
-twitter_hashtags: ""
+twitter_hashtags: "#casualconnect"
 twitter_account: 
 location: Congress Center
 address: Marseiller Straße 1, 20355, Hamburg, Germany
@@ -2620,7 +2620,7 @@ name: Casual Connect Europe 2013
 start_date: [2013, 2, 12]
 end_date: [2013, 2, 14]
 main_url: "http://europe.casualconnect.org/"
-twitter_hashtags: ""
+twitter_hashtags: "#casualconnect"
 twitter_account: 
 location: Congress Center
 address: Marseiller Straße 1, 20355, Hamburg, Germany
@@ -2629,7 +2629,7 @@ name: Casual Connect USA 2013
 start_date: [2013, 7, 30]
 end_date: [2013, 8, 1]
 main_url: "http://seattle.casualconnect.org/"
-twitter_hashtags: ""
+twitter_hashtags: "#casualconnect"
 twitter_account:
 location: "Hilton San Francisco Union Square"
 address: "San Francisco, USA"
@@ -3141,7 +3141,7 @@ name: Winter Nights Mobile Game Conference 2013
 start_date: [2013, 2, 8]
 end_date: [2013, 2, 9]
 main_url: "http://www.wnconf.com/en/"
-twitter_hashtags: ""
+twitter_hashtags: "#wnconf"
 twitter_account:
 location: Sokos Hotel Palace Bridge
 address: St. Petersburg, Russia
@@ -3726,7 +3726,7 @@ name: Casual Connect Asia 2013
 start_date: [2013, 5, 21]
 end_date: [2013, 5, 23]
 main_url: "http://asia.casualconnect.org/"
-twitter_hashtags: ""
+twitter_hashtags: "#casualconnect"
 twitter_account:
 location: "Shangri-La Hotel"
 address: Singapore
@@ -4145,23 +4145,103 @@ twitter_account: londongamesconference
 location: One Wimpole Street
 address: 1 Wimpole Street, London, United Kingdom
 ---
-name:
-start_date: [2013, 1, 1]
-end_date: [2013, 1, 1]
-main_url: ""
+name: Videogame Economics Forum
+start_date: [2013, 4, 16]
+end_date: [2013, 4, 17]
+main_url: "http://www.videogame-economics-forum.com/"
 twitter_hashtags: ""
 twitter_account:
-location:
-address:
+location: Angoulême, France
 ---
-name:
-start_date: [2013, 1, 1]
-end_date: [2013, 1, 1]
-main_url: ""
+name: AIIDE 2013
+start_date: [2013, 10, 14]
+end_date: [2013, 10, 18]
+main_url: "http://www.aiide.org/"
+twitter_hashtags: ""
+twitter_account: AIIDEConference
+location: Unknown
+address: Boston, USA
+---
+name: GAMEON-NA'2013
+start_date: [2013, 8, 19]
+end_date: [2013, 8, 21]
+main_url: "http://www.eurosis.org/cms/?q=node/2469"
 twitter_hashtags: ""
 twitter_account:
-location:
-address:
+location: Unknown
+address: San Diego, California, USA
+---
+name: East Coast Game Conference 2013
+start_date: [2013, 4, 25]
+end_date: [2013, 4, 26]
+main_url: "http://www.ecgconf.com/"
+twitter_hashtags: ""
+twitter_account: ECGameCon
+location: "Raleigh Convention Center"
+address: Raleigh, NC, USA
+---
+name: Indie Gameleon 2013
+start_date: [2013, 3, 8]
+end_date: [2013, 3, 11]
+main_url: "http://indie-gameleon.org"
+twitter_hashtags: ""
+twitter_account: indiegameleon
+location: Oude RKE
+address: Groningen, Netherlands
+---
+name: One Day Digital Dundee
+start_date: [2013, 3, 2]
+end_date: [2013, 3, 2]
+main_url: "http://onedaydigitaldundee13-eorg.eventbrite.com"
+twitter_hashtags: ""
+twitter_account:
+location: Queen Mother Building
+address: Dundee, United Kingdom
+---
+name: One Day Digital Aberdeen
+start_date: [2013, 3, 16]
+end_date: [2013, 3, 16]
+main_url: "http://onedaydigitalaberdeen-eorg.eventbrite.com"
+twitter_hashtags: ""
+twitter_account:
+location: Satrosphere Science Centre
+address: Aberdeen, United Kingdom
+---
+name: One Day Digital Glasgow
+start_date: [2013, 3, 23]
+end_date: [2013, 3, 23]
+main_url: "http://www.eventbrite.com/event/5329946012/eorg"
+twitter_hashtags: ""
+twitter_account:
+location: Glasgow Science Centre
+address: Glasgow, United Kingdom
+---
+name: One Day Digital Edinburgh
+start_date: [2013, 3, 30]
+end_date: [2013, 3, 30]
+main_url: "http://onedaydigitaledinburgh-eorg.eventbrite.com"
+twitter_hashtags: ""
+twitter_account:
+location: Edinburgh Science Centre
+address: Edinburgh, United Kingdom
+---
+name: "+1 to Leadership: Improving Leadership in Game Development"
+start_date: [2013, 3, 26]
+end_date: [2013, 3, 26]
+main_url: "http://ldrplusone_sf2013.eventbrite.com"
+twitter_hashtags: ""
+twitter_account:
+location: Unknown
+address: San Francisco
+---
+name: Russian Game Developers Conference (KRI) 2013
+start_date: [2013, 5, 15]
+end_date: [2013, 5, 17]
+main_url: "http://rgdconf.com/2013/"
+twitter_hashtags: ""
+twitter_account:
+location: Cosmos Hotel
+address: Moscow, Russia
 ---
 name:
 start_date: [2013, 1, 1]
