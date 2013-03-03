@@ -26,26 +26,18 @@
 	<p>Total number of events: <strong>{{ total_nr_events }}</strong>. Events before May 2012 are patchy.</p>
 	<br/>
 	<h2>Top {{ country_stats|length }} countries</h2>
-	<table class="table table-condensed stats" id="country-stats">
-		{% for country_data in country_stats %}
-		<tr>
-			<td>{{ loop.index }}</td>
-			<td>{{ country_data[0] }}</td>
-			<td>{{ country_data[1] }}</td>
-		</tr>
-		{% endfor %}
-	</table>
+	<table class="table table-condensed stats bars" id="country-stats"></table>
 	<p>Total number of countries: <strong>{{ total_nr_countries }}</strong>.</p>
 	<br/>
 	<h2>Top {{ city_stats|length }} cities</h2>
-	<table class="table table-condensed stats" id="city-stats">
-		{% for city_data in city_stats %}
-		<tr>
-			<td>{{ loop.index }}</td>
-			<td>{{ city_data[0] }}</td>
-			<td>{{ city_data[1] }}</td>
-		</tr>
-		{% endfor %}
-	</table>
+    <table class="table table-condensed stats bars" id="city-stats"></table>
 	<p>Total number of cities: <strong>{{ total_nr_cities }}</strong>.</p>
+{% endblock %}
+{% block jscode %}
+<script src="http://d3js.org/d3.v3.min.js"></script>
+<script type="text/javascript">
+var country_data = {{ country_stats|tojson|safe }};
+var city_data = {{ city_stats|tojson|safe }};
+</script>
+<script src="{{ url_for('static', filename='js/stats.js') }}"></script>
 {% endblock %}

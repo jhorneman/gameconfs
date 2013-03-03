@@ -144,36 +144,26 @@ table#time-stats td.total
 	font-weight: bold;
 }
 
-table#country-stats tr:nth-child(1) td
+table.bars tr td
 {
-	border-top: none;
+	border: none;
 }
 
-table#country-stats tr td:nth-child(1)
+tabl.bars tr td:nth-child(1)
 {
-	text-align: right;
+    text-align: right;
 }
 
-table#country-stats tr td:nth-child(3)
+table.bars .bar
 {
-	text-align: right;
-	padding-left: 1em;
+    display: inline-block;
+    color: rgb(0, 136, 204);
+    background-color: rgb(0, 136, 204);
 }
 
-table#city-stats tr:nth-child(1) td
+table.bars .bar_label
 {
-	border-top: none;
-}
-
-table#city-stats tr td:nth-child(1)
-{
-	text-align: right;
-}
-
-table#city-stats tr td:nth-child(3)
-{
-	text-align: right;
-	padding-left: 1em;
+    margin-left: 0.5em;
 }
 
 /* Place controls */
