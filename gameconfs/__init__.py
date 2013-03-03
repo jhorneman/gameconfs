@@ -66,7 +66,7 @@ def create_app(_run_mode):
     # because we want to make sure we don't run debug in production by accident.
     app.config["DEBUG"] = False
 
-    # (In the latest version of Flask we could set port and host to None so the Flask defaults will
+    # (We should be able to set port and host to None so the Flask defaults will
     # be used if we don't change these variables.)
     global app_run_args
     app_run_args = {'port': 5000, 'host': '127.0.0.1'}
