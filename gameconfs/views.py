@@ -4,7 +4,7 @@ from datetime import datetime, date, timedelta
 import json
 import operator
 from flask import render_template, request, redirect, url_for, abort, send_from_directory
-from flask_principal import Permission, RoleNeed
+from flask.ext.security.decorators import roles_required
 from sqlalchemy.sql.expression import *
 from sqlalchemy import func 
 from gameconfs import app, db
@@ -68,6 +68,34 @@ def get_year_range():
     min_year = db.session.query(func.min(Event.start_date)).one()[0].year
     max_year = db.session.query(func.max(Event.end_date)).one()[0].year
     return min_year, max_year
+
+
+def filter_by_place_name(_query, _place_name):
+    continent = Continent.query.\
+        filter(Continent.name.like(_place_name)).\
+        first()
+    if continent:
+        return _query.filter(Continent.id == continent.id)
+
+    country = Country.query.\
+        filter(Country.name.like(_place_name)).\
+        first()
+    if country:
+        return _query.filter(Country.id == country.id)
+
+    state = State.query.\
+        filter(State.name.like(_place_name)).\
+        first()
+    if state:
+        return _query.filter(City.state_id == state.id)
+
+    city = City.query.\
+        filter(City.name.like(_place_name)).\
+        first()
+    if city:
+        return _query.filter(City.id == city.id)
+
+    return _query
 
 
 @app.route('/', defaults={'year': None, 'continent_name': None, 'country_name': None, 'city_or_state_name': None, 'city_name': None})
@@ -238,20 +266,15 @@ def index(year, continent_name, country_name, city_or_state_name, city_name):
         min_year=min_year, max_year=max_year, nr_events_by_month=nr_events_by_month,
         selected_continent=continent_name, selected_country=country_name, selected_state=state_name, selected_city=city_name,
         continents=all_continents, countries=countries, states=states, cities=cities,
-        show_states=show_states, show_cities=show_cities, title=title )
+        show_states=show_states, show_cities=show_cities, title=title)
 
-
-#    if not admin_permission.can():
-#        abort(403)
-
-admin_permission = Permission(RoleNeed('admin'))
 
 @app.route('/new', methods=("GET", "POST"))
-@admin_permission.require(403)
+@roles_required('admin')
 def new_event():
     form = EventForm()
     if form.validate_on_submit():
-        logging.info("NEW EVENT")
+        pass
     return render_template('edit_event.html', form=form)
 
 
@@ -322,34 +345,6 @@ def widget_script(version):
 @app.route('/widget/v<int:version>/<filename>.css')
 def widget_css(version, filename):
     return send_from_directory(os.path.join(app.root_path, 'widget'), filename + '.css', mimetype='text/css')
-
-
-def filter_by_place_name(_query, _place_name):
-    continent = Continent.query.\
-        filter(Continent.name.like(_place_name)).\
-        first()
-    if continent:
-        return _query.filter(Continent.id == continent.id)
-
-    country = Country.query.\
-        filter(Country.name.like(_place_name)).\
-        first()
-    if country:
-        return _query.filter(Country.id == country.id)
-
-    state = State.query.\
-    filter(State.name.like(_place_name)).\
-    first()
-    if state:
-        return _query.filter(City.state_id == state.id)
-
-    city = City.query.\
-    filter(City.name.like(_place_name)).\
-    first()
-    if city:
-        return _query.filter(City.id == city.id)
-
-    return _query
 
 
 @app.route('/widget/v<int:version>/data.json')

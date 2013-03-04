@@ -82,11 +82,6 @@ def create_app(_run_mode):
         app.config["DEBUG"] = True
         app.config["TESTING"] = True
         app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
-        
-    # Team run mode
-    elif _run_mode == "team":
-        app.config["DEBUG"] = True
-        app_run_args['port'] = 5001
 
     # Production run mode
     elif _run_mode == "production":
@@ -94,6 +89,9 @@ def create_app(_run_mode):
         app.config.setdefault('SQLALCHEMY_DATABASE_URI', os.environ.get('DATABASE_URL'))
         app_run_args['port'] = int(os.environ['PORT'])
         app_run_args['host'] = '0.0.0.0'
+        app_run_args['SECURITY_PASSWORD_HASH'] = 'bcrypt'
+        app_run_args['SECURITY_PASSWORD_SALT'] = '4tjDFbMVTbmVYULHbj2baaGk'
+        app_run_args['SECURITY_EMAIL_SENDER'] = 'admin@gameconfs.com'
 
     # Unrecognized run mode
     else:
