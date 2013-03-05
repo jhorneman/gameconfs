@@ -68,11 +68,11 @@
             <li><a href="{{ url_for('stats') }}">Stats</a></li>
             <li><a href="{{ url_for('about') }}">About</a></li>
               {% if current_user and current_user.is_authenticated() %}
-              <li><a href="/logout">Sign out</a></li>
+              <li><a href="/logout">Sign out {{ current_user.name }}</a></li>
               {% endif %}
           </ul>
           <div class="copyright pull-right">
-            <p>&copy; 2012 Jurie Horneman</p>
+            <p>&copy; 2012-2013 Jurie Horneman</p>
           </div>
         </div>
       </div>
