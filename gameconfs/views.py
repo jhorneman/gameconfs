@@ -377,7 +377,7 @@ def widget_data(version):
         if domain != widget_users[user_id]:
           abort(403)
 
-    # Fail is no JSONP callback name was given
+    # Fail if no JSONP callback name was given
     callback = request.args.get('callback', None)
     if callback is None:
         abort(400)
