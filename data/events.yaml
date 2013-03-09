@@ -4234,6 +4234,114 @@ twitter_account:
 location: Unknown
 address: San Francisco
 ---
+name: Good Game Show Korea 2013
+start_date: [2013, 5, 24]
+end_date: [2013, 5, 26]
+main_url: "http://goodgameshow.or.kr"
+twitter_hashtags: ""
+twitter_account:
+location: "Korea International Exhibition Center (KINTEX)"
+address: Goyang, South Korea
+---
+name: Korea Serious Game Festival (KSF) 2012
+start_date: [2012, 8, 31]
+end_date: [2012, 9, 2]
+main_url: "http://www.ksf2012.org/"
+twitter_hashtags: ""
+twitter_account:
+location: Seongnam City Hall
+address: Seongnam City, South Korea
+---
+name: International Roguelike Developers Conference 2013
+start_date: [2013, 6, 7]
+end_date: [2013, 6, 7]
+main_url: "http://irdc2013.eventbrite.com"
+twitter_hashtags: ""
+twitter_account:
+location: Zoo Coworking Space
+address: Poznan, Poland
+---
+name: "GameDevNorth - Leeds 1"
+start_date: [2013, 6, 13]
+end_date: [2013, 6, 13]
+main_url: "http://gamedevnorthleeds1.eventbrite.com"
+twitter_hashtags: ""
+twitter_account:
+location: The White Cloth Gallery
+address: Leeds, United Kingdom
+---
+name: "Game Dev Midlands 1"
+start_date: [2013, 3, 9]
+end_date: [2013, 3, 9]
+main_url: "http://gamesdevmidlands.eventbrite.co.uk"
+twitter_hashtags: ""
+twitter_account:
+location: Temple Street Social
+address: Birmingham, United Kingdom
+---
+name: "A MAZE. Indie Connect 2013"
+start_date: [2013, 4, 24]
+end_date: [2013, 4, 26]
+main_url: "http://www.amaze-festival.de/"
+twitter_hashtags: ""
+twitter_account:
+location: Unknown
+address: Berlin, Germany
+---
+name: QuakeCon 2013
+start_date: [2013, 8, 1]
+end_date: [2013, 8, 4]
+main_url: "http://www.quakecon.org/"
+twitter_hashtags: ""
+twitter_account:
+location: Hilton Anatole
+address: Dallas, Texas, United States
+---
+name: Game Connection Asia
+start_date: [2013, 5, 28]
+end_date: [2013, 5, 29]
+main_url: "http://www.game-connection.com/gameconn/content/gameconnection-asia"
+twitter_hashtags: ""
+twitter_account: The_GameCo
+location: The Longemont Hotel
+address: Shanghai, China
+---
+name: Blizzcon 2013
+start_date: [2013, 11, 8]
+end_date: [2013, 11, 9]
+main_url: "http://www.blizzcon.com/"
+twitter_hashtags: ""
+twitter_account:
+location: Anaheim Convention Center
+address: Anaheim, USA
+---
+name: "Frag-O-Matic (FOM)"
+start_date: [2013, 2, 15]
+end_date: [2013, 2, 17]
+main_url: "http://www.fom.be"
+twitter_hashtags: ""
+twitter_account:
+location: Oktoberhalleb
+address: Wieze, Belgium
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
 name:
 start_date: [2013, 1, 1]
 end_date: [2013, 1, 1]
