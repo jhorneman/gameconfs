@@ -1,0 +1,40 @@
+{% extends "layout.html" %}
+{% block title %}Gameconfs widget{% endblock %}
+{% block content %}
+    <h1>The Gameconfs Widget</h1>
+    <p>You can add Gameconfs to your own website as a widget. It looks like this:</p>
+    <div id="gameconfs-widget-container" data-user-id="2467750341" data-nr-months="3" data-place="United Kingdom" data-width="240" data-height="400"></div>
+    <script src="{{ url_for('widget.script', _external=True, version='1') }}" type="text/javascript"></script>
+    <br/>
+    <h2>How to add it to your site</h2>
+    <p>The widget is easy to integrate. You just need to add two lines two your website's HTML. First, put:</p>
+    <pre>&lt;div id="gameconfs-widget-container" data-user-id="&lt;your widget user ID&gt;" data-nr-months="3" data-place="United Kingdom" data-width="240" data-height="400"&gt;&lt;/div&gt;</pre>
+    <p>where you want the widget to appear. You'll need to change those values; this is explained below. Then, put:</p>
+    <pre>&lt;script src="http://www.gameconfs.com/widget/v1/script.js" type="text/javascript"&gt;&lt;/script&lt;</pre>
+    <p>after the div, for instance at the end of your &lt;body&gt; tag.</p>
+    <h2>Parameters</h2>
+    <p>You can customize the widget by changing the parameters of the div. The parameters are:</p>
+    <ul>
+        <li><strong>data-user-id</strong>: Your widget user ID. Not optional and locked to your domain. See below for how to get one.</li>
+        <li><strong>data-nr-months</strong>: The number of months from today you want to see in the widget. The value has to be between 1 and 12. Optional. The default is 3.</li>
+        <li><strong>data-place</strong>: The continent, country, state or city you want to show events for. Optional. The default is none, which shows events in the whole world.</li>
+        <li><strong>data-width</strong>: The width of the widget in pixels. Optional. The default is 240.</li>
+        <li><strong>data-height</strong>: The height of the widget in pixels. Optional. The default is 400.</li>
+    </ul>
+    <h2>FAQ</h2>
+    <p>Here are the answers to some questions you might have:</p>
+    <p><strong>So how do I get a user ID?</strong></p>
+    <p>Just email me <a href="mailto:admin@gameconfs.com">here</a> and tell me the domain or domains on which you want to use the widget.</p>
+    <p><strong>Why do you need to know the domain?</strong></p>
+    <p>Because the widget only works when the user ID matches the domain.</p>
+    <p><strong>Why is that?</strong></p>
+    <p>I want to have a little control over how the widget spreads.</p>
+    <p><strong>How stable is this widget?</strong></p>
+    <p>Consider it in an alpha stage. It works fine for me but I make no guarantees. Use it at your own risk.</p>
+    <p><strong>Can your widget damage my site?</strong></p>
+    <p>I don't see how: it injects some HTML and CSS into the page. The worse case I can imagine is it makes your site look odd. But again, I make no guarantees.</p>
+    <p><strong>How does it work?</strong></p>
+    <p>The script uses jQuery to insert its own CSS into your page and to load some HTML from the Gameconfs server (using JSONP). It tries to play nice with your Javascript, jQuery and CSS.</p>
+    <p><strong>Do you take feature requests?</strong></p>
+    <p>Within reason, sure. I want this widget to be useful. Just <a href="mailto:admin@gameconfs.com">email me</a> and we'll see what we can do.</p>
+{% endblock %}

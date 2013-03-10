@@ -113,7 +113,11 @@ def create_app(_run_mode):
 
     # Import the views, to apply the decorators which use the global app object.
     import gameconfs.views
-    
+
+    # Register blueprints
+    from gameconfs.widget import widget_blueprint
+    app.register_blueprint(widget_blueprint)
+
     # Set up Jinja2 filters
     init_template_filters(app)
 

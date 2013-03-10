@@ -1,101 +1,20 @@
-import re
-import os.path
-from datetime import datetime, date, timedelta
-import json
+import os
+from datetime import date
 import operator
-from flask import render_template, request, redirect, url_for, abort, send_from_directory
+from flask import render_template, request, abort, send_from_directory
 from flask.ext.security.decorators import roles_required
 from sqlalchemy.sql.expression import *
-from sqlalchemy import func 
 from gameconfs import app, db
 from gameconfs.models import *
 from gameconfs.geocoder import all_continents
 from gameconfs.filters import definite_country
 from gameconfs.forms import EventForm
+from gameconfs.helpers import *
 
 
 @app.teardown_request
 def shutdown_session(exception=None):
     db.session.remove()
-
-
-def get_x_months_ago(_start_year, _start_month, _nr_months):
-    final_month = _start_month - _nr_months
-    if final_month >= 1:
-        return _start_year, final_month
-    else:
-        return _start_year - 1, final_month + 12
-
-
-def get_x_months_away(_start_year, _start_month, _nr_months):
-    final_month = _start_month + _nr_months
-    if final_month <= 12:
-        return _start_year, final_month
-    else:
-        return _start_year + 1, final_month - 12
-
-
-def get_month_period(_start_year, _start_month, _nr_months = 1):
-    period_start = date(_start_year, _start_month, 1)
-    end_year, end_month = get_x_months_away(_start_year, _start_month, _nr_months)
-    period_end = date(end_year, end_month, 1)
-    return period_start, period_end
-
-
-def filter_by_place(_query, _continent, _country, _state, _city):
-    q = _query.filter(Country.continent_id == _continent.id)
-    if _country:
-        q = q.filter(City.country_id == _country.id)
-        if _state:
-            q = q.filter(City.state_id == _state.id)
-        if _city:
-            q = q.filter(Event.city_id == _city.id)
-    return q
-
-
-def filter_by_period(_query, _start_year, _start_month, _nr_months = 1):
-    period_start, period_end = get_month_period(_start_year, _start_month, _nr_months)
-    return filter_by_period_start_end(_query, period_start, period_end)
-
-
-def filter_by_period_start_end(_query, _period_start, _period_end):
-    return _query.filter(or_(and_(Event.start_date >= _period_start, Event.start_date < _period_end),
-        and_(Event.end_date >= _period_start, Event.end_date < _period_end)))
-
-
-def get_year_range():
-    #TODO: Cache this
-    min_year = db.session.query(func.min(Event.start_date)).one()[0].year
-    max_year = db.session.query(func.max(Event.end_date)).one()[0].year
-    return min_year, max_year
-
-
-def filter_by_place_name(_query, _place_name):
-    continent = Continent.query.\
-        filter(Continent.name.like(_place_name)).\
-        first()
-    if continent:
-        return _query.filter(Continent.id == continent.id)
-
-    country = Country.query.\
-        filter(Country.name.like(_place_name)).\
-        first()
-    if country:
-        return _query.filter(Country.id == country.id)
-
-    state = State.query.\
-        filter(State.name.like(_place_name)).\
-        first()
-    if state:
-        return _query.filter(City.state_id == state.id)
-
-    city = City.query.\
-        filter(City.name.like(_place_name)).\
-        first()
-    if city:
-        return _query.filter(City.id == city.id)
-
-    return _query
 
 
 @app.route('/', defaults={'year': None, 'continent_name': None, 'country_name': None, 'city_or_state_name': None, 'city_name': None})
@@ -312,18 +231,18 @@ def stats():
 
     # Get city stats
     city_stats = []
-    for id, name in db.session.query(City.id, City.name):
-        city_stats.append((name, Event.query.filter(Event.city_id == id).count()))
+    for city_id, name in db.session.query(City.id, City.name):
+        city_stats.append((name, Event.query.filter(Event.city_id == city_id).count()))
     city_stats = sorted(city_stats, key=operator.itemgetter(1), reverse=True)[:10]
     total_nr_cities = City.query.count()
 
     # Get country stats
     country_stats = []
-    for id, name in db.session.query(Country.id, Country.name):
+    for country_id, name in db.session.query(Country.id, Country.name):
         count = db.session.query(Event).\
              join(Event.city).\
              join(City.country).\
-             filter(City.country_id == id).\
+             filter(City.country_id == country_id).\
              count()
         country_stats.append((name, count))
     country_stats = sorted(country_stats, key=operator.itemgetter(1), reverse=True)[:10]
@@ -336,86 +255,6 @@ def stats():
         city_stats=city_stats, total_nr_events=total_nr_events, total_nr_cities=total_nr_cities,
         total_nr_countries=total_nr_countries)
 
-
-@app.route('/widget/v<int:version>/script.js')
-def widget_script(version):
-    return send_from_directory(os.path.join(app.root_path, 'widget'), 'script.js', mimetype='text/javascript')
-
-
-@app.route('/widget/v<int:version>/<filename>.css')
-def widget_css(version, filename):
-    return send_from_directory(os.path.join(app.root_path, 'widget'), filename + '.css', mimetype='text/css')
-
-
-@app.route('/widget/v<int:version>/data.json')
-def widget_data(version):
-    #TODO: Move this to a database or text file or something
-    widget_users = {
-        '2467750341': 'www.gameconfs.com'
-    }
-
-    # Get widget user ID
-    user_id = request.args.get('user-id', None)
-
-    # Fail if no user ID was given
-    if user_id is None:
-        abort(400)
-
-    # Fail if user ID is unknown
-    if user_id not in widget_users:
-        abort(403)
-
-    # Extract domain from request URL
-    regex = re.match("https?://([\w\.:]*)/?", request.url_root)
-    if regex:
-        domain = regex.group(1)
-    else:
-        domain = ""
-
-    # Fail if domain doesn't match UNLESS we're in debug mode and requesting from local machine
-    if not app.debug or domain != '127.0.0.1:5000':
-        if domain != widget_users[user_id]:
-          abort(403)
-
-    # Fail if no JSONP callback name was given
-    callback = request.args.get('callback', None)
-    if callback is None:
-        abort(400)
-
-    # Get number of months, make sure it's a reasonable value
-    nr_months = int(request.args.get('nr-months', 3))
-    if nr_months < 1:
-        nr_months = 1
-    elif nr_months > 12:
-        nr_months = 12
-
-    place_name = request.args.get('place', None)
-
-    today = date.today()
-    year = today.year
-
-    period_start, period_end = get_month_period(year, today.month, nr_months)
-
-    if place_name:
-        q = Event.query.\
-            join(Event.city).\
-            join(City.country).\
-            join(Country.continent)
-        q = filter_by_place_name(q, place_name)
-    else:
-        q = Event.query
-    q = filter_by_period_start_end(q, period_start, period_end)
-    events = q.all()
-
-    html = render_template('widget_contents.html', events=events, year=year, today=today,
-        period_start=period_start, period_end=period_end,
-        nr_months=nr_months, place_name=place_name)
-    return "%s ( {'html': %s } )" % (callback, json.dumps(html))
-
-
-@app.route('/widget_test')
-def widget_test():
-    return render_template('widget_test.html')
 
 
 @app.errorhandler(404)

@@ -22,7 +22,7 @@
         <td>{{ event.start_date|short_date }} - {{ event.end_date|short_date }}</td>
         {% endif %}
         <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
-    </tr>
+        </tr>
     {% endfor %}
     </tbody>
 </table>

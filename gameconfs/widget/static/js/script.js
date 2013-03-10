@@ -39,34 +39,45 @@
     /******** Our main function ********/
     function main() {
         jQuery(document).ready(function($) {
-            $('#gameconfs-widget-container').addClass('cleanslate');
+            var container,
+                css_link,
+                userId,
+                place,
+                nrMonths,
+                widgetWidth,
+                widgetHeight,
+                jsonpURL;
 
-            /******* Load CSS *******/
-            var css_link = $("<link>", {
+            container = $('#gameconfs-widget-container');
+            container.addClass('cleanslate');
+
+            /* Append CSS to head */
+            css_link = $("<link>", {
                 rel: "stylesheet",
                 type: "text/css",
-                href: "widget/v1/widget.css"
+                href: "/widget/v1/widget.css"
             });
             css_link.appendTo('head');
 
-            /******* Load HTML *******/
-            var userId = jQuery("#gameconfs-widget-container").data('user-id');
-            var place = jQuery("#gameconfs-widget-container").data('place');
-            var nrMonths = jQuery("#gameconfs-widget-container").data('nr-months');
-            if (nrMonths === undefined) {
-                nrMonths = 3;
-            }
-            console.log(nrMonths);
-            var jsonp_url = "widget/v1/data.json?nr-months=" + encodeURIComponent(nrMonths);
+            /* Load widget parameters */
+            userId = container.data('user-id');
+            place = container.data('place');
+            nrMonths = container.data('nr-months') || 3;
+            widgetWidth = container.data('width') || 240;
+            widgetHeight = container.data('height') || 400;
+
+            /* Load and inject HTML */
+            jsonpURL = "/widget/v1/data.json?nr-months=" + encodeURIComponent(nrMonths);
             if (userId) {
-                jsonp_url += "&user-id=" + encodeURIComponent(userId);
+                jsonpURL += "&user-id=" + encodeURIComponent(userId);
             }
             if (place) {
-                jsonp_url += "&place=" + encodeURIComponent(place);
+                jsonpURL += "&place=" + encodeURIComponent(place);
             }
-            jsonp_url += "&callback=?";
-            $.getJSON(jsonp_url, function(data) {
-                $('#gameconfs-widget-container').html(data.html);
+            jsonpURL += "&callback=?";
+            $.getJSON(jsonpURL, function(data) {
+                container.html(data.html);
+                container.attr('style', 'width: ' + widgetWidth + 'px !important; height: ' + widgetHeight + 'px !important;')
             });
         });
     }

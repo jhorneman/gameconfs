@@ -66,6 +66,7 @@
             <li><a href="{{ url_for('other') }}">Other event directories</a></li>
             <li><a href="http://blog.gameconfs.com">Blog</a></li>
             <li><a href="{{ url_for('stats') }}">Stats</a></li>
+            <li><a href="{{ url_for('widget.index') }}">Widget</a></li>
             <li><a href="{{ url_for('about') }}">About</a></li>
               {% if current_user and current_user.is_authenticated() %}
               <li><a href="/logout">Sign out {{ current_user.name }}</a></li>
