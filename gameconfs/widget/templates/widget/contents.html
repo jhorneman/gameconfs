@@ -21,7 +21,7 @@
         {% else %}
         <td>{{ event.start_date|short_date }} - {{ event.end_date|short_date }}</td>
         {% endif %}
-        <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
+        <td><a href="{{ url_for('event', _external=True, id=event.id) }}">{{ event.name }}</a></td>
         </tr>
     {% endfor %}
     </tbody>
@@ -31,4 +31,4 @@
 {% else %}
 <p>The Gameconfs database contains no events satisfying these criteria.</p>
 {% endif %}
-<p>Event data provided by <a href="{{ url_for('index') }}">Gameconfs</a>.</p>
+<p>Event data provided by <a href="{{ url_for('index', _external=True) }}">Gameconfs</a>.</p>
