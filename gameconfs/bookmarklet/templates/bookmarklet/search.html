@@ -1,0 +1,43 @@
+{% extends "layout.html" %}
+{% block title %}Search bookmarklet{% endblock %}
+{% block content %}
+<h1>Search Bookmarklet</h1>
+
+{% if search_string %}
+<h2>Results for '{{ search_string }}'</h2>
+{% if found_events_by_string %}
+<table class="table table-condensed events">
+    <tbody>
+    {% for event in found_events_by_string %}
+    <tr>
+        <td><span class="date">{{ event.start_date|nice_date }}</span><span class="short_date">{{ event.start_date|short_date }}</span></td>
+        <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
+        <td>{{ event.city|city_and_state_or_country }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>The Gameconfs database contains no events containing this search string.</p>
+{% endif %}
+{% endif %}
+
+<h2>Results for {{ referring_url }}</h2>
+{% if found_events_by_url %}
+<table class="table table-condensed events">
+    <tbody>
+    {% for event in found_events_by_url %}
+    <tr>
+        <td><span class="date">{{ event.start_date|nice_date }}</span><span class="short_date">{{ event.start_date|short_date }}</span></td>
+        <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
+        <td>{{ event.city|city_and_state_or_country }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>The Gameconfs database contains no events with this URL.</p>
+{% endif %}
+
+<a class="btn btn-primary" href="{{ referring_url }}">Take me back</a>
+{% endblock %}
