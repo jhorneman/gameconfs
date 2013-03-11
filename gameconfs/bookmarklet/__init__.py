@@ -24,16 +24,10 @@ def search():
 
     if not search_string:
         found_events_by_string = []
-    # elif re.match("^https?://.+", search_string):
-    elif search_string.startswith("#"):
-        #TODO: Handle multiple hash tags
-        found_events_by_string = Event.query. \
-            filter(Event.twitter_hashtags.contains(search_string)). \
-            order_by(Event.start_date). \
-            all()
     else:
         found_events_by_string = Event.query. \
-            filter(Event.name.contains(search_string)). \
+            filter(or_(Event.name.ilike('%' + search_string + '%'), Event.twitter_hashtags.ilike('%' + search_string + '%'),
+                       Event.twitter_account.ilike('%' + search_string + '%'), Event.main_url.ilike('%' + search_string + '%'))). \
             order_by(Event.start_date). \
             all()
 
@@ -41,7 +35,7 @@ def search():
     if search_url.endswith('/'):
         search_url = search_url[:-1]
     found_events_by_url = Event.query. \
-        filter(Event.main_url.ilike(search_url)). \
+        filter(Event.main_url.ilike('%' + search_url + '%')). \
         order_by(Event.start_date). \
         all()
 
