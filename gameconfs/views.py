@@ -256,7 +256,6 @@ def stats():
         total_nr_countries=total_nr_countries)
 
 
-
 @app.errorhandler(404)
 def page_not_found(error):
     return render_template('page_not_found.html'), 404
