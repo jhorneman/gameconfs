@@ -75,7 +75,7 @@ def create_app(_run_mode):
     if _run_mode == "dev":
         app.config["DEBUG"] = True
         app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
-#        toolbar = DebugToolbarExtension(app)
+        toolbar = DebugToolbarExtension(app)
 
     # Test run mode
     elif _run_mode == "test":
