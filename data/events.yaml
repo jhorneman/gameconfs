@@ -232,13 +232,13 @@ twitter_account:
 location: "Red Rock Resort & Casino"
 address: "11011 West Charleston Boulevard  Las Vegas, NV 89135"
 ---
-name: Indiecade
+name: Indiecade 2012
 start_date: [2012, 10, 4]
 end_date: [2012, 10, 7]
 main_url: "http://www.indiecade.com/"
 twitter_hashtags: ""
 twitter_account: IndieCade
-location: "Foshay Lodge"
+location: Various
 address: "9635 Venice Blvd. Culver City, CA 90232"
 ---
 name: FMX 2012
@@ -687,7 +687,7 @@ twitter_account:
 location: Concordia University
 address: 2811 NE Holman Street, Portland, Oregon
 ---
-name: Quo Vadis
+name: Quo Vadis 2012
 start_date: [2012, 4, 24]
 end_date: [2012, 4, 26]
 main_url: "http://www.die-entwicklerkonferenz.de/"
@@ -1376,7 +1376,7 @@ twitter_account:
 location: Microsoft NERD Center
 address: 1 Memorial Dr, Mid-Cambridge, Massachusetts, USA
 ---
-name: onGameStart
+name: onGameStart 2012
 start_date: [2012, 9, 19]
 end_date: [2012, 9, 21]
 main_url: "http://ongamestart.com/"
@@ -2644,8 +2644,8 @@ location: Ottawa Convention Centre
 address: Colonel By Drive, Ottawa, Ontario
 ---
 name: Nordic Game 2013
-start_date: [2013, 5, 15]
-end_date: [2013, 5, 17]
+start_date: [2013, 5, 22]
+end_date: [2013, 5, 24]
 main_url: "http://nordicgame.com/"
 twitter_hashtags: "#nordicgame"
 twitter_account: NordicGame
@@ -2931,7 +2931,7 @@ twitter_account: SeriousGameExpo
 location: "Cité Centre des Congrès – Cité Internationale de Lyon"
 address: Lyon, France
 ---
-name: Play Expo
+name: Play Expo 2012
 start_date: [2012, 10, 13]
 end_date: [2012, 10, 14]
 main_url: "http://www.playexpo.net/"
@@ -3384,7 +3384,7 @@ name: Entertainment Software and Cognitive Neurotherapeutics Society (ESCoNS) 2
 start_date: [2013, 3, 15]
 end_date: [2013, 3, 17]
 main_url: "http://www.escons.org"
-twitter_hashtags: ""
+twitter_hashtags: "#ESCONS"
 twitter_account: esconsmtg
 location: USC School of Cinematic Arts
 address: Los Angeles, USA
@@ -3533,7 +3533,7 @@ twitter_account:
 location: Yetizen Game Innovation Center
 address: San Francisco, USA
 ---
-name: Wisconsin Game Developers Summit
+name: "Wisconsin Game Developers Summit (WGDS)"
 start_date: [2013, 4, 20]
 end_date: [2013, 4, 21]
 main_url: "http://www.wgdsummit.com"
@@ -3957,8 +3957,8 @@ location: Unknown
 address: Vancouver, Canada
 ---
 name: LOGIN Conference 2013
-start_date: [2012, 9, 26]
-end_date: [2012, 9, 27]
+start_date: [2013, 9, 26]
+end_date: [2013, 9, 27]
 main_url: "http://www.loginconference.com/"
 twitter_hashtags: "#login2013"
 twitter_account: loginconference
@@ -4109,7 +4109,7 @@ twitter_account:
 location: The Technological Parc of the Universitat de Girona
 address: Girona, Spain
 ---
-name: Digital Content Monetisation Europe
+name: "Digital Content Monetisation (DCM) Europe"
 start_date: [2013, 1, 29]
 end_date: [2013, 1, 31]
 main_url: "http://www.dcm-eu.com"
@@ -4321,8 +4321,449 @@ end_date: [2013, 2, 17]
 main_url: "http://www.fom.be"
 twitter_hashtags: ""
 twitter_account:
-location: Oktoberhalleb
+location: Oktoberhallen
 address: Wieze, Belgium
+---
+name: Israeli Game Development Day 2013
+start_date: [2013, 4, 29]
+end_date: [2013, 4, 29]
+main_url: "https://gameday2013.eventbrite.com"
+twitter_hashtags: ""
+twitter_account:
+location: Shenkar College of Engineering And Design
+address: Ramat Gan, Israel
+---
+name: Bit Of Alright 2013
+start_date: [2013, 5, 10]
+end_date: [2013, 5, 10]
+main_url: "http://bit-of-alright.com"
+twitter_hashtags: ""
+twitter_account:
+location: Motorschiff Stubnitz
+address: London, United Kingdom
+---
+name: Twofivesix
+start_date: [2013, 5, 11]
+end_date: [2013, 5, 11]
+main_url: "http://www.two5six.com"
+twitter_hashtags: ""
+twitter_account:
+location: The Invisible Dog Art Center
+address: Brooklyn, New York, USA
+---
+name: "The Wild Rumpus #4"
+start_date: [2013, 5, 11]
+end_date: [2013, 5, 11]
+main_url: "http://thewildrumpus.co.uk"
+twitter_hashtags: ""
+twitter_account:
+location: Motorschiff Stubnitz
+address: London, United Kingdom
+---
+name: Flash GAMM 2013
+start_date: [2013, 5, 14]
+end_date: [2013, 5, 14]
+main_url: "http://www.flashgamm.com/moscow2013/en/"
+twitter_hashtags: ""
+twitter_account:
+location: Hotel Cosmos
+address: Moscow, Russia
+---
+name: "3MG: Marketing & Monetising Mobile Games"
+start_date: [2013, 6, 26]
+end_date: [2013, 6, 27]
+main_url: "http://osneymobile.com"
+twitter_hashtags: ""
+twitter_account: gamesforum
+location: Unknown
+address: London, United Kingdom
+---
+name: "The NUJ presents Game Over?"
+start_date: [2013, 4, 18]
+end_date: [2013, 4, 18]
+main_url: "http://thenujpresentsgameover.eventbrite.co.uk"
+twitter_hashtags: ""
+twitter_account:
+location: Innovation Warehouse
+address: London, United Kingdom
+---
+name: Rethinking Gamification Workshop
+start_date: [2013, 5, 15]
+end_date: [2013, 5, 17]
+main_url: "http://artandcivicmedia.net/2013/02/07/118/"
+twitter_hashtags: ""
+twitter_account:
+location: Leuphana University Lüneburg
+address: Lüneburg, Germany
+---
+name: Play Expo 2013
+start_date: [2013, 10, 12]
+end_date: [2013, 10, 13]
+main_url: "http://www.playexpo.net/"
+twitter_hashtags: "#PlayExpo"
+twitter_account: ReplayEvents
+location: EventCity
+address: Manchester, United Kingdom
+---
+name: iDÉAME
+start_date: [2013, 4, 13]
+end_date: [2013, 4, 14]
+main_url: "http://ideame.es"
+twitter_hashtags: ""
+twitter_account:
+location: Escuela Cinematográfica de la Comunidad de Madrid
+address: Madrid, Spain
+---
+name: Vector 2013
+start_date: [2013, 2, 21]
+end_date: [2013, 2, 24]
+main_url: "http://vectorgameartfest.tumblr.com"
+twitter_hashtags: "#vector2013"
+twitter_account:
+location: Various
+address: Toronto, Ontario, Canada
+---
+name: Interactive Storytelling Symposium 2013
+start_date: [2013, 5, 10]
+end_date: [2013, 5, 10]
+main_url: "http://ifog.soe.ucsc.edu"
+twitter_hashtags: "#ifog2013"
+twitter_account:
+location: Computer History Museum
+address: Mountain View, USA
+---
+name: FROG 2013
+start_date: [2013, 9, 27]
+end_date: [2013, 9, 28]
+main_url: "http://bupp.at/service/frog/frog-2013/"
+twitter_hashtags: ""
+twitter_account: 
+location: Wiener Rathaus
+address: Vienna, Austria
+---
+name: Gamelab Barcelona 2013
+start_date: [2013, 6, 26]
+end_date: [2013, 6, 28]
+main_url: "http://www.gamelab.es/"
+twitter_hashtags: ""
+twitter_account: 
+location: Unknown
+address: Barcelona, Spain
+---
+name: Games For Change Europe Kickoff
+start_date: [2013, 4, 8]
+end_date: [2013, 4, 8]
+main_url: "http://colognegamelab.de/news_eng.php?postid=51"
+twitter_hashtags: ""
+twitter_account:
+location: Cologne University of Applied Sciences
+address: Cologne, Germany
+---
+name: Indiecade 2013
+start_date: [2013, 10, 3]
+end_date: [2013, 10, 6]
+main_url: "http://www.indiecade.com/"
+twitter_hashtags: ""
+twitter_account: IndieCade
+location: Various
+address: Culver City, California, USA
+---
+name: Queerness and Games Conference
+start_date: [2013, 10, 26]
+end_date: [2013, 10, 27]
+main_url: "http://www.qgcon.com"
+twitter_hashtags: ""
+twitter_account: QGCon
+location: Center for New Media
+address: Berkeley, California, USA
+---
+name: "Come Out & Play 2013"
+start_date: [2013, 7, 12]
+end_date: [2013, 7, 13]
+main_url: "http://www.comeoutandplay.org/"
+twitter_hashtags: ""
+twitter_account: comeoutandplay
+location: Various
+address: New York City, New York, USA
+---
+name: Different Games
+start_date: [2013, 4, 26]
+end_date: [2013, 4, 27]
+main_url: "http://www.differentgames.org/"
+twitter_hashtags: ""
+twitter_account: DifferentGames
+location: NYU Polytechnic Institute
+address: Brooklyn, New York, USA
+---
+name: "EvoGAMES 2013"
+start_date: [2013, 4, 3]
+end_date: [2013, 4, 5]
+main_url: "http://www.kevinsim.co.uk/evostar2013/cfpEvoGAMES.html"
+twitter_hashtags: ""
+twitter_account:
+location: Freihaus of the Vienna University of Technology
+address: Vienna, Austria
+---
+name: NAB Show 2013
+start_date: [2013, 4, 6]
+end_date: [2013, 4, 11]
+main_url: "http://www.nabshow.com/2013/"
+twitter_hashtags: ""
+twitter_account:
+location: Las Vegas Convention Center
+address: Las Vegas, Nevada, USA
+---
+name: Game Developers Conference 2014
+start_date: [2014, 3, 17]
+end_date: [2014, 3, 21]
+main_url: "http://www.gdconf.com"
+twitter_hashtags: "#gdc #gdc14"
+twitter_account: Official_GDC
+location: "Moscone Conference Center"
+address: "747 Howard Street, San Francisco"
+---
+name: Gamers Assembly 2013
+start_date: [2013, 3, 30]
+end_date: [2013, 4, 1]
+main_url: "http://www.gamers-assembly.net/en"
+twitter_hashtags: ""
+twitter_account:
+location: Palais Des Congrès Du Futuroscope
+address: Futuroscope, France
+---
+name: NMS Play Day
+start_date: [2013, 4, 6]
+end_date: [2013, 4, 6]
+main_url: "http://www.interface3.com/play-day-games/"
+twitter_hashtags: ""
+twitter_account:
+location: National Museum of Scotland
+address: Edinburgh, United Kingdom
+---
+name: GeekyConf
+start_date: [2013, 11, 21]
+end_date: [2013, 11, 21]
+main_url: "http://geekyconf.com"
+twitter_hashtags: ""
+twitter_account:
+location: Oval Space
+address: London, United Kingdom
+---
+name: Brains Eden 2013
+start_date: [2013, 6, 28]
+end_date: [2013, 7, 1]
+main_url: "http://www.creativefront.org/news-and-events/news/be13"
+twitter_hashtags: ""
+twitter_account: creativefront
+location: Anglia Ruskin University's Cambridge Campus
+address: Cambridge, United Kingdom
+---
+name: Free to Play Summit
+start_date: [2013, 4, 18]
+end_date: [2013, 4, 18]
+main_url: "http://www.f2p-summit.com/"
+twitter_hashtags: "#f2psummit"
+twitter_account: F2PSummit
+location: Rich Mix
+address: London, United Kingdom
+---
+name: BitSummit 2013
+start_date: [2013, 3, 9]
+end_date: [2013, 3, 9]
+main_url: "http://bitsummit.org"
+twitter_hashtags: ""
+twitter_account: bitsummit
+location: Kyoto Fanj Hall
+address: Kyoto, Japan
+---
+name: Women in Gaming Awards 2013
+start_date: [2013, 5, 16]
+end_date: [2013, 5, 16]
+main_url: "http://www.gaming-awards.com/wig/"
+twitter_hashtags: ""
+twitter_account:
+location: Jumeirah Carlton Tower
+address: London, United Kingdom
+---
+name: Gameland 2013
+start_date: [2013, 9, 6]
+end_date: [2013, 9, 8]
+main_url: "http://gameland.be"
+twitter_hashtags: ""
+twitter_account:
+location: Bobbejaanland
+address: Lichtaart, Belgium
+---
+name: Gameland 2012
+start_date: [2012, 9, 7]
+end_date: [2012, 9, 9]
+main_url: "http://gameland.be"
+twitter_hashtags: ""
+twitter_account:
+location: Bobbejaanland
+address: Lichtaart, Belgium
+---
+name: GamesIndustry Fair 2012
+start_date: [2012, 09, 27]
+end_date: [2012, 09, 30]
+main_url: "http://www.eurogamer.net/showcase/gi-fair"
+twitter_hashtags: 
+twitter_account:
+location: Earls Court
+address: London, United Kingdom
+---
+name: GamesIndustry Fair 2013
+start_date: [2013, 09, 26]
+end_date: [2013, 09, 29]
+main_url: "http://www.eurogamer.net/showcase/gi-fair"
+twitter_hashtags: 
+twitter_account:
+location: Earls Court
+address: London, United Kingdom
+---
+name: Quo Vadis 2013
+start_date: [2013, 4, 23]
+end_date: [2013, 4, 25]
+main_url: "http://www.die-entwicklerkonferenz.de/"
+twitter_hashtags: ""
+twitter_account: 
+location: Café Moskau
+address: Berlin, Germany
+---
+name: "Game Business & Legal Affairs"
+start_date: [2013, 5, 20]
+end_date: [2013, 5, 21]
+main_url: "http://gamelaw.pro"
+twitter_hashtags: ""
+twitter_account:
+location: UCLA School of Law
+address: Los Angeles, California, USA
+---
+name: "9th International Mobile Gaming Awards (IMGA)"
+start_date: [2013, 3, 28]
+end_date: [2013, 3, 28]
+main_url: "http://imgawards.com"
+twitter_hashtags: ""
+twitter_account: imgawards
+location: Fairmont San Francisco
+address: San Francisco, California, USA
+---
+name: "Irish Symposium on Game Based Learning 2013 (IGBL)"
+start_date: [2013, 6, 6]
+end_date: [2013, 6, 7]
+main_url: "http://igbl2013.wordpress.com"
+twitter_hashtags: ""
+twitter_account:
+location: Dublin Institute of Technology
+address: Dublin, Ireland
+---
+name: Game Dev North 9
+start_date: [2012, 3, 2]
+end_date: [2012, 3, 2]
+main_url: "http://gamedevnorth9.eventbrite.co.uk/"
+twitter_hashtags: ""
+twitter_account: GameDevNorth
+location: Kyoto Lounge
+address: Manchester, United Kingdom
+---
+name: onGameStart 2013
+start_date: [2013, 9, 18]
+end_date: [2013, 9, 20]
+main_url: "http://ongamestart.com/"
+twitter_hashtags: "#ogs13"
+twitter_account: onGameStart
+location: Unknown
+address: Warsaw, Poland
+---
+name: w00T Copenhagen Play Festival 2013
+start_date: [2013, 5, 25]
+end_date: [2013, 5, 26]
+main_url: "http://w00t.dk/en/"
+twitter_hashtags: ""
+twitter_account:
+location: KU.BE-Grunden
+address: Copenhagen, Denmark
+---
+name: THATCamp Games 2013
+start_date: [2013, 4, 19]
+end_date: [2013, 4, 21]
+main_url: "http://2013.thatcampgames.org/"
+twitter_hashtags: ""
+twitter_account:
+location: Case Western Reserve University
+address: Cleveland, USA
+---
+name: GAMEXPO 2013
+start_date: [2013, 5, 24]
+end_date: [2013, 5, 26]
+main_url: "http://gamexpo.info/"
+twitter_hashtags: ""
+twitter_account: thegamexpo
+location: Brookside Park
+address: Pasadena, California
+---
+name: Christian Game Developers Conference
+start_date: [2013, 7, 11]
+end_date: [2013, 7, 13]
+main_url: "http://cgdc.org"
+twitter_hashtags: ""
+twitter_account: 
+location: Concordia University
+address: Portland, Oregon
+---
+name: "India Game Developers Conclave (IGDcon)"
+start_date: [2013, 8, 7]
+end_date: [2013, 8, 8]
+main_url: "http://www.igdcon.in/"
+twitter_hashtags: ""
+twitter_account: GameDeveloperIN
+location: Unknown
+address: Bengaluru, India
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
 ---
 name:
 start_date: [2013, 1, 1]
