@@ -691,7 +691,7 @@ name: Quo Vadis 2012
 start_date: [2012, 4, 24]
 end_date: [2012, 4, 26]
 main_url: "http://www.die-entwicklerkonferenz.de/"
-twitter_hashtags: ""
+twitter_hashtags: "#qvconf #quovadis"
 twitter_account: 
 location: Café Moskau
 address: Berlin, Germany
@@ -908,14 +908,14 @@ twitter_account:
 location: 3rd floor, the Flemington
 address: 182 Le Dai Hanh, Ho Chi Minh City, Vietnam
 ---
-name: Nasscom Game Developer Conference
-start_date: [2012, 11, 11]
-end_date: [2012, 11, 12]
+name: Nasscom Game Developer Conference 2012
+start_date: [2012, 11, 2]
+end_date: [2012, 11, 3]
 main_url: "http://ngdc.nasscom.in/"
 twitter_hashtags: ""
 twitter_account: NASSCOMGDC
 location: Hyatt Regency Pune
-address: Weikfield IT Park, Nagar Road, Pune, India
+address: Pune, India
 ---
 name: Got Game Conference
 start_date: [2012, 8, 20]
@@ -3527,7 +3527,7 @@ address: Dundee, United Kingdom
 name: NeuroGaming 2013 Conference and Expo
 start_date: [2013, 5, 1]
 end_date: [2013, 5, 2]
-main_url: "http://www.regonline.com/builder/site/Default.aspx?EventID=1142068"
+main_url: "http://www.neurogamingconf.com/"
 twitter_hashtags: ""
 twitter_account:
 location: Yetizen Game Innovation Center
@@ -4283,7 +4283,7 @@ name: "A MAZE. Indie Connect 2013"
 start_date: [2013, 4, 24]
 end_date: [2013, 4, 26]
 main_url: "http://www.amaze-festival.de/"
-twitter_hashtags: ""
+twitter_hashtags: "#AMaze2013"
 twitter_account:
 location: Unknown
 address: Berlin, Germany
@@ -4625,7 +4625,7 @@ name: Quo Vadis 2013
 start_date: [2013, 4, 23]
 end_date: [2013, 4, 25]
 main_url: "http://www.die-entwicklerkonferenz.de/"
-twitter_hashtags: ""
+twitter_hashtags: "#qvconf #quovadis"
 twitter_account: 
 location: Café Moskau
 address: Berlin, Germany
@@ -4747,23 +4747,59 @@ twitter_account: GPUComputing
 location: San Jose McEnery Convention Center
 address: San Jose, California, USA
 ---
-name:
-start_date: [2013, 1, 1]
-end_date: [2013, 1, 1]
-main_url: ""
+name: "Digital Dragons European Games Festival (EFG) 2013"
+start_date: [2013, 4, 19]
+end_date: [2013, 4, 20]
+main_url: "http://digitaldragons.pl/en/"
 twitter_hashtags: ""
 twitter_account:
-location:
-address:
+location: Małopolska Garden of Art
+address: Kraków, Poland
 ---
-name:
-start_date: [2013, 1, 1]
-end_date: [2013, 1, 1]
-main_url: ""
+name: Game Developers Gathering (GDG)
+start_date: [2013, 5, 25]
+end_date: [2013, 5, 25]
+main_url: "http://gamedevgathering.com"
 twitter_hashtags: ""
 twitter_account:
-location:
-address:
+location: Binus University JWC Campus
+address: Jakarta, Indonesia
+---
+name: Canadian Videogame Awards
+start_date: [2013, 4, 20]
+end_date: [2013, 4, 20]
+main_url: "http://www.canadianvideogameawards.com"
+twitter_hashtags: "#CVA2013"
+twitter_account: CVAwards
+location: Vancouver Convention Centre
+address: Vancouver, British Columbia, Canada
+---
+name: "International Conference on Interactive Digital Storytelling (ICIDS) 2013"
+start_date: [2013, 11, 6]
+end_date: [2013, 11, 9]
+main_url: "http://gamesandnarrative.net/icids2013/"
+twitter_hashtags: ""
+twitter_account: 
+location: "Bahçeşehir University’s Game Lab campus"
+address: Istanbul, Turkey
+---
+name: Extending Play
+start_date: [2013, 4, 19]
+end_date: [2013, 4, 20]
+main_url: "http://mediacon.rutgers.edu"
+twitter_hashtags: ""
+twitter_account:
+location: Livingston Student Center
+address: Piscataway, New Jersey, USA
+---
+name: IGDA Summit 2013
+start_date: [2013, 7, 31]
+end_date: [2013, 8, 1]
+main_url: "http://www.igda.org/2013SummitCFP"
+twitter_hashtags: ""
+twitter_account:
+location: Hilton San Francisco Union Square
+address: San Francisco, USA
 ---
 name:
 start_date: [2013, 1, 1]
