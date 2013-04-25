@@ -1931,8 +1931,8 @@ end_date: [2012, 5, 12]
 main_url: "http://gamecamp.org.uk/"
 twitter_hashtags: ""
 twitter_account: gamecamp
-location: London South Bank University
-address: Keyworth Centre, Keyworth Street, London, United Kingdom
+location: "Keyworth Centre, London South Bank University"
+address: London, United Kingdom
 ---
 name: IGDA Leadership Forum
 start_date: [2011, 10, 27]
@@ -4171,15 +4171,6 @@ twitter_account:
 location: Unknown
 address: San Diego, California, USA
 ---
-name: East Coast Game Conference 2013
-start_date: [2013, 4, 25]
-end_date: [2013, 4, 26]
-main_url: "http://www.ecgconf.com/"
-twitter_hashtags: ""
-twitter_account: ECGameCon
-location: "Raleigh Convention Center"
-address: Raleigh, NC, USA
----
 name: Indie Gameleon 2013
 start_date: [2013, 3, 8]
 end_date: [2013, 3, 11]
@@ -4800,6 +4791,69 @@ twitter_hashtags: ""
 twitter_account:
 location: Hilton San Francisco Union Square
 address: San Francisco, USA
+---
+name: Playful 2013
+start_date: [2013, 10, 25]
+end_date: [2013, 10, 25]
+main_url: "http://www.thisisplayful.com/"
+twitter_hashtags: "#playful13"
+twitter_account: thisisplayful
+location: Conway Hall
+address: London, United Kingdom
+---
+name: UCLA Game Art Festival 2013
+start_date: [2013, 5, 8]
+end_date: [2013, 5, 8]
+main_url: "http://festival.games.ucla.edu"
+twitter_hashtags: ""
+twitter_account:
+location: Hammer Museum
+address: Los Angeles, California, USA
+---
+name: GameCamp 6
+start_date: [2013, 5, 18]
+end_date: [2013, 5, 18]
+main_url: "http://gamecamp.org.uk/"
+twitter_hashtags: ""
+twitter_account: gamecamp
+location: "Keyworth Centre, London South Bank University"
+address: London, United Kingdom
+---
+name: "EVE Online - Fanfest 2013"
+start_date: [2013, 4, 25]
+end_date: [2013, 4, 27]
+main_url: "http://fanfest.eveonline.com/en/default.aspx"
+twitter_hashtags: ""
+twitter_account:
+location: Harpa
+address: Reykjavik, Iceland
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
+---
+name:
+start_date: [2013, 1, 1]
+end_date: [2013, 1, 1]
+main_url: ""
+twitter_hashtags: ""
+twitter_account:
+location:
+address:
 ---
 name:
 start_date: [2013, 1, 1]
