@@ -399,8 +399,9 @@ start_date: [2012, 07, 03]
 end_date: [2012, 07, 05]
 main_url: "http://www.virtual-worlds.net/vw2012/"
 twitter_hashtags: ""
-twitter_account: Pôle universitaire Léonard de Vinci
-location: Paris, France
+twitter_account: 
+location: Pôle universitaire Léonard de Vinci
+address: Paris, France
 ---
 name: Japan Expo
 start_date: [2012, 07, 05]
@@ -597,7 +598,8 @@ end_date: [2012, 10, 27]
 main_url: "http://festival.gamecity.org/"
 twitter_hashtags: ""
 twitter_account: gamecity
-location: Nottingham, United Kingdom
+location: Various
+address: Nottingham, United Kingdom
 ---
 name: GamesMaster Golden Joystick Awards
 start_date: [2012, 10, 26]
@@ -650,7 +652,7 @@ end_date: [2012, 11, 11]
 main_url: "http://altdevconf.com"
 twitter_hashtags: ""
 twitter_account: altdevconf
-location:
+location: Online
 ---
 name: Project Horseshoe
 start_date: [2012, 11, 1]
@@ -667,7 +669,8 @@ end_date: [2012, 10, 21]
 main_url: "http://gamexpo.info/"
 twitter_hashtags: ""
 twitter_account: 
-location: Pasadena, California
+location: Various
+address: Pasadena, California
 ---
 name: Project Bar-B-Q
 start_date: [2012, 10, 7]
@@ -714,13 +717,14 @@ twitter_account: webgameconf
 location: La Gaîté Lyrique
 address: Paris, France
 ---
-name: Videogame Economics Forum
+name: Videogame Economics Forum 2012
 start_date: [2012, 4, 5]
 end_date: [2012, 4, 6]
 main_url: "http://www.videogame-economics-forum.com/"
 twitter_hashtags: ""
 twitter_account: 
-location: Angoulême, France
+location: "Cité internationale de la bande dessinée et de l'image"
+address: Angoulême, France
 ---
 name: "GameON: Finance 2012"
 start_date: [2012, 1, 17]
@@ -809,7 +813,8 @@ end_date: [2012, 4, 29]
 main_url: "http://grassrootsgameconference.com/"
 twitter_hashtags: ""
 twitter_account: Phlgamelab
-location: Philadelphia
+location: Various
+address: Philadelphia, USA
 ---
 name: "DiGRA Conference: Think Design Play"
 start_date: [2011, 9, 14]
@@ -841,10 +846,11 @@ address: Durham, North Carolina
 name: New Game 2011
 start_date: [2011, 11, 1]
 end_date: [2011, 11, 2]
-main_url: "http://www.newgameconf.com/"
+main_url: "http://www.newgameconf.com/2011/"
 twitter_hashtags: "#ngc11"
 twitter_account: newgameconf
-location: San Francisco
+location: Yerba Buena Center for the Arts
+address: San Francisco, California, USA
 ---
 name: Games DevCon
 start_date: [2012, 10, 29]
@@ -855,13 +861,14 @@ twitter_account:
 location: Rheingoldhalle Mainz
 address: Mainz, Germany
 ---
-name: GaymerCon
+name: Gaymer X 2013
 start_date: [2013, 8, 3]
 end_date: [2013, 8, 4]
 main_url: "http://www.gaymercon.org/"
 twitter_hashtags: ""
-twitter_account: gaymercon
-location:
+twitter_account: GaymerX
+location: "Hotel Kabuki & Hotel Tomo"
+address: San Francisco, California, USA
 ---
 name: Rezzed
 start_date: [2012, 7, 6]
@@ -3003,14 +3010,6 @@ twitter_account: gamesforum
 location: Dexter House
 address: London, United Kingdom
 ---
-name: "Indie+"
-start_date: [2012, 10, 29]
-end_date: [2012, 11, 4]
-main_url: "http://indieplus.org/doku.php"
-twitter_hashtags: ""
-twitter_account:
-location:
----
 name: Conpulsion 2013
 start_date: [2013, 4, 12]
 end_date: [2013, 4, 14]
@@ -3053,7 +3052,7 @@ end_date: [2013, 1, 20]
 main_url: "http://www.gamedesignexpo.com/"
 twitter_hashtags: ""
 twitter_account: gamedesignexpo
-location: Unknown
+location: Vancity Theatre at Vancouver International Film Centre
 address: Vancouver, British Columbia, Canada
 ---
 name: Taipei Game Show 2012
@@ -4145,13 +4144,14 @@ twitter_account: londongamesconference
 location: One Wimpole Street
 address: 1 Wimpole Street, London, United Kingdom
 ---
-name: Videogame Economics Forum
+name: Videogame Economics Forum 2013
 start_date: [2013, 5, 16]
 end_date: [2013, 5, 17]
 main_url: "http://www.videogame-economics-forum.com/"
 twitter_hashtags: ""
 twitter_account:
-location: Angoulême, France
+location: "Cité internationale de la bande dessinée et de l'image"
+address: Angoulême, France
 ---
 name: AIIDE 2013
 start_date: [2013, 10, 14]
