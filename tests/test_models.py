@@ -34,12 +34,14 @@ class TestCaseUsingDatabase(unittest.TestCase):
 class UserModelTestCase(TestCaseUsingDatabase):
     def test_user_can_be_added(self):
         with self.app.test_request_context():
-            user = User('Jurie', 'Horneman', 'admin@example.com')
+            user = User()
+            user.name = 'Jurie Horneman'
+            user.email = 'admin@example.com'
             self.db_session.add(user)
             self.db_session.commit()
 
             found_user = User.query.one()
-            ok_(found_user.display_name == 'Jurie Horneman')
+            ok_(found_user.name == 'Jurie Horneman')
             ok_(found_user.email == 'admin@example.com')
 
 
@@ -230,9 +232,10 @@ class CityModelTestCase(TestCaseUsingDatabase):
 
 
 class EvemtModelTestCase(TestCaseUsingDatabase):
-    def test_evemt_can_be_added(self):
+    def test_event_can_be_added(self):
         with self.app.test_request_context():
-            event = Event('Stagconf 2012')
-            event.set_location(self.db_session, 'Naturhistorisches Museum in Vienna, Austria')
+            event = Event()
+            event.name = 'Stagconf 2012'
+            event.set_location(self.db_session, 'Naturhistorisches Museum', 'Vienna, Austria')
             self.db_session.add(event)
             self.db_session.commit()

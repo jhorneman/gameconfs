@@ -1,4 +1,4 @@
-# coding=iso-8859-1
+# coding=utf-8
 
 import logging
 import unittest
@@ -37,11 +37,6 @@ class GeocoderTestCase(unittest.TestCase):
         ok_(not g.is_valid)
         ok_(len(self.mock_handler.messages["error"]) > 0)
 
-    def test_query_multiple_results_outputs_warning(self):
-        g = GeocodeResults("Springfield")
-        ok_(g.is_valid)
-        ok_(len(self.mock_handler.messages["warning"]) > 0)
-
     def test_utf8_query_works(self):
         g = GeocodeResults("Koelnmesse, Köln, Germany")
         ok_(g.is_valid)
@@ -50,7 +45,7 @@ class GeocoderTestCase(unittest.TestCase):
         ok_(g.continent == "Europe")
 
     def test_unicode_query_works(self):
-        g = GeocodeResults(u"Koelnmesse, Köln, Germany")
+        g = GeocodeResults(u"Koelnmesse, K\xf6ln, Germany")
         ok_(g.is_valid)
         ok_(g.city == "Cologne")
         ok_(g.country == "Germany")
