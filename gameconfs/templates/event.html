@@ -27,8 +27,8 @@
         {% endif %}
         <tr>
           <td>Website</td>
-          {% if event.main_url %}
-          <td><a itemprop="url" id="event_url" href="{{ event.main_url }}" target="_blank">{{ event.main_url }}</a></td>
+          {% if event.event_url %}
+          <td><a itemprop="url" id="event_url" href="{{ event.event_url }}" target="_blank">{{ event.event_url }}</a></td>
           {% else %}
           <td>None</td>
           {% endif %}

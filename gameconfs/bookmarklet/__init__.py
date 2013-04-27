@@ -27,7 +27,7 @@ def search():
     else:
         found_events_by_string = Event.query. \
             filter(or_(Event.name.ilike('%' + search_string + '%'), Event.twitter_hashtags.ilike('%' + search_string + '%'),
-                       Event.twitter_account.ilike('%' + search_string + '%'), Event.main_url.ilike('%' + search_string + '%'))). \
+                       Event.twitter_account.ilike('%' + search_string + '%'), Event.event_url.ilike('%' + search_string + '%'))). \
             order_by(Event.start_date). \
             all()
 
@@ -35,7 +35,7 @@ def search():
     if search_url.endswith('/'):
         search_url = search_url[:-1]
     found_events_by_url = Event.query. \
-        filter(Event.main_url.ilike('%' + search_url + '%')). \
+        filter(Event.event_url.ilike('%' + search_url + '%')). \
         order_by(Event.start_date). \
         all()
 

@@ -70,28 +70,28 @@ def short_month(_month):
     return "{0}".format(month.strftime("%b"))
 
 def event_location(_event):
-    if _event.city:
-        return _event.location_name + ", " + city_and_state_or_country(_event.city)
-    else:
+    if _event.is_online():
         return "Online"
+    else:
+        return _event.venue + ", " + event_city_and_state_or_country(_event)
+
+def event_city_and_state_or_country(_event):
+    if _event.is_online():
+        return "Online"
+    else:
+        loc = _event.city.name
+        if _event.city.country.has_states():        #TODO: Eliminate SQL call!
+            if _event.city.name not in geocoder.cities_without_states_or_countries:
+                loc += ", " + _event.city.state.name     #TODO: Eliminate SQL call!
+        elif _event.city.name not in geocoder.cities_without_states_or_countries:
+            loc += ", " + _event.city.country.name
+        return loc
 
 def definite_country(_country):
     if _country in ["Netherlands", "United Kingdom", "United States"]:
         return "the " + _country
     else:
         return _country
-
-def city_and_state_or_country(_city):
-    if _city:
-        loc = _city.name
-        if _city.country.name in geocoder.countries_with_states:        #TODO: Eliminate SQL call!
-            if _city.name not in geocoder.cities_without_states_or_countries:
-                loc += ", " + _city.state.name     #TODO: Eliminate SQL call!
-        elif _city.name not in geocoder.cities_without_states_or_countries:
-            loc += ", " + _city.country.name
-    else:
-        loc = "Online"
-    return loc
 
 def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
     return value.strftime(format)

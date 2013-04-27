@@ -1,5 +1,5 @@
 import logging
-from sqlalchemy import Column, Integer, String, ForeignKey, Date, Boolean
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, DateTime
 from sqlalchemy.orm import relationship, backref
 import sqlalchemy.orm
 from flask.ext.security import UserMixin, RoleMixin
@@ -100,6 +100,9 @@ class Country(db.Model):
     def __repr__(self):
         return '<Country %r>' % (self.name)
 
+    def has_states(self):
+        return self.name in geocoder.countries_with_states
+
 
 class Continent(db.Model):
     __tablename__ = 'continents'
@@ -117,72 +120,63 @@ class Continent(db.Model):
 class Event(db.Model):
     __tablename__ = 'events'
 
-    #TODO: Handle compound / child events (GDC tutorials and summits, e.g.)
-    #TODO: Add event prototype model and link to it
-    #TODO: Creation / modification dates
-    #TODO: Non-database index ID?
-    #TODO: Slug support
-    #TODO: Slug history in other table
-    #TODO: Deadline support in other table
-    #TODO: See if strings that are null (nullable) are treated as empty strings
-
     # Primary key. Global event ID.
     id = Column(Integer, primary_key=True)
 
+    # Creation and last modification date/times.
+    created_at = Column(DateTime)
+    last_modified_at = Column(DateTime)
+
     # Name of the event. Need not be unique. Repeating events may have the same name.
     name = Column(String(250))
-
-    # slug = Column(String(250))
 
     # Start and end dates of the event.
     start_date = Column(Date)
     end_date = Column(Date)
 
-    #TODO: Replace these with deadline table rows
-    # Start and end dates of the speaker submission period.
-    # submission_start_date = Column(Date)
-    # submission_end_date = Column(Date)
-    # Start date of event registration. The end date is assumed to be the event itself.
-    # registration_start_date = Column(Date)
-    # End date of the early bird discount period. Some events may have.
-    # early_bird_end_date = Column(Date)
-
-    # Main URL for the site for this event.
-    main_url = Column(String(250))
+    # URL for the website for this event.
+    event_url = Column(String(250))
 
     # Twitter hash tags for this event, with hash signs, separated by spaces.
     twitter_hashtags = Column(String(250))
+
+    # Twitter account associated with this event, no @ sign.
     twitter_account = Column(String(250))
 
     # Location info
-    location_name = Column(String(250), nullable=True)
+    venue = Column(String(250), nullable=True)
     address_for_geocoding = Column(String(250), nullable=True)
 
-    location_lat = Column(String(32))
-    location_long = Column(String(32))
-
+    # If an event is not associated with a city, it is online
     city_id = Column(Integer, ForeignKey('cities.id'), nullable=True)
     city = relationship('City')
 
-    def __init__(self, _name):
-        self.name = _name
-        self.is_free = False
+    def is_online(self):
+        return self.city is None
 
-    def set_location(self, _db_session, _location_name, _address_for_geocoding):
+    def set_location(self, _db_session, _venue, _address_for_geocoding):
         """
         Set location data based on geocoding of location info.
         Caller is responsible for committing database transaction.
         """
-        self.location_name = _location_name
-        self.address_for_geocoding = _address_for_geocoding
-        if self.location_name:
+
+        if _venue is None:
+            _venue = ""
+        self.venue = _venue.strip()
+
+        if _address_for_geocoding is None:
+            _address_for_geocoding = ""
+        self.address_for_geocoding = _address_for_geocoding.strip()
+
+        # Address given?
+        if self.address_for_geocoding:
+            # Yes -> Try to geocode, then set location data if successful.
             g = geocoder.GeocodeResults(self.address_for_geocoding)
             if g.is_valid:
-                self.location_lat = g.latitude
-                self.location_long = g.longitude
                 (self.city, state, country, continent) = set_up_location_data(_db_session, g)
             return g.is_valid
         else:
+            # No -> Online event, valid.
             return True
 
     def __repr__(self):

@@ -22,6 +22,16 @@
 
 {% block title %}New event - Gameconfs{% endblock %}
 {% block content %}
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <ul class="flashes">
+    {% for message in messages %}
+      <li>{{ message }}</li>
+    {% endfor %}
+    </ul>
+  {% endif %}
+{% endwith %}
+
 <form class="form-horizontal" method="POST" action="/new">
   <legend>Enter data for a new event</legend>
   <fieldset>
@@ -29,7 +39,7 @@
     {{ form_control(form.name, "Game Developers Conference 2013") }}
     {{ form_control(form.start_date, class="span2 datepicker") }}
     {{ form_control(form.end_date, class="span2 datepicker") }}
-    {{ form_control(form.main_url, "http://www.gdconf.com") }}
+    {{ form_control(form.event_url, "http://www.gdconf.com") }}
     {{ form_control(form.twitter_account, "Official_GDC") }}
     {{ form_control(form.twitter_hashtags, "#gdc #gdc13") }}
     {{ form_control(form.location, "Moscone Conference Center") }}

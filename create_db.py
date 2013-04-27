@@ -2,6 +2,7 @@ import os.path
 import codecs
 import logging
 import yaml
+import datetime
 from sqlalchemy import MetaData
 from gameconfs import create_app
 from gameconfs.models import *
@@ -29,6 +30,8 @@ if __name__ == "__main__":
         if os.path.exists("geocoder_cache.json"):
             GeocodeResults.load_cache("geocoder_cache.json")
 
+        now = datetime.datetime.now()
+
         # Load events
         with codecs.open('data/events.yaml', 'r', 'utf-8') as f:
             for data in yaml.load_all(f):
@@ -38,24 +41,29 @@ if __name__ == "__main__":
                 if not name:
                     continue
                     
-                new_event = Event(data["name"])
+                new_event = Event()
+
+                new_event.created_at = now
+                new_event.last_modified_at = now
+
+                new_event.name = data["name"]
+
                 d = [int(i) for i in data["start_date"]]
                 new_event.start_date = date(d[0], d[1], d[2])
                 d = [int(i) for i in data["end_date"]]
                 new_event.end_date = date(d[0], d[1], d[2])
 
                 if "main_url" in data:
-                    new_event.main_url = data["main_url"]
+                    new_event.event_url = data["main_url"]
                 if "twitter_hashtags" in data:
                     new_event.twitter_hashtags = data["twitter_hashtags"]
                 if "twitter_account" in data:
                     new_event.twitter_account = data["twitter_account"]
 
-                if "address" in data:
-                    address = data["address"]
-                else:
-                    address = data["location"]
-                result = new_event.set_location(db_session, data["location"], address)
+                venue = data.get("location", "")
+                address = data.get("address", "")
+
+                result = new_event.set_location(db_session, venue, address)
 
                 # Only add if setting location worked (geocoding can fail)
                 if result:
@@ -66,6 +74,8 @@ if __name__ == "__main__":
                 else:
                     # Otherwise get rid of whatever was done to the session or it will cause trouble later
                     db_session.expunge_all()
+
+                    print "Location setting for event", data["name"], "failed"
 
         # Save geocoder cache
         GeocodeResults.save_cache("geocoder_cache.json")
