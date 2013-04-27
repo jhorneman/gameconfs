@@ -1,4 +1,4 @@
-# coding=iso-8859-1
+# coding=utf-8
 """
     gameconfs.geocoder
     ====================
@@ -10,16 +10,12 @@
 
 import sys
 import os
-import os.path
 import logging
 import datetime
 import codecs
-from urllib import urlencode
-from urllib2 import urlopen
 import json
-import xml.dom.minidom
-from xml.parsers.expat import ExpatError
 import pygeoip
+import requests
 
 
 logger = logging.getLogger(__name__)
@@ -79,11 +75,12 @@ class GeocodeResults(object):
 
     def __init__(self, _query, _use_cache=True):
         #: the original query string
+        # Make sure it is UTF-8, not Unicode
         if isinstance(_query, unicode):
             self.query = _query.encode('utf-8', 'replace')
         else:
             self.query = _query
-            #: True if geocoding succeeded
+        #: True if geocoding succeeded
         self.is_valid = False
         #: the full formatted address
         self.formatted_address = "<Unknown>"
@@ -108,7 +105,6 @@ class GeocodeResults(object):
             (retrieval_datetime, results) = GeocodeResults.cache_dict[_query]
 
             self.url = "<retrieved from cache>"
-            self.raw_json = None
         else:
             logger.info("Geocoding query '%s': Using Google Maps API" % self.query)
 
@@ -120,23 +116,9 @@ class GeocodeResults(object):
                 'address': self.query,
                 'sensor': "false"
             }
-            self.url = "http://maps.googleapis.com/maps/api/geocode/json?%s" % urlencode(params)
-            page = urlopen(self.url)
-            contents = page.read()
-
-            # Convert result to Unicode
-            # (HTTP 1.1 defines iso-8859-1 as the 'implied' encoding if none is given)
-            encoding = page.headers.getparam("charset") or None
-            if not encoding:
-                try:
-                    encoding = xml.dom.minidom.parseString(contents).encoding
-                except ExpatError:
-                    encoding = 'iso-8859-1'
-                    pass
-            self.raw_json = unicode(contents, encoding=encoding).encode('utf-8')
-
-            # Parse JSON
-            results = json.loads(self.raw_json)
+            r = requests.get("http://maps.googleapis.com/maps/api/geocode/json", params=params)
+            self.url = r.url
+            results = r.json
 
             # Store in cache if results were OK
             if results["status"] == u"OK":
@@ -166,15 +148,15 @@ class GeocodeResults(object):
                     component = self.find_address_component(u"administrative_area_level_1")
                     self.state = component["long_name"]
                     # Get state abbreviation if the short name is different from the long name
-                    if (self.state != component["short_name"]):
+                    if self.state != component["short_name"]:
                         self.state_abbr = component["short_name"]
 
                 city_component_type = city_component_types_per_country.get(self.country, default_city_component_type)
                 component = self.find_address_component(city_component_type)
                 if not component:
                     # Needed for very special cases (Hull, Quebec, Vilamoura, Portgual, and Hong Kong)
-                    for type in ["sublocality", "political"]:
-                        component = self.find_address_component(type)
+                    for component_type in ["sublocality", "political"]:
+                        component = self.find_address_component(component_type)
                         if component:
                             break
                     else:
@@ -221,14 +203,20 @@ class GeocodeResults(object):
 
 
 if __name__ == "__main__":
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.WARNING)
+    formatter = logging.Formatter("%(levelname)s - %(message)s")
+    ch.setFormatter(formatter)
+    logger.addHandler(ch)
+
     for query in ["Naturhistorisches Museum in Vienna, Austria", "One Wimpole Street, London",
-                  "Luftkastellet, Malmö", "Moscone, 747 Howard Street, San Francisco", "Maceió, Alagoas, Brazil",
+                  "Luftkastellet, MalmÃ¶", "Moscone, 747 Howard Street, San Francisco", "MaceiÃ³, Alagoas, Brazil",
                   "Shanghai International Convention Center, Shanghai", "Adelaide Convention Centre, Adelaide",
-                  "Koelnmesse, Köln, Germany"]:
+                  "Koelnmesse, KÃ¶ln, Germany"]:
         g = GeocodeResults(query)
         print unicode(g)
         print
     print json.dumps(GeocodeResults.cache_dict)
 
-    g = geocoder.IPGeocodeResults("213.47.84.26")
+    g = IPGeocodeResults("213.47.84.26")
     print g.results
