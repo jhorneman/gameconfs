@@ -652,7 +652,6 @@ end_date: [2012, 11, 11]
 main_url: "http://altdevconf.com"
 twitter_hashtags: ""
 twitter_account: altdevconf
-location: Online
 ---
 name: Project Horseshoe
 start_date: [2012, 11, 1]
@@ -2244,7 +2243,6 @@ end_date: [2012, 1, 29]
 main_url: "http://globalgamejam.org/"
 twitter_hashtags: "#ggj12"
 twitter_account: globalgamejam
-location: 
 ---
 name: Global Game Jam 2013
 start_date: [2013, 1, 25]
@@ -2252,7 +2250,6 @@ end_date: [2013, 1, 27]
 main_url: "http://globalgamejam.org/"
 twitter_hashtags: "#ggj13"
 twitter_account: globalgamejam
-location: 
 ---
 name: "Italian Videogame Developer Conference (IVDC) 2012"
 start_date: [2012, 3, 22]
