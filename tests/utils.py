@@ -1,22 +1,33 @@
-import logging
+import unittest
+from nose.tools import *
+from gameconfs import create_app
+from gameconfs.models import initialize_continents
 
 
-# Origin: http://stackoverflow.com/questions/899067/how-should-i-verify-a-log-message-when-testing-python-code-under-nose
-class MockLoggingHandler(logging.Handler):
-    """Mock logging handler to check for expected logs."""
+class TestCaseUsingDatabase(unittest.TestCase):
+    def setUp(self):
+        create_app("test")
+        from gameconfs import app, db
+        self.app = app
+        self.db = db
 
-    def __init__(self, *args, **kwargs):
-        self.reset()
-        logging.Handler.__init__(self, *args, **kwargs)
+        with self.app.test_request_context():
+            self.db.create_all()
+            initialize_continents(self.db)
+            self.db_session = self.db.create_scoped_session()
+            # IMPORTANT: Always use self.db_session.query(Klass) NOT Klass.query
+            # as the latter will create a new session
 
-    def emit(self, record):
-        self.messages[record.levelname.lower()].append(record.getMessage())
+    def tearDown(self):
+        with self.app.test_request_context():
+            self.db_session.remove()
+            self.db.drop_all()
 
-    def reset(self):
-        self.messages = {
-            'debug': [],
-            'info': [],
-            'warning': [],
-            'error': [],
-            'critical': [],
-        }
+    def count_in_db(self, _klass):
+        return _klass.query.count()
+
+    def exists_in_db(self, _klass, _name, _msg=None):
+        ok_(_klass.query.filter(_klass.name == _name).count() == 1, _msg)
+
+    def does_not_exist_in_db(self, _klass, _name, _msg=None):
+        ok_(_klass.query.filter(_klass.name == _name).count() == 0, _msg)

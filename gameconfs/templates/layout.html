@@ -50,7 +50,7 @@
             <li><a href="{{ url_for('widget.index') }}">Widget</a></li>
             <li><a href="{{ url_for('about') }}">About</a></li>
               {% if current_user and current_user.is_authenticated() %}
-              <li><a href="/logout">Sign out {{ current_user.name }}</a></li>
+              <li><a href="/logout">Sign out {{ current_user.user_name }}</a></li>
               {% endif %}
           </ul>
           <div class="copyright pull-right">

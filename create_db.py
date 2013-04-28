@@ -82,7 +82,7 @@ if __name__ == "__main__":
 
         # Create users
         admin_role = app.user_datastore.create_role(name='admin')
-        user = app.user_datastore.create_user(name='Jurie', email='admin@gameconfs.com', password='password')
+        user = app.user_datastore.create_user(user_name='Jurie', email='admin@gameconfs.com', password='password')
         app.user_datastore.add_role_to_user(user, admin_role)
         db.session.commit()
 
