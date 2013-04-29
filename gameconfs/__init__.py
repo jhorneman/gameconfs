@@ -133,7 +133,7 @@ def create_app(_run_mode):
     # Set up Jinja2 filters
     init_template_filters(app)
 
-    return (app, db)
+    return app, db
 
 
 def run_app():
