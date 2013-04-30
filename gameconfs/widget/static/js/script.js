@@ -60,7 +60,6 @@
             css_link.appendTo('head');
 
             /* Load widget parameters */
-            userId = container.data('user-id');
             place = container.data('place');
             nrMonths = container.data('nr-months') || 3;
             widgetWidth = container.data('width') || 240;
@@ -68,9 +67,6 @@
 
             /* Load and inject HTML */
             jsonpURL = "http://www.gameconfs.com/widget/v1/data.json?nr-months=" + encodeURIComponent(nrMonths);
-            if (userId) {
-                jsonpURL += "&user-id=" + encodeURIComponent(userId);
-            }
             if (place) {
                 jsonpURL += "&place=" + encodeURIComponent(place);
             }

@@ -26,35 +26,6 @@ def css(version, filename):
 
 @widget_blueprint.route('/v<int:version>/data.json')
 def data(version):
-    #TODO: Move this to a database or text file or something
-    widget_users = {
-        '2467750341': 'www.gameconfs.com',
-        '4088578391': 'www.intelligent-artifice.com'
-    }
-
-    # Get widget user ID
-    user_id = request.args.get('user-id', None)
-
-    # Fail if no user ID was given
-    if user_id is None:
-        abort(400)
-
-    # Fail if user ID is unknown
-    if user_id not in widget_users:
-        abort(403)
-
-    # Extract domain from request URL
-    regex = re.match("https?://([\w\.:]*)/?", request.url_root)
-    if regex:
-        domain = regex.group(1)
-    else:
-        domain = ""
-
-    # Fail if domain doesn't match UNLESS we're in debug mode and requesting from local machine
-    if not current_app.debug or domain != '127.0.0.1:5000':
-        if domain != widget_users[user_id]:
-            abort(403)
-
     # Fail if no JSONP callback name was given
     callback = request.args.get('callback', None)
     if callback is None:
