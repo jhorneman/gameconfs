@@ -12,11 +12,6 @@ from gameconfs.forms import EventForm
 from gameconfs.helpers import *
 
 
-@app.teardown_request
-def shutdown_session(exception=None):
-    db.session.remove()
-
-
 @app.route('/', defaults={'year': None, 'continent_name': None, 'country_name': None, 'city_or_state_name': None, 'city_name': None})
 @app.route('/<int:year>', defaults={'continent_name': None, 'country_name': None, 'city_or_state_name': None, 'city_name': None})
 @app.route('/<int:year>/<continent_name>', defaults={'country_name': None, 'city_or_state_name': None, 'city_name': None})
@@ -218,7 +213,47 @@ def new_event():
             flash("Location setting failed", "error")
             return render_template('edit_event.html', form=form)
     else:
-        return render_template('edit_event.html', form=form)
+        return render_template('edit_event.html', form=form, event_id=None)
+
+
+@app.route('/event/<id>/edit', methods=("GET", "POST"))
+@roles_required('admin')
+def edit_event(id):
+    form = EventForm()
+    if form.is_submitted():
+        pass
+    else:
+        event = Event.query.filter(Event.id == id).one()
+        form.name.data = event.name
+        form.start_date.data = event.start_date
+        form.end_date.data = event.end_date
+        form.event_url.data = event.event_url
+        form.twitter_hashtags.data = event.twitter_hashtags
+        form.twitter_account.data = event.twitter_account
+        form.venue.data = event.venue
+
+        if event.is_online():
+            form.address.data = ""
+        else:
+            # Copied from filters
+            loc = event.city.name
+            if event.city.country.has_states():        #TODO: Eliminate SQL call!
+                if event.city.name not in geocoder.cities_without_states_or_countries:
+                    loc += ", " + event.city.state.name     #TODO: Eliminate SQL call!
+                elif event.city.name not in geocoder.cities_without_states_or_countries:
+                    loc += ", " + event.city.country.name
+            form.address.data = loc
+
+    return render_template('edit_event.html', form=form, event_id=event.id)
+
+
+@app.route('/event/<id>/delete', methods=("GET", "POST"))
+@roles_required('admin')
+def delete_event(id):
+    event = Event.query.filter(Event.id == id).one()
+    db.session.delete(event)
+    db.session.commit()
+    return redirect(url_for('index'))
 
 
 @app.route('/event/<id>')
