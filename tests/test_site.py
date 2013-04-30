@@ -115,6 +115,23 @@ class SiteTestCase(unittest.TestCase):
 
         self.db_session.commit()
 
+        # Create user data
+        admin_role = self.app.user_datastore.create_role(name='admin')
+        user = self.app.user_datastore.create_user(user_name='Test', email='test@gameconfs.com', password='test')
+        self.app.user_datastore.add_role_to_user(user, admin_role)
+        db.session.commit()
+
+        self.db_session.commit()
+
+    def login(self, _email, _password):
+        return self.c.post('/login', data=dict(
+            email=_email,
+            password=_password
+        ), follow_redirects=True)
+
+    def logout(self):
+        return self.c.get('/logout', follow_redirects=True)
+
     def test_index_page(self):
         rv = self.c.get('/')
         assert "Stagconf" in rv.data
@@ -168,3 +185,13 @@ class SiteTestCase(unittest.TestCase):
         assert "March" in rv.data
         assert "Moscone" in rv.data
         assert "www.gdconf.com" in rv.data
+
+    def test_login(self):
+        rv = self.c.get('/')
+        assert "Sign out" not in rv.data
+
+        rv = self.login('test@gameconfs.com', 'test')
+        assert "Sign out" in rv.data
+
+        rv = self.logout()
+        assert "Sign out" not in rv.data
