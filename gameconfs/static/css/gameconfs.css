@@ -11,23 +11,6 @@
 	padding-right: 1em;
 }
 
-.social .facebook-widget
-{
-    float: right;
-    display: inline-block;
-    margin-top: 7px;
-    height: 22px;
-}
-
-.social .g-plus-widget
-{
-    float: right;
-    display: inline-block;
-    margin-top: 7px;
-    margin-left: 10px;
-    height: 22px;
-}
-
 .footer
 {
 	margin-top: 30px;
@@ -180,4 +163,10 @@ div#place-controls i
 	float: left;
 	margin-right: 0.5em;
 	margin-top: 6px;
+}
+
+/* Flash messages */
+.flash_msgs li
+{
+    list-style-type: none;
 }
