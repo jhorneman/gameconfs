@@ -1440,7 +1440,7 @@ name: Deutsche Gamestage 13
 start_date: [2013, 4, 23]
 end_date: [2013, 4, 27]
 main_url: "http://www.deutsche-gamestage.de/"
-twitter_hashtags: ""
+twitter_hashtags: "#dgt13"
 twitter_account: 
 location: Various
 address: Berlin, Germany
@@ -1450,7 +1450,7 @@ start_date: [2012, 4, 24]
 end_date: [2012, 4, 28]
 main_url: "http://www.deutsche-gamestage.de/maze/maze-indie-connect-2012"
 twitter_hashtags: ""
-twitter_account: 
+twitter_account: AMazeFest
 location: Various
 address: Berlin, Germany
 ---
@@ -4272,7 +4272,7 @@ start_date: [2013, 4, 24]
 end_date: [2013, 4, 26]
 main_url: "http://www.amaze-festival.de/"
 twitter_hashtags: "#AMaze2013"
-twitter_account:
+twitter_account: AMazeFest
 location: Unknown
 address: Berlin, Germany
 ---
@@ -4825,59 +4825,59 @@ twitter_account:
 location: Harpa
 address: Reykjavik, Iceland
 ---
-name:
-start_date: [2013, 1, 1]
-end_date: [2013, 1, 1]
-main_url: ""
+name: "StoryCase 2012: Workshop on Stories, Episodes, and Cases"
+start_date: [2012, 9, 3]
+end_date: [2012, 9, 6]
+main_url: "http://gaia.fdi.ucm.es/sites/storycase12/"
 twitter_hashtags: ""
 twitter_account:
-location:
-address:
+location: Bâtiment Nautibus
+address: Lyon, France
 ---
-name:
-start_date: [2013, 1, 1]
-end_date: [2013, 1, 1]
-main_url: ""
+name: Narrative Minds and Virtual Worlds Conference
+start_date: [2013, 5, 21]
+end_date: [2013, 5, 22]
+main_url: "http://www.uta.fi/ltl/en/plural/research/mmk/narrative_minds.html"
 twitter_hashtags: ""
 twitter_account:
-location:
-address:
+location: University of Tampere
+address: Tampere, Finland
 ---
-name:
-start_date: [2013, 1, 1]
-end_date: [2013, 1, 1]
-main_url: ""
+name: StoreCon3
+start_date: [2013, 4, 27]
+end_date: [2013, 4, 28]
+main_url: "http://www.scorecon3.com"
 twitter_hashtags: ""
-twitter_account:
-location:
-address:
+twitter_account: scoreonline
+location: Drury Plaza Hotel
+address: Franklin, Tennessee, USA
 ---
-name:
-start_date: [2013, 1, 1]
-end_date: [2013, 1, 1]
-main_url: ""
-twitter_hashtags: ""
+name: Stunfest
+start_date: [2013, 4, 26]
+end_date: [2013, 4, 28]
+main_url: "http://www.stunfest.fr"
+twitter_hashtags: "#Stunfest"
 twitter_account:
-location:
-address:
+location: INSA de Rennes
+address: Rennes, France
 ---
-name:
-start_date: [2013, 1, 1]
-end_date: [2013, 1, 1]
-main_url: ""
+name: CHI 2013
+start_date: [2013, 4, 27]
+end_date: [2013, 5, 2]
+main_url: "http://chi2013.acm.org"
 twitter_hashtags: ""
-twitter_account:
-location:
-address:
+twitter_account: sig_chi
+location: Palais de Congrès de Paris
+address: Paris, France
 ---
-name:
-start_date: [2013, 1, 1]
-end_date: [2013, 1, 1]
-main_url: ""
+name: Captivate Conference 2013
+start_date: [2013, 10, 6]
+end_date: [2013, 10, 8]
+main_url: "http://captivateconference.com"
 twitter_hashtags: ""
 twitter_account:
-location:
-address:
+location: Palmer Auditorium
+address: Austin, Texas
 ---
 name:
 start_date: [2013, 1, 1]
