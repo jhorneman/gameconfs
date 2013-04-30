@@ -28,7 +28,8 @@ def css(version, filename):
 def data(version):
     #TODO: Move this to a database or text file or something
     widget_users = {
-        '2467750341': 'www.gameconfs.com'
+        '2467750341': 'www.gameconfs.com',
+        '4088578391': 'www.intelligent-artifice.com'
     }
 
     # Get widget user ID

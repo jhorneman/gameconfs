@@ -55,7 +55,7 @@
             css_link = $("<link>", {
                 rel: "stylesheet",
                 type: "text/css",
-                href: "/widget/v1/widget.css"
+                href: "http://www.gameconfs.com/widget/v1/widget.css"
             });
             css_link.appendTo('head');
 
@@ -67,7 +67,7 @@
             widgetHeight = container.data('height') || 400;
 
             /* Load and inject HTML */
-            jsonpURL = "/widget/v1/data.json?nr-months=" + encodeURIComponent(nrMonths);
+            jsonpURL = "http://www.gameconfs.com/widget/v1/data.json?nr-months=" + encodeURIComponent(nrMonths);
             if (userId) {
                 jsonpURL += "&user-id=" + encodeURIComponent(userId);
             }
