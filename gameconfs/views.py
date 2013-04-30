@@ -1,7 +1,7 @@
 import os
-from datetime import date
+from datetime import date, datetime
 import operator
-from flask import render_template, request, abort, send_from_directory
+from flask import render_template, request, abort, send_from_directory, flash, redirect, url_for, g
 from flask.ext.security.decorators import roles_required
 from sqlalchemy.sql.expression import *
 from gameconfs import app, db
@@ -193,8 +193,32 @@ def index(year, continent_name, country_name, city_or_state_name, city_name):
 def new_event():
     form = EventForm()
     if form.validate_on_submit():
-        pass
-    return render_template('edit_event.html', form=form)
+        new_event = Event()
+        now = datetime.now()
+        new_event.created_at = now
+        new_event.last_modified_at = now
+        new_event.name = form.name.data
+        new_event.start_date = form.start_date.data
+        new_event.end_date = form.end_date.data
+        new_event.event_url = form.event_url.data
+        new_event.twitter_hashtags = form.twitter_hashtags.data
+        new_event.twitter_account = form.twitter_account.data
+
+        result = new_event.set_location(db.session, form.venue.data, form.address.data)
+
+        # Only add if setting location worked (geocoding can fail)
+        if result:
+            db.session.add(new_event)
+            db.session.commit()
+            return redirect(url_for('event', id=new_event.id))
+        else:
+            # Otherwise get rid of whatever was done to the session or it will cause trouble later
+            db.session.expunge_all()
+
+            flash("Location setting failed", "error")
+            return render_template('edit_event.html', form=form)
+    else:
+        return render_template('edit_event.html', form=form)
 
 
 @app.route('/event/<id>')

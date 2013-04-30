@@ -20,20 +20,23 @@
     </div>
 {% endmacro %}
 
-{% block title %}New event - Gameconfs{% endblock %}
-{% block content %}
-{% with messages = get_flashed_messages() %}
+{% macro flash() %}
+{% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
-    <ul class="flashes">
-    {% for message in messages %}
-      <li>{{ message }}</li>
+    <ul class="flash_msgs">
+    {% for category, message in messages %}
+      <li class="alert alert-{{ category }}">{{ message }}</li>
     {% endfor %}
     </ul>
   {% endif %}
 {% endwith %}
+{% endmacro %}
 
+{% block title %}New event - Gameconfs{% endblock %}
+{% block content %}
 <form class="form-horizontal" method="POST" action="/new">
   <legend>Enter data for a new event</legend>
+  {{ flash() }}
   <fieldset>
     {{ form.hidden_tag() }}
     {{ form_control(form.name, "Game Developers Conference 2013") }}
@@ -42,8 +45,8 @@
     {{ form_control(form.event_url, "http://www.gdconf.com") }}
     {{ form_control(form.twitter_account, "Official_GDC") }}
     {{ form_control(form.twitter_hashtags, "#gdc #gdc13") }}
-    {{ form_control(form.location, "Moscone Conference Center") }}
-    {{ form_control(form.address, "San Francisco, USA") }}
+    {{ form_control(form.venue, "Moscone Conference Center") }}
+    {{ form_control(form.address, "San Francisco, USA (leave empty for online events)") }}
     <div class="form-actions">
         <button type="submit" class="btn btn-primary">Save</button>
     </div>
