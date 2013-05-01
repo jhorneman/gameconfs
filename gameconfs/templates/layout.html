@@ -25,7 +25,11 @@
       })();
     </script>
   </head>
+{% if body_id %}
+<body id="{{ body_id }}">
+{% else %}
 <body>
+{% endif %}
   <div class="navbar">
     <div class="navbar-inner">
       <div class="container">
@@ -33,11 +37,9 @@
       </div>
     </div>
   </div>
-
   <div class="container">
 {% block content %}{% endblock %}
   </div>
-
   <footer class="footer">
     <div class="navbar">
       <div class="navbar-inner">

@@ -1,4 +1,13 @@
 $(document).ready(function() {
+    var bodyId = $(document.body).attr('id');
+    if (bodyId == "edit-event") {
+        initEditEventPage();
+    } else if (bodyId == "view-event") {
+        initViewEventPage();
+    }
+});
+
+function initEditEventPage() {
     var startDatePickerData,
         endDatePickerData;
 
@@ -32,4 +41,13 @@ $(document).ready(function() {
             endDatePickerData.hide();
         })
         .data("datepicker");
-});
+}
+
+function initViewEventPage() {
+    $('#delete-button')
+        .on('click', function(evt) {
+            if (!confirm("Are you sure you want to delete this event?")) {
+                evt.preventDefault();
+            }
+        });
+}

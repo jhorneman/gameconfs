@@ -211,9 +211,9 @@ def new_event():
             db.session.expunge_all()
 
             flash("Location setting failed", "error")
-            return render_template('edit_event.html', form=form)
+            return render_template('edit_event.html', body_id="edit-event", form=form)
     else:
-        return render_template('edit_event.html', form=form, event_id=None)
+        return render_template('edit_event.html', body_id="edit-event", form=form, event_id=None)
 
 
 @app.route('/event/<id>/edit', methods=("GET", "POST"))
@@ -244,7 +244,7 @@ def edit_event(id):
                     loc += ", " + event.city.country.name
             form.address.data = loc
 
-    return render_template('edit_event.html', form=form, event_id=event.id)
+    return render_template('edit_event.html', body_id="edit-event", form=form, event_id=event.id)
 
 
 @app.route('/event/<id>/delete', methods=("GET", "POST"))
@@ -259,7 +259,7 @@ def delete_event(id):
 @app.route('/event/<id>')
 def event(id):
     event = Event.query.filter(Event.id == id).one()
-    return render_template('event.html', event=event, today=date.today())
+    return render_template('event.html', body_id="view-event", event=event, today=date.today())
 
 
 @app.route('/about')
