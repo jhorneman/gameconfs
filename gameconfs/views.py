@@ -3,6 +3,7 @@ from datetime import date, datetime
 import operator
 from flask import render_template, request, abort, send_from_directory, flash, redirect, url_for, g
 from flask.ext.security.decorators import roles_required
+from sqlalchemy.orm import *
 from sqlalchemy.sql.expression import *
 from gameconfs import app, db
 from gameconfs.models import *
@@ -139,25 +140,11 @@ def index(year, continent_name, country_name, city_or_state_name, city_name):
                         abort(404)
                     location_title = u"in " + city_name
 
-    #TODO: Cache this
-    # Get the number of events for each month
-    # We need this to set the status of the month buttons
-    nr_events_by_month = [ 0 for i in range(0, 12) ]
-    for month in range(1, 12+1):
-        period_start = date(year, month, 1)
-        if month < 12:
-            period_end = date(year, month+1, 1)
-        else:
-            period_end = date(year+1, 1, 1)
-        #TODO: Add place filter
-        nr_events_by_month[month-1] = Event.query.\
-            filter(and_(Event.start_date >= period_start, Event.start_date < period_end)).\
-            count()
-
     # Get the events
     if continent is None:
         q = Event.query
-        q = filter_by_period(q, year, 1, 12)
+        q = filter_by_period(q, year, 1, 12).\
+            options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
         events = q.all()
     else:
         q = Event.query.\
@@ -167,6 +154,15 @@ def index(year, continent_name, country_name, city_or_state_name, city_name):
         q = filter_by_place(q, continent, country, state, city)
         q = filter_by_period(q, year, 1, 12)
         events = q.all()
+
+    # Get the number of events for each month
+    # We need this to set the status of the month buttons
+    nr_events_by_month = [0 for i in range(0, 12)]
+    for event in events:
+        if event.start_date.year == year:
+            nr_events_by_month[event.start_date.month-1] += 1
+            if event.end_date.year == year and event.end_date.month != event.start_date.month:
+                nr_events_by_month[event.end_date.month-1] += 1
 
     # Get stats for header
     # total_nr_countries = Country.query.count()
@@ -237,7 +233,7 @@ def edit_event(id):
         else:
             # Copied from filters
             loc = event.city.name
-            if event.city.country.has_states():        #TODO: Eliminate SQL call!
+            if event.city.country.has_states:        #TODO: Eliminate SQL call!
                 if event.city.name not in geocoder.cities_without_states_or_countries:
                     loc += ", " + event.city.state.name     #TODO: Eliminate SQL call!
                 elif event.city.name not in geocoder.cities_without_states_or_countries:
