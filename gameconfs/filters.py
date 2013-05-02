@@ -80,9 +80,9 @@ def event_city_and_state_or_country(_event):
         return "Online"
     else:
         loc = _event.city.name
-        if _event.city.country.has_states():        #TODO: Eliminate SQL call!
+        if _event.city.country.has_states:
             if _event.city.name not in geocoder.cities_without_states_or_countries:
-                loc += ", " + _event.city.state.name     #TODO: Eliminate SQL call!
+                loc += ", " + _event.city.state.name
         elif _event.city.name not in geocoder.cities_without_states_or_countries:
             loc += ", " + _event.city.country.name
         return loc

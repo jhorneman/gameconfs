@@ -1,5 +1,5 @@
 import logging
-from sqlalchemy import Column, Integer, String, ForeignKey, Date, DateTime
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, DateTime, Boolean
 from sqlalchemy.orm import relationship, backref
 import sqlalchemy.orm
 from flask.ext.security import UserMixin, RoleMixin
@@ -79,15 +79,14 @@ class Country(db.Model):
     name = Column(String(250), unique=True, nullable=False)
     continent_id = Column(Integer, ForeignKey('continents.id'), nullable=False)
     continent = relationship('Continent', backref=backref('countries', lazy='lazy'))
+    has_states = Column(Boolean)
 
     def __init__(self, _name):
         self.name = _name
+        self.has_states = _name in geocoder.countries_with_states
 
     def __repr__(self):
         return '<Country %r>' % (self.name)
-
-    def has_states(self):
-        return self.name in geocoder.countries_with_states
 
 
 class Continent(db.Model):
@@ -138,7 +137,7 @@ class Event(db.Model):
     city = relationship('City')
 
     def is_online(self):
-        return self.city is None
+        return self.city_id is None
 
     def set_location(self, _db_session, _venue, _address_for_geocoding):
         """
