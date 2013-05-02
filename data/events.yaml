@@ -4879,6 +4879,15 @@ twitter_account:
 location: Palmer Auditorium
 address: Austin, Texas
 ---
+name: GaME 2013
+start_date: [2012, 5, 20]
+end_date: [2012, 5, 20]
+main_url: "http://www.doc.ic.ac.uk/game/"
+twitter_hashtags: ""
+twitter_account: 
+location: Huxley building, Imperial College
+address: London, United Kingdom
+---
 name:
 start_date: [2013, 1, 1]
 end_date: [2013, 1, 1]
