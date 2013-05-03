@@ -53,6 +53,16 @@
           <td>Location</td>
           <td itemprop="location">{{ event|event_location }}</td>
         </tr>
+        {% if logged_in %}
+        <tr>
+          <td>Created at</td>
+          <td>{{ event.created_at|datetimeformat('%d %B %Y %H:%M') }}</td>
+        </tr>
+        <tr>
+          <td>Last modified at</td>
+          <td>{{ event.last_modified_at|datetimeformat('%d %B %Y %H:%M') }}</td>
+        </tr>
+        {% endif %}
       </tbody>
     </table>
     <p>
