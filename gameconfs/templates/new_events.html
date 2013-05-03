@@ -4,7 +4,7 @@
     {% if events %}
 	<table class="table table-condensed events">
 	  	<tbody>
-			{% for event in events|sort(attribute='last_modified_at') %}
+			{% for event in events %}
     		<tr>
          	<td><span class="date">{{ event.start_date|nice_date }}</span><span class="short_date">{{ event.start_date|short_date }}</span></td>
 	      	<td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
