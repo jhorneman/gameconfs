@@ -5,6 +5,7 @@ import icalendar
 import pytz
 from flask import render_template, request, abort, send_from_directory, flash, redirect, url_for, Response
 from flask.ext.security.decorators import roles_required
+from flask.ext.login import current_user
 from sqlalchemy.orm import *
 from sqlalchemy.sql.expression import *
 from gameconfs import app, db
@@ -13,6 +14,12 @@ from gameconfs.geocoder import all_continents
 from gameconfs.filters import definite_country, event_location
 from gameconfs.forms import EventForm
 from gameconfs.helpers import *
+
+
+# For convenience
+@app.context_processor
+def inject_logged_in_status():
+    return dict(logged_in=current_user and current_user.is_authenticated())
 
 
 @app.route('/', defaults={'year': None, 'continent_name': None, 'country_name': None, 'city_or_state_name': None, 'city_name': None})
