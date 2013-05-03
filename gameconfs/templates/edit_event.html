@@ -1,6 +1,6 @@
 {% extends "layout.html" %}
 
-{% macro form_control(field, placeholder="", explanation=None, class="span4") %}
+{% macro form_control(field, placeholder="", class="span4", show_at_symbol=False) %}
     {% if field.errors %}
     <div class="control-group error">
     {% else %}
@@ -8,13 +8,14 @@
     {% endif %}
       {{ field.label(class="control-label") }}
       <div class="controls">
+      {%  if show_at_symbol %}
+      <div class="input-prepend"><span class="add-on">@</span>{{ field(class=class, placeholder=placeholder) }}</div>
+      {% else %}
       {{ field(class=class, placeholder=placeholder) }}
+      {% endif %}
       {% if field.errors %}
       <span class="help-inline">{% for error in field.errors %}{{ error }} {% endfor %}</span>
       {% else %}
-      {% if explanation %}
-      <span class="help-inline">{{ explanation }}</span>
-      {% endif %}
       {% endif %}
       </div>
     </div>
@@ -43,7 +44,7 @@
     {{ form_control(form.start_date, class="span2 datepicker") }}
     {{ form_control(form.end_date, class="span2 datepicker") }}
     {{ form_control(form.event_url, "http://www.gdconf.com") }}
-    {{ form_control(form.twitter_account, "Official_GDC") }}
+    {{ form_control(form.twitter_account, "Official_GDC", class="span2", show_at_symbol=True) }}
     {{ form_control(form.twitter_hashtags, "#gdc #gdc13") }}
     {{ form_control(form.venue, "Moscone Conference Center") }}
     {{ form_control(form.address, "San Francisco, USA (leave empty for online events)") }}
