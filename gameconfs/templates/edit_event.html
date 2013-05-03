@@ -33,10 +33,22 @@
 {% endwith %}
 {% endmacro %}
 
-{% block title %}New event - Gameconfs{% endblock %}
+{% block title %}
+{% if event_id %}
+Edit event - Gameconfs
+{% else %}
+New event - Gameconfs
+{% endif %}
+{% endblock %}
+
 {% block content %}
-<form class="form-horizontal" method="POST" action="/new">
+{% if event_id %}
+<form class="form-horizontal" method="POST" action="{{ url_for('edit_event', id=event_id) }}">
+  <legend>Edit event data</legend>
+{% else %}
+<form class="form-horizontal" method="POST" action="{{ url_for('new_event') }}">
   <legend>Enter data for a new event</legend>
+{% endif %}
   {{ flash() }}
   <fieldset>
     {{ form.hidden_tag() }}

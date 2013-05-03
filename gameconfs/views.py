@@ -224,11 +224,30 @@ def new_event():
 @app.route('/event/<id>/edit', methods=("GET", "POST"))
 @roles_required('admin')
 def edit_event(id):
+    event = Event.query.filter(Event.id == id).one()
     form = EventForm()
     if form.is_submitted():
-        pass
+        event.last_modified_at = datetime.now()
+        event.name = form.name.data
+        event.start_date = form.start_date.data
+        event.end_date = form.end_date.data
+        event.event_url = form.event_url.data
+        event.twitter_hashtags = form.twitter_hashtags.data
+        event.twitter_account = form.twitter_account.data
+
+        result = event.set_location(db.session, form.venue.data, form.address.data)
+
+        # Only add if setting location worked (geocoding can fail)
+        if result:
+            db.session.commit()
+            return redirect(url_for('event', id=event.id))
+        else:
+            # Otherwise get rid of whatever was done to the session or it will cause trouble later
+            db.session.expunge_all()
+
+            flash("Location setting failed", "error")
+            return render_template('edit_event.html', body_id="edit-event", form=form, event_id=event.id)
     else:
-        event = Event.query.filter(Event.id == id).one()
         form.name.data = event.name
         form.start_date.data = event.start_date
         form.end_date.data = event.end_date
@@ -245,8 +264,8 @@ def edit_event(id):
             if event.city.country.has_states:
                 if event.city.name not in geocoder.cities_without_states_or_countries:
                     loc += ", " + event.city.state.name
-                elif event.city.name not in geocoder.cities_without_states_or_countries:
-                    loc += ", " + event.city.country.name
+            elif event.city.name not in geocoder.cities_without_states_or_countries:
+                loc += ", " + event.city.country.name
             form.address.data = loc
 
     return render_template('edit_event.html', body_id="edit-event", form=form, event_id=event.id)
