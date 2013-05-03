@@ -49,6 +49,10 @@ def filter_by_period_start_end(_query, _period_start, _period_end):
                              and_(Event.end_date >= _period_start, Event.end_date < _period_end)))
 
 
+def filter_by_newer_than(_query, _threshold):
+    return _query.filter(Event.last_modified_at > _threshold)
+
+
 def get_year_range():
     #TODO: Cache this
     min_year = db.session.query(func.min(Event.start_date)).one()[0].year

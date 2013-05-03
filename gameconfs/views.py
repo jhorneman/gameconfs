@@ -6,12 +6,13 @@ import pytz
 from flask import render_template, request, abort, send_from_directory, flash, redirect, url_for, Response
 from flask.ext.security.decorators import roles_required
 from flask.ext.login import current_user
+from werkzeug.contrib.atom import AtomFeed
 from sqlalchemy.orm import *
 from sqlalchemy.sql.expression import *
 from gameconfs import app, db
 from gameconfs.models import *
 from gameconfs.geocoder import all_continents
-from gameconfs.filters import definite_country, event_location
+from gameconfs.filters import definite_country, event_location, event_city_and_state_or_country, get_feed_title
 from gameconfs.forms import EventForm
 from gameconfs.helpers import *
 
@@ -280,6 +281,17 @@ def delete_event(id):
     return redirect(url_for('index'))
 
 
+@app.route('/new_events')
+@roles_required('admin')
+def new_events():
+    new_threshold = datetime(2013, 5, 2, 12, 35)
+    q = Event.query
+    q = filter_by_newer_than(q, new_threshold).\
+        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
+    events = q.all()
+    return render_template('new_events.html', events=events)
+
+
 @app.route('/event/<id>')
 def event(id):
     event = Event.query.filter(Event.id == id).one()
@@ -306,6 +318,34 @@ def event_ics(id):
     cal.add_component(calendar_entry)
 
     return Response(cal.to_ical(), status=200, mimetype='text/calendar')
+
+
+@app.route('/recent.atom')
+def recent_feed():
+    def build_feed_entry_title(_event):
+        return _event.name + " - " + event_city_and_state_or_country(_event)
+
+    feed = AtomFeed(get_feed_title(),
+                    title_type='text',
+                    url=request.url_root,
+                    updated=datetime.now(),
+                    feed_url=request.url,
+                    author="Gameconfs",
+                    subtitle="Recently added or modified events on Gameconfs",
+                    subtitle_type='text')
+
+    events = Event.query.order_by(Event.last_modified_at.desc()).limit(15).all()
+    for event in events:
+        feed.add(build_feed_entry_title(event),
+                 title_type='text',
+                 content=render_template('feed_entry.html', event=event),
+                 content_type='html',
+                 url=url_for('event', id=event.id, _external=True),
+                 updated=event.last_modified_at,
+                 author="Gameconfs",
+                 published=event.last_modified_at)
+
+    return feed.get_response()
 
 
 @app.route('/about')
@@ -345,10 +385,10 @@ def stats():
     country_stats = []
     for country_id, name in db.session.query(Country.id, Country.name):
         count = db.session.query(Event).\
-             join(Event.city).\
-             join(City.country).\
-             filter(City.country_id == country_id).\
-             count()
+            join(Event.city).\
+            join(City.country).\
+            filter(City.country_id == country_id).\
+            count()
         country_stats.append((name, count))
     country_stats = sorted(country_stats, key=operator.itemgetter(1), reverse=True)[:10]
     total_nr_countries = Country.query.count()

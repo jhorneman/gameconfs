@@ -183,3 +183,10 @@ div#place-controls i
 
     background-color: #dddddd;
 }
+
+/* Feed icon in footer */
+
+#feed-icon {
+    margin-bottom: 4px;
+    margin-right: 3px;
+}

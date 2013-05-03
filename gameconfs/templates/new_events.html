@@ -1,0 +1,20 @@
+{% extends "layout.html" %}
+{% block title %}{{title}}{% endblock %}
+{% block content %}
+    {% if events %}
+	<table class="table table-condensed events">
+	  	<tbody>
+			{% for event in events|sort(attribute='last_modified_at') %}
+    		<tr>
+         	<td><span class="date">{{ event.start_date|nice_date }}</span><span class="short_date">{{ event.start_date|short_date }}</span></td>
+	      	<td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
+	      	<td>{{ event|event_city_and_state_or_country }}</td>
+	      	<td>{{ event.last_modified_at|datetimeformat('%d %B %Y %H:%M') }}</td>
+		  	</tr>
+			{% endfor %}
+	  	</tbody>
+	</table>
+	{% else %}
+    <p>There are no new events.</p>
+    {% endif %}
+{% endblock %}
