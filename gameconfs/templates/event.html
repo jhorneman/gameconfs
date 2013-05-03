@@ -55,6 +55,8 @@
         </tr>
       </tbody>
     </table>
+    <p><a class="btn" href="{{  url_for('event_ics', id=event.id) }}"><i class="icon-calendar"></i>&nbsp;Add to calendar</a></p>
+    <p>(This feature is still in Alpha - <a href="mailto:admin@gameconfs.com">let me know</a> if you're having problems.)</p>
     {% if current_user and current_user.is_authenticated() %}
     <a class="btn" href="{{ url_for('edit_event', id=event.id) }}">Edit</a>
     <a class="btn btn-danger" id="delete-button" href="{{ url_for('delete_event', id=event.id) }}">Delete</a>

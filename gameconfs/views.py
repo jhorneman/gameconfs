@@ -1,14 +1,16 @@
 import os
-from datetime import date, datetime
+from datetime import date, datetime, timedelta
 import operator
-from flask import render_template, request, abort, send_from_directory, flash, redirect, url_for, g
+import icalendar
+import pytz
+from flask import render_template, request, abort, send_from_directory, flash, redirect, url_for, Response
 from flask.ext.security.decorators import roles_required
 from sqlalchemy.orm import *
 from sqlalchemy.sql.expression import *
 from gameconfs import app, db
 from gameconfs.models import *
 from gameconfs.geocoder import all_continents
-from gameconfs.filters import definite_country
+from gameconfs.filters import definite_country, event_location
 from gameconfs.forms import EventForm
 from gameconfs.helpers import *
 
@@ -233,9 +235,9 @@ def edit_event(id):
         else:
             # Copied from filters
             loc = event.city.name
-            if event.city.country.has_states:        #TODO: Eliminate SQL call!
+            if event.city.country.has_states:
                 if event.city.name not in geocoder.cities_without_states_or_countries:
-                    loc += ", " + event.city.state.name     #TODO: Eliminate SQL call!
+                    loc += ", " + event.city.state.name
                 elif event.city.name not in geocoder.cities_without_states_or_countries:
                     loc += ", " + event.city.country.name
             form.address.data = loc
@@ -256,6 +258,29 @@ def delete_event(id):
 def event(id):
     event = Event.query.filter(Event.id == id).one()
     return render_template('event.html', body_id="view-event", event=event, today=date.today())
+
+
+@app.route('/event/<id>/ics')
+def event_ics(id):
+    event = Event.query.filter(Event.id == id).one()
+
+    cal = icalendar.Calendar()
+    cal.add('prodid', '-//Game event//gameconfs.com//')
+    cal.add('version', '2.0')
+
+    calendar_entry = icalendar.Event()
+    calendar_entry.add('summary', event.name)
+    calendar_entry.add('location', event_location(event))
+    calendar_entry.add('url', event.event_url)
+    calendar_entry.add('dtstart', date(event.start_date.year,event.start_date.month, event.start_date.day))
+    day_after_end_date = event.end_date + timedelta(days=1)
+    calendar_entry.add('dtend', date(day_after_end_date.year, day_after_end_date.month, day_after_end_date.day))
+    calendar_entry.add('dtstamp', datetime.now(pytz.utc))
+    calendar_entry['uid'] = u'{event_id}-{date}@gameconfs.com'.format(date=event.start_date, event_id=event.id)
+    calendar_entry.add('priority', 5)
+    cal.add_component(calendar_entry)
+
+    return Response(cal.to_ical(), status=200, mimetype='text/calendar')
 
 
 @app.route('/about')
