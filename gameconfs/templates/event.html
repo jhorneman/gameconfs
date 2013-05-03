@@ -55,7 +55,9 @@
         </tr>
       </tbody>
     </table>
-    <p><a class="btn" href="{{  url_for('event_ics', id=event.id) }}"><i class="icon-calendar"></i>&nbsp;Add to calendar</a></p>
+    <p>
+        <a class="btn" href="{{ url_for('event_ics', id=event.id) }}"><i class="icon-calendar"></i>&nbsp;Add to calendar</a>&nbsp;{{ event|build_google_calendar_link|safe }}
+    </p>
     <p>(This feature is still in Alpha - <a href="mailto:admin@gameconfs.com">let me know</a> if you're having problems.)</p>
     {% if current_user and current_user.is_authenticated() %}
     <a class="btn" href="{{ url_for('edit_event', id=event.id) }}">Edit</a>

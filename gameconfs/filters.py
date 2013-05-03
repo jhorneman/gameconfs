@@ -1,8 +1,7 @@
 import sys
 import inspect
-from datetime import datetime, date, timedelta
+from datetime import date, timedelta
 import urllib
-import codecs
 from gameconfs import geocoder
 
 
@@ -52,28 +51,35 @@ def friendly_time(dt, past_="ago",
 
     return default
 
+
 def nice_date(_date):
     return "{0} {1}".format(_date.strftime("%B"), _date.day)
+
 
 def short_date(_date):
     return "{0} {1}".format(_date.strftime("%b"), _date.day)
 
+
 def microdata_date(_date):
     return _date.isoformat()
+
 
 def nice_month(_month):
     month = date(2012, _month, 1)   # Year is irrelevant
     return "{0}".format(month.strftime("%B"))
 
+
 def short_month(_month):
     month = date(2012, _month, 1)   # Year is irrelevant
     return "{0}".format(month.strftime("%b"))
+
 
 def event_location(_event):
     if _event.is_online():
         return "Online"
     else:
         return _event.venue + ", " + event_city_and_state_or_country(_event)
+
 
 def event_city_and_state_or_country(_event):
     if _event.is_online():
@@ -87,17 +93,38 @@ def event_city_and_state_or_country(_event):
             loc += ", " + _event.city.country.name
         return loc
 
+
 def definite_country(_country):
     if _country in ["Netherlands", "United Kingdom", "United States"]:
         return "the " + _country
     else:
         return _country
 
+
 def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
     return value.strftime(format)
+
 
 def split(value, sep=None):
     return value.split(sep)
 
+
 def urlencode(value):
     return urllib.urlencode([("", value.encode('utf8'))])[1:]
+
+
+#TODO: Remove this after switch to Flask 0.10
+def change_scheme(_url, _scheme):
+    assert _url.startswith("http://")
+    return _scheme + '://' + _url[len('http://'):]
+
+
+def build_google_calendar_link(_event):
+    google_url = "http://www.google.com/calendar/event?" + urllib.urlencode(dict(
+        action = 'TEMPLATE',
+        text = _event.name,
+        dates = _event.start_date.strftime('%Y%m%d') + '/' + (_event.end_date + timedelta(days=1)).strftime('%Y%m%d'),
+        details = "Event website: " + _event.event_url,
+        location = event_location(_event)
+    ))
+    return '<a href="%s" target="_blank"><img src="//www.google.com/calendar/images/ext/gc_button1.gif" border=0></a>' % google_url
