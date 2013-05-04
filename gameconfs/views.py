@@ -226,7 +226,19 @@ def new_event():
 @roles_required('admin')
 def edit_event(id):
     event = Event.query.filter(Event.id == id).one()
-    form = EventForm()
+
+    address = ""
+    if not event.is_online():
+        # Copied from filters
+        address = event.city.name
+        if event.city.country.has_states:
+            if event.city.name not in geocoder.cities_without_states_or_countries:
+                address += ", " + event.city.state.name
+        elif event.city.name not in geocoder.cities_without_states_or_countries:
+            address += ", " + event.city.country.name
+
+    form = EventForm(obj=event, address=address)
+
     if form.is_submitted():
         event.last_modified_at = datetime.now()
         event.name = form.name.data
@@ -247,27 +259,6 @@ def edit_event(id):
             db.session.expunge_all()
 
             flash("Location setting failed", "error")
-            return render_template('edit_event.html', body_id="edit-event", form=form, event_id=event.id)
-    else:
-        form.name.data = event.name
-        form.start_date.data = event.start_date
-        form.end_date.data = event.end_date
-        form.event_url.data = event.event_url
-        form.twitter_hashtags.data = event.twitter_hashtags
-        form.twitter_account.data = event.twitter_account
-        form.venue.data = event.venue
-
-        if event.is_online():
-            form.address.data = ""
-        else:
-            # Copied from filters
-            loc = event.city.name
-            if event.city.country.has_states:
-                if event.city.name not in geocoder.cities_without_states_or_countries:
-                    loc += ", " + event.city.state.name
-            elif event.city.name not in geocoder.cities_without_states_or_countries:
-                loc += ", " + event.city.country.name
-            form.address.data = loc
 
     return render_template('edit_event.html', body_id="edit-event", form=form, event_id=event.id)
 
