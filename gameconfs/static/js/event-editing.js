@@ -11,6 +11,10 @@ function initEditEventPage() {
     var startDatePickerData,
         endDatePickerData;
 
+    if (Modernizr.inputtypes.date) {
+        return;
+    }
+
     startDatePickerData = $('#start_date')
         .datepicker({
             'format': 'dd/mm/yyyy',

@@ -41,6 +41,11 @@ New event - Gameconfs
 {% endif %}
 {% endblock %}
 
+{% block head %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/datepicker.css') }}">
+    <script src="{{ url_for('static', filename='js/modernizr-latest.js') }}"></script>
+{%  endblock %}
+
 {% block content %}
 {% if event_id %}
 <form class="form-horizontal" method="POST" action="{{ url_for('edit_event', id=event_id) }}">
@@ -70,7 +75,7 @@ New event - Gameconfs
 </form>
 {% endblock %}
 
-{% block jscode %}
+{% block end_of_body %}
 <script src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
 <script src="{{ url_for('static', filename='js/event-editing.js') }}"></script>
 {% endblock %}

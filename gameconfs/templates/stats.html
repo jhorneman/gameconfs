@@ -33,7 +33,7 @@
     <table class="table table-condensed stats bars" id="city-stats"></table>
 	<p>Total number of cities: <strong>{{ total_nr_cities }}</strong>.</p>
 {% endblock %}
-{% block jscode %}
+{% block end_of_body %}
 <script src="http://d3js.org/d3.v3.min.js"></script>
 <script type="text/javascript">
 var country_data = {{ country_stats|tojson|safe }};
