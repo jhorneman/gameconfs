@@ -54,11 +54,11 @@
           <td itemprop="location">{{ event|event_location }}</td>
         </tr>
         {% if logged_in %}
-        <tr>
+        <tr class="info">
           <td>Created at</td>
           <td>{{ event.created_at|datetimeformat('%d %B %Y %H:%M') }}</td>
         </tr>
-        <tr>
+        <tr class="info">
           <td>Last modified at</td>
           <td>{{ event.last_modified_at|datetimeformat('%d %B %Y %H:%M') }}</td>
         </tr>
@@ -67,8 +67,8 @@
     </table>
     <p>
         <a class="btn" href="{{ url_for('event_ics', id=event.id) }}"><i class="icon-calendar"></i>&nbsp;Add to calendar</a>&nbsp;{{ event|build_google_calendar_link|safe }}
+        &nbsp;&nbsp;<small>(This feature is still in Alpha - <a href="mailto:admin@gameconfs.com">let me know</a> if you're having problems.)</small>
     </p>
-    <p>(This feature is still in Alpha - <a href="mailto:admin@gameconfs.com">let me know</a> if you're having problems.)</p>
     {% if logged_in %}
     <a class="btn" href="{{ url_for('edit_event', id=event.id) }}">Edit</a>
     <a class="btn btn-danger" id="delete-button" href="{{ url_for('delete_event', id=event.id) }}">Delete</a>
