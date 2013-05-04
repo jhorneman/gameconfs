@@ -8,16 +8,20 @@ $(document).ready(function() {
 });
 
 function initEditEventPage() {
-    var startDatePickerData,
+    var startDatePicker,
+        endDatePicker,
+        startDatePickerData,
         endDatePickerData;
 
     if (Modernizr.inputtypes.date) {
         return;
     }
 
-    startDatePickerData = $('#start_date')
+    startDatePicker = $('#start_date');
+
+    startDatePickerData = startDatePicker
         .datepicker({
-            'format': 'dd/mm/yyyy',
+            'format': 'yyyy-mm-dd',
             'weekStart': 1
         })
         .on('changeDate', function(evt) {
@@ -30,9 +34,15 @@ function initEditEventPage() {
         })
         .data("datepicker");
 
-    endDatePickerData = $('#end_date')
+    startDatePicker.on('blur', function(evt) {
+        startDatePickerData.hide();
+    });
+
+    endDatePicker = $('#end_date');
+
+    endDatePickerData = endDatePicker
         .datepicker({
-            'format': 'dd/mm/yyyy',
+            'format': 'yyyy-mm-dd',
             'weekStart': 1,
             'onRender': function(date) {
                 return date.valueOf() < startDatePickerData.date.valueOf() ? 'disabled' : '';
@@ -45,6 +55,10 @@ function initEditEventPage() {
             endDatePickerData.hide();
         })
         .data("datepicker");
+
+    endDatePicker.on('blur', function(evt) {
+        endDatePickerData.hide();
+    });
 }
 
 function initViewEventPage() {
