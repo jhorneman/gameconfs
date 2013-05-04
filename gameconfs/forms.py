@@ -4,7 +4,8 @@ from datetime import date
 
 class EventForm(Form):
     name = TextField('Name', validators=[Required()])
-    start_date = DateField('Start date', validators=[Required()], format='%d/%m/%Y', default=date.today())
+    start_date = DateField('Start date', validators=[Required()], default=date.today())
+    # start_date = DateField('Start date', validators=[Required()], format='%d/%m/%Y', default=date.today())
     end_date = DateField('End date', format='%d/%m/%Y', default=date.today())
     event_url = URLField('URL', validators=[Required()])
     twitter_hashtags = TextField('Hashtags')
