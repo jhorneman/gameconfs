@@ -2,6 +2,7 @@ from flask.ext.wtf import Form, TextField, TextAreaField, Required, ValidationEr
 from flask.ext.wtf.html5 import URLField, DateField
 from datetime import date
 
+
 class EventForm(Form):
     name = TextField('Name', validators=[Required()])
     start_date = DateField('Start date', validators=[Required()], default=date.today())

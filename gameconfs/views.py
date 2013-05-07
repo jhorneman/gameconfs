@@ -340,6 +340,11 @@ def recent_feed():
     return feed.get_response()
 
 
+@app.route('/feedback', methods=("POST",))
+def feedback():
+    return request.form['feedback']
+
+
 @app.route('/about')
 def about():
     return render_template('about.html')

@@ -185,8 +185,12 @@ div#place-controls i
 }
 
 /* Feed icon in footer */
-
 #feed-icon {
     margin-bottom: 4px;
     margin-right: 3px;
+}
+
+/* Feedback form */
+#feedbackForm form {
+    margin-bottom: 0px;
 }
