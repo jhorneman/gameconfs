@@ -34,10 +34,6 @@ function initEditEventPage() {
         })
         .data("datepicker");
 
-    startDatePicker.on('blur', function(evt) {
-        startDatePickerData.hide();
-    });
-
     endDatePicker = $('#end_date');
 
     endDatePickerData = endDatePicker
@@ -55,10 +51,6 @@ function initEditEventPage() {
             endDatePickerData.hide();
         })
         .data("datepicker");
-
-    endDatePicker.on('blur', function(evt) {
-        endDatePickerData.hide();
-    });
 }
 
 function initViewEventPage() {
