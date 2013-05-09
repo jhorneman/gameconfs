@@ -10,13 +10,16 @@ from gameconfs import geocoder
 logger = logging.getLogger(__name__)
 
 
-roles_users = db.Table('roles_users',
-    db.Column('user_id', db.Integer(), db.ForeignKey('users.id')),
-    db.Column('role_id', db.Integer(), db.ForeignKey('roles.id')))
+class RolesUsers(db.Model):
+    __tablename__ = 'roles_users'
+
+    user_id = Column(Integer, ForeignKey('users.id'), primary_key=True)
+    role_id = Column(Integer, ForeignKey('roles.id'), primary_key=True)
 
 
 class Role(db.Model, RoleMixin):
     __tablename__ = 'roles'
+
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)
     description = db.Column(db.String(255))
@@ -25,13 +28,14 @@ class Role(db.Model, RoleMixin):
 class User(db.Model, UserMixin):
     #TODO: Check password field, check connection with relevant Flask plugins
     __tablename__ = 'users'
+
     id = db.Column(db.Integer, primary_key=True)
     user_name = db.Column(db.String(255), unique=True, nullable=False)
     email = db.Column(db.String(255), unique=True, nullable=False)
     password = db.Column(db.String(255))
     active = db.Column(db.Boolean())
     confirmed_at = db.Column(db.DateTime())
-    roles = db.relationship('Role', secondary=roles_users,
+    roles = db.relationship('Role', secondary='roles_users',
         backref=db.backref('users', lazy='dynamic'))
 
     def __repr__(self):
