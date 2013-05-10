@@ -317,12 +317,14 @@ def recent_feed():
     def build_feed_entry_title(_event):
         return _event.name + " - " + event_city_and_state_or_country(_event)
 
-    feed = AtomFeed("Gameconfs - Recent changes",
+    feed = AtomFeed('Gameconfs - Recent changes',
                     title_type='text',
                     url=request.url_root,
                     updated=datetime.now(),
                     feed_url=request.url,
-                    author="Gameconfs")
+                    author='Gameconfs',
+                    subtitle='New or changed events on Gameconfs',
+                    subtitle_type='text')
 
     events = Event.query.order_by(Event.last_modified_at.desc()).limit(15).all()
     for event in events:
@@ -332,7 +334,7 @@ def recent_feed():
                  content_type='html',
                  url=url_for('event', id=event.id, _external=True),
                  updated=event.last_modified_at,
-                 author="Gameconfs",
+                 author='Gameconfs',
                  published=event.last_modified_at)
 
     return feed.get_response()
@@ -348,8 +350,8 @@ def today_feed():
                     url=request.url_root,
                     updated=datetime.now(),
                     feed_url=request.url,
-                    author="Gameconfs",
-                    subtitle="Events on Gameconfs starting today",
+                    author='Gameconfs',
+                    subtitle='Events on Gameconfs starting today',
                     subtitle_type='text')
 
     events = Event.query.filter(Event.start_date == date.today()).all()
@@ -361,7 +363,7 @@ def today_feed():
                  content_type='html',
                  url=url_for('event', id=event.id, _external=True),
                  updated=start_datetime,
-                 author="Gameconfs",
+                 author='Gameconfs',
                  published=start_datetime)
 
     return feed.get_response()
