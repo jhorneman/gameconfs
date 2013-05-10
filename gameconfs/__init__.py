@@ -98,7 +98,7 @@ def create_app(_run_mode):
         app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
         app_run_args['port'] = int(os.environ['PORT'])
         app_run_args['host'] = '0.0.0.0'
-        app.config['SECURITY_PASSWORD_HASH'] = 'bcrypt'
+        app.config['SECURITY_PASSWORD_HASH'] = 'pbkdf2_sha512'
         app.config['SECURITY_PASSWORD_SALT'] = '4tjDFbMVTbmVYULHbj2baaGk'
         app.config['SECURITY_EMAIL_SENDER'] = 'admin@gameconfs.com'
 
