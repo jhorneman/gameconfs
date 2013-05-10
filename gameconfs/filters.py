@@ -128,7 +128,3 @@ def build_google_calendar_link(_event):
         location=event_location(_event).encode('utf-8')
     ))
     return '<a href="%s" target="_blank"><img src="//www.google.com/calendar/images/ext/gc_button1.gif" border=0></a>' % google_url
-
-
-def get_feed_title():
-    return 'Gameconfs - Recent changes'
