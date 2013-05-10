@@ -348,7 +348,9 @@ def today_feed():
                     url=request.url_root,
                     updated=datetime.now(),
                     feed_url=request.url,
-                    author="Gameconfs")
+                    author="Gameconfs",
+                    subtitle="Events on Gameconfs starting today",
+                    subtitle_type='text')
 
     events = Event.query.filter(Event.start_date == date.today()).all()
     for event in events:
