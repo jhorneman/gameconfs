@@ -105,7 +105,7 @@ class GeocodeResults(object):
             }
             r = requests.get("http://maps.googleapis.com/maps/api/geocode/json", params=params)
             self.url = r.url
-            results = r.json
+            results = r.json()
 
             # Store in cache if results were OK
             if results["status"] == u"OK":

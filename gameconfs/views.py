@@ -340,6 +340,15 @@ def recent_feed():
     return feed.get_response()
 
 
+# from flask.ext.mail import Message
+# @app.route('/email')
+# def send():
+#     msg = Message("Hello", recipients=["jhorneman@pobox.com"])
+#     msg.body = "Hello\nThis is a mail from your server\n\nBye\n"
+#     app.mail.send(msg)
+#     return "OK"
+
+
 @app.route('/about')
 def about():
     return render_template('about.html')
