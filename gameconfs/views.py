@@ -314,9 +314,6 @@ def event_ics(id):
 
 @app.route('/recent.atom')
 def recent_feed():
-    def build_feed_entry_title(_event):
-        return _event.name + " - " + event_city_and_state_or_country(_event)
-
     feed = AtomFeed('Gameconfs - Recent changes',
                     title_type='text',
                     url=request.url_root,
@@ -328,9 +325,9 @@ def recent_feed():
 
     events = Event.query.order_by(Event.last_modified_at.desc()).limit(15).all()
     for event in events:
-        feed.add(build_feed_entry_title(event),
+        feed.add(event.name + " - " + event_city_and_state_or_country(event),
                  title_type='text',
-                 content=render_template('feed_entry.html', event=event),
+                 content=render_template('recent_feed_entry.html', event=event),
                  content_type='html',
                  url=url_for('event', id=event.id, _external=True),
                  updated=event.last_modified_at,
@@ -342,9 +339,6 @@ def recent_feed():
 
 @app.route('/today.atom')
 def today_feed():
-    def build_feed_entry_title(_event):
-        return _event.name + " - " + event_city_and_state_or_country(_event)
-
     feed = AtomFeed("Gameconfs - Today's events",
                     title_type='text',
                     url=request.url_root,
@@ -357,10 +351,10 @@ def today_feed():
     events = Event.query.filter(Event.start_date == date.today()).all()
     for event in events:
         start_datetime = datetime.combine(event.start_date, time.min)
-        feed.add(build_feed_entry_title(event),
+        feed.add(event.name + " - " + event_city_and_state_or_country(event),
                  title_type='text',
-                 content=render_template('feed_entry.html', event=event),
-                 content_type='html',
+                 content=render_template('today_feed_entry.txt', event=event),
+                 content_type='txt',
                  url=url_for('event', id=event.id, _external=True),
                  updated=start_datetime,
                  author='Gameconfs',
