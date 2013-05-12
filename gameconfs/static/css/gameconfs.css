@@ -172,7 +172,8 @@ div#place-controls i
 }
 
 /* Admin bar */
-#admin-bar {
+#admin-bar
+{
     margin-top: -20px;
     margin-bottom: 20px;
 
@@ -185,8 +186,46 @@ div#place-controls i
 }
 
 /* Feed icon in footer */
-
-#feed-icon {
+#feed-icon
+{
     margin-bottom: 4px;
     margin-right: 3px;
+}
+
+/* Sponsor */
+#sponsor
+{
+    padding-left: 0;
+    padding-right: 0;
+}
+
+@media (max-width: 600px)
+{
+    #sponsor div
+    {
+        margin-left: 0;
+        margin-right: 0;
+    }
+}
+
+@media (min-width: 601px)
+{
+    #sponsor
+    {
+        width: 650px;
+    }
+
+    #sponsor div
+    {
+        margin-left: auto;
+        margin-right: auto;
+    }
+}
+
+#sponsor div
+{
+    margin-top: -10px;
+    margin-bottom: 10px;
+    width: 480px;
+    height: 90px;
 }

@@ -382,6 +382,16 @@ def other():
     return render_template('other.html')
 
 
+@app.route('/sponsoring')
+def sponsoring():
+    class Sponsor(object):
+        def __init__(self):
+            self.target_url = "http://www.intelligent-artifice.com/"
+            self.image_filename = "placeholder_sponsor.jpg"
+
+    return render_template('sponsoring.html', sponsor=Sponsor())
+
+
 @app.route('/stats')
 def stats():
     # Get time stats
@@ -444,4 +454,3 @@ def sitemap():
     url_root = request.url_root[:-1]
     event_ids = [e[0] for e in db.session.query(Event.id).all()]
     return render_template('sitemap.xml', url_root=url_root, event_ids=event_ids, mimetype='text/xml')
-
