@@ -314,25 +314,25 @@ def event_ics(id):
 
 @app.route('/recent.atom')
 def recent_feed():
-    feed = AtomFeed('Gameconfs - Recent changes',
+    feed = AtomFeed('Gameconfs - New events',
                     title_type='text',
                     url=request.url_root,
                     updated=datetime.now(),
                     feed_url=request.url,
                     author='Gameconfs',
-                    subtitle='New or changed events on Gameconfs',
+                    subtitle='New events on Gameconfs',
                     subtitle_type='text')
 
-    events = Event.query.order_by(Event.last_modified_at.desc()).limit(15).all()
+    events = Event.query.order_by(Event.created_at.desc()).limit(15).all()
     for event in events:
         feed.add(event.name + " - " + event_city_and_state_or_country(event),
                  title_type='text',
                  content=render_template('recent_feed_entry.html', event=event),
                  content_type='text/html',
                  url=url_for('event', id=event.id, _external=True),
-                 updated=event.last_modified_at,
+                 updated=event.created_at,
                  author='Gameconfs',
-                 published=event.last_modified_at)
+                 published=event.created_at)
 
     return feed.get_response()
 
