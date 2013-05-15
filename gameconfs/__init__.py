@@ -59,17 +59,7 @@ def create_app(_run_mode):
     app.config["DEBUG"] = False
 
     # Set up logging
-    # This messes up Werkzeug's console output - no idea why
-    console = logging.StreamHandler()
-    # console = logging.FileHandler('gameconfs.log')
-    console.setLevel(logging.DEBUG)
-    console.setFormatter(logging.Formatter('%(message)s'))
-
-    loggers = [logging.getLogger(''), app.logger, logging.getLogger('sqlalchemy'),
-               logging.getLogger('gameconfs.models')]
-    for logger in loggers:
-        logger.setLevel(logging.DEBUG)
-        logger.addHandler(console)
+    set_up_logging()
 
     # (We should be able to set port and host to None so the Flask defaults will
     # be used if we don't change these variables.)
@@ -95,9 +85,6 @@ def create_app(_run_mode):
         app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
         app_run_args['port'] = int(os.environ['PORT'])
         app_run_args['host'] = '0.0.0.0'
-        app.config['SECURITY_PASSWORD_HASH'] = 'pbkdf2_sha512'
-        app.config['SECURITY_PASSWORD_SALT'] = '4tjDFbMVTbmVYULHbj2baaGk'
-        app.config['SECURITY_EMAIL_SENDER'] = 'admin@gameconfs.com'
 
     # Unrecognized run mode
     else:
@@ -111,6 +98,10 @@ def create_app(_run_mode):
 
     # Set up Flask-Security
     # (Hang new variables off app to avoid terrible circular import issues.)
+    # app.config['SECURITY_PASSWORD_HASH'] = 'pbkdf2_sha512'
+    # app.config['SECURITY_PASSWORD_SALT'] = '4tjDFbMVTbmVYULHbj2baaGk'
+    app.config['SECURITY_EMAIL_SENDER'] = 'admin@gameconfs.com'
+
     app.user_datastore = SQLAlchemyUserDatastore(db, models.User, models.Role)
     app.security = Security(app, app.user_datastore)
 
@@ -134,6 +125,19 @@ def create_app(_run_mode):
     app.mail = Mail(app)
 
     return app, db
+
+
+def set_up_logging(_level=logging.WARNING):
+    handler = logging.StreamHandler()
+    # handler = logging.FileHandler('gameconfs.log')
+    handler.setLevel(_level)
+    handler.setFormatter(logging.Formatter('%(message)s'))
+
+    loggers = [logging.getLogger(''), app.logger, logging.getLogger('sqlalchemy'),
+               logging.getLogger('gameconfs.models')]
+    for logger in loggers:
+        logger.setLevel(_level)
+        logger.addHandler(handler)
 
 
 def run_app():
