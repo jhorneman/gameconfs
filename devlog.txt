@@ -1,3 +1,0 @@
-
-Date picker for Twitter Bootstrap:
-http://www.eyecon.ro/bootstrap-datepicker/
