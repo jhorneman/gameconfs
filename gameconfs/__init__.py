@@ -58,9 +58,6 @@ def create_app(_run_mode):
     # because we want to make sure we don't run debug in production by accident.
     app.config["DEBUG"] = False
 
-    # Set up logging
-    set_up_logging()
-
     # (We should be able to set port and host to None so the Flask defaults will
     # be used if we don't change these variables.)
     global app_run_args
@@ -85,6 +82,8 @@ def create_app(_run_mode):
         app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
         app_run_args['port'] = int(os.environ['PORT'])
         app_run_args['host'] = '0.0.0.0'
+
+        set_up_logging()
 
     # Unrecognized run mode
     else:
