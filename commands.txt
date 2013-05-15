@@ -33,18 +33,17 @@ To upload to Heroku:
 
 git push heroku master
 
-Various Heroku commands:
+To install PostgreSQL locally:
 
-heroku pg:info
-heroku pg:psql
-heroku pg:promote
-heroku pg:wait
-heroku addons
-heroku ps
-heroku restart
-heroku logs
-heroku run python
-heroku ps:scale web=1
-heroku create --stack cedar
-heroku login
-foreman start
+- OS X has a crippled version of Postgres pre-installed.
+- Currently, we have the EnterpriseDB distribution installed.
+- In /Library/PostgreSQL/9.2/ is pg_env.sh, a shell script that points Postgres commands to the installed version, not the crippled version.
+- In /Library/PostgreSQL/9.2/ is uninstall-postgresql, an uninstaller.
+- There is a PostreSQL 9.2 folder in /Applications.
+- Data is stored in ~/dev/PostgreSQL/9.2/data.
+
+"dyld: Library not loaded: /usr/lib/libpq.5.dylib" - do this to fix it:
+
+sudo ln -s /usr/lib/libpq.5.3.dylib /usr/lib/libpq.5.dylib
+
+(See this: http://superuser.com/questions/352005/os-x-lion-web-sharing-cant-start)
