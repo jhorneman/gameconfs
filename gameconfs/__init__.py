@@ -58,21 +58,18 @@ def create_app(_run_mode):
     # because we want to make sure we don't run debug in production by accident.
     app.config["DEBUG"] = False
 
-    # # Set up logging
-    # if _run_mode == 'dev':
-    #     # This messes up Werkzeug's console output - no idea why
-    #     # console = logging.StreamHandler()
-    #     console = logging.FileHandler('gameconfs.log')
-    #     console.setLevel(logging.DEBUG)
-    #     console.setFormatter(logging.Formatter('%(message)s'))
-    #
-    #     loggers = [app.logger, logging.getLogger('sqlalchemy'),
-    #                logging.getLogger('gameconfs.models')]
-    #     for logger in loggers:
-    #         logger.addHandler(console)
-    #
-    #     logging.getLogger('').setLevel(logging.DEBUG)
-    #     logging.getLogger('').addHandler(console)
+    # Set up logging
+    # This messes up Werkzeug's console output - no idea why
+    console = logging.StreamHandler()
+    # console = logging.FileHandler('gameconfs.log')
+    console.setLevel(logging.DEBUG)
+    console.setFormatter(logging.Formatter('%(message)s'))
+
+    loggers = [logging.getLogger(''), app.logger, logging.getLogger('sqlalchemy'),
+               logging.getLogger('gameconfs.models')]
+    for logger in loggers:
+        logger.setLevel(logging.DEBUG)
+        logger.addHandler(console)
 
     # (We should be able to set port and host to None so the Flask defaults will
     # be used if we don't change these variables.)
