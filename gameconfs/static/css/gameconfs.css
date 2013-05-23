@@ -229,3 +229,40 @@ div#place-controls i
     width: 480px;
     height: 90px;
 }
+
+/* Today page */
+
+body#today .row
+{
+    overflow: hidden;
+}
+
+.event-card
+{
+    background: lightblue;
+    text-align: center;
+    margin-bottom: -99999px;
+    padding-bottom: 99999px;
+}
+
+.event-card .event-name
+{
+    font-weight: bold;
+    display: block;
+    line-height: 1.5em;
+    font-size: 24px;
+}
+
+.event-card .event-location
+{
+    display: block;
+    line-height: 1.5em;
+    font-size: 20px;
+}
+
+.event-card .event-hashtags
+{
+    display: block;
+    line-height: 1.5em;
+    font-size: 24px;
+}

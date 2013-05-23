@@ -189,6 +189,25 @@ def index(year, continent_name, country_name, city_or_state_name, city_name):
         show_states=show_states, show_cities=show_cities, title=title)
 
 
+@app.route('/today')
+def today():
+    today = date.today()
+    q = Event.query.\
+        order_by(Event.start_date.asc()).\
+        filter(and_(Event.start_date <= today, Event.end_date >= today)).\
+        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
+    ongoing_events = q.all()
+
+    today_in_1_month = today +  + timedelta(days=31)
+    q = Event.query.\
+        order_by(Event.start_date.asc()).\
+        filter(and_(Event.start_date > today, Event.start_date < today_in_1_month)).\
+        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
+    upcoming_events = q.all()
+
+    return render_template('today.html', body_id="today", ongoing_events=ongoing_events, upcoming_events=upcoming_events)
+
+
 @app.route('/new', methods=("GET", "POST"))
 @roles_required('admin')
 def new_event():

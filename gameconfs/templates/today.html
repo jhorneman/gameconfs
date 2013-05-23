@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+{% block title %}Gameconfs Today{% endblock %}
+{% block content %}
+{% if ongoing_events %}
+	<h1>What's happening today</h1>
+    <div>
+        {% for event in ongoing_events %}
+        {% if loop.index0 % 3 == 0 %}
+        <div class="row">
+        {%  endif %}
+        <div class="span4 event-card">
+            <span class="event-name"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
+            <span class="event-location">{{ event|event_city_and_state_or_country }}</span>
+            <span class="event-hashtags">
+                {% for tag in event.twitter_hashtags|split %}
+                <a href="http://twitter.com/search?q=%23{{ tag[1:]|urlencode }}" target="_blank">{{ tag }}</a>
+                {% endfor %}
+            </span>
+        </div>
+        {% if loop.index0 % 3 == 2 %}
+        </div>
+        {% endif %}
+        {% endfor %}
+        {% if loop.index0 % 3 != 0 %}
+        </div>
+        {% endif %}
+    </div>
+{%  endif %}
+
+{% if upcoming_events %}
+    <h1>Upcoming events</h1>
+    <table class="table table-condensed events">
+        <tbody>
+            {% for event in upcoming_events %}
+            <tr>
+            <td><span class="date">{{ event.start_date|nice_date }}</span><span class="short_date">{{ event.start_date|short_date }}</span></td>
+            <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
+            <td>{{ event|event_city_and_state_or_country }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endif %}
+
+{% endblock %}
