@@ -12,8 +12,7 @@ heroku pgbackups:restore DATABASE 'http://www.intelligent-artifice.com/data.dump
 
 To grab database backup from live server on Heroku:
 
-heroku pgbackups:capture
-curl -o latest.dump `heroku pgbackups:url`
+heroku pgbackups:capture && curl -o latest.dump `heroku pgbackups:url`
 
 (Source: https://devcenter.heroku.com/articles/heroku-postgres-import-export)
 
