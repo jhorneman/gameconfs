@@ -286,7 +286,10 @@ def new_events():
 
 @app.route('/event/<id>')
 def event(id):
-    event = Event.query.filter(Event.id == id).one()
+    try:
+        event = Event.query.filter(Event.id == id).one()
+    except sqlalchemy.orm.exc.NoResultFound:
+        abort(404)
     return render_template('event.html', body_id="view-event", event=event, today=date.today())
 
 
