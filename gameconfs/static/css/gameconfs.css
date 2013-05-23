@@ -232,17 +232,37 @@ div#place-controls i
 
 /* Today page */
 
-body#today .row
+@media (max-width: 768px)
 {
-    overflow: hidden;
+    .event-card
+    {
+        margin-bottom: 10px;
+    }
+}
+
+@media (min-width: 769px)
+{
+    body#today .row
+    {
+        overflow: hidden;
+    }
+
+    .event-card
+    {
+        margin-bottom: -99999px;
+        padding-bottom: 99999px;
+    }
 }
 
 .event-card
 {
     background: lightblue;
     text-align: center;
-    margin-bottom: -99999px;
-    padding-bottom: 99999px;
+}
+
+.event-card div
+{
+    padding: 10px;
 }
 
 .event-card .event-name

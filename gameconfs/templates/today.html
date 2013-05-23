@@ -8,7 +8,7 @@
         {% if loop.index0 % 3 == 0 %}
         <div class="row">
         {%  endif %}
-        <div class="span4 event-card">
+        <div class="span4 event-card"><div>
             <span class="event-name"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
             <span class="event-location">{{ event|event_city_and_state_or_country }}</span>
             <span class="event-hashtags">
@@ -16,7 +16,7 @@
                 <a href="http://twitter.com/search?q=%23{{ tag[1:]|urlencode }}" target="_blank">{{ tag }}</a>
                 {% endfor %}
             </span>
-        </div>
+        </div></div>
         {% if loop.index0 % 3 == 2 %}
         </div>
         {% endif %}
