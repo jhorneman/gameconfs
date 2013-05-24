@@ -202,6 +202,7 @@ def today():
     q = Event.query.\
         order_by(Event.start_date.asc()).\
         filter(and_(Event.start_date > today, Event.start_date < today_in_1_month)).\
+        limit(15).\
         options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
     upcoming_events = q.all()
 
