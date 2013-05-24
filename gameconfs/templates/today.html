@@ -41,5 +41,21 @@
         </tbody>
     </table>
 {% endif %}
-
+{% endblock %}
+{% block end_of_body %}
+<script src="{{ url_for('static', filename='js/jQuery.equalHeights.js') }}"></script>
+<script>
+function adaptToWindowWidth() {
+    var row = $('.row');
+    if (window.innerWidth > 768) {
+        row.equalHeights();
+    } else {
+        // This code copied from jQuery.equalHeights.js
+		if ($.browser.msie && $.browser.version == 6.0) { row.children().css({'height': '0'}); }
+		row.children().css({'min-height': '0'});
+    }
+}
+$(window).resize(adaptToWindowWidth);
+adaptToWindowWidth();
+</script>
 {% endblock %}
