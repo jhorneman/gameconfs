@@ -245,6 +245,7 @@ div#place-controls i
     body#today .row
     {
         overflow: hidden;
+        margin-bottom: 20px;
     }
 
     .event-card
@@ -262,7 +263,7 @@ div#place-controls i
 
 .event-card div
 {
-    padding: 10px;
+    padding: 10px 10px 16px 10px;
 }
 
 .event-card .event-name
