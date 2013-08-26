@@ -310,9 +310,7 @@ def event(id):
         event = Event.query.filter(Event.id == id).one()
     except sqlalchemy.orm.exc.NoResultFound:
         abort(404)
-    from_pinterest = request.referrer.find("pinterest") >= 0
-    print "Referrer:", request.referrer
-    return render_template('event.html', body_id="view-event", event=event, today=date.today(), from_pinterest=from_pinterest)
+    return render_template('event.html', body_id="view-event", event=event, today=date.today())
 
 
 @app.route('/event/<id>/ics')
