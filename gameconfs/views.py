@@ -311,7 +311,7 @@ def event(id):
     except sqlalchemy.orm.exc.NoResultFound:
         abort(404)
     from_pinterest = request.referrer.find("pinterest") >= 0
-    print "Hello, logs!"
+    print "Referrer:", request.referrer
     return render_template('event.html', body_id="view-event", event=event, today=date.today(), from_pinterest=from_pinterest)
 
 
