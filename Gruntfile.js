@@ -24,12 +24,24 @@ module.exports = function(grunt) {
           ]
         }
       }
+    },
+
+    watch: {
+      css: {
+        files: ['gameconfs/static/css/gameconfs.css'],
+        tasks: ['cssmin'],
+        options: {
+          livereload: true
+        }
+      }
     }
   });
 
   grunt.loadNpmTasks('grunt-contrib-clean');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-watch');
 
   grunt.registerTask('default', ['cssmin', 'uglify']);
+  grunt.registerTask('dev', ['watch']);
 };
