@@ -1,31 +1,15 @@
-{% macro form_control(field, placeholder="", class="span4", show_at_symbol=False) %}
-    {% if field.errors %}
-    <div class="control-group error">
-    {% else %}
-    <div class="control-group">
-    {% endif %}
-      {{ field.label(class="control-label") }}
-      <div class="controls">
-      {%  if show_at_symbol %}
-      <div class="input-prepend"><span class="add-on">@</span>{{ field(class=class, placeholder=placeholder) }}</div>
-      {% else %}
-      {{ field(class=class, placeholder=placeholder) }}
-      {% endif %}
-      {% if field.errors %}
-      <span class="help-inline">{% for error in field.errors %}{{ error }} {% endfor %}</span>
-      {% else %}
-      {% endif %}
-      </div>
-    </div>
-{% endmacro %}
-
 {% extends "layout.html" %}
 {% block content %}
 	<h2>New search</h2>
   <form class="form-horizontal" method="POST" action="{{ url_for('new_search') }}">
     <fieldset>
       {{ form.hidden_tag() }}
-      {{ form_control(form.query_string, "San Francisco") }}
+      <div class="control-group">
+        {{ form.query_string.label(class="control-label") }}
+        <div class="controls">
+        {{ form.query_string(class="span4", id="search", placeholder="San Francisco") }}
+        </div>
+      </div>
       <div class="form-actions">
           <button type="submit" class="btn btn-primary">Search</button>
       </div>
