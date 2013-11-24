@@ -33,7 +33,7 @@
         <tbody>
             {% for event in upcoming_events %}
             <tr>
-            <td><span class="date">{{ event.start_date|nice_date }}</span><span class="short_date">{{ event.start_date|short_date }}</span></td>
+            <td><span class="hidden-xs">{{ event.start_date|nice_date }}</span><span class="visible-xs">{{ event.start_date|short_date }}</span></td>
             <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
             <td>{{ event|event_city_and_state_or_country }}</td>
             </tr>

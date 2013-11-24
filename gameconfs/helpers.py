@@ -62,27 +62,27 @@ def get_year_range():
 
 def filter_by_place_name(_query, _place_name):
     continent = Continent.query. \
-        filter(Continent.name.like(_place_name)). \
+        filter(Continent.name.ilike(_place_name)). \
         first()
     if continent:
         return _query.filter(Continent.id == continent.id)
 
     country = Country.query. \
-        filter(Country.name.like(_place_name)). \
+        filter(Country.name.ilike(_place_name)). \
         first()
     if country:
         return _query.filter(Country.id == country.id)
 
     state = State.query. \
-        filter(State.name.like(_place_name)). \
+        filter(State.name.ilike(_place_name)). \
         first()
     if state:
-        return _query.filter(City.state_id == state.id)
+        return _query.filter(City.state == state)
 
     city = City.query. \
-        filter(City.name.like(_place_name)). \
+        filter(City.name.ilike(_place_name)). \
         first()
     if city:
         return _query.filter(City.id == city.id)
 
-    return _query
+    return None

@@ -13,7 +13,7 @@ from gameconfs import app, db
 from gameconfs.models import *
 from gameconfs.geocoder import all_continents
 from gameconfs.filters import definite_country, event_location, event_city_and_state_or_country
-from gameconfs.forms import EventForm
+from gameconfs.forms import EventForm, NewSearchForm
 from gameconfs.helpers import *
 
 
@@ -198,7 +198,7 @@ def today():
         options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
     ongoing_events = q.all()
 
-    today_in_1_month = today +  + timedelta(days=31)
+    today_in_1_month = today + timedelta(days=31)
     q = Event.query.\
         order_by(Event.start_date.asc()).\
         filter(and_(Event.start_date > today, Event.start_date < today_in_1_month)).\
@@ -207,6 +207,27 @@ def today():
     upcoming_events = q.all()
 
     return render_template('today.html', body_id="today", ongoing_events=ongoing_events, upcoming_events=upcoming_events)
+
+
+@app.route('/new_search', methods=("GET", "POST"))
+def new_search():
+    form = NewSearchForm()
+    if form.validate_on_submit():
+        q = Event.query.\
+            join(Event.city).\
+            join(City.country).\
+            join(Country.continent)
+        q = filter_by_place_name(q, form.query_string.data)
+        if q:
+            q = q.limit(15)
+            found_events = q.all()
+        else:
+            found_events = []
+
+        return render_template('new_search.html', body_id="new-search", form=form, found_events=found_events)
+    else:
+        app.logger.info('new_search - form didn\'t validate')
+        return render_template('new_search.html', body_id="new-search", form=form, found_events=None)
 
 
 @app.route('/new', methods=("GET", "POST"))

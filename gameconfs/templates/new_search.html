@@ -1,0 +1,52 @@
+{% macro form_control(field, placeholder="", class="span4", show_at_symbol=False) %}
+    {% if field.errors %}
+    <div class="control-group error">
+    {% else %}
+    <div class="control-group">
+    {% endif %}
+      {{ field.label(class="control-label") }}
+      <div class="controls">
+      {%  if show_at_symbol %}
+      <div class="input-prepend"><span class="add-on">@</span>{{ field(class=class, placeholder=placeholder) }}</div>
+      {% else %}
+      {{ field(class=class, placeholder=placeholder) }}
+      {% endif %}
+      {% if field.errors %}
+      <span class="help-inline">{% for error in field.errors %}{{ error }} {% endfor %}</span>
+      {% else %}
+      {% endif %}
+      </div>
+    </div>
+{% endmacro %}
+
+{% extends "layout.html" %}
+{% block content %}
+	<h2>New search</h2>
+  <form class="form-horizontal" method="POST" action="{{ url_for('new_search') }}">
+    <fieldset>
+      {{ form.hidden_tag() }}
+      {{ form_control(form.query_string, "San Francisco") }}
+      <div class="form-actions">
+          <button type="submit" class="btn btn-primary">Search</button>
+      </div>
+    </fieldset>
+  </form>
+  {% if found_events %}
+  <h2>Found events</h2>
+  <table class="table table-condensed events">
+      <tbody>
+      {% for event in found_events %}
+      <tr>
+          <td><span class="hidden-xs">{{ event.start_date|nice_date }}</span><span class="visible-xs">{{ event.start_date|short_date }}</span> {{ event.start_date.year }}</td>
+          <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
+          <td>{{ event|event_city_and_state_or_country }}</td>
+      </tr>
+      {% endfor %}
+      </tbody>
+  </table>
+  {% endif %}
+{% endblock %}
+
+{% block end_of_body %}
+<script src="{{ url_for('static', filename='js/gameconfs.js') }}"></script>
+{% endblock %}

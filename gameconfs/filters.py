@@ -105,6 +105,10 @@ def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
     return value.strftime(format)
 
 
+def pretty_url(url):
+    return urllib.splittype(url)[1][2:]
+
+
 def split(value, sep=None):
     return value.split(sep)
 
@@ -120,11 +124,10 @@ def change_scheme(_url, _scheme):
 
 
 def build_google_calendar_link(_event):
-    google_url = "http://www.google.com/calendar/event?" + urllib.urlencode(dict(
+    return "http://www.google.com/calendar/event?" + urllib.urlencode(dict(
         action='TEMPLATE',
         text=_event.name.encode('utf-8'),
         dates=_event.start_date.strftime('%Y%m%d') + '/' + (_event.end_date + timedelta(days=1)).strftime('%Y%m%d'),
         details="Event website: " + _event.event_url.encode('utf-8'),
         location=event_location(_event).encode('utf-8')
     ))
-    return '<a href="%s" target="_blank"><img src="//www.google.com/calendar/images/ext/gc_button1.gif" border=0></a>' % google_url

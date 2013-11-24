@@ -1,73 +1,56 @@
 {% extends "layout.html" %}
 {% block title %}{{ event.name }} - Gameconfs{% endblock %}
 {% block content %}
-  <div itemscope itemtype="http://schema.org/Event">
+  <div itemscope itemtype="http://schema.org/Event" class="event">
     <h2 itemprop="name" id="event_name">{{ event.name }}</h2>
-    <table class="table table-condensed event">
-      <tbody>
-        {% if event.start_date == event.end_date %}
-        <tr>
-          <td>Date</td>
-          <td><span itemprop="startDate" id="event_date" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }} {{ event.start_date.year }}</span>
-          {% if event.start_date == today %}
-          &nbsp;<span class="badge badge-today">TODAY</span>
-          {% endif %}
-          <span itemprop="endDate" content="{{ event.end_date|microdata_date }}"/>
-          </td>
-        </tr>
-        {% else %}
-        <tr>
-          <td>Dates</td>
-          <td><span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }}</span> until <span itemprop="endDate" content="{{ event.end_date|microdata_date }}">{{ event.end_date|nice_date }} {{ event.start_date.year }}</span>
-          {% if event.start_date <= today and today <= event.end_date %}
-          &nbsp;<span class="badge badge-today">TODAY</span>
-          {% endif %}
-          </td>
-        </tr>
-        {% endif %}
-        <tr>
-          <td>Website</td>
-          {% if event.event_url %}
-          <td><a itemprop="url" id="event_url" href="{{ event.event_url }}" target="_blank">{{ event.event_url }}</a></td>
-          {% else %}
-          <td>None</td>
-          {% endif %}
-        </tr>
-        {% if event.twitter_hashtags %}
-        <tr>
-          <td>Twitter hashtags</td> 
-          <td id="event_hashtags">
-            {% for tag in event.twitter_hashtags|split %}
-            <a href="http://twitter.com/search?q=%23{{ tag[1:]|urlencode }}" target="_blank">{{ tag }}</a>
-            {% endfor %}
-          </td>
-        </tr>
-        {% endif %}
-        {% if event.twitter_account %}
-        <tr>
-          <td>Twitter account</td>
-          <td><a id="event_twitter" href="http://twitter.com/{{ event.twitter_account|urlencode }}" target="_blank">@{{ event.twitter_account }}</a></td>
-        </tr>
-        {% endif %}
-        <tr>
-          <td>Location</td>
-          <td itemprop="location">{{ event|event_location }}</td>
-        </tr>
-        {% if logged_in %}
-        <tr class="info">
-          <td>Created at</td>
-          <td>{{ event.created_at|datetimeformat('%d %B %Y %H:%M') }}</td>
-        </tr>
-        <tr class="info">
-          <td>Last modified at</td>
-          <td>{{ event.last_modified_at|datetimeformat('%d %B %Y %H:%M') }}</td>
-        </tr>
-        {% endif %}
-      </tbody>
-    </table>
     <p>
-        <a class="btn" href="{{ url_for('event_ics', id=event.id) }}"><i class="icon-calendar"></i>&nbsp;Add to calendar</a>&nbsp;{{ event|build_google_calendar_link|safe }}
-        &nbsp;&nbsp;<small>(This feature is still in Alpha - <a href="mailto:admin@gameconfs.com">let me know</a> if you're having problems.)</small>
+      <span class="glyphicon glyphicon-calendar"></span>&nbsp;
+      {% if event.start_date == event.end_date %}
+      <span itemprop="startDate" id="event_date" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }} {{ event.start_date.year }}</span>
+      {% if event.start_date == today %}
+      &nbsp;<span class="badge badge-today">TODAY</span>
+      {% endif %}
+      <span itemprop="endDate" content="{{ event.end_date|microdata_date }}"/>
+      {% else %}
+      <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }}</span> until <span itemprop="endDate" content="{{ event.end_date|microdata_date }}">{{ event.end_date|nice_date }} {{ event.start_date.year }}</span>
+      {% if event.start_date <= today and today <= event.end_date %}
+      &nbsp;<span class="badge badge-today">TODAY</span>
+      {% endif %}
+      {% endif %}
+    </p>
+
+    {% if event.event_url %}
+    <p><span class="glyphicon glyphicon-link"></span>&nbsp;<a itemprop="url" id="event_url" href="{{ event.event_url }}" target="_blank">{{ event.event_url|pretty_url }}</a></p>
+    {% endif %}
+
+    {% if event.twitter_account %}
+    <p><span class="glyphicon glyphicon-user"></span>&nbsp;<a id="event_twitter" href="http://twitter.com/{{ event.twitter_account|urlencode }}" target="_blank">@{{ event.twitter_account }}</a></p>
+    {% endif %}
+
+    {% if event.twitter_hashtags %}
+    <p id="event_hashtags">
+      <span class="glyphicon glyphicon-tag"></span>&nbsp;
+      {% for tag in event.twitter_hashtags|split %}
+      <a href="http://twitter.com/search?q=%23{{ tag[1:]|urlencode }}" target="_blank">{{ tag }}</a>
+      {% endfor %}
+    </p>
+    {% endif %}
+
+    <p itemprop="location"><span class="glyphicon glyphicon-globe"></span>&nbsp;{{ event|event_location }}</p>
+
+{#        {% if logged_in %}#}
+{#        <tr class="info">#}
+{#          <td>Created at</td>#}
+{#          <td>{{ event.created_at|datetimeformat('%d %B %Y %H:%M') }}</td>#}
+{#        </tr>#}
+{#        <tr class="info">#}
+{#          <td>Last modified at</td>#}
+{#          <td>{{ event.last_modified_at|datetimeformat('%d %B %Y %H:%M') }}</td>#}
+{#        </tr>#}
+{#        {% endif %}#}
+    <p>
+        <a class="btn btn-default" href="{{ url_for('event_ics', id=event.id) }}">Add to calendar</a>
+        <a class="btn btn-default" href="{{ event|build_google_calendar_link|safe }}">Add to Google calendar</a>
     </p>
     {% if logged_in %}
     <a class="btn" href="{{ url_for('edit_event', id=event.id) }}">Edit</a>
@@ -75,7 +58,7 @@
     {% endif %}
   </div>
 
-    <img style="opacity: 0;position: absolute;top:-1000; left:0" src="{{ url_for('static', filename='img/gameconfs_pinterest.jpg') }}">
+{#    <img style="opacity: 0;position: absolute;top:-1000; left:0" src="{{ url_for('static', filename='img/gameconfs_pinterest.jpg') }}">#}
 {% endblock %}
 
 {% if logged_in %}
