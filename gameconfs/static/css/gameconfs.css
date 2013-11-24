@@ -252,3 +252,12 @@ div#place-controls i
     line-height: 1.5em;
     font-size: 24px;
 }
+
+/* NEW SEARCH */
+
+.ui-autocomplete-category {
+    font-weight: bold;
+    padding: .2em .4em;
+    margin: .8em 0 .2em;
+    line-height: 1.5;
+}
