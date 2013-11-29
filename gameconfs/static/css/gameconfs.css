@@ -31,7 +31,7 @@
 
 @media (min-width: 768px) {
   .container {
-    max-width: 400px;
+    max-width: 500px;
   }
 }
 
@@ -255,9 +255,32 @@ div#place-controls i
 
 /* NEW SEARCH */
 
-.ui-autocomplete-category {
-    font-weight: bold;
-    padding: .2em .4em;
-    margin: .8em 0 .2em;
-    line-height: 1.5;
+#search-form {
+    display: None;
+}
+
+.event-entry {
+    border-top:solid 1px #efefef;
+}
+
+.event-entry span {
+    vertical-align: text-top;
+}
+
+.event-entry span.event-date {
+    width: 26px;
+    text-align: right;
+    margin-right: 18px;
+    display: inline-block;
+}
+
+.event-entry span.event-location {
+    width: 94px;
+    margin-right: 20px;
+    display: inline-block;
+}
+
+.event-entry span.event-link {
+    width: 300px;
+    display: inline-block;
 }

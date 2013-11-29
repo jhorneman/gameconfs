@@ -1,36 +1,39 @@
 {% extends "layout.html" %}
 {% block content %}
-	<h2>New search</h2>
-  <form class="form-horizontal" method="POST" action="{{ url_for('new_search') }}">
-    <fieldset>
-      {{ form.hidden_tag() }}
-      <div class="control-group">
-        {{ form.query_string.label(class="control-label") }}
-        <div class="controls">
-        {{ form.query_string(class="span4", id="search", placeholder="San Francisco") }}
+  {% if found_events and location %}
+  <h2>Events <a id="location" data-placement="auto" title="Click to change location" href="#">{{ location }}</a> in 2013</h2>
+  {% else %}
+  <p>Sorry, I couldn't find any events <a id="location" data-placement="auto" title="Click to change location" href="#">{{ location }}</a> in 2013.</p>
+  {% endif %}
+  <div id="search-form" class="panel panel-default">
+    <div class="panel-body">
+      <p><small class="text-muted">Enter the name of a city, state, country or continent. Leave empty for the whole world.</small></p>
+      <form class="form-inline" method="POST" action="{{ url_for('new_search') }}">
+        {{ form.hidden_tag() }}
+        <div class="form-group">
+          {{ form.query_string(id="search", class="form-control", placeholder="San Francisco") }}
         </div>
-      </div>
-      <div class="form-actions">
-          <button type="submit" class="btn btn-primary">Search</button>
-      </div>
-    </fieldset>
-  </form>
+        <button type="submit" class="btn btn-primary">Search</button>
+        <button type="button" class="btn btn-default" id="cancel">Cancel</button>
+      </form>
+    </div>
+  </div>
   {% if found_events %}
-  <h2>Found events</h2>
-  <table class="table table-condensed events">
-      <tbody>
-      {% for event in found_events %}
-      <tr>
-          <td><span class="hidden-xs">{{ event.start_date|nice_date }}</span><span class="visible-xs">{{ event.start_date|short_date }}</span> {{ event.start_date.year }}</td>
-          <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
-          <td>{{ event|event_city_and_state_or_country }}</td>
-      </tr>
-      {% endfor %}
-      </tbody>
-  </table>
+	{% for month_group in found_events|sort(attribute='start_date')|groupby('start_date.month') %}
+	<a name="{{ month_group.grouper }}"></a>
+	<h4>{{ month_group.grouper|nice_month }}</h4>
+  <div class="event-list">
+  	{% for event in month_group.list %}
+    <div class="event-entry">
+        <span class="event-date">{{ event.start_date.day }}.</span>
+        <span class="event-location">{{ event.city.name }}</span>
+        <span class="event-link"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
+    </div>
+    {% endfor %}
+  </div>
+  {% endfor %}
   {% endif %}
 {% endblock %}
-
 {% block end_of_body %}
 <script src="{{ url_for('static', filename='js/gameconfs.js') }}"></script>
 {% endblock %}

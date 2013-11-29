@@ -65,24 +65,24 @@ def filter_by_place_name(_query, _place_name):
         filter(Continent.name.ilike(_place_name)). \
         first()
     if continent:
-        return _query.filter(Continent.id == continent.id)
+        return _query.filter(Continent.id == continent.id), continent.name
 
     country = Country.query. \
         filter(Country.name.ilike(_place_name)). \
         first()
     if country:
-        return _query.filter(Country.id == country.id)
+        return _query.filter(Country.id == country.id), country.name
 
     state = State.query. \
         filter(State.name.ilike(_place_name)). \
         first()
     if state:
-        return _query.filter(City.state == state)
+        return _query.filter(City.state == state), state.name
 
     city = City.query. \
         filter(City.name.ilike(_place_name)). \
         first()
     if city:
-        return _query.filter(City.id == city.id)
+        return _query.filter(City.id == city.id), city.name
 
-    return None
+    return _query, None

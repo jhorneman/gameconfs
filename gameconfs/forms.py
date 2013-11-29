@@ -19,4 +19,4 @@ class EventForm(Form):
 
 
 class NewSearchForm(Form):
-    query_string = TextField('Query', validators=[Required()])
+    query_string = TextField('Query')
