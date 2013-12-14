@@ -74,6 +74,14 @@ def short_month(_month):
     return "{0}".format(month.strftime("%b"))
 
 
+def index_to_month(_index):
+    return (int(_index) % 12) + 1
+
+
+def index_to_year(_index):
+    return int(int(_index) / 12)
+
+
 def event_location(_event):
     if _event.is_online():
         return "Online"
@@ -101,20 +109,20 @@ def definite_country(_country):
         return _country
 
 
-def datetimeformat(value, format='%H:%M / %d-%m-%Y'):
-    return value.strftime(format)
+def datetimeformat(_value, _format='%H:%M / %d-%m-%Y'):
+    return _value.strftime(_format)
 
 
-def pretty_url(url):
-    return urllib.splittype(url)[1][2:]
+def pretty_url(_url):
+    return urllib.splittype(_url)[1][2:]
 
 
-def split(value, sep=None):
-    return value.split(sep)
+def split(_value, _sep=None):
+    return _value.split(_sep)
 
 
-def urlencode(value):
-    return urllib.urlencode([("", value.encode('utf8'))])[1:]
+def urlencode(_value):
+    return urllib.urlencode([("", _value.encode('utf8'))])[1:]
 
 
 #TODO: Remove this after switch to Flask 0.10

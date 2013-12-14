@@ -143,6 +143,11 @@ class Event(db.Model):
     def is_online(self):
         return self.city_id is None
 
+    # Needed for proper grouping of months across year boundaries
+    def get_year_month_index(self):
+        return self.start_date.year * 12 + self.start_date.month - 1
+    year_month_index = property(get_year_month_index)
+
     def set_location(self, _db_session, _venue, _address_for_geocoding):
         """
         Set location data based on geocoding of location info.
