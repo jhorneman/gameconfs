@@ -1,0 +1,31 @@
+{% macro _date_or_range(event) %}
+  {% if event.start_date == event.end_date %}
+  <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date.day }}</span>
+  <span itemprop="endDate" content="{{ event.end_date|microdata_date }}"></span>
+  {% else %}
+  <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date.day }}</span>-<span itemprop="endDate" content="{{ event.end_date|microdata_date }}">{{ event.end_date.day }}</span>
+  {% endif %}
+{% endmacro %}
+
+{% extends "layout.html" %}
+{% block title %}Events in {{ year }}{% endblock %}
+{% block content %}
+  <h1>Events in {{ year }}</h1>
+  {% if events %}
+	{% for month_group in events|sort(attribute='start_date')|groupby('start_date.month') %}
+	<a name="{{ month_group.grouper }}"></a>
+	<h4>{{ month_group.grouper|nice_month }}</h4>
+  <div id="events">
+  {% for event in month_group.list %}
+    <div class="event-entry">
+        <span class="event-date">{{ _date_or_range(event) }}</span>
+        <span class="event-link"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
+        <span class="event-location">{{ event|event_city_and_state_or_country }}</span>
+    </div>
+  {% endfor %}
+  </div>
+  {% endfor %}
+	{% else %}
+  <p>Our database contains no events in {{ year }}.</p>
+  {% endif %}
+{% endblock %}

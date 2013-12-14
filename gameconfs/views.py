@@ -23,174 +23,8 @@ def inject_logged_in_status():
     return dict(logged_in=current_user and current_user.is_authenticated())
 
 
-@app.route('/', defaults={'year': None, 'continent_name': None, 'country_name': None, 'city_or_state_name': None, 'city_name': None})
-@app.route('/<int:year>', defaults={'continent_name': None, 'country_name': None, 'city_or_state_name': None, 'city_name': None})
-@app.route('/<int:year>/<continent_name>', defaults={'country_name': None, 'city_or_state_name': None, 'city_name': None})
-@app.route('/<int:year>/<continent_name>/<country_name>', defaults={'city_or_state_name': None, 'city_name': None})
-@app.route('/<int:year>/<continent_name>/<country_name>/<city_or_state_name>', defaults={'city_name': None})
-@app.route('/<int:year>/<continent_name>/<country_name>/<city_or_state_name>/<city_name>')
-def index(year, continent_name, country_name, city_or_state_name, city_name):
-    today = date.today()
-
-    # Per default, the year is the current year
-    title = None
-    if year is None:
-        year = today.year
-        # If no year is set, set a different title
-        title = "Game events all over the world"
-
-    # Make sure the year is valid (compared to our data)
-    min_year, max_year = get_year_range()
-    if year < min_year or year > max_year:
-        abort(404)
-
-    state_name = None
-    continent = None
-    country = None
-    state = None
-    city = None
-    countries = []
-    states = []
-    cities = []
-    show_states = False
-    show_cities = True
-
-    location_title = None
-    if continent_name is None:
-        selection_level = "all"
-        location_title = u"all over the world"
-    else:
-        continent = Continent.query.\
-            filter(Continent.name.like(continent_name)).\
-            first()
-        if continent is None:
-            abort(404)
-
-        countries = db.session.query(Country.name).\
-            join(Country.continent).\
-            filter(Continent.id == continent.id).\
-            order_by(Country.name).\
-            all()
-        countries = [c[0] for c in countries]
-
-        if country_name is None:
-            selection_level = "continent"
-            location_title = u"in " + continent_name
-        else:
-            country = Country.query.\
-                filter(Country.name.like(country_name)).\
-                first()
-            if country is None:
-                abort(404)
-
-            if country_name in geocoder.countries_with_states:
-                states = db.session.query(State.name).\
-                    join(State.country).\
-                    filter(Country.id == country.id).\
-                    order_by(State.name).\
-                    all()
-                states = [c[0] for c in states]
-                show_states = True
-
-                if city_or_state_name is None:
-                    selection_level = "country"
-                    location_title = u"in " + definite_country(country_name)
-                    show_cities = False
-                else:
-                    state_name = city_or_state_name
-                    state = State.query.\
-                        join(State.country).\
-                        filter(and_(State.name.like(state_name), Country.id == State.country_id)).\
-                        first()
-                    if state is None:
-                        abort(404)
-
-                    cities = db.session.query(City.name).\
-                        join(City.state).\
-                        filter(State.id == state.id).\
-                        order_by(City.name).\
-                        all()
-                    cities = [c[0] for c in cities]
-
-                    if city_name is None:
-                        selection_level = "state"
-                        location_title = u"in " + state_name
-                    else:
-                        selection_level = "city"
-                        city = City.query.\
-                            join(City.state).\
-                            join(City.country).\
-                            filter(and_(City.name.like(city_name), State.id == City.state_id, Country.id == City.country_id)).\
-                            first()
-                        if city is None:
-                            abort(404)
-                        location_title = u"in " + city_name
-            else:
-                cities = db.session.query(City.name).\
-                    join(City.country).\
-                    filter(Country.id == country.id).\
-                    order_by(City.name).\
-                    all()
-                cities = [c[0] for c in cities]
-
-                if city_or_state_name is None:
-                    selection_level = "country"
-                    location_title = u"in " + definite_country(country_name)
-                    show_cities = country_name not in geocoder.countries_without_cities
-                else:
-                    if city_name is None:
-                        city_name = city_or_state_name
-
-                    selection_level = "city"
-                    city = City.query.\
-                        join(City.country).\
-                        filter(and_(City.name.like(city_name), Country.id == City.country_id)).\
-                        first()
-                    if city is None:
-                        abort(404)
-                    location_title = u"in " + city_name
-
-    # Get the events
-    if continent is None:
-        q = Event.query
-        q = filter_by_period(q, year, 1, 12).\
-            options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
-        events = q.all()
-    else:
-        q = Event.query.\
-            join(Event.city).\
-            join(City.country).\
-            join(Country.continent)
-        q = filter_by_place(q, continent, country, state, city)
-        q = filter_by_period(q, year, 1, 12)
-        events = q.all()
-
-    # Get the number of events for each month
-    # We need this to set the status of the month buttons
-    nr_events_by_month = [0 for i in range(0, 12)]
-    for event in events:
-        if event.start_date.year == year:
-            nr_events_by_month[event.start_date.month-1] += 1
-            if event.end_date.year == year and event.end_date.month != event.start_date.month:
-                nr_events_by_month[event.end_date.month-1] += 1
-
-    # Get stats for header
-    # total_nr_countries = Country.query.count()
-    # total_nr_events = Event.query.count()
-
-    if not title:
-        title = u"Game events {0} in {1}".format(location_title, unicode(year))
-
-    #TODO: Find a nicer way to pass all of these parameters
-    return render_template('index.html', events=events, year=year, today=today, selection_level=selection_level,
-        min_year=min_year, max_year=max_year, nr_events_by_month=nr_events_by_month,
-        selected_continent=continent_name, selected_country=country_name, selected_state=state_name, selected_city=city_name,
-        continents=all_continents, countries=countries, states=states, cities=cities,
-        show_states=show_states, show_cities=show_cities, title=title)
-
-
-@app.route('/today')
-def today():
+@app.route('/')
+def index():
     today = date.today()
     q = Event.query.\
         order_by(Event.start_date.asc()).\
@@ -198,15 +32,63 @@ def today():
         options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
     ongoing_events = q.all()
 
-    today_in_1_month = today + timedelta(days=31)
+    min_year, max_year = get_year_range()
+
+    countries = Country.query.\
+        order_by(Country.name).\
+        all()
+
+    return render_template('index.html', body_id="today", ongoing_events=ongoing_events, min_year=min_year,
+                           max_year=max_year, countries=countries)
+
+
+@app.route('/upcoming')
+def upcoming():
+    today = date.today()
+    end_of_upcoming_period = today + timedelta(days=90)
+
     q = Event.query.\
         order_by(Event.start_date.asc()).\
-        filter(and_(Event.start_date > today, Event.start_date < today_in_1_month)).\
-        limit(15).\
+        filter(and_(Event.start_date > today, Event.start_date < end_of_upcoming_period)).\
         options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
-    upcoming_events = q.all()
+    events = q.all()
 
-    return render_template('today.html', body_id="today", ongoing_events=ongoing_events, upcoming_events=upcoming_events)
+    return render_template('upcoming.html', body_id='upcoming', events=events)
+
+
+@app.route('/year/<int:year>')
+def year(year):
+    # Make sure the year is valid (compared to our data)
+    min_year, max_year = get_year_range()
+    if year < min_year or year > max_year:
+        abort(404)
+
+    q = Event.query
+    q = filter_by_period(q, year, 1, 12).\
+        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
+    events = q.all()
+
+    return render_template('year.html', body_id='year', events=events, year=year)
+
+
+@app.route('/place/<place>')
+def place(place):
+    q = Event.query.\
+        join(Event.city).\
+        join(City.country).\
+        join(Country.continent).\
+        order_by(Event.start_date.asc())
+
+    (q, location) = filter_by_place_name(q, place)
+    if not location:
+        abort(404)
+
+    today = date.today()
+    q = filter_by_period(q, today.year, 1, 12)
+    events = q.all()
+
+    return render_template('place.html', body_id='place', events=events, location=location,
+                           year=today.year)
 
 
 @app.route('/new_search', methods=("GET", "POST"))

@@ -1,173 +1,52 @@
-{%- macro _button_class(_flag) -%}
-{% if _flag %}btn btn-primary{% else %}btn{% endif %}	
-{%- endmacro -%}
-
-{% macro _country_list() %}
-	<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-		{% for country in countries %}
-		<li><a tabindex="-1" href="{{ url_for('index', year=year, continent_name=continent, country_name=country) }}">{{ country }}</a></li>
-		{% endfor %}
-	</ul>
-{% endmacro %}
-
-{% macro _continent_button(_string, _active, _url = '#') %}
-	<div class="btn-group">
-		<a class="{{ _button_class(_active) }}" href="{{ _url }}" role="button">{{ _string }}</a>
-		<button class="{{ _button_class(_active) }} dropdown-toggle" data-toggle="dropdown">
-			<span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-			{% for continent in continents %}
-			<li><a tabindex="-1" href="{{ url_for('index', year=year, continent_name=continent) }}">{{ continent }}</a></li>
-			{% endfor %}
-		</ul>
-	</div>
-{% endmacro %}
-
-{% macro _country_button(_string, _active, _url = '#') %}
-	<div class="btn-group">
-		<a class="{{ _button_class(_active) }}" href="{{ _url }}" role="button">{{ _string }}</a>
-		<button class="{{ _button_class(_active) }} dropdown-toggle" data-toggle="dropdown">
-			<span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-			{% for country in countries %}
-			<li><a tabindex="-1" href="{{ url_for('index', year=year, continent_name=selected_continent, country_name=country) }}">{{ country }}</a></li>
-			{% endfor %}
-		</ul>
-	</div>
-{% endmacro %}
-
-{% macro _state_button(_string, _active, _url = '#') %}
-	<div class="btn-group">
-		<a class="{{ _button_class(_active) }}" href="{{ _url }}" role="button">{{ _string }}</a>
-		<button class="{{ _button_class(_active) }} dropdown-toggle" data-toggle="dropdown">
-			<span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-			{% for state in states %}
-			<li><a tabindex="-1" href="{{ url_for('index', year=year, continent_name=selected_continent, country_name=selected_country, city_or_state_name=state) }}">{{ state }}</a></li>
-			{% endfor %}
-		</ul>
-	</div>
-{% endmacro %}
-
-{% macro _city_button(_string, _active, _url = '#') %}
-	<div class="btn-group">
-		<a class="{{ _button_class(_active) }}" href="{{ _url }}" role="button">{{ _string }}</a>
-		<button class="{{ _button_class(_active) }} dropdown-toggle" data-toggle="dropdown">
-			<span class="caret"></span>
-		</button>
-		<ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu">
-			{% for city in cities %}
-			{% if show_states %}
-			<li><a tabindex="-1" href="{{ url_for('index', year=year, continent_name=selected_continent, country_name=selected_country, city_or_state_name=selected_state, city_name=city) }}">{{ city }}</a></li>
-			{% else %}
-			<li><a tabindex="-1" href="{{ url_for('index', year=year, continent_name=selected_continent, country_name=selected_country, city_or_state_name=city) }}">{{ city }}</a></li>
-			{% endif %}
-			{% endfor %}
-		</ul>
-	</div>
+{% macro _date_or_range(event) %}
+  {% if event.start_date == event.end_date %}
+  <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }} {{ event.start_date.year }}</span>
+  <span itemprop="endDate" content="{{ event.end_date|microdata_date }}"></span>
+  {% else %}
+  <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }}</span> until <span itemprop="endDate" content="{{ event.end_date|microdata_date }}">{{ event.end_date|nice_date }} {{ event.start_date.year }}</span>
+  {% endif %}
 {% endmacro %}
 
 {% extends "layout.html" %}
-{% block title %}{{title}}{% endblock %}
+{% block title %}Gameconfs Today{% endblock %}
 {% block content %}
-	<div id="place-controls" class="clearfix">
-		<div class="btn-group">
-			<a class="{{ _button_class(selection_level == 'all') }}" href="{{ url_for('index') }}">All</a>
-		</div>
-		<i class="icon-chevron-right"></i>
-		{% if selection_level == 'all' %}
-			{{ _continent_button('All continents', False) }}
-		{% else %}
-			{{ _continent_button(selected_continent, selection_level == 'continent', url_for('index', year=year, continent_name=selected_continent)) }}
-			<i class="icon-chevron-right"></i>
-			{% if selection_level == 'continent' %}
-				{{ _country_button("All countries", False) }}
-			{% else %}
-				{% if selection_level == 'country' %}
-					{{ _country_button(selected_country, True, url_for('index', year=year, continent_name=selected_continent, country_name=selected_country)) }}
-				{% else %}
-					{{ _country_button(selected_country, False, url_for('index', year=year, continent_name=selected_continent, country_name=selected_country)) }}
-				{% endif %}
-
-				{% if show_states %}
-					<i class="icon-chevron-right"></i>
-					{% if selection_level == 'country' %}
-						{{ _state_button("All states", False) }}
-					{% else %}
-						{{ _state_button(selected_state, selection_level == 'state', url_for('index', year=year, continent_name=selected_continent, country_name=selected_country, city_or_state_name=selected_state)) }}
-					{% endif %}
-					{% if show_cities %}
-						<i class="icon-chevron-right"></i>
-						{% if selection_level != 'city' %}
-							{{ _city_button("All cities", False) }}
-						{% else %}
-							{{ _city_button(selected_city, True, url_for('index', year=year, continent_name=selected_continent, country_name=selected_country, city_or_state_name=selected_state, city_name=selected_city)) }}
-						{% endif %}
-					{% endif %}
-				{% else %}
-					{% if show_cities %}
-						<i class="icon-chevron-right"></i>
-						{% if selection_level != 'city' %}
-							{{ _city_button("All cities", False) }}
-						{% else %}
-							{{ _city_button(selected_city, True, url_for('index', year=year, continent_name=selected_continent, country_name=selected_country, city_or_state_name=selected_city)) }}
-						{% endif %}
-					{% endif %}
-				{% endif %}
-			{% endif %}
-		{% endif %}
-	</div>
-
-	<div id="time-controls" class="btn-toolbar">
-		<div class="dropdown btn-group">
-			<a class="btn btn-primary" href="#" role="button">{{ year }}</a>
-			<button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
-				<span class="caret"></span>
-			</button>
-			<ul class="dropdown-menu" role="menu" aria-labelledby="dLabel">
-				{% for year in range(min_year, max_year+1) %}
-				<li><a tabindex="-1" href="{{ url_for('index', year=year) }}">{{ year }}</a></li>
-				{% endfor %}
-			</ul>
-		</div>
-		<div class="btn-group">
-			{% for month in range(1, 12+1) %}
-			{% set btn_class = "btn" %}
-			{% if year == today.year and month == today.month %}
-				{% set btn_class = btn_class + " btn-success" %}
-			{% endif %}
-			{% if nr_events_by_month[month-1] == 0 %}
-				{% set btn_class = btn_class + " disabled" %}
-			{% endif %}
-			<a class="{{ btn_class }}" href="#{{ month }}">{{ month|short_month }}</a>
-			{% endfor %}
-		</div>
-	</div>
-    {% if events %}
-	{% for month_group in events|sort(attribute='start_date')|groupby('start_date.month') %}
-	<a name="{{ month_group.grouper }}"></a>
-	<h3>{{ month_group.grouper|nice_month }} {{ year }}</h3>
-	<table class="table table-condensed events">
-	  	<tbody>
-			{% for event in month_group.list %}
-    		<tr>
-			{% if event.start_date <= today and today <= event.end_date %}
-	      	<td><span class="badge badge-today">TODAY</span></td>
-	      	{% else %}
-		     	<td><span class="hidden-xs">{{ event.start_date|nice_date }}</span><span class="visible-xs">{{ event.start_date|short_date }}</span></td>
-	      	{% endif %}
-	      	<td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
-	      	<td>{{ event|event_city_and_state_or_country }}</td>
-		  	</tr>
-			{% endfor %}
-	  	</tbody>
-	</table>
+  {% if ongoing_events %}
+	<h2>What's happening today</h2>
+  <div id="ongoing-events">
+    {% for event in ongoing_events %}
+    <div class="event-entry">
+        <span class="event-link"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
+        <span class="event-hashtags">
+          {% for tag in event.twitter_hashtags|split %}
+          <a href="http://twitter.com/search?q=%23{{ tag[1:]|urlencode }}" target="_blank">{{ tag }}</a>
+          {% endfor %}
+        </span>
+        <span class="event-location">{{ event|event_city_and_state_or_country }}</span>
+        <span class="event-date">{{ _date_or_range(event) }}</span>
+    </div>
     {% endfor %}
-	{% else %}
-    <p>The Gameconfs database contains no events satisfying these criteria.</p>
+  </div>
+  {% endif %}
+  <h2>Browse events</h2>
+  <p>Browse <a href="{{  url_for('upcoming') }}">upcoming events</a>.</p>
+  <p>Browse by year:<br/>
+  {% for year in range(min_year, max_year + 1) %}
+    <a href="{{ url_for('year', year=year) }}">{{ year }}</a>
+  {% endfor %}
+  </p>
+  <p>Browse by country:<br/>
+  <div class="country-list">
+  {% for country in countries %}
+    {% if loop.index0 % 2 == 0 %}
+    <div>
+    {%  endif %}
+      <a href="{{ url_for('place', place=country.name.lower()) }}">{{ country.name }}</a>
+    {% if loop.index0 % 2 == 1 %}
+    </div>
     {% endif %}
-    <img style="opacity: 0;position: absolute;top:-1000; left:0" src="{{ url_for('static', filename='img/gameconfs_pinterest.jpg') }}">
+  {% endfor %}
+  {% if loop.index0 % 2 != 0 %}
+  </div>
+  {% endif %}
+  </div></p>
 {% endblock %}

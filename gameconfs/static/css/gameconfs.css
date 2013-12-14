@@ -204,53 +204,145 @@ div#place-controls i
 
 /* Today page */
 
-@media (max-width: 768px)
-{
-    .event-card
-    {
-        margin-bottom: 10px;
-    }
+body#today .event-entry {
+    margin-bottom: 1.5em;
 }
 
-@media (min-width: 769px)
-{
-    body#today .row
-    {
-        margin-bottom: 20px;
-    }
+body#today .event-entry > span {
+    vertical-align: text-top;
 }
 
-.event-card
-{
-    background: lightblue;
-    text-align: center;
-}
-
-.event-card div
-{
-    padding: 10px 10px 16px 10px;
-}
-
-.event-card .event-name
-{
-    font-weight: bold;
+body#today .event-entry span.event-link {
+    font-size: large;
     display: block;
-    line-height: 1.5em;
-    font-size: 24px;
 }
 
-.event-card .event-location
-{
+body#today .event-entry span.event-location {
     display: block;
-    line-height: 1.5em;
-    font-size: 20px;
 }
 
-.event-card .event-hashtags
-{
+body#today .event-entry span.event-hashtags {
     display: block;
-    line-height: 1.5em;
-    font-size: 24px;
+}
+
+body#today .event-entry span.event-date {
+    display: inline-block;
+}
+
+body#today .country-list > div > a {
+    display: inline-block;
+    width: 200px;
+}
+
+/* Year page */
+
+body#year h1 {
+    margin-left: 56px;
+}
+
+body#year h4 {
+    margin-left: 59px;
+}
+
+body#year .event-entry {
+    /*border-top:solid 1px #efefef;*/
+    margin-bottom: 1.5em;
+}
+
+body#year .event-entry > span {
+    vertical-align: text-top;
+}
+
+body#year .event-entry span.event-date {
+    text-align: right;
+    margin-right: 5px;
+    display: inline-block;
+    width: 50px;
+}
+
+body#year .event-entry span.event-link {
+    display: inline-block;
+    width: 400px;
+}
+
+body#year .event-entry span.event-location {
+    margin-left: 59px;
+    display: block;
+    width: 400px;
+}
+
+/* Place page */
+
+body#place h1 {
+    margin-left: 56px;
+}
+
+body#place h4 {
+    margin-left: 59px;
+}
+
+body#place .event-entry {
+    /*border-top:solid 1px #efefef;*/
+    margin-bottom: 1.5em;
+}
+
+body#place .event-entry > span {
+    vertical-align: text-top;
+}
+
+body#place .event-entry span.event-date {
+    text-align: right;
+    margin-right: 5px;
+    display: inline-block;
+    width: 50px;
+}
+
+body#place .event-entry span.event-link {
+    display: inline-block;
+    width: 400px;
+}
+
+body#place .event-entry span.event-location {
+    margin-left: 59px;
+    display: block;
+    width: 400px;
+}
+
+/* Upcoming page */
+
+body#upcoming h1 {
+    margin-left: 56px;
+}
+
+body#upcoming h4 {
+    margin-left: 59px;
+}
+
+body#upcoming .event-entry {
+    /*border-top:solid 1px #efefef;*/
+    margin-bottom: 1.5em;
+}
+
+body#upcoming .event-entry > span {
+    vertical-align: text-top;
+}
+
+body#upcoming .event-entry span.event-date {
+    text-align: right;
+    margin-right: 5px;
+    display: inline-block;
+    width: 50px;
+}
+
+body#upcoming .event-entry span.event-link {
+    display: inline-block;
+    width: 400px;
+}
+
+body#upcoming .event-entry span.event-location {
+    margin-left: 59px;
+    display: block;
+    width: 400px;
 }
 
 /* NEW SEARCH */
@@ -259,28 +351,32 @@ div#place-controls i
     display: None;
 }
 
-.event-entry {
+body#new-search .event-entry {
     border-top:solid 1px #efefef;
 }
 
-.event-entry span {
+body#new-search .event-entry span {
     vertical-align: text-top;
 }
 
-.event-entry span.event-date {
+body#new-search .event-entry span.event-date {
     width: 26px;
     text-align: right;
     margin-right: 18px;
     display: inline-block;
 }
 
-.event-entry span.event-location {
+body#new-search .event-entry span.event-location {
     width: 94px;
     margin-right: 20px;
     display: inline-block;
 }
 
-.event-entry span.event-link {
+body#new-search .event-entry span.event-link {
     width: 300px;
     display: inline-block;
+}
+
+body#new-search .event-entry span.event-hashtags {
+    display: block;
 }
