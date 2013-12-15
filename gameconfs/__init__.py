@@ -66,6 +66,7 @@ def create_app(_run_mode):
     # Dev run mode
     if _run_mode == "dev":
         app.config["DEBUG"] = True
+        app.config["OFFLINE"] = True
         app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
         app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
         toolbar = DebugToolbarExtension(app)
@@ -116,6 +117,10 @@ def create_app(_run_mode):
 
     from gameconfs.bookmarklet import bookmarklet_blueprint
     app.register_blueprint(bookmarklet_blueprint)
+
+    if app.config["OFFLINE"]:
+        from gameconfs.offline import offline_blueprint
+        app.register_blueprint(offline_blueprint)
 
     # Set up Jinja2 filters
     init_template_filters(app)

@@ -22,6 +22,10 @@ from gameconfs.helpers import *
 def inject_logged_in_status():
     return dict(logged_in=current_user and current_user.is_authenticated())
 
+@app.context_processor
+def inject_offline_mode():
+    return dict(offline_mode=app.config["OFFLINE"])
+
 
 @app.route('/')
 def index():
