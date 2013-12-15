@@ -8,10 +8,10 @@
 {% endmacro %}
 
 {% extends "layout.html" %}
-{% block title %}Events in {{ location }}{% endblock %}
+{% block title %}Events in {{ location }} in {{ year }}{% endblock %}
 {% block content %}
   {% if events %}
-  <h1>Events in {{ location }}</h1>
+  <h1>Events in {{ location }} in {{ year }}</h1>
 	{% for month_group in events|sort(attribute='start_date')|groupby('start_date.month') %}
 	<a name="{{ month_group.grouper }}"></a>
 	<h4>{{ month_group.grouper|nice_month }} {{ year }}</h4>
@@ -26,6 +26,6 @@
   </div>
   {% endfor %}
 	{% else %}
-  <p>Our database contains no events in {{ location }}.</p>
+  <p>Our database contains no events in {{ location }} in {{ year }}.</p>
   {% endif %}
 {% endblock %}
