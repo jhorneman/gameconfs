@@ -66,7 +66,7 @@ def create_app(_run_mode):
     # Dev run mode
     if _run_mode == "dev":
         app.config["DEBUG"] = True
-        app.config["OFFLINE"] = True
+        # app.config["OFFLINE"] = True
         app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
         app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
         toolbar = DebugToolbarExtension(app)
@@ -83,7 +83,10 @@ def create_app(_run_mode):
         app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
         app_run_args['port'] = int(os.environ['PORT'])
         app_run_args['host'] = '0.0.0.0'
+        set_up_logging()
 
+    elif _run_mode == "vagrant-test":
+        app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
         set_up_logging()
 
     # Unrecognized run mode
