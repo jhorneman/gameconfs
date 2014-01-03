@@ -46,6 +46,15 @@ def index():
                            max_year=max_year, countries=countries)
 
 
+@app.route('/event/<id>')
+def event(id):
+    try:
+        event = Event.query.filter(Event.id == id).one()
+    except sqlalchemy.orm.exc.NoResultFound:
+        abort(404)
+    return render_template('event.html', body_id="view-event", event=event, today=date.today())
+
+
 @app.route('/upcoming')
 def upcoming():
     today = date.today()
@@ -221,15 +230,6 @@ def new_events():
     return render_template('new_events.html', events=events)
 
 
-@app.route('/event/<id>')
-def event(id):
-    try:
-        event = Event.query.filter(Event.id == id).one()
-    except sqlalchemy.orm.exc.NoResultFound:
-        abort(404)
-    return render_template('event.html', body_id="view-event", event=event, today=date.today())
-
-
 @app.route('/event/<id>/ics')
 def event_ics(id):
     event = Event.query.filter(Event.id == id).one()
@@ -263,6 +263,7 @@ def recent_feed():
                     subtitle='New events on Gameconfs',
                     subtitle_type='text')
 
+    #TODO: This will miss events if more than 15 are added at once, which occasionally happens.
     events = Event.query.order_by(Event.created_at.desc()).limit(15).all()
     for event in events:
         feed.add(event.name + " - " + event_city_and_state_or_country(event),
@@ -322,6 +323,11 @@ def other():
     return render_template('other.html')
 
 
+@app.route('/notifications')
+def notifications():
+    return render_template('notifications.html')
+
+
 @app.route('/sponsoring')
 def sponsoring():
     class Sponsor(object):
@@ -379,10 +385,12 @@ def stats():
 def page_not_found(error):
     return render_template('page_not_found.html'), 404
 
-# @app.route('/favicon.ico')
-# def favicon():
-#     return send_from_directory(os.path.join(app.root_path, 'static'),
-#                                'favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+@app.route('/favicon.ico')
+def favicon():
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'img/favicon.ico', mimetype='image/vnd.microsoft.icon')
+
 
 @app.route('/robots.txt')
 def robots_txt():
