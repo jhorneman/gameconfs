@@ -44,14 +44,12 @@
     <div class="title">
       <p><strong>Gameconfs</strong> - a directory of game industry events.</p>
     </div>
-{#    {% if logged_in %}#}
-{#    <div id="admin-bar" class="clearfix">#}
-{#      {% if not body_id or body_id != "edit-event" %}#}
-{#      <a class="btn" href="{{ url_for('new_event') }}">Add event</a>#}
-{#      {% endif %}#}
-{#      <a class="btn pull-right" href="{{ url_for('security.logout') }}">Sign out {{ current_user.user_name }}</a>#}
-{#    </div>#}
-{#    {% endif %}#}
+    {% if logged_in %}
+    {% if not body_id or body_id != "edit-event" %}
+    <a class="btn btn-primary" href="{{ url_for('new_event') }}">Add event</a>
+    {% endif %}
+    <a class="btn btn-danger" href="{{ url_for('security.logout') }}">Sign out {{ current_user.user_name }}</a>
+    {% endif %}
 {#    {% if sponsor %}#}
 {#    <div id="sponsor"><div><a href="{{ sponsor.target_url }}" target="_blank"><img src="{{ url_for('static', filename='img/sponsors/' + sponsor.image_filename) }}"></a></div></div>#}
 {#    {% endif %}#}
@@ -65,7 +63,7 @@
         <li><a href="{{ url_for('about') }}">About</a></li>
         <li><a href="{{ url_for('notifications') }}">Notifications</a></li>
       </ul>
-{#      <p class="text-muted">Gameconfs - a directory of game industry events.</p>#}
+      <p class="text-muted">&copy; 2012-2014 Jurie Horneman</p>
     </div>
   </div>
   {% if offline_mode %}
