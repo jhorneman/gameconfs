@@ -45,10 +45,12 @@
       <p><strong>Gameconfs</strong> - a directory of game industry events.</p>
     </div>
     {% if logged_in %}
-    {% if not body_id or body_id != "edit-event" %}
-    <a class="btn btn-primary" href="{{ url_for('new_event') }}">Add event</a>
-    {% endif %}
-    <a class="btn btn-danger" href="{{ url_for('security.logout') }}">Sign out {{ current_user.user_name }}</a>
+    <div id="admin-bar">
+      {% if not body_id or body_id != "edit-event" %}
+      <a class="btn btn-primary" href="{{ url_for('new_event') }}">Add event</a>
+      {% endif %}
+      <a class="btn btn-danger" href="{{ url_for('security.logout') }}">Sign out {{ current_user.user_name }}</a>
+    </div>
     {% endif %}
 {#    {% if sponsor %}#}
 {#    <div id="sponsor"><div><a href="{{ sponsor.target_url }}" target="_blank"><img src="{{ url_for('static', filename='img/sponsors/' + sponsor.image_filename) }}"></a></div></div>#}
