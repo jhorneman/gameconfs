@@ -75,37 +75,6 @@
 	/*}*/
 /*}*/
 
-table.events
-{
-	table-layout: fixed;
-	width: auto;
-}
-
-table.events td
-{
-	overflow: hidden;
-}
-
-table.events tr:last-child td
-{
-  /*border-bottom: 1px solid #dddddd;*/
-}
-
-table.events tr td:nth-child(1)
-{
-    width: 9em;
-}
-
-table.events tr td:nth-child(2)
-{
-    width: 22em;
-}
-
-table.events tr td:nth-child(3)
-{
-    padding-right: 1em;
-}
-
 /* Stats tables */
 table.stats 
 {
