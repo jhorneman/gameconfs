@@ -334,36 +334,36 @@ body#upcoming .event-entry span.event-location {
 
 /* NEW SEARCH */
 
-#search-form {
-    display: None;
-}
+/*#search-form {*/
+    /*display: None;*/
+/*}*/
 
-body#new-search .event-entry {
-    border-top:solid 1px #efefef;
-}
+/*body#new-search .event-entry {*/
+    /*border-top:solid 1px #efefef;*/
+/*}*/
 
-body#new-search .event-entry span {
-    vertical-align: text-top;
-}
+/*body#new-search .event-entry span {*/
+    /*vertical-align: text-top;*/
+/*}*/
 
-body#new-search .event-entry span.event-date {
-    width: 26px;
-    text-align: right;
-    margin-right: 18px;
-    display: inline-block;
-}
+/*body#new-search .event-entry span.event-date {*/
+    /*width: 26px;*/
+    /*text-align: right;*/
+    /*margin-right: 18px;*/
+    /*display: inline-block;*/
+/*}*/
 
-body#new-search .event-entry span.event-location {
-    width: 94px;
-    margin-right: 20px;
-    display: inline-block;
-}
+/*body#new-search .event-entry span.event-location {*/
+    /*width: 94px;*/
+    /*margin-right: 20px;*/
+    /*display: inline-block;*/
+/*}*/
 
-body#new-search .event-entry span.event-link {
-    width: 300px;
-    display: inline-block;
-}
+/*body#new-search .event-entry span.event-link {*/
+    /*width: 300px;*/
+    /*display: inline-block;*/
+/*}*/
 
-body#new-search .event-entry span.event-hashtags {
-    display: block;
-}
+/*body#new-search .event-entry span.event-hashtags {*/
+    /*display: block;*/
+/*}*/

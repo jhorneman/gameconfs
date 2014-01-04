@@ -108,35 +108,35 @@ def place(place):
                            year=today.year)
 
 
-@app.route('/new_search', methods=("GET", "POST"))
-def new_search():
-    q = Event.query.\
-        join(Event.city).\
-        join(City.country).\
-        join(Country.continent).\
-        order_by(Event.start_date.asc())
-
-    form = NewSearchForm()
-    if request.method == "POST":   # Form has no validation
-        if form.query_string.data.strip():
-            (q, location) = filter_by_place_name(q, form.query_string.data)
-            if location:
-                location = "in " + location
-                q = filter_by_period(q, 2013, 1, 12)
-                found_events = q.all()
-            else:
-                location = "in " + form.query_string.data.strip()
-                found_events = None
-        else:
-            location = "all over the world"
-            q = filter_by_period(q, 2013, 1, 12)
-            found_events = q.all()
-    else:
-        location = "all over the world"
-        q = filter_by_period(q, 2013, 1, 12)
-        found_events = q.all()
-
-    return render_template('new_search.html', body_id="new-search", location=location, form=form, found_events=found_events)
+# @app.route('/new_search', methods=("GET", "POST"))
+# def new_search():
+#     q = Event.query.\
+#         join(Event.city).\
+#         join(City.country).\
+#         join(Country.continent).\
+#         order_by(Event.start_date.asc())
+#
+#     form = NewSearchForm()
+#     if request.method == "POST":   # Form has no validation
+#         if form.query_string.data.strip():
+#             (q, location) = filter_by_place_name(q, form.query_string.data)
+#             if location:
+#                 location = "in " + location
+#                 q = filter_by_period(q, 2013, 1, 12)
+#                 found_events = q.all()
+#             else:
+#                 location = "in " + form.query_string.data.strip()
+#                 found_events = None
+#         else:
+#             location = "all over the world"
+#             q = filter_by_period(q, 2013, 1, 12)
+#             found_events = q.all()
+#     else:
+#         location = "all over the world"
+#         q = filter_by_period(q, 2013, 1, 12)
+#         found_events = q.all()
+#
+#     return render_template('new_search.html', body_id="new-search", location=location, form=form, found_events=found_events)
 
 
 @app.route('/new', methods=("GET", "POST"))
