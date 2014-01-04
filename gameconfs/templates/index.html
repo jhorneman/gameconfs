@@ -10,8 +10,8 @@
 {% extends "layout.html" %}
 {% block title %}Gameconfs{% endblock %}
 {% block content %}
-  {% if ongoing_events %}
 	<h2>What's happening today</h2>
+  {% if ongoing_events %}
   <div id="ongoing-events">
     {% for event in ongoing_events %}
     <div class="event-entry">
@@ -26,6 +26,8 @@
     </div>
     {% endfor %}
   </div>
+  {% else %}
+  <p>There are no events going on today.</p>
   {% endif %}
   <h2>Browse events</h2>
   <p>Browse <a href="{{  url_for('upcoming') }}">upcoming events</a>.</p>
@@ -41,6 +43,21 @@
     <div>
     {%  endif %}
       <a href="{{ url_for('place', place=country.name.lower()) }}">{{ country.name }}</a>
+    {% if loop.index0 % 2 == 1 %}
+    </div>
+    {% endif %}
+  {% endfor %}
+  {% if loop.index0 % 2 != 0 %}
+  </div>
+  {% endif %}
+  </div></p>
+  <p>Browse by continent:<br/>
+  <div class="country-list">
+  {% for continent in continents %}
+    {% if loop.index0 % 2 == 0 %}
+    <div>
+    {%  endif %}
+      <a href="{{ url_for('place', place=continent.name.lower()) }}">{{ continent.name }}</a>
     {% if loop.index0 % 2 == 1 %}
     </div>
     {% endif %}

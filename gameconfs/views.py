@@ -42,8 +42,12 @@ def index():
         order_by(Country.name).\
         all()
 
+    continents = Continent.query.\
+        order_by(Continent.name).\
+        all()
+
     return render_template('index.html', body_id="today", ongoing_events=ongoing_events, min_year=min_year,
-                           max_year=max_year, countries=countries)
+                           max_year=max_year, countries=countries, continents=continents)
 
 
 @app.route('/event/<id>')
