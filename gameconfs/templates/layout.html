@@ -41,6 +41,9 @@
 <body>
 {% endif %}
   <div class="container">
+    <div class="title">
+      <p><a href="{{ url_for('index') }}"><strong>Gameconfs</strong> - a directory of game industry events.</a></p>
+    </div>
 {#    {% if logged_in %}#}
 {#    <div id="admin-bar" class="clearfix">#}
 {#      {% if not body_id or body_id != "edit-event" %}#}
@@ -56,14 +59,13 @@
 {% block content %}{% endblock %}
     <div class="footer">
       <ul class="clearfix">
-        <li><a href="{{ url_for('index') }}">Home</a></li>
-        <li><a href="{{ url_for('other') }}">More</a></li>
+        <li><a href="{{ url_for('other') }}">More events</a></li>
         <li><a target="_blank" href="http://blog.gameconfs.com">Blog</a></li>
         <li><a href="{{ url_for('stats') }}">Stats</a></li>
         <li><a href="{{ url_for('about') }}">About</a></li>
         <li><a href="{{ url_for('notifications') }}">Notifications</a></li>
       </ul>
-      <p class="text-muted">Gameconfs - a directory of game industry events.</p>
+{#      <p class="text-muted">Gameconfs - a directory of game industry events.</p>#}
     </div>
   </div>
   {% if offline_mode %}

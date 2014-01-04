@@ -1,6 +1,29 @@
 
 /* NEW STYLES */
 
+.title {
+    color: #999;
+    display: block;
+    float: left;
+    padding: 10px 20px 10px;
+    margin-left: -20px;
+    font-size: 20px;
+    font-weight: 200;
+}
+
+.title a {
+    color: #999;
+}
+
+.title a:visited {
+    color: #999;
+}
+
+.title a:hover{
+    color: #428bca;
+    text-decoration: none;
+}
+
 .footer {
     padding-top: 1em;
   /*border-top: 1px solid #e5e5e5;*/
@@ -51,11 +74,6 @@
 		/*display: none;*/
 	/*}*/
 /*}*/
-
-.badge-today
-{
-	background: #5BB75B;
-}
 
 table.events
 {
