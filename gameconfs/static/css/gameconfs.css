@@ -58,23 +58,6 @@
   }
 }
 
-/* Events list */
-/*@media (max-width: 480px)*/
-/*{*/
-	/*.date*/
-	/*{*/
-		/*display: none;*/
-	/*}*/
-/*}*/
-
-/*@media (min-width: 481px)*/
-/*{*/
-	/*.short_date*/
-	/*{*/
-		/*display: none;*/
-	/*}*/
-/*}*/
-
 /* Stats tables */
 table.stats 
 {
@@ -113,22 +96,6 @@ table.bars .bar
 table.bars .bar_label
 {
     margin-left: 0.5em;
-}
-
-/* Place controls */
-div#place-controls div.btn-group
-{
-	position: relative;
-	float: left;
-	margin-right: 0.5em;
-} 
-
-div#place-controls i
-{
-	position: relative;
-	float: left;
-	margin-right: 0.5em;
-	margin-top: 6px;
 }
 
 /* Flash messages */
@@ -189,34 +156,34 @@ div#place-controls i
     height: 90px;
 }
 
-/* Today page */
+/* Main page */
 
-body#today .event-entry {
+body#index .event-entry {
     margin-bottom: 1.5em;
 }
 
-body#today .event-entry > span {
+body#index .event-entry > span {
     vertical-align: text-top;
 }
 
-body#today .event-entry span.event-link {
+body#index .event-entry span.event-link {
     font-size: large;
     display: block;
 }
 
-body#today .event-entry span.event-location {
+body#index .event-entry span.event-location {
     display: block;
 }
 
-body#today .event-entry span.event-hashtags {
+body#index .event-entry span.event-hashtags {
     display: block;
 }
 
-body#today .event-entry span.event-date {
+body#index .event-entry span.event-date {
     display: inline-block;
 }
 
-body#today .country-list > div > a {
+body#index .country-list > div > a {
     display: inline-block;
     width: 200px;
 }

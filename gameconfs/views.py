@@ -46,7 +46,7 @@ def index():
         order_by(Continent.name).\
         all()
 
-    return render_template('index.html', body_id="today", ongoing_events=ongoing_events, min_year=min_year,
+    return render_template('index.html', body_id="index", ongoing_events=ongoing_events, min_year=min_year,
                            max_year=max_year, countries=countries, continents=continents)
 
 
