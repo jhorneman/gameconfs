@@ -73,13 +73,14 @@ class SiteTestCase(unittest.TestCase):
         self.db_session.commit()
 
         now = datetime.datetime.now()
+        this_year = now.date().year
 
         new_event = Event()
         new_event.created_at = now
         new_event.last_modified_at = now
         new_event.name = "Stagconf"
-        new_event.start_date = datetime.date(2013, 8, 14)
-        new_event.end_date = datetime.date(2013, 8, 14)
+        new_event.start_date = datetime.date(this_year, 8, 14)
+        new_event.end_date = datetime.date(this_year, 8, 14)
         new_event.event_url = "http://www.stagconf.com/"
         new_event.twitter_hashtags = ""
         new_event.twitter_account = ""
@@ -90,9 +91,9 @@ class SiteTestCase(unittest.TestCase):
         new_event = Event()
         new_event.created_at = now
         new_event.last_modified_at = now
-        new_event.name = "GDC 2012"
-        new_event.start_date = datetime.date(2012, 3, 31)
-        new_event.end_date = datetime.date(2012, 4, 1)
+        new_event.name = "GDC"
+        new_event.start_date = datetime.date(this_year-1, 3, 31)
+        new_event.end_date = datetime.date(this_year-1, 4, 1)
         new_event.event_url = "http://www.gdconf.com/"
         new_event.twitter_hashtags = ""
         new_event.twitter_account = ""
@@ -104,8 +105,8 @@ class SiteTestCase(unittest.TestCase):
         new_event.created_at = now
         new_event.last_modified_at = now
         new_event.name = "Someconf"
-        new_event.start_date = datetime.date(2013, 5, 25)
-        new_event.end_date = datetime.date(2013, 5, 27)
+        new_event.start_date = datetime.date(this_year, 5, 25)
+        new_event.end_date = datetime.date(this_year, 5, 27)
         new_event.event_url = "http://www.someconf.com/"
         new_event.twitter_hashtags = ""
         new_event.twitter_account = ""
@@ -134,35 +135,25 @@ class SiteTestCase(unittest.TestCase):
 
     def test_index_page(self):
         rv = self.c.get('/')
-        assert "Stagconf" in rv.data
-        assert "Vienna" in rv.data
-        assert "August" in rv.data
-
-        assert "Someconf" in rv.data
-        assert "London" in rv.data
-        assert "May" in rv.data
+        assert "Austria" in rv.data
+        assert "United Kingdom" in rv.data
 
     def test_continent_page(self):
-        rv = self.c.get('/2013/Europe')
-        assert "Stagconf" in rv.data
-        assert "Vienna" in rv.data
-        assert "Austria" in rv.data
-        assert "August" in rv.data
-
+        rv = self.c.get('/place/europe')
         assert "Someconf" in rv.data
         assert "London" in rv.data
         assert "United Kingdom" in rv.data
         assert "May" in rv.data
 
     def test_country_page(self):
-        rv = self.c.get('/2013/Europe/Austria')
+        rv = self.c.get('/place/austria')
         assert "Stagconf" in rv.data
         assert "Vienna" in rv.data
         assert "Austria" in rv.data
         assert "August" in rv.data
 
     def test_year_page(self):
-        rv = self.c.get('/2012')
+        rv = self.c.get('/year/%s' % (datetime.date.today().year - 1))
         assert "GDC" in rv.data
         assert "San Francisco" in rv.data
         assert "California" in rv.data
