@@ -222,18 +222,6 @@ def delete_event(id):
     return redirect(url_for('index'))
 
 
-@app.route('/new_events')
-@roles_required('admin')
-def new_events():
-    new_threshold = datetime(2013, 5, 2, 12, 35)
-    q = Event.query
-    q = filter_by_newer_than(q, new_threshold).\
-        order_by(Event.last_modified_at.desc()).\
-        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
-    events = q.all()
-    return render_template('new_events.html', events=events)
-
-
 @app.route('/event/<id>/ics')
 def event_ics(id):
     event = Event.query.filter(Event.id == id).one()
