@@ -1,5 +1,12 @@
+/* Responsiveness */
 
-/* NEW STYLES */
+@media (min-width: 768px) {
+  .container {
+    max-width: 500px;
+  }
+}
+
+/* Layout */
 
 .title {
     color: #999;
@@ -29,10 +36,6 @@
   /*border-top: 1px solid #e5e5e5;*/
 }
 
-.event span.glyphicon {
-    margin-right: 0.5em;
-}
-
 .footer ul {
     padding-left: 0;
     list-style: none;
@@ -52,14 +55,100 @@
     border-left: none;
 }
 
-@media (min-width: 768px) {
-  .container {
-    max-width: 500px;
-  }
+/* General styles */
+
+.event-entry {
+    margin-bottom: 1.5em;
 }
 
-/* Stats tables */
-table.stats 
+.event-entry > span {
+    vertical-align: text-top;
+}
+
+.event-entry span.event-date {
+    text-align: right;
+    margin-right: 5px;
+    display: inline-block;
+    width: 50px;
+}
+
+.event-entry span.event-link {
+    display: inline-block;
+    width: 400px;
+}
+
+.event-entry span.event-location {
+    margin-left: 59px;
+    display: block;
+    width: 400px;
+}
+
+.event span.glyphicon {
+    margin-right: 0.5em;
+}
+
+.flash_msgs li
+{
+    list-style-type: none;
+}
+
+/* Main page */
+
+body#index .event-entry span.event-link {
+    font-size: large;
+    display: block;
+}
+
+body#index .event-entry span.event-location {
+    display: block;
+}
+
+body#index .event-entry span.event-hashtags {
+    display: block;
+}
+
+body#index .event-entry span.event-date {
+    display: inline-block;
+}
+
+body#index .browse-list > div > a {
+    display: inline-block;
+    width: 200px;
+}
+
+/* Year page */
+
+body#year h1 {
+    margin-left: 56px;
+}
+
+body#year h4 {
+    margin-left: 59px;
+}
+
+/* Place page */
+
+body#place h1 {
+    margin-left: 56px;
+}
+
+body#place h4 {
+    margin-left: 59px;
+}
+
+/* Upcoming page */
+
+body#upcoming h1 {
+    margin-left: 56px;
+}
+
+body#upcoming h4 {
+    margin-left: 59px;
+}
+
+/* Stats page */
+
+table.stats
 {
 	table-layout: fixed;
 	width: auto;
@@ -98,12 +187,6 @@ table.bars .bar_label
     margin-left: 0.5em;
 }
 
-/* Flash messages */
-.flash_msgs li
-{
-    list-style-type: none;
-}
-
 /* Admin bar */
 #admin-bar
 {
@@ -119,185 +202,42 @@ table.bars .bar_label
 }
 
 /* Sponsor */
-#sponsor
-{
-    padding-left: 0;
-    padding-right: 0;
-}
+/*#sponsor*/
+/*{*/
+    /*padding-left: 0;*/
+    /*padding-right: 0;*/
+/*}*/
 
-@media (max-width: 600px)
-{
-    #sponsor div
-    {
-        margin-left: 0;
-        margin-right: 0;
-    }
-}
+/*@media (max-width: 600px)*/
+/*{*/
+    /*#sponsor div*/
+    /*{*/
+        /*margin-left: 0;*/
+        /*margin-right: 0;*/
+    /*}*/
+/*}*/
 
-@media (min-width: 601px)
-{
-    #sponsor
-    {
-        width: 650px;
-    }
+/*@media (min-width: 601px)*/
+/*{*/
+    /*#sponsor*/
+    /*{*/
+        /*width: 650px;*/
+    /*}*/
 
-    #sponsor div
-    {
-        margin-left: auto;
-        margin-right: auto;
-    }
-}
+    /*#sponsor div*/
+    /*{*/
+        /*margin-left: auto;*/
+        /*margin-right: auto;*/
+    /*}*/
+/*}*/
 
-#sponsor div
-{
-    margin-top: -10px;
-    margin-bottom: 10px;
-    width: 480px;
-    height: 90px;
-}
-
-/* Main page */
-
-body#index .event-entry {
-    margin-bottom: 1.5em;
-}
-
-body#index .event-entry > span {
-    vertical-align: text-top;
-}
-
-body#index .event-entry span.event-link {
-    font-size: large;
-    display: block;
-}
-
-body#index .event-entry span.event-location {
-    display: block;
-}
-
-body#index .event-entry span.event-hashtags {
-    display: block;
-}
-
-body#index .event-entry span.event-date {
-    display: inline-block;
-}
-
-body#index .country-list > div > a {
-    display: inline-block;
-    width: 200px;
-}
-
-/* Year page */
-
-body#year h1 {
-    margin-left: 56px;
-}
-
-body#year h4 {
-    margin-left: 59px;
-}
-
-body#year .event-entry {
-    /*border-top:solid 1px #efefef;*/
-    margin-bottom: 1.5em;
-}
-
-body#year .event-entry > span {
-    vertical-align: text-top;
-}
-
-body#year .event-entry span.event-date {
-    text-align: right;
-    margin-right: 5px;
-    display: inline-block;
-    width: 50px;
-}
-
-body#year .event-entry span.event-link {
-    display: inline-block;
-    width: 400px;
-}
-
-body#year .event-entry span.event-location {
-    margin-left: 59px;
-    display: block;
-    width: 400px;
-}
-
-/* Place page */
-
-body#place h1 {
-    margin-left: 56px;
-}
-
-body#place h4 {
-    margin-left: 59px;
-}
-
-body#place .event-entry {
-    /*border-top:solid 1px #efefef;*/
-    margin-bottom: 1.5em;
-}
-
-body#place .event-entry > span {
-    vertical-align: text-top;
-}
-
-body#place .event-entry span.event-date {
-    text-align: right;
-    margin-right: 5px;
-    display: inline-block;
-    width: 50px;
-}
-
-body#place .event-entry span.event-link {
-    display: inline-block;
-    width: 400px;
-}
-
-body#place .event-entry span.event-location {
-    margin-left: 59px;
-    display: block;
-    width: 400px;
-}
-
-/* Upcoming page */
-
-body#upcoming h1 {
-    margin-left: 56px;
-}
-
-body#upcoming h4 {
-    margin-left: 59px;
-}
-
-body#upcoming .event-entry {
-    /*border-top:solid 1px #efefef;*/
-    margin-bottom: 1.5em;
-}
-
-body#upcoming .event-entry > span {
-    vertical-align: text-top;
-}
-
-body#upcoming .event-entry span.event-date {
-    text-align: right;
-    margin-right: 5px;
-    display: inline-block;
-    width: 50px;
-}
-
-body#upcoming .event-entry span.event-link {
-    display: inline-block;
-    width: 400px;
-}
-
-body#upcoming .event-entry span.event-location {
-    margin-left: 59px;
-    display: block;
-    width: 400px;
-}
+/*#sponsor div*/
+/*{*/
+    /*margin-top: -10px;*/
+    /*margin-bottom: 10px;*/
+    /*width: 480px;*/
+    /*height: 90px;*/
+/*}*/
 
 /* NEW SEARCH */
 

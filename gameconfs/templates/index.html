@@ -27,7 +27,7 @@
     {% endfor %}
   </div>
   {% else %}
-  <p>There are no events going on today.</p>
+  <p>We don't know of any events going on today.</p>
   {% endif %}
   <h2>Browse events</h2>
   <p>Browse <a href="{{  url_for('upcoming') }}">upcoming events</a>.</p>
@@ -37,7 +37,7 @@
   {% endfor %}
   </p>
   <p>Browse by country:<br/>
-  <div class="country-list">
+  <div class="browse-list">
   {% for country in countries %}
     {% if loop.index0 % 2 == 0 %}
     <div>
@@ -52,7 +52,7 @@
   {% endif %}
   </div></p>
   <p>Browse by continent:<br/>
-  <div class="country-list">
+  <div class="browse-list">
   {% for continent in continents %}
     {% if loop.index0 % 2 == 0 %}
     <div>
