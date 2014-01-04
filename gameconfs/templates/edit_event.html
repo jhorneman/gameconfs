@@ -1,21 +1,21 @@
 {% extends "layout.html" %}
 
-{% macro form_control(field, placeholder="", class="span4", show_at_symbol=False) %}
+{% macro form_control(field, placeholder="", class="", show_at_symbol=False) %}
     {% if field.errors %}
-    <div class="control-group error">
+    <div class="form-group has-error">
     {% else %}
-    <div class="control-group">
+    <div class="form-group">
     {% endif %}
-      {{ field.label(class="control-label") }}
-      <div class="controls">
-      {%  if show_at_symbol %}
-      <div class="input-prepend"><span class="add-on">@</span>{{ field(class=class, placeholder=placeholder) }}</div>
-      {% else %}
-      {{ field(class=class, placeholder=placeholder) }}
-      {% endif %}
-      {% if field.errors %}
-      <span class="help-inline">{% for error in field.errors %}{{ error }} {% endfor %}</span>
-      {% else %}
+      {{ field.label(class="col-sm-3 control-label") }}
+      <div class="col-sm-9">
+        {%  if show_at_symbol %}
+        <div class="input-group"><span class="input-group-addon">@</span>{{ field(class=class + " form-control", placeholder=placeholder) }}</div>
+        {% else %}
+        {{ field(class=class + " form-control", placeholder=placeholder) }}
+        {% endif %}
+        {% if field.errors %}
+        <span class="help-inline">{% for error in field.errors %}{{ error }} {% endfor %}</span>
+        {% else %}
       {% endif %}
       </div>
     </div>
@@ -55,23 +55,23 @@ New event - Gameconfs
   <legend>Enter data for a new event</legend>
 {% endif %}
   {{ flash() }}
-  <fieldset>
-    {{ form.hidden_tag() }}
-    {{ form_control(form.name, "Game Developers Conference 2013") }}
-    {{ form_control(form.start_date, class="span2 datepicker") }}
-    {{ form_control(form.end_date, class="span2 datepicker") }}
-    {{ form_control(form.event_url, "http://www.gdconf.com") }}
-    {{ form_control(form.twitter_account, "Official_GDC", class="span2", show_at_symbol=True) }}
-    {{ form_control(form.twitter_hashtags, "#gdc #gdc13") }}
-    {{ form_control(form.venue, "Moscone Conference Center") }}
-    {{ form_control(form.address, "San Francisco, USA (leave empty for online events)") }}
-    <div class="form-actions">
+  {{ form.hidden_tag() }}
+  {{ form_control(form.name, "Game Developers Conference 2013") }}
+  {{ form_control(form.start_date, class="datepicker") }}
+  {{ form_control(form.end_date, class="datepicker") }}
+  {{ form_control(form.event_url, "http://www.gdconf.com") }}
+  {{ form_control(form.twitter_account, "Official_GDC", show_at_symbol=True) }}
+  {{ form_control(form.twitter_hashtags, "#gdc #gdc13") }}
+  {{ form_control(form.venue, "Moscone Conference Center") }}
+  {{ form_control(form.address, "San Francisco, USA (leave empty for online events)") }}
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
         <button type="submit" class="btn btn-primary">Save</button>
         {% if event_id %}
-        <a class="btn" href="{{ url_for('event', id=event_id) }}">Cancel</a>
+        <a class="btn btn-default" href="{{ url_for('event', id=event_id) }}">Cancel</a>
         {% endif %}
     </div>
-  </fieldset>
+  </div>
 </form>
 {% endblock %}
 
