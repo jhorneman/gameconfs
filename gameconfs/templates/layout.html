@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
     {% endif %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/gameconfs.css') }}">
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="{{ url_for('recent_feed') }}" rel="alternate" title="Recent Changes" type="application/atom+xml">
 {% block head %}{% endblock %}
     {% if offline_mode %}
