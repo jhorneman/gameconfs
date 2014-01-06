@@ -3,7 +3,7 @@
   <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }} {{ event.start_date.year }}</span>
   <span itemprop="endDate" content="{{ event.end_date|microdata_date }}"></span>
   {% else %}
-  <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }}</span> until <span itemprop="endDate" content="{{ event.end_date|microdata_date }}">{{ event.end_date|nice_date }} {{ event.start_date.year }}</span>
+  <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }}</span> - <span itemprop="endDate" content="{{ event.end_date|microdata_date }}">{{ event.end_date|nice_date }}</span>
   {% endif %}
 {% endmacro %}
 
@@ -15,14 +15,14 @@
   <div id="ongoing-events">
     {% for event in ongoing_events %}
     <div class="event-entry">
-        <span class="event-link"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
-        <span class="event-hashtags">
-          {% for tag in event.twitter_hashtags|split %}
-          <a href="http://twitter.com/search?q=%23{{ tag[1:]|urlencode }}" target="_blank">{{ tag }}</a>
-          {% endfor %}
-        </span>
-        <span class="event-location">{{ event|event_city_and_state_or_country }}</span>
-        <span class="event-date">{{ _date_or_range(event) }}</span>
+      <span class="event-link"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
+      <span class="event-hashtags">
+        {% for tag in event.twitter_hashtags|split %}
+        <a href="http://twitter.com/search?q=%23{{ tag[1:]|urlencode }}" target="_blank">{{ tag }}</a>
+        {% endfor %}
+      </span>
+      <span class="event-date">{{ _date_or_range(event) }}</span>
+      <span class="event-location">{{ event|event_city_and_state_or_country }}</span>
     </div>
     {% endfor %}
   </div>

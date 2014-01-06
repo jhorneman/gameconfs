@@ -91,16 +91,19 @@ body#index .event-entry span.event-link {
     display: block;
 }
 
-body#index .event-entry span.event-location {
-    display: block;
-}
-
 body#index .event-entry span.event-hashtags {
     display: block;
 }
 
 body#index .event-entry span.event-date {
-    display: inline-block;
+    text-align: left;
+    margin-right: 0;
+    display: block;
+    width: 100%;
+}
+
+body#index .event-entry span.event-location {
+    margin-left: 0;
 }
 
 body#index .browse-list > div > a {
