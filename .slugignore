@@ -1,10 +1,7 @@
-data
 doc
 tests
 *.pyc
 commands.txt
 run_tests.py
-scrape.py
-create_db.py
 package.json
 node_modules
