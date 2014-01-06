@@ -7,13 +7,22 @@ $(document).ready(function() {
     }
 });
 
+// Doing this by hand instead of loading Modernizr just for this one function.
+function supportsDateInputType() {
+    var testInputElement, supportsFlag;
+
+    testInputElement = document.createElement("input");
+    testInputElement.setAttribute("type", "date");
+    return testInputElement.type !== "text";
+}
+
 function initEditEventPage() {
     var startDatePicker,
         endDatePicker,
         startDatePickerData,
         endDatePickerData;
 
-    if (Modernizr.inputtypes.date) {
+    if (supportsDateInputType()) {
         return;
     }
 
