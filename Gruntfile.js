@@ -2,14 +2,14 @@ module.exports = function(grunt) {
   grunt.initConfig({
     pkg: grunt.file.readJSON('package.json'),
 
-    clean: {
-      build: ['build']
-    },
-
     cssmin: {
       combine: {
         files: {
-          'build/combined.css': ['gameconfs/static/css/gameconfs.css', 'gameconfs/static/css/datepicker.css']
+          'gameconfs/static/css/all.min.css': [
+              'gameconfs/static/css/jquery-ui.css',
+              'gameconfs/static/css/bootstrap.min.css',
+              'gameconfs/static/css/gameconfs.css'
+          ]
         }
       }
     },
@@ -17,7 +17,11 @@ module.exports = function(grunt) {
     uglify: {
       combine: {
         files: {
-          'build/combined.js': ['gameconfs/static/js/*.js']
+          'gameconfs/static/js/all.min.js': [
+              'gameconfs/static/js/jquery-1.9.1.js',
+              'gameconfs/static/js/jquery-ui.js',
+              'gameconfs/static/js/bootstrap.js'
+          ]
         }
       }
     }
@@ -27,5 +31,5 @@ module.exports = function(grunt) {
   grunt.loadNpmTasks('grunt-contrib-cssmin');
   grunt.loadNpmTasks('grunt-contrib-uglify');
 
-  grunt.registerTask('default', ['clean', 'cssmin', 'uglify']);
+  grunt.registerTask('default', ['cssmin', 'uglify']);
 };
