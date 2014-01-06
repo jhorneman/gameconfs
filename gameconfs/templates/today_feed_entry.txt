@@ -5,4 +5,3 @@
 {%- if not event.is_online() %} in {{ event|event_city_and_state_or_country }}.{% else %}.{% endif -%}
 {% if event.event_url %} {{ event.event_url }}{% endif -%}
 {% if event.twitter_hashtags %} {{ event.twitter_hashtags }}{% endif -%}
-{% if event.twitter_account %} /cc @{{ event.twitter_account }}{% endif %}
