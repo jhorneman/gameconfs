@@ -1,8 +1,6 @@
 import os
-import re
 import json
-from datetime import date
-from flask import Blueprint, render_template, send_from_directory, request, abort, current_app
+from flask import Blueprint, render_template, send_from_directory, request, abort
 from gameconfs.helpers import *
 
 
