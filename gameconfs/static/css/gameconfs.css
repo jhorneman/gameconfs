@@ -141,6 +141,12 @@ body#upcoming h4 {
     margin-left: 59px;
 }
 
+/* Event page */
+
+.internal_data {
+    color: #999;
+}
+
 /* Stats page */
 
 table.stats

@@ -38,23 +38,22 @@
 
     <p itemprop="location"><span class="glyphicon glyphicon-globe"></span>&nbsp;{{ event|event_location }}</p>
 
-{#        {% if logged_in %}#}
-{#        <tr class="info">#}
-{#          <td>Created at</td>#}
-{#          <td>{{ event.created_at|datetimeformat('%d %B %Y %H:%M') }}</td>#}
-{#        </tr>#}
-{#        <tr class="info">#}
-{#          <td>Last modified at</td>#}
-{#          <td>{{ event.last_modified_at|datetimeformat('%d %B %Y %H:%M') }}</td>#}
-{#        </tr>#}
-{#        {% endif %}#}
     <p>
         <a class="btn btn-default" href="{{ url_for('event_ics', id=event.id) }}">Add to calendar</a>
         <a class="btn btn-default" href="{{ event|build_google_calendar_link|safe }}">Add to Google calendar</a>
     </p>
     {% if logged_in %}
-    <a class="btn btn-primary" href="{{ url_for('edit_event', id=event.id) }}">Edit</a>
-    <a class="btn btn-danger" id="delete-button" href="{{ url_for('delete_event', id=event.id) }}">Delete</a>
+    <div class="internal_data">
+      <p>Created on: {{ event.created_at|datetimeformat('%d %B %Y %H:%M') }}.<br/>
+      {% if event.created_at != event.last_modified_at %}
+      Last modified on: {{ event.last_modified_at|datetimeformat('%d %B %Y %H:%M') }}.
+      {% else %}
+      Never modified since.
+      {% endif %}
+      </p>
+    </div>
+    <a class="btn btn-sm btn-default" href="{{ url_for('edit_event', id=event.id) }}">Edit</a>
+    <a class="btn btn-sm btn-danger" id="delete-button" href="{{ url_for('delete_event', id=event.id) }}">Delete</a>
     {% endif %}
   </div>
 
