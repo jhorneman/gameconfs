@@ -5,19 +5,13 @@
     <title>{% block title %}Gameconfs{% endblock %}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <meta name="description" content="The world's most comprehensive directory of conferences, trade shows and events related to electronic games.">
-    {% if offline_mode %}
-    <link rel="stylesheet" href="{{ url_for('offline.static', filename='css/jquery-ui.css') }}">
-    <link rel="stylesheet" href="{{ url_for('offline.static', filename='css/bootstrap.min.css') }}">
-    {% else %}
-    <link rel="stylesheet" href="http://code.jquery.com/ui/1.10.3/themes/smoothness/jquery-ui.css">
-    <link rel="stylesheet" href="//netdna.bootstrapcdn.com/bootstrap/3.0.2/css/bootstrap.min.css">
-    {% endif %}
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/jquery-ui.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/bootstrap.min.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/gameconfs.css') }}">
     <link rel="icon" href="favicon.ico" type="image/x-icon">
     <link href="{{ url_for('recent_feed') }}" rel="alternate" title="Recent Changes" type="application/atom+xml">
 {% block head %}{% endblock %}
-    {% if offline_mode %}
-    {% else %}
+    {% if not offline_mode %}
     <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
     <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
     <!--[if lt IE 9]>
