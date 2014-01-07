@@ -43,6 +43,7 @@ New event - Gameconfs
 
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/datepicker.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/typeahead.css') }}">
 {%  endblock %}
 
 {% block content %}
@@ -63,6 +64,7 @@ New event - Gameconfs
   {{ form_control(form.twitter_hashtags, "#gdc #gdc13") }}
   {{ form_control(form.venue, "Moscone Conference Center") }}
   {{ form_control(form.address, "San Francisco, USA (leave empty for online events)") }}
+  {{ form_control(form.series, "Series name (optional)") }}
   <div class="form-group">
     <div class="col-sm-offset-3 col-sm-9">
         <button type="submit" class="btn btn-primary">Save</button>
@@ -76,5 +78,6 @@ New event - Gameconfs
 
 {% block end_of_body %}
 <script src="{{ url_for('static', filename='js/bootstrap-datepicker.js') }}"></script>
+<script src="{{ url_for('static', filename='js/typeahead.js') }}"></script>
 <script src="{{ url_for('static', filename='js/event-editing.js') }}"></script>
 {% endblock %}

@@ -33,7 +33,7 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
 from flask_principal import Principal
-from flask.ext.security import Security, SQLAlchemyUserDatastore, UserMixin, RoleMixin
+from flask.ext.security import Security, SQLAlchemyUserDatastore
 from flask.ext.mail import Mail
 from filters import init_template_filters
 
@@ -114,6 +114,9 @@ def create_app(_run_mode):
 
     from gameconfs.bookmarklet import bookmarklet_blueprint
     app.register_blueprint(bookmarklet_blueprint)
+
+    from gameconfs.data import data_blueprint
+    app.register_blueprint(data_blueprint)
 
     # Set up Jinja2 filters
     init_template_filters(app)

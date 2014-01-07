@@ -11,7 +11,8 @@ class EventForm(Form):
     twitter_hashtags = TextField('Hashtags')
     twitter_account = TextField('Twitter account')
     venue = TextField('Venue')
-    address = TextAreaField('City')
+    address = TextField('City')
+    series = TextField('Series tag')
 
     def validate_end_date(form, field):
         if field.data < form.start_date.data:

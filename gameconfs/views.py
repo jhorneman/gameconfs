@@ -167,6 +167,14 @@ def edit_event(id):
         event.twitter_hashtags = form.twitter_hashtags.data
         event.twitter_account = form.twitter_account.data
 
+        if form.series.data:
+            try:
+                series = Series.query.filter(Series.name == form.series.data).one()
+            except sqlalchemy.orm.exc.NoResultFound:
+                series = Series(form.series.data)
+                db.session.add(series)
+            event.series = series
+
         result = event.set_location(db.session, form.venue.data, form.address.data)
 
         # Only add if setting location worked (geocoding can fail)

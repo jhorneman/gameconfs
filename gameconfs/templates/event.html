@@ -43,6 +43,13 @@
         <a class="btn btn-default" href="{{ event|build_google_calendar_link|safe }}">Add to Google calendar</a>
     </p>
     {% if logged_in %}
+    <p>
+      {% if event.series %}
+      Series tag: {{ event.series.name }}.
+      {% else %}
+      No series tag.
+      {% endif %}
+    </p>
     <div class="internal_data">
       <p>Created on: {{ event.created_at|datetimeformat('%d %B %Y %H:%M') }}.<br/>
       {% if event.created_at != event.last_modified_at %}

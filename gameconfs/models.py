@@ -106,6 +106,19 @@ class Continent(db.Model):
         return '<Continent %r>' % (self.name)
 
 
+class Series(db.Model):
+    __tablename__ = 'series'
+
+    id = Column(Integer, primary_key=True)
+    name = Column(String(250), unique=True, nullable=False)
+
+    def __init__(self, _name):
+        self.name = _name
+
+    def __repr__(self):
+        return self.name
+
+
 class Event(db.Model):
     __tablename__ = 'events'
 
@@ -139,6 +152,9 @@ class Event(db.Model):
     # If an event is not associated with a city, it is online
     city_id = Column(Integer, ForeignKey('cities.id'), nullable=True)
     city = relationship('City')
+
+    series_id = Column(Integer, ForeignKey('series.id'), nullable=True)
+    series = relationship('Series', backref=backref('series', lazy='lazy'))
 
     def is_online(self):
         return self.city_id is None

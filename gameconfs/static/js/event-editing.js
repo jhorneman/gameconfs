@@ -17,6 +17,26 @@ function supportsDateInputType() {
 }
 
 function initEditEventPage() {
+    setUpDatePickers();
+
+    // Set up typeahead
+    $('#address').typeahead({
+        name: 'cities',
+        prefetch: '/data/cities.json',
+        template: function(datum) {
+            return '<p>'+datum.value+', '+datum.country+'</p>';
+        },
+        limit: 10
+    });
+
+    $('#series').typeahead({
+        name: 'series',
+        prefetch: '/data/series.json',
+        limit: 10
+    });
+}
+
+function setUpDatePickers() {
     var startDatePicker,
         endDatePicker,
         startDatePickerData,
