@@ -79,9 +79,18 @@
     margin-right: 0.5em;
 }
 
-.flash_msgs li
-{
+.flash-msgs {
+    padding: 0.5em 1em 0.5em 1em;
+    margin-top: -10px;
+    background: #ddd;
+}
+
+.flash-msgs li {
     list-style-type: none;
+}
+
+.flash-error {
+    color: red;
 }
 
 /* Main page */

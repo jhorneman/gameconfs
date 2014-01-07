@@ -2,7 +2,6 @@ import sys
 import inspect
 from datetime import date, timedelta
 import urllib
-from gameconfs import geocoder
 
 
 def init_template_filters(_app):
@@ -82,24 +81,18 @@ def index_to_year(_index):
     return int(int(_index) / 12)
 
 
+def event_venue_and_location(_event):
+    if _event.is_online():
+        return "Online"
+    else:
+        return _event.venue + ", " + event_location(_event)
+
+
 def event_location(_event):
     if _event.is_online():
         return "Online"
     else:
-        return _event.venue + ", " + event_city_and_state_or_country(_event)
-
-
-def event_city_and_state_or_country(_event):
-    if _event.is_online():
-        return "Online"
-    else:
-        loc = _event.city.name
-        if _event.city.country.has_states:
-            if _event.city.name not in geocoder.cities_without_states_or_countries:
-                loc += ", " + _event.city.state.name
-        elif _event.city.name not in geocoder.cities_without_states_or_countries:
-            loc += ", " + _event.city.country.name
-        return loc
+        return _event.city_and_state_or_country()
 
 
 def definite_country(_country):
@@ -137,5 +130,5 @@ def build_google_calendar_link(_event):
         text=_event.name.encode('utf-8'),
         dates=_event.start_date.strftime('%Y%m%d') + '/' + (_event.end_date + timedelta(days=1)).strftime('%Y%m%d'),
         details="Event website: " + _event.event_url.encode('utf-8'),
-        location=event_location(_event).encode('utf-8')
+        location=event_venue_and_location(_event).encode('utf-8')
     ))

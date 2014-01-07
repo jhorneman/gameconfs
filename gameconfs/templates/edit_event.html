@@ -24,9 +24,9 @@
 {% macro flash() %}
 {% with messages = get_flashed_messages(with_categories=true) %}
   {% if messages %}
-    <ul class="flash_msgs">
+    <ul class="flash-msgs">
     {% for category, message in messages %}
-      <li class="alert alert-{{ category }}">{{ message }}</li>
+      <li class="flash-{{ category }}">{{ message }}</li>
     {% endfor %}
     </ul>
   {% endif %}
@@ -47,10 +47,10 @@ New event - Gameconfs
 
 {% block content %}
 {% if event_id %}
-<form class="form-horizontal" method="POST" action="{{ url_for('edit_event', id=event_id) }}">
+<form class="form-horizontal" method="POST" action="{{ url_for(view_name, id=event_id) }}">
   <legend>Edit event data</legend>
 {% else %}
-<form class="form-horizontal" method="POST" action="{{ url_for('new_event') }}">
+<form class="form-horizontal" method="POST" action="{{ url_for(view_name) }}">
   <legend>Enter data for a new event</legend>
 {% endif %}
   {{ flash() }}
