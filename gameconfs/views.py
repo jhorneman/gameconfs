@@ -13,7 +13,7 @@ from gameconfs import app, db
 from gameconfs.models import *
 from gameconfs.geocoder import all_continents
 from gameconfs.filters import definite_country, event_location, event_city_and_state_or_country
-from gameconfs.forms import EventForm, NewSearchForm
+from gameconfs.forms import EventForm, SearchForm
 from gameconfs.helpers import *
 
 
@@ -47,7 +47,25 @@ def index():
         all()
 
     return render_template('index.html', body_id="index", ongoing_events=ongoing_events, min_year=min_year,
-                           max_year=max_year, countries=countries, continents=continents)
+                           max_year=max_year, countries=countries, continents=continents, form=SearchForm())
+
+
+@app.route('/search', methods=("GET", "POST"))
+def search():
+    if request.method == "POST":   # Form has no validation
+        form = SearchForm()
+        search_string = form.search_string.data.strip()
+        if search_string:
+            q = Event.query.\
+                filter(Event.name.ilike("%" + search_string + "%")).\
+                order_by(Event.start_date.desc())
+            found_events = q.all()
+        else:
+            found_events = []
+    else:
+        search_string = ""
+        found_events = []
+    return render_template('search.html', body_id="search", search_string=search_string, found_events=found_events)
 
 
 @app.route('/event/<id>')

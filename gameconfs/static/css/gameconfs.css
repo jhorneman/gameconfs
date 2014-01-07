@@ -111,6 +111,24 @@ body#index .browse-list > div > a {
     width: 200px;
 }
 
+/* Search page */
+
+body#search .event-entry span.event-link {
+    font-size: large;
+    display: block;
+}
+
+body#search .event-entry span.event-date {
+    text-align: left;
+    margin-right: 0;
+    display: block;
+    width: 100%;
+}
+
+body#search .event-entry span.event-location {
+    margin-left: 0;
+}
+
 /* Year page */
 
 body#year h1 {
