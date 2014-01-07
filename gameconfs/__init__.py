@@ -115,6 +115,9 @@ def create_app(_run_mode):
     from gameconfs.bookmarklet import bookmarklet_blueprint
     app.register_blueprint(bookmarklet_blueprint)
 
+    from gameconfs.admin import admin_blueprint
+    app.register_blueprint(admin_blueprint)
+
     # Set up Jinja2 filters
     init_template_filters(app)
 
