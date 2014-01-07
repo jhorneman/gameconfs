@@ -253,8 +253,6 @@ def edit_event(id):
         try:
             if not event.set_location(db.session, form.venue.data, form.address.data):
                 raise EventSaveException("Location setting failed.")
-            if is_duplicate_event(event):
-                raise EventSaveException("Another event with the same name already exists for this year.")
         except EventSaveException as e:
             # Get rid of whatever was done to the session or it will cause trouble later
             db.session.expunge_all()
