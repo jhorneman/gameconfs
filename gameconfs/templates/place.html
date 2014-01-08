@@ -40,7 +40,7 @@
   {% if location == "online" %}
   <p>We don't know of any online events in {{ year }}. Browse <a href="{{ url_for('place_past', place=location) }}">past online events</a>.</p>
 	{% else %}
-  <p>We don't know of any events in {{ location }} in {{ year }}. Browse <a href="{{ url_for('place_past', place=location) }}">events in the past</a>.</p>
+  <p>We don't know of any events in {{ location }} in {{ year }}. Browse <a href="{{ url_for('place_past', place=location) }}">past events</a>.</p>
   {% endif %}
   {% endif %}
 {% endblock %}
