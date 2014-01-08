@@ -17,9 +17,9 @@
         <tr>
         {% endif %}
         {% if event.start_date == event.end_date %}
-        <td>{{ event.start_date|short_date }}</td>
+        <td>{{ event.start_date.day }}</td>
         {% else %}
-        <td>{{ event.start_date|short_date }} - {{ event.end_date|short_date }}</td>
+        <td>{{ event.start_date.day }} - {{ event.end_date.day }}</td>
         {% endif %}
         <td><a href="{{ url_for('event', _external=True, id=event.id) }}">{{ event.name }}</a></td>
         </tr>
