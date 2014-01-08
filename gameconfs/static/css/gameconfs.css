@@ -4,6 +4,22 @@
   .container {
     max-width: 500px;
   }
+
+  body#index #search {
+    width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  body#index .form-inline .form-group {
+    display:inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+
+  body#index #search {
+    width: 200px;
+  }
 }
 
 /* Layout */
@@ -113,10 +129,6 @@ body#index .event-entry span.event-date {
 
 body#index .event-entry span.event-location {
     margin-left: 0;
-}
-
-body#index #search {
-    width: 250px;
 }
 
 body#index .browse-list > div > a {
