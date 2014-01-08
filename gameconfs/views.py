@@ -132,6 +132,30 @@ def place(place):
                            year=today.year)
 
 
+@app.route('/place/<place>/past')
+def place_past(place):
+    if place == "online":
+        q = Event.query.\
+            filter(Event.city == None).\
+            order_by(Event.start_date.asc())
+        location = "online"
+    else:
+        q = Event.query.\
+            join(Event.city).\
+            join(City.country).\
+            join(Country.continent).\
+            order_by(Event.start_date.asc())
+
+        (q, location) = filter_by_place_name(q, place)
+        if not location:
+            abort(404)
+
+    q = q.filter(Event.start_date < date(date.today().year, 1, 1))
+    events = q.all()
+
+    return render_template('place_past.html', body_id='place', events=events, location=location)
+
+
 class EventSaveException(Exception):
     def __init__(self, _flash_message=None):
         self.flash_message = _flash_message
