@@ -12,7 +12,7 @@
     <tr>
         <td><span class="date">{{ event.start_date|nice_date }}</span><span class="short_date">{{ event.start_date|short_date }}</span> {{ event.start_date.year }}</td>
         <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
-        <td>{{ event|event_city_and_state_or_country }}</td>
+        <td>{{ event|event_location }}</td>
     </tr>
     {% endfor %}
     </tbody>
@@ -30,7 +30,7 @@
     <tr>
         <td><span class="date">{{ event.start_date|nice_date }}</span><span class="short_date">{{ event.start_date|short_date }}</span> {{ event.start_date.year }}</td>
         <td><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></td>
-        <td>{{ event|event_city_and_state_or_country }}</td>
+        <td>{{ event|event_location }}</td>
     </tr>
     {% endfor %}
     </tbody>
