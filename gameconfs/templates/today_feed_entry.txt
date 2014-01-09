@@ -2,6 +2,6 @@
 {{ event.name }} takes place today
 {%- else -%}
 {{ event.name }} starts today{%- endif -%}
-{%- if not event.is_online() %} in {{ event|event_location }}.{% else %}.{% endif -%}
+{%- if event.is_in_a_city() %} in {{ event|event_location }}.{% else %}.{% endif -%}
 {% if event.event_url %} {{ event.event_url }}{% endif -%}
 {% if event.twitter_hashtags %} {{ event.twitter_hashtags }}{% endif -%}

@@ -82,15 +82,15 @@ def index_to_year(_index):
 
 
 def event_venue_and_location(_event):
-    if _event.is_online():
-        return "Online"
+    if _event.is_not_in_a_city():
+        return _event.venue
     else:
-        return _event.venue + ", " + event_location(_event)
+        return _event.venue + ", " + _event.city_and_state_or_country()
 
 
 def event_location(_event):
-    if _event.is_online():
-        return "Online"
+    if _event.is_not_in_a_city():
+        return _event.venue
     else:
         return _event.city_and_state_or_country()
 

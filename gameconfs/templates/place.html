@@ -9,16 +9,16 @@
 
 {% extends "layout.html" %}
 {% block title %}
-  {% if location == "online" %}
-  Online events in {{ year }}
+  {% if location == "other" %}
+  Events in {{ year }}
   {% else %}
   Events in {{ location }} in {{ year }}
   {% endif %}
 {% endblock %}
 {% block content %}
   {% if events %}
-  {% if location == "online" %}
-  <h1>Online events in {{ year }}</h1>
+  {% if location == "other" %}
+  <h1>Events in {{ year }}</h1>
   {% else %}
   <h1>Events in {{ location }} in {{ year }}</h1>
   {% endif %}
@@ -35,14 +35,14 @@
   {% endfor %}
   </div>
   {% endfor %}
-  {% if location == "online" %}
-  <p>Browse <a href="{{ url_for('place_past', place=location) }}">past online events</a>.</p>
+  {% if location == "other" %}
+  <p>Browse <a href="{{ url_for('place_past', place=location) }}">past events</a>.</p>
 	{% else %}
   <p>Browse <a href="{{ url_for('place_past', place=location) }}">past events</a> in {{ location  }}.</p>
   {% endif %}
 	{% else %}
-  {% if location == "online" %}
-  <p>We don't know of any online events in {{ year }}. Browse <a href="{{ url_for('place_past', place=location) }}">past online events</a>.</p>
+  {% if location == "other" %}
+  <p>We don't know of any other events in {{ year }}. Browse <a href="{{ url_for('place_past', place=location) }}">past events</a>.</p>
 	{% else %}
   <p>We don't know of any events in {{ location }} in {{ year }}. Browse <a href="{{ url_for('place_past', place=location) }}">past events</a>.</p>
   {% endif %}

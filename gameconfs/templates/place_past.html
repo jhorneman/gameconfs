@@ -9,16 +9,16 @@
 
 {% extends "layout.html" %}
 {% block title %}
-  {% if location == "online" %}
-  Past online events
+  {% if location == "other" %}
+  Past events
   {% else %}
   Past events in {{ location }}
   {% endif %}
 {% endblock %}
 {% block content %}
   {% if events %}
-  {% if location == "online" %}
-  <h1>Past online events</h1>
+  {% if location == "other" %}
+  <h1>Past events</h1>
   {% else %}
   <h1>Past events in {{ location }}</h1>
   {% endif %}
@@ -37,8 +37,8 @@
   {% endfor %}
   {% endfor %}
 	{% else %}
-  {% if location == "online" %}
-  <p>We don't know of any online events in {{ year }}.</p>
+  {% if location == "other" %}
+  <p>We don't know of any other events in {{ year }}.</p>
 	{% else %}
   <p>We don't know of any events in {{ location }} in {{ year }}.</p>
   {% endif %}
