@@ -2,6 +2,11 @@ To make psycopg2 use OpenSSL 1.0.0:
 
 export DYLD_LIBRARY_PATH=/usr/local/Cellar/openssl/1.0.1c/lib
 
+or:
+
+sudo ln -s /Library/PostgreSQL/9.2/lib/libssl.1.0.0.dylib /usr/lib
+$ sudo ln -s /Library/PostgreSQL/9.2/lib/libcrypto.1.0.0.dylib /usr/lib
+
 To dump database for Heroku:
 
 /Library/PostgreSQL/9.1/bin/pg_dump --host localhost --port 5432 --username "postgres" -Fc --no-acl --no-owner --verbose --file "/Users/jhorneman/Desktop/data.dump" "gdcal-dev"
