@@ -68,6 +68,7 @@ def search():
     return render_template('search.html', body_id="search", search_string=search_string, found_events=found_events)
 
 
+#TODO: Improve view name
 @app.route('/event/<id>')
 def event(id):
     try:
@@ -77,6 +78,7 @@ def event(id):
     return render_template('event.html', body_id="view-event", event=event, today=date.today())
 
 
+#TODO: Improve view name
 @app.route('/upcoming')
 def upcoming():
     today = date.today()
@@ -91,6 +93,7 @@ def upcoming():
     return render_template('upcoming.html', body_id='upcoming', events=events)
 
 
+#TODO: Improve view name
 @app.route('/year/<int:year>')
 def year(year):
     # Make sure the year is valid (compared to our data)
@@ -106,6 +109,7 @@ def year(year):
     return render_template('year.html', body_id='year', events=events, year=year)
 
 
+#TODO: Improve view name and parameter
 @app.route('/place/<place>')
 def place(place):
     if place == "online":
@@ -154,6 +158,24 @@ def place_past(place):
     events = q.all()
 
     return render_template('place_past.html', body_id='place', events=events, location=location)
+
+
+@app.route('/series/<series_id>')
+def view_series(series_id):
+    try:
+        series = Series.query.filter(Series.id == series_id).one()
+    except sqlalchemy.orm.exc.NoResultFound:
+        abort(404)
+
+    q = Event.query.\
+        join(Event.city).\
+        join(City.country).\
+        join(Country.continent).\
+        order_by(Event.start_date.desc()).\
+        filter(Event.series_id == series_id)
+    events = q.all()
+
+    return render_template('series.html', body_id='series', events=events, series=series)
 
 
 class EventSaveException(Exception):
@@ -433,7 +455,7 @@ def sponsoring():
 def stats():
     # Get time stats
     time_stats = {}
-    
+
     for d in db.session.query(Event.start_date).order_by(Event.start_date):
         start_date = d.start_date
         if time_stats.has_key(start_date.year):

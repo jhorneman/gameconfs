@@ -45,9 +45,9 @@
     {% if logged_in %}
     <p>
       {% if event.series %}
-      Series tag: {{ event.series.name }}.
+      Part of the <a href="{{ url_for('view_series', series_id=event.series.id) }}">{{ event.series.name }} event series</a>.
       {% else %}
-      No series tag.
+      Not part of a series.
       {% endif %}
     </p>
     <div class="internal_data">
