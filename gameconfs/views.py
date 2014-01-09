@@ -181,16 +181,16 @@ def create_new_event():
             if not new_event.set_location(db.session, form.venue.data, form.address.data):
                 raise EventSaveException("Location setting failed.")
         except EventSaveException as e:
-            db.session.expunge_all()    # Get rid of whatever was done to the session or it will cause trouble later
+            # Get rid of whatever was done to the session or it will cause trouble later
+            db.session.expunge_all()
             if e.flash_message:
                 flash(e.flash_message, "error")
-            # return render_template('edit_event.html', body_id="edit-event", form=form, view_name='edit_event')
         else:
             db.session.add(new_event)
             db.session.commit()
             return redirect(url_for('event', id=new_event.id))
-    # else:
-    return render_template('edit_event.html', body_id="edit-event", form=form, event_id=None, view_name='create_new_event')
+    return render_template('edit_event.html', body_id="edit-event", form=form, event_id=None,
+                           view_name='create_new_event')
 
 
 @app.route('/event/<id>/duplicate', methods=("GET", "POST"))
