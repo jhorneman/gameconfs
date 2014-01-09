@@ -8,10 +8,20 @@
 {% endmacro %}
 
 {% extends "layout.html" %}
-{% block title %}Events in {{ location }} in {{ year }}{% endblock %}
+{% block title %}
+  {% if location == "online" %}
+  Online events in {{ year }}
+  {% else %}
+  Events in {{ location }} in {{ year }}
+  {% endif %}
+{% endblock %}
 {% block content %}
   {% if events %}
+  {% if location == "online" %}
+  <h1>Online events in {{ year }}</h1>
+  {% else %}
   <h1>Events in {{ location }} in {{ year }}</h1>
+  {% endif %}
 	{% for month_group in events|sort(attribute='start_date')|groupby('start_date.month') %}
 	<a name="{{ month_group.grouper }}"></a>
 	<h4>{{ month_group.grouper|nice_month }} {{ year }}</h4>
@@ -20,12 +30,21 @@
     <div class="event-entry">
         <span class="event-date">{{ _date_or_range(event) }}</span>
         <span class="event-link"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
-        <span class="event-location">{{ event|event_city_and_state_or_country }}</span>
+        <span class="event-location">{{ event|event_location }}</span>
     </div>
   {% endfor %}
   </div>
   {% endfor %}
+  {% if location == "online" %}
+  <p>Browse <a href="{{ url_for('place_past', place=location) }}">past online events</a>.</p>
 	{% else %}
-  <p>We don't know of any events in {{ location }} in {{ year }}.</p>
+  <p>Browse <a href="{{ url_for('place_past', place=location) }}">past events</a> in {{ location  }}.</p>
+  {% endif %}
+	{% else %}
+  {% if location == "online" %}
+  <p>We don't know of any online events in {{ year }}. Browse <a href="{{ url_for('place_past', place=location) }}">past online events</a>.</p>
+	{% else %}
+  <p>We don't know of any events in {{ location }} in {{ year }}. Browse <a href="{{ url_for('place_past', place=location) }}">past events</a>.</p>
+  {% endif %}
   {% endif %}
 {% endblock %}

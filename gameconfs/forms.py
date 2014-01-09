@@ -19,5 +19,5 @@ class EventForm(Form):
             raise ValidationError(u'End date can not be before start date')
 
 
-class NewSearchForm(Form):
-    query_string = TextField('Query')
+class SearchForm(Form):
+    search_string = TextField('Query')

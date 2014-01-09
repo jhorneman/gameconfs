@@ -40,9 +40,9 @@
     {% if logged_in %}
     <div id="admin-bar">
       {% if not body_id or body_id != "edit-event" %}
-      <a class="btn btn-sm btn-default" href="{{ url_for('new_event') }}">Add event</a>
+      <a class="btn btn-sm btn-default" href="{{ url_for('create_new_event') }}">New event</a>
       {% endif %}
-      <a class="btn btn-sm btn-default" href="{{ url_for('security.logout') }}">Sign out {{ current_user.user_name }}</a>
+      <a class="btn btn-sm btn-danger pull-right" href="{{ url_for('security.logout') }}">Sign out {{ current_user.user_name }}</a>
     </div>
     {% endif %}
 {#    {% if sponsor %}#}

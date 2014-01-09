@@ -11,9 +11,8 @@ from sqlalchemy.orm import *
 from sqlalchemy.sql.expression import *
 from gameconfs import app, db
 from gameconfs.models import *
-from gameconfs.geocoder import all_continents
-from gameconfs.filters import definite_country, event_location, event_city_and_state_or_country
-from gameconfs.forms import EventForm, NewSearchForm
+from gameconfs.filters import event_venue_and_location, event_location
+from gameconfs.forms import EventForm, SearchForm
 from gameconfs.helpers import *
 
 
@@ -45,9 +44,28 @@ def index():
     continents = Continent.query.\
         order_by(Continent.name).\
         all()
+    continents.append({"name": "Online"})
 
     return render_template('index.html', body_id="index", ongoing_events=ongoing_events, min_year=min_year,
-                           max_year=max_year, countries=countries, continents=continents)
+                           max_year=max_year, countries=countries, continents=continents, form=SearchForm())
+
+
+@app.route('/search', methods=("GET", "POST"))
+def search():
+    if request.method == "POST":   # Form has no validation
+        form = SearchForm()
+        search_string = form.search_string.data
+        if search_string:
+            q = Event.query.\
+                filter(Event.name.ilike("%" + search_string + "%")).\
+                order_by(Event.start_date.desc())
+            found_events = q.all()
+        else:
+            found_events = []
+    else:
+        search_string = ""
+        found_events = []
+    return render_template('search.html', body_id="search", search_string=search_string, found_events=found_events)
 
 
 @app.route('/event/<id>')
@@ -90,15 +108,21 @@ def year(year):
 
 @app.route('/place/<place>')
 def place(place):
-    q = Event.query.\
-        join(Event.city).\
-        join(City.country).\
-        join(Country.continent).\
-        order_by(Event.start_date.asc())
+    if place == "online":
+        q = Event.query.\
+            filter(Event.city == None).\
+            order_by(Event.start_date.asc())
+        location = "online"
+    else:
+        q = Event.query.\
+            join(Event.city).\
+            join(City.country).\
+            join(Country.continent).\
+            order_by(Event.start_date.asc())
 
-    (q, location) = filter_by_place_name(q, place)
-    if not location:
-        abort(404)
+        (q, location) = filter_by_place_name(q, place)
+        if not location:
+            abort(404)
 
     today = date.today()
     q = filter_by_period(q, today.year, 1, 12)
@@ -108,9 +132,38 @@ def place(place):
                            year=today.year)
 
 
+@app.route('/place/<place>/past')
+def place_past(place):
+    if place == "online":
+        q = Event.query.\
+            filter(Event.city == None).\
+            order_by(Event.start_date.asc())
+        location = "online"
+    else:
+        q = Event.query.\
+            join(Event.city).\
+            join(City.country).\
+            join(Country.continent).\
+            order_by(Event.start_date.asc())
+
+        (q, location) = filter_by_place_name(q, place)
+        if not location:
+            abort(404)
+
+    q = q.filter(Event.start_date < date(date.today().year, 1, 1))
+    events = q.all()
+
+    return render_template('place_past.html', body_id='place', events=events, location=location)
+
+
+class EventSaveException(Exception):
+    def __init__(self, _flash_message=None):
+        self.flash_message = _flash_message
+
+
 @app.route('/new', methods=("GET", "POST"))
 @roles_required('admin')
-def new_event():
+def create_new_event():
     form = EventForm()
     if form.validate_on_submit():
         new_event = Event()
@@ -124,41 +177,95 @@ def new_event():
         new_event.twitter_hashtags = form.twitter_hashtags.data
         new_event.twitter_account = form.twitter_account.data
 
-        result = new_event.set_location(db.session, form.venue.data, form.address.data)
-
-        # Only add if setting location worked (geocoding can fail)
-        if result:
+        try:
+            if not new_event.set_location(db.session, form.venue.data, form.address.data):
+                raise EventSaveException("Location setting failed.")
+        except EventSaveException as e:
+            db.session.expunge_all()    # Get rid of whatever was done to the session or it will cause trouble later
+            if e.flash_message:
+                flash(e.flash_message, "error")
+            # return render_template('edit_event.html', body_id="edit-event", form=form, view_name='edit_event')
+        else:
             db.session.add(new_event)
             db.session.commit()
             return redirect(url_for('event', id=new_event.id))
-        else:
-            # Otherwise get rid of whatever was done to the session or it will cause trouble later
-            db.session.expunge_all()
+    # else:
+    return render_template('edit_event.html', body_id="edit-event", form=form, event_id=None, view_name='create_new_event')
 
-            flash("Location setting failed", "error")
-            return render_template('edit_event.html', body_id="edit-event", form=form)
+
+@app.route('/event/<id>/duplicate', methods=("GET", "POST"))
+@roles_required('admin')
+def duplicate_event(id):
+    if request.method == "GET":
+        try:
+            original_event = Event.query.filter(Event.id == id).one()
+        except sqlalchemy.orm.exc.NoResultFound:
+            abort(404)
+
+        new_event = Event()
+        new_event.name = original_event.name
+        new_event.start_date = original_event.start_date
+        new_event.end_date = original_event.end_date
+        new_event.event_url = original_event.event_url
+        new_event.twitter_hashtags = original_event.twitter_hashtags
+        new_event.twitter_account = original_event.twitter_account
+        new_event.city = original_event.city
+        new_event.venue = original_event.venue
+        new_event.address_for_geocoding = original_event.address_for_geocoding
+
+        address = ""
+        if not original_event.is_online():
+            address = original_event.city_and_state_or_country()
+
+        form = EventForm(obj=new_event, address=address)
     else:
-        return render_template('edit_event.html', body_id="edit-event", form=form, event_id=None)
+        new_event = Event()
+        form = EventForm()
+
+    if form.validate_on_submit():
+        now = datetime.now()
+        new_event.created_at = now
+        new_event.last_modified_at = now
+        new_event.name = form.name.data
+        new_event.start_date = form.start_date.data
+        new_event.end_date = form.end_date.data
+        new_event.event_url = form.event_url.data
+        new_event.twitter_hashtags = form.twitter_hashtags.data
+        new_event.twitter_account = form.twitter_account.data
+
+        try:
+            if not new_event.set_location(db.session, form.venue.data, form.address.data):
+                raise EventSaveException("Location setting failed.")
+            if is_duplicate_event(new_event):
+                raise EventSaveException("Another event with the same name already exists for this year.")
+
+        except EventSaveException as e:
+            # Get rid of whatever was done to the session or it will cause trouble later
+            db.session.expunge_all()
+            if e.flash_message:
+                flash(e.flash_message, "error")
+        else:
+            db.session.add(new_event)
+            db.session.commit()
+            return redirect(url_for('event', id=new_event.id))
+
+    return render_template('edit_event.html', body_id="edit-event", form=form, event_id=id, view_name='duplicate_event')
 
 
 @app.route('/event/<id>/edit', methods=("GET", "POST"))
 @roles_required('admin')
 def edit_event(id):
-    event = Event.query.filter(Event.id == id).one()
+    try:
+        event = Event.query.filter(Event.id == id).one()
+    except sqlalchemy.orm.exc.NoResultFound:
+        abort(404)
 
     address = ""
     if not event.is_online():
-        # Copied from filters
-        address = event.city.name
-        if event.city.country.has_states:
-            if event.city.name not in geocoder.cities_without_states_or_countries:
-                address += ", " + event.city.state.name
-        elif event.city.name not in geocoder.cities_without_states_or_countries:
-            address += ", " + event.city.country.name
+        address = event.city_and_state_or_country()
 
     form = EventForm(obj=event, address=address)
-
-    if form.is_submitted():
+    if form.validate_on_submit():
         event.last_modified_at = datetime.now()
         event.name = form.name.data
         event.start_date = form.start_date.data
@@ -175,33 +282,48 @@ def edit_event(id):
                 db.session.add(series)
             event.series = series
 
-        result = event.set_location(db.session, form.venue.data, form.address.data)
-
-        # Only add if setting location worked (geocoding can fail)
-        if result:
+        try:
+            if not event.set_location(db.session, form.venue.data, form.address.data):
+                raise EventSaveException("Location setting failed.")
+        except EventSaveException as e:
+            # Get rid of whatever was done to the session or it will cause trouble later
+            db.session.expunge_all()
+            if e.flash_message:
+                flash(e.flash_message, "error")
+        else:
             db.session.commit()
             return redirect(url_for('event', id=event.id))
-        else:
-            # Otherwise get rid of whatever was done to the session or it will cause trouble later
-            db.session.expunge_all()
 
-            flash("Location setting failed", "error")
+    return render_template('edit_event.html', body_id="edit-event", form=form, event_id=event.id, view_name='edit_event')
 
-    return render_template('edit_event.html', body_id="edit-event", form=form, event_id=event.id)
+
+def is_duplicate_event(_event):
+    events = Event.query.\
+        filter(Event.name == _event.name).\
+        filter(extract("year", Event.start_date) == extract("year", _event.start_date)).\
+        all()
+    return len(events) > 0
 
 
 @app.route('/event/<id>/delete', methods=("GET", "POST"))
 @roles_required('admin')
 def delete_event(id):
-    event = Event.query.filter(Event.id == id).one()
-    db.session.delete(event)
-    db.session.commit()
+    try:
+        event = Event.query.filter(Event.id == id).one()
+    except sqlalchemy.orm.exc.NoResultFound:
+        pass
+    else:
+        db.session.delete(event)
+        db.session.commit()
     return redirect(url_for('index'))
 
 
 @app.route('/event/<id>/ics')
 def event_ics(id):
-    event = Event.query.filter(Event.id == id).one()
+    try:
+        event = Event.query.filter(Event.id == id).one()
+    except sqlalchemy.orm.exc.NoResultFound:
+        abort(404)
 
     cal = icalendar.Calendar()
     cal.add('prodid', '-//Game event//gameconfs.com//')
@@ -209,7 +331,7 @@ def event_ics(id):
 
     calendar_entry = icalendar.Event()
     calendar_entry.add('summary', event.name)
-    calendar_entry.add('location', event_location(event))
+    calendar_entry.add('location', event_venue_and_location(event))
     calendar_entry.add('url', event.event_url)
     calendar_entry.add('dtstart', event.start_date)
     calendar_entry.add('dtend', event.end_date + timedelta(days=1))
@@ -235,7 +357,7 @@ def recent_feed():
     #TODO: This will miss events if more than 15 are added at once, which occasionally happens.
     events = Event.query.order_by(Event.created_at.desc()).limit(15).all()
     for event in events:
-        feed.add(event.name + " - " + event_city_and_state_or_country(event),
+        feed.add(event.name + " - " + event_location(event),
                  title_type='text',
                  content=render_template('recent_feed_entry.html', event=event),
                  content_type='text/html',
@@ -261,7 +383,7 @@ def today_feed():
     events = Event.query.filter(Event.start_date == date.today()).all()
     for event in events:
         start_datetime = datetime.combine(event.start_date, time.min)
-        feed.add(event.name + " - " + event_city_and_state_or_country(event),
+        feed.add(event.name + " - " + event_location(event),
                  title_type='text',
                  content=render_template('today_feed_entry.txt', event=event),
                  content_type='text/plain',

@@ -20,7 +20,7 @@
     <div class="event-entry">
         <span class="event-date">{{ _date_or_range(event) }}</span>
         <span class="event-link"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
-        <span class="event-location">{{ event|event_city_and_state_or_country }}</span>
+        <span class="event-location">{{ event|event_location }}</span>
     </div>
   {% endfor %}
   </div>

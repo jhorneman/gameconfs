@@ -4,6 +4,22 @@
   .container {
     max-width: 500px;
   }
+
+  body#index #search {
+    width: 250px;
+  }
+}
+
+@media (max-width: 768px) {
+  body#index .form-inline .form-group {
+    display:inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+  }
+
+  body#index #search {
+    width: 200px;
+  }
 }
 
 /* Layout */
@@ -79,9 +95,18 @@
     margin-right: 0.5em;
 }
 
-.flash_msgs li
-{
+.flash-msgs {
+    padding: 0.5em 1em 0.5em 1em;
+    margin-top: -10px;
+    background: #ddd;
+}
+
+.flash-msgs li {
     list-style-type: none;
+}
+
+.flash-error {
+    color: red;
 }
 
 /* Main page */
@@ -109,6 +134,24 @@ body#index .event-entry span.event-location {
 body#index .browse-list > div > a {
     display: inline-block;
     width: 200px;
+}
+
+/* Search page */
+
+body#search .event-entry span.event-link {
+    font-size: large;
+    display: block;
+}
+
+body#search .event-entry span.event-date {
+    text-align: left;
+    margin-right: 0;
+    display: block;
+    width: 100%;
+}
+
+body#search .event-entry span.event-location {
+    margin-left: 0;
 }
 
 /* Year page */

@@ -129,6 +129,8 @@ class GeocodeResults(object):
 
                 component = self.find_address_component(u"country")
                 self.country = component["long_name"]
+                if self.country == "Hong Kong":
+                    self.country = "China"
                 self.continent = continents_per_country_code[component["short_name"]]
 
                 if self.country in countries_with_states:

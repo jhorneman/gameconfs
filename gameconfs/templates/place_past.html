@@ -8,14 +8,25 @@
 {% endmacro %}
 
 {% extends "layout.html" %}
-{% block title %}Upcoming events{% endblock %}
+{% block title %}
+  {% if location == "online" %}
+  Past online events
+  {% else %}
+  Past events in {{ location }}
+  {% endif %}
+{% endblock %}
 {% block content %}
-  <h1>Upcoming events</h1>
   {% if events %}
-	{% for month_group in events|sort(attribute='start_date')|groupby('year_month_index') %}
-	<h4>{{ month_group.grouper|index_to_month|nice_month }} {{ month_group.grouper|index_to_year }}</h4>
+  {% if location == "online" %}
+  <h1>Past online events</h1>
+  {% else %}
+  <h1>Past events in {{ location }}</h1>
+  {% endif %}
+	{% for year_group in events|sort(attribute='start_date')|groupby('start_date.year')|reverse %}
+	{% for month_group in year_group.list|sort(attribute='start_date')|groupby('start_date.month')|reverse %}
+	<h4>{{ month_group.grouper|nice_month }} {{ year_group.grouper }}</h4>
   <div id="events">
-  {% for event in month_group.list %}
+  {% for event in month_group.list|reverse %}
     <div class="event-entry">
         <span class="event-date">{{ _date_or_range(event) }}</span>
         <span class="event-link"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
@@ -24,7 +35,12 @@
   {% endfor %}
   </div>
   {% endfor %}
+  {% endfor %}
 	{% else %}
-  <p>No upcoming events. Strange!</p>
+  {% if location == "online" %}
+  <p>We don't know of any online events in {{ year }}.</p>
+	{% else %}
+  <p>We don't know of any events in {{ location }} in {{ year }}.</p>
+  {% endif %}
   {% endif %}
 {% endblock %}

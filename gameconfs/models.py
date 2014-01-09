@@ -164,6 +164,15 @@ class Event(db.Model):
         return self.start_date.year * 12 + self.start_date.month - 1
     year_month_index = property(get_year_month_index)
 
+    def city_and_state_or_country(self):
+        address = self.city.name
+        if self.city.country.has_states:
+            if self.city.name not in geocoder.cities_without_states_or_countries:
+                address += ", " + self.city.state.name
+        elif self.city.name not in geocoder.cities_without_states_or_countries:
+            address += ", " + self.city.country.name
+        return address
+
     def set_location(self, _db_session, _venue, _address_for_geocoding):
         """
         Set location data based on geocoding of location info.
