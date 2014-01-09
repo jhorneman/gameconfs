@@ -118,6 +118,9 @@ def create_app(_run_mode):
     from gameconfs.data import data_blueprint
     app.register_blueprint(data_blueprint)
 
+    from gameconfs.admin import admin_blueprint
+    app.register_blueprint(admin_blueprint)
+
     # Set up Jinja2 filters
     init_template_filters(app)
 
