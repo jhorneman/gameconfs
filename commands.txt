@@ -9,7 +9,7 @@ $ sudo ln -s /Library/PostgreSQL/9.2/lib/libcrypto.1.0.0.dylib /usr/lib
 
 To dump database for Heroku:
 
-/Library/PostgreSQL/9.1/bin/pg_dump --host localhost --port 5432 --username "postgres" -Fc --no-acl --no-owner --verbose --file "/Users/jhorneman/Desktop/data.dump" "gdcal-dev"
+/Library/PostgreSQL/9.2/bin/pg_dump --host localhost --port 5432 --username "postgres" -Fc --no-acl --no-owner --verbose --file "/Users/jhorneman/Desktop/data.dump" "gdcal-dev"
 
 To import data dump into Heroku database:
 
