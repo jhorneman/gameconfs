@@ -1,6 +1,7 @@
 from __future__ import with_statement
+import os
 from alembic import context
-from sqlalchemy import engine_from_config, pool
+from sqlalchemy import create_engine, engine_from_config, pool
 from logging.config import fileConfig
 
 # this is the Alembic Config object, which provides
@@ -47,7 +48,12 @@ def run_migrations_online():
     and associate a connection with the context.
 
     """
-    engine = engine_from_config(
+
+    database_uri = os.environ.get('DATABASE_URL')
+    if database_uri:
+        engine = create_engine(database_uri)
+    else:
+        engine = engine_from_config(
                 config.get_section(config.config_ini_section),
                 prefix='sqlalchemy.',
                 poolclass=pool.NullPool)
