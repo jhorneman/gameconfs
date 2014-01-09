@@ -12,7 +12,7 @@ class EventForm(Form):
     twitter_account = TextField('Twitter account')
     venue = TextField('Venue')
     address = TextField('City')
-    series = TextField('Series tag')
+    series = TextField('Series')
 
     def validate_end_date(form, field):
         if field.data < form.start_date.data:
