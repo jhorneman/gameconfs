@@ -1,0 +1,8 @@
+ul.button-list {
+    padding-left: 0px;
+}
+
+.button-list li {
+    list-style-type: none;
+    margin-bottom: 4px;
+}

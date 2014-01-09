@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block title %}No series{% endblock %}
+{% block content %}
+  <h1>Events without series</h1>
+  <p>Total number: {{ events_without_series|length }} events.</p>
+  <div id="events">
+  {% for event in events_without_series %}
+    <div class="event-entry">
+        <span class="event-link"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
+        <span class="event-date">{{ event.start_date.year }}</span>
+        <span class="event-location">{{ event|event_location }}</span>
+    </div>
+  {% endfor %}
+  </div>
+{% endblock %}

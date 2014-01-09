@@ -1,0 +1,12 @@
+{% extends "layout.html" %}
+{% block title %}All series{% endblock %}
+{% block content %}
+  <h1>All event series</h1>
+  <p>Total number: {{ all_series_data|length }} series.</p>
+  {% for series_data in all_series_data %}
+  <div>
+     <a href="{{ url_for('view_series', series_id=series_data[0].id) }}">{{ series_data[0].name }}</a>
+     ({{ series_data[1] }})
+  </div>
+  {% endfor %}
+{% endblock %}
