@@ -140,6 +140,9 @@ class Event(db.Model):
     city_id = Column(Integer, ForeignKey('cities.id'), nullable=True)
     city = relationship('City')
 
+    def is_not_in_one_city(self):
+        return self.city_id is None
+
     def is_online(self):
         return self.city_id is None
 
