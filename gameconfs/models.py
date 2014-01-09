@@ -136,15 +136,15 @@ class Event(db.Model):
     venue = Column(String(250), nullable=True)
     address_for_geocoding = Column(String(250), nullable=True)
 
-    # If an event is not associated with a city, it is online
+    # An event may take place worldwide or online. If it has no city, the venue describes the location.
     city_id = Column(Integer, ForeignKey('cities.id'), nullable=True)
     city = relationship('City')
 
-    def is_not_in_one_city(self):
+    def is_not_in_a_city(self):
         return self.city_id is None
 
-    def is_online(self):
-        return self.city_id is None
+    def is_in_a_city(self):
+        return not self.is_not_in_a_city()
 
     # Needed for proper grouping of months across year boundaries
     def get_year_month_index(self):

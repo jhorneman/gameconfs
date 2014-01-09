@@ -44,7 +44,7 @@ def index():
     continents = Continent.query.\
         order_by(Continent.name).\
         all()
-    continents.append({"name": "Online"})
+    continents.append({"name": "Other"})
 
     return render_template('index.html', body_id="index", ongoing_events=ongoing_events, min_year=min_year,
                            max_year=max_year, countries=countries, continents=continents, form=SearchForm())
@@ -108,11 +108,11 @@ def year(year):
 
 @app.route('/place/<place>')
 def place(place):
-    if place == "online":
+    if place == "other":
         q = Event.query.\
             filter(Event.city == None).\
             order_by(Event.start_date.asc())
-        location = "online"
+        location = "other"
     else:
         q = Event.query.\
             join(Event.city).\
@@ -134,11 +134,11 @@ def place(place):
 
 @app.route('/place/<place>/past')
 def place_past(place):
-    if place == "online":
+    if place == "other":
         q = Event.query.\
             filter(Event.city == None).\
             order_by(Event.start_date.asc())
-        location = "online"
+        location = "other"
     else:
         q = Event.query.\
             join(Event.city).\
@@ -214,7 +214,7 @@ def duplicate_event(id):
         new_event.address_for_geocoding = original_event.address_for_geocoding
 
         address = ""
-        if not original_event.is_online():
+        if original_event.is_in_a_city():
             address = original_event.city_and_state_or_country()
 
         form = EventForm(obj=new_event, address=address)
@@ -261,7 +261,7 @@ def edit_event(id):
         abort(404)
 
     address = ""
-    if not event.is_online():
+    if event.is_in_a_city():
         address = event.city_and_state_or_country()
 
     form = EventForm(obj=event, address=address)
