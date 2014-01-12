@@ -21,7 +21,7 @@ function isEventValid() {
     }
 
     eventName = $("#name").val();
-    result = new RegExp(".*(20\\d\\d).*").exec(eventName);
+    result = new RegExp(".*(2\\d\\d\\d).*").exec(eventName);
     if (result) {
         yearInTitle = parseInt(result[1]);
         if (yearInStartDate != yearInTitle) {
