@@ -67,7 +67,7 @@ New event - Gameconfs
   {{ form_control(form.series, "Series name (optional)") }}
   <div class="form-group">
     <div class="col-sm-offset-3 col-sm-9">
-        <button type="submit" class="btn btn-primary">Save</button>
+        <button type="submit" id="submit-button" class="btn btn-primary">Save</button>
         {% if event_id %}
         <a class="btn btn-default" href="{{ url_for('event', id=event_id) }}">Cancel</a>
         {% endif %}

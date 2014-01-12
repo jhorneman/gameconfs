@@ -7,13 +7,30 @@ $(document).ready(function() {
     }
 });
 
-// Doing this by hand instead of loading Modernizr just for this one function.
-function supportsDateInputType() {
-    var testInputElement, supportsFlag;
+function isEventValid() {
+    var yearInStartDate, yearInEndDate, eventName, result, yearInTitle;
 
-    testInputElement = document.createElement("input");
-    testInputElement.setAttribute("type", "date");
-    return testInputElement.type !== "text";
+    yearInStartDate = parseInt($("#start_date").val().slice(0, 4));
+    yearInEndDate = parseInt($("#end_date").val().slice(0, 4));
+
+    if (yearInStartDate != yearInEndDate) {
+        if (1 != confirm("This event starts in " + yearInStartDate.toString() + ", but it ends in "
+         + yearInEndDate.toString() + ". Are you sure you want to submit this event?")) {
+            return false;
+        }
+    }
+
+    eventName = $("#name").val();
+    result = new RegExp(".*(20\\d\\d).*").exec(eventName);
+    if (result) {
+        yearInTitle = parseInt(result[1]);
+        if (yearInStartDate != yearInTitle) {
+            return (1 == confirm("The year in the event title is " + yearInTitle.toString() + ", while the one in the start date is "
+             + yearInStartDate.toString() + ". Are you sure you want to submit this event?"));
+        }
+    }
+
+    return true;
 }
 
 function initEditEventPage() {
@@ -34,6 +51,22 @@ function initEditEventPage() {
         prefetch: '/data/series.json',
         limit: 10
     });
+
+    $('#submit-button')
+        .on('click', function(evt) {
+            if (!isEventValid()) {
+                evt.preventDefault();
+            }
+        });
+}
+
+// Doing this by hand instead of loading Modernizr just for this one function.
+function supportsDateInputType() {
+    var testInputElement, supportsFlag;
+
+    testInputElement = document.createElement("input");
+    testInputElement.setAttribute("type", "date");
+    return testInputElement.type !== "text";
 }
 
 function setUpDatePickers() {
@@ -85,7 +118,7 @@ function setUpDatePickers() {
 function initViewEventPage() {
     $('#delete-button')
         .on('click', function(evt) {
-            if (!confirm("Are you sure you want to delete this event?")) {
+            if (1 != confirm("Are you sure you want to delete this event?")) {
                 evt.preventDefault();
             }
         });
