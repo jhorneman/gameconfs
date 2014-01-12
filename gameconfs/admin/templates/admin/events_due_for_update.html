@@ -1,13 +1,14 @@
 {% extends "layout.html" %}
-{% block title %}Events update watch{% endblock %}
+{% block title %}Events that might be due for an update{% endblock %}
 {% block content %}
-  <h1>Events that might have updates</h1>
+  <h1>Events that might be due for an update</h1>
   <p>Total number: {{ events_due_for_update|length }} events.</p>
   <div class="ad-hoc-event-list">
   {% for event in events_due_for_update %}
     <div class="event-entry">
         <span class="event-name"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
-        <span class="event-date">{{ event.start_date|nice_date }} {{ event.start_date.year }}</span>
+        <span class="event-url"><a href="{{ event.event_url }}" target="_blank">{{ event.event_url|pretty_url }}</a></span>
+        <span class="event-date">{{ adhoc_date_or_range(event) }}</span>
         <span class="event-location">{{ event|event_location }}</span>
     </div>
   {% endfor %}
