@@ -168,9 +168,6 @@ def view_series(series_id):
         abort(404)
 
     q = Event.query.\
-        join(Event.city).\
-        join(City.country).\
-        join(Country.continent).\
         order_by(Event.start_date.desc()).\
         filter(Event.series_id == series_id)
     events = q.all()
@@ -198,6 +195,14 @@ def create_new_event():
         new_event.event_url = form.event_url.data
         new_event.twitter_hashtags = form.twitter_hashtags.data
         new_event.twitter_account = form.twitter_account.data
+
+        if form.series.data:
+            try:
+                series = Series.query.filter(Series.name == form.series.data).one()
+            except sqlalchemy.orm.exc.NoResultFound:
+                series = Series(form.series.data)
+                db.session.add(series)
+            new_event.series = series
 
         try:
             if not new_event.set_location(db.session, form.venue.data, form.address.data):
@@ -234,6 +239,7 @@ def duplicate_event(id):
         new_event.city = original_event.city
         new_event.venue = original_event.venue
         new_event.address_for_geocoding = original_event.address_for_geocoding
+        new_event.series = original_event.series
 
         address = ""
         if original_event.is_in_a_city():
@@ -254,6 +260,14 @@ def duplicate_event(id):
         new_event.event_url = form.event_url.data
         new_event.twitter_hashtags = form.twitter_hashtags.data
         new_event.twitter_account = form.twitter_account.data
+
+        if form.series.data:
+            try:
+                series = Series.query.filter(Series.name == form.series.data).one()
+            except sqlalchemy.orm.exc.NoResultFound:
+                series = Series(form.series.data)
+                db.session.add(series)
+            new_event.series = series
 
         try:
             if not new_event.set_location(db.session, form.venue.data, form.address.data):
