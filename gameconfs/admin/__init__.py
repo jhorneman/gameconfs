@@ -1,3 +1,4 @@
+import re
 from flask import Blueprint, render_template
 from gameconfs.models import *
 
@@ -22,3 +23,14 @@ def view_all_series():
 def view_events_without_series():
     events_without_series = Event.query.filter(Event.series_id == None).order_by(Event.name).all()
     return render_template('admin/no_series.html', events_without_series=events_without_series)
+
+
+@admin_blueprint.route('/problematic-events')
+def view_problematic_events():
+    problematic_events = []
+    year_regex = re.compile(".*(20\d\d).*")
+    for event in Event.query.filter(Event.name.op('~')(".*20\d\d.*")).order_by(Event.name).all():
+        year = int(year_regex.match(event.name).group(1))
+        if year != event.start_date.year:
+            problematic_events.append(event)
+    return render_template('admin/problematic_events.html', problematic_events=problematic_events)
