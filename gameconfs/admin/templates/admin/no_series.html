@@ -3,7 +3,7 @@
 {% block content %}
   <h1>Events without series</h1>
   <p>Total number: {{ events_without_series|length }} events.</p>
-  <div id="events">
+  <div class="ad-hoc-event-list">
   {% for event in events_without_series %}
     <div class="event-entry">
         <span class="event-name"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
