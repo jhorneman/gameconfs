@@ -9,5 +9,6 @@
     <li><a class="btn btn-default" href="{{ url_for("admin.view_all_series") }}">All event series</a></li>
     <li><a class="btn btn-default" href="{{ url_for("admin.view_events_without_series") }}">All events without series</a></li>
     <li><a class="btn btn-default" href="{{ url_for("admin.view_problematic_events") }}">All events that might have problems</a></li>
+    <li><a class="btn btn-default" href="{{ url_for("admin.view_events_due_for_update") }}">All events that might be due for an update</a></li>
   </ul>
 {% endblock %}
