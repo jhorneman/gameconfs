@@ -12,10 +12,10 @@
 {% block content %}
   <h1>Events in {{ year }}</h1>
   {% if events %}
+  <div class="monthly-event-list">
 	{% for month_group in events|sort(attribute='start_date')|groupby('start_date.month') %}
 	<a name="{{ month_group.grouper }}"></a>
 	<h4>{{ month_group.grouper|nice_month }}</h4>
-  <div id="events">
   {% for event in month_group.list %}
     <div class="event-entry">
         <span class="event-date">{{ _date_or_range(event) }}</span>
@@ -23,8 +23,8 @@
         <span class="event-location">{{ event|event_location }}</span>
     </div>
   {% endfor %}
-  </div>
   {% endfor %}
+  </div>
 	{% else %}
   <p>We don't know of any events in {{ year }}.</p>
   {% endif %}

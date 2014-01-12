@@ -10,9 +10,9 @@
 {% extends "layout.html" %}
 {% block title %}Events in the {{ series.name }} series{% endblock %}
 {% block content %}
-  {% if events %}
   <h1>Events in the {{ series.name }} series</h1>
-  <div id="events">
+  {% if events %}
+  <div class="ad-hoc-event-list">
   {% for event in events %}
     <div class="event-entry">
         <span class="event-link"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>

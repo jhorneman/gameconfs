@@ -10,10 +10,10 @@
 {% extends "layout.html" %}
 {% block title %}Search results{% endblock %}
 {% block content %}
-  {% if found_events %}
   <h1>Search results</h1>
+  {% if found_events %}
   <p>Events with names containing "{{ search_string }}":</p>
-  <div id="events">
+  <div class="ad-hoc-event-list">
   {% for event in found_events %}
     <div class="event-entry">
         <span class="event-link"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>

@@ -16,16 +16,16 @@
   {% endif %}
 {% endblock %}
 {% block content %}
-  {% if events %}
   {% if location == "other" %}
   <h1>Past events</h1>
   {% else %}
   <h1>Past events in {{ location }}</h1>
   {% endif %}
+  {% if events %}
+  <div class="monthly-event-list">
 	{% for year_group in events|sort(attribute='start_date')|groupby('start_date.year')|reverse %}
 	{% for month_group in year_group.list|sort(attribute='start_date')|groupby('start_date.month')|reverse %}
 	<h4>{{ month_group.grouper|nice_month }} {{ year_group.grouper }}</h4>
-  <div id="events">
   {% for event in month_group.list|reverse %}
     <div class="event-entry">
         <span class="event-date">{{ _date_or_range(event) }}</span>
@@ -33,9 +33,9 @@
         <span class="event-location">{{ event|event_location }}</span>
     </div>
   {% endfor %}
+  {% endfor %}
+  {% endfor %}
   </div>
-  {% endfor %}
-  {% endfor %}
 	{% else %}
   {% if location == "other" %}
   <p>We don't know of any other events in {{ year }}.</p>

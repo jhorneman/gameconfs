@@ -16,16 +16,16 @@
   {% endif %}
 {% endblock %}
 {% block content %}
-  {% if events %}
   {% if location == "other" %}
   <h1>Events in {{ year }}</h1>
   {% else %}
   <h1>Events in {{ location }} in {{ year }}</h1>
   {% endif %}
+  {% if events %}
+  <div class="monthly-event-list">
 	{% for month_group in events|sort(attribute='start_date')|groupby('start_date.month') %}
 	<a name="{{ month_group.grouper }}"></a>
 	<h4>{{ month_group.grouper|nice_month }} {{ year }}</h4>
-  <div id="events">
   {% for event in month_group.list %}
     <div class="event-entry">
         <span class="event-date">{{ _date_or_range(event) }}</span>
@@ -33,8 +33,8 @@
         <span class="event-location">{{ event|event_location }}</span>
     </div>
   {% endfor %}
-  </div>
   {% endfor %}
+  </div>
   {% if location == "other" %}
   <p>Browse <a href="{{ url_for('place_past', place=location) }}">past events</a>.</p>
 	{% else %}
@@ -44,7 +44,7 @@
   {% if location == "other" %}
   <p>We don't know of any other events in {{ year }}. Browse <a href="{{ url_for('place_past', place=location) }}">past events</a>.</p>
 	{% else %}
-  <p>We don't know of any events in {{ location }} in {{ year }}. Browse <a href="{{ url_for('place_past', place=location) }}">past events</a>.</p>
+  <p>We don't know of any events in {{ location }} in {{ year }}. Browse <a href="{{ url_for('place_past', place=location) }}">past events in {{ location }}</a>.</p>
   {% endif %}
   {% endif %}
 {% endblock %}

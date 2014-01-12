@@ -10,9 +10,9 @@
 {% extends "layout.html" %}
 {% block title %}Gameconfs{% endblock %}
 {% block content %}
-	<h2>What's happening today</h2>
   {% if ongoing_events %}
-  <div id="ongoing-events">
+	<h2>What's happening today</h2>
+  <div class="ad-hoc-event-list">
     {% for event in ongoing_events %}
     <div class="event-entry">
       <span class="event-link"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
@@ -26,8 +26,6 @@
     </div>
     {% endfor %}
   </div>
-  {% else %}
-  <p>We don't know of any events going on today.</p>
   {% endif %}
   <h2>All events</h2>
   <p>Search for an event by name:<br/>

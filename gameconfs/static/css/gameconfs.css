@@ -2,7 +2,7 @@
 
 @media (min-width: 768px) {
   .container {
-    max-width: 500px;
+    max-width: 700px;
   }
 
   body#index #search {
@@ -27,12 +27,11 @@
 .title {
     color: #999;
     display: block;
-    float: left;
     padding: 10px 20px 10px;
     margin-left: -20px;
     font-size: 20px;
     font-weight: 200;
-    margin-bottom: -0.5em;
+    margin-bottom: -1.5em;
 }
 
 .footer {
@@ -63,37 +62,71 @@
     margin-bottom: 1em;
 }
 
-/* General styles */
+/* Monthly event lists */
 
-.event-entry {
-    margin-bottom: 1.5em;
+.monthly-event-list h4 {
+    margin-left: 59px;
+    padding-top: 0.5em;
 }
 
-.event-entry > span {
+.monthly-event-list .event-entry {
+    border-top: #eee 1px solid;
+    margin-bottom: 4px;
+}
+
+.monthly-event-list .event-entry > span {
     vertical-align: text-top;
 }
 
-.event-entry span.event-date {
+.monthly-event-list .event-entry span.event-date {
     text-align: right;
     margin-right: 5px;
     display: inline-block;
     width: 50px;
 }
 
-.event-entry span.event-link {
+.monthly-event-list .event-entry span.event-link {
+    padding-right: 1em;
     display: inline-block;
     width: 400px;
 }
 
-.event-entry span.event-location {
-    margin-left: 59px;
-    display: block;
-    width: 400px;
+.monthly-event-list .event-entry span.event-location {
+    display: inline-block;
+    width: 200px;
 }
 
-.event span.glyphicon {
-    margin-right: 0.5em;
+.monthly-event-list + p {
+    padding-top: 1em;
 }
+
+/* Ad-hoc event lists */
+
+.ad-hoc-event-list .event-entry {
+    margin-bottom: .5em;
+}
+
+.ad-hoc-event-list .event-entry span.event-link {
+    font-size: large;
+    display: block;
+}
+
+.ad-hoc-event-list .event-entry span.event-hashtags {
+    display: block;
+}
+
+.ad-hoc-event-list .event-entry span.event-date {
+    text-align: left;
+    margin-right: 0;
+    display: block;
+    width: 100%;
+}
+
+.ad-hoc-event-list .event-entry span.event-location {
+    margin-left: 0;
+}
+
+/* Form-related styles */
 
 .flash-msgs {
     padding: 0.5em 1em 0.5em 1em;
@@ -111,98 +144,16 @@
 
 /* Main page */
 
-body#index .event-entry span.event-link {
-    font-size: large;
-    display: block;
-}
-
-body#index .event-entry span.event-hashtags {
-    display: block;
-}
-
-body#index .event-entry span.event-date {
-    text-align: left;
-    margin-right: 0;
-    display: block;
-    width: 100%;
-}
-
-body#index .event-entry span.event-location {
-    margin-left: 0;
-}
-
 body#index .browse-list > div > a {
     display: inline-block;
     width: 200px;
 }
 
-/* Search page */
-
-body#search .event-entry span.event-link {
-    font-size: large;
-    display: block;
-}
-
-body#search .event-entry span.event-date {
-    text-align: left;
-    margin-right: 0;
-    display: block;
-    width: 100%;
-}
-
-body#search .event-entry span.event-location {
-    margin-left: 0;
-}
-
-/* Series page */
-
-body#series .event-entry span.event-link {
-    font-size: large;
-    display: block;
-}
-
-body#series .event-entry span.event-date {
-    text-align: left;
-    margin-right: 0;
-    display: block;
-    width: 100%;
-}
-
-body#series .event-entry span.event-location {
-    margin-left: 0;
-}
-
-/* Year page */
-
-body#year h1 {
-    margin-left: 56px;
-}
-
-body#year h4 {
-    margin-left: 59px;
-}
-
-/* Place page */
-
-body#place h1 {
-    margin-left: 56px;
-}
-
-body#place h4 {
-    margin-left: 59px;
-}
-
-/* Upcoming page */
-
-body#upcoming h1 {
-    margin-left: 56px;
-}
-
-body#upcoming h4 {
-    margin-left: 59px;
-}
-
 /* Event page */
+
+.event span.glyphicon {
+    margin-right: 0.5em;
+}
 
 .internal_data {
     color: #999;
@@ -291,34 +242,4 @@ table.bars .bar_label
 
 /*#search-form {*/
     /*display: None;*/
-/*}*/
-
-/*body#new-search .event-entry {*/
-    /*border-top:solid 1px #efefef;*/
-/*}*/
-
-/*body#new-search .event-entry span {*/
-    /*vertical-align: text-top;*/
-/*}*/
-
-/*body#new-search .event-entry span.event-date {*/
-    /*width: 26px;*/
-    /*text-align: right;*/
-    /*margin-right: 18px;*/
-    /*display: inline-block;*/
-/*}*/
-
-/*body#new-search .event-entry span.event-location {*/
-    /*width: 94px;*/
-    /*margin-right: 20px;*/
-    /*display: inline-block;*/
-/*}*/
-
-/*body#new-search .event-entry span.event-link {*/
-    /*width: 300px;*/
-    /*display: inline-block;*/
-/*}*/
-
-/*body#new-search .event-entry span.event-hashtags {*/
-    /*display: block;*/
 /*}*/
