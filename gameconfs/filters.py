@@ -3,6 +3,7 @@ import inspect
 from datetime import date, timedelta
 import urllib
 
+#TODO: Rename to template_filters.py
 
 def init_template_filters(_app):
     this_module = sys.modules[__name__]
