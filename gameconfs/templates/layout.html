@@ -1,3 +1,19 @@
+{% macro monthly_date_or_range(event) %}
+  {% if event.start_date == event.end_date %}
+  <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date.day }}</span>
+  <span itemprop="endDate" content="{{ event.end_date|microdata_date }}"></span>
+  {% else %}
+  <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date.day }}</span>-<span itemprop="endDate" content="{{ event.end_date|microdata_date }}">{{ event.end_date.day }}</span>
+  {% endif %}
+{% endmacro %}
+{% macro adhoc_date_or_range(event) %}
+  {% if event.start_date == event.end_date %}
+  <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }} {{ event.start_date.year }}</span>
+  <span itemprop="endDate" content="{{ event.end_date|microdata_date }}"></span>
+  {% else %}
+  <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }}</span> until <span itemprop="endDate" content="{{ event.end_date|microdata_date }}">{{ event.end_date|nice_date }} {{ event.start_date.year }}</span>
+  {% endif %}
+{% endmacro %}
 <!DOCTYPE html>
 <html lang="en">
   <head>

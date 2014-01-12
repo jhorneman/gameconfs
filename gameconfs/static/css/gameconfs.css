@@ -86,7 +86,7 @@
     width: 50px;
 }
 
-.monthly-event-list .event-entry span.event-link {
+.monthly-event-list .event-entry span.event-name {
     padding-right: 1em;
     display: inline-block;
     width: 400px;
@@ -107,7 +107,7 @@
     margin-bottom: .5em;
 }
 
-.ad-hoc-event-list .event-entry span.event-link {
+.ad-hoc-event-list .event-entry span.event-name {
     font-size: large;
     display: block;
 }
@@ -152,11 +152,42 @@ body#index .browse-list > div > a {
 
 /* Event page */
 
-.event span.glyphicon {
-    margin-right: 0.5em;
+body#view-event .event-entry {
+    margin-bottom: 1em;
 }
 
-.internal_data {
+body#view-event .event-entry span.glyphicon {
+    display: inline-block;
+    width: 32px;
+    line-height: 2em;
+}
+
+body#view-event .event-entry span.event-date {
+    display: inline-block;
+    width: 620px;
+}
+
+body#view-event .event-entry span.event-url {
+    display: inline-block;
+    width: 620px;
+}
+
+body#view-event .event-entry span.event-twitter {
+    display: inline-block;
+    width: 620px;
+}
+
+body#view-event .event-entry span.event-hashtags {
+    display: inline-block;
+    width: 620px;
+}
+
+body#view-event .event-entry span.event-location {
+    display: inline-block;
+    width: 620px;
+}
+
+.internal-data {
     color: #999;
 }
 

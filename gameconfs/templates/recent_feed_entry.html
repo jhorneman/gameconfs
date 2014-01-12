@@ -24,7 +24,7 @@
     {% if event.twitter_hashtags %}
     <tr>
       <td>Twitter hashtags</td>
-      <td id="event_hashtags">
+      <td>
         {% for tag in event.twitter_hashtags|split %}
         <a href="http://twitter.com/#!/search/%23{{ tag[1:] }}" target="_blank">{{ tag }}</a>
         {% endfor %}

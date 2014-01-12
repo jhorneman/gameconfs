@@ -1,12 +1,3 @@
-{% macro _date_or_range(event) %}
-  {% if event.start_date == event.end_date %}
-  <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }} {{ event.start_date.year }}</span>
-  <span itemprop="endDate" content="{{ event.end_date|microdata_date }}"></span>
-  {% else %}
-  <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }}</span> - <span itemprop="endDate" content="{{ event.end_date|microdata_date }}">{{ event.end_date|nice_date }} {{ event.start_date.year }}</span>
-  {% endif %}
-{% endmacro %}
-
 {% extends "layout.html" %}
 {% block title %}Events in the {{ series.name }} series{% endblock %}
 {% block content %}
@@ -15,8 +6,8 @@
   <div class="ad-hoc-event-list">
   {% for event in events %}
     <div class="event-entry">
-        <span class="event-link"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
-        <span class="event-date">{{ _date_or_range(event) }}</span>
+        <span class="event-name"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
+        <span class="event-date">{{ adhoc_date_or_range(event) }}</span>
         <span class="event-location">{{ event|event_location }}</span>
     </div>
   {% endfor %}

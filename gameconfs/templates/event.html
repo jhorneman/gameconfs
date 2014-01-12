@@ -1,73 +1,55 @@
 {% extends "layout.html" %}
 {% block title %}{{ event.name }} - Gameconfs{% endblock %}
 {% block content %}
-  <div itemscope itemtype="http://schema.org/Event" class="event">
-    <h2 itemprop="name" id="event_name">{{ event.name }}</h2>
-    <p>
-      <span class="glyphicon glyphicon-calendar"></span>&nbsp;
-      {% if event.start_date == event.end_date %}
-      <span itemprop="startDate" id="event_date" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }} {{ event.start_date.year }}</span>
-      {% if event.start_date == today %}
-      &nbsp;<span class="event-date-today">(today)</span>
-      {% endif %}
-      <span itemprop="endDate" content="{{ event.end_date|microdata_date }}"/>
-      {% else %}
-      <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }}</span> until <span itemprop="endDate" content="{{ event.end_date|microdata_date }}">{{ event.end_date|nice_date }} {{ event.start_date.year }}</span>
-      {% if event.start_date <= today and today <= event.end_date %}
-      &nbsp;<span class="event-date-today">(today)</span>
-      {% endif %}
-      {% endif %}
-    </p>
-
+  <div itemscope itemtype="http://schema.org/Event" class="event-entry">
+    <h2 itemprop="name">{{ event.name }}</h2>
+    <span class="glyphicon glyphicon-calendar"></span>
+    <span class="event-date">{{ adhoc_date_or_range(event) }}</span>
     {% if event.event_url %}
-    <p><span class="glyphicon glyphicon-link"></span>&nbsp;<a itemprop="url" id="event_url" href="{{ event.event_url }}" target="_blank">{{ event.event_url|pretty_url }}</a></p>
+    <span class="glyphicon glyphicon-link"></span>
+    <span class="event-url"><a itemprop="url" href="{{ event.event_url }}" target="_blank">{{ event.event_url|pretty_url }}</a></span>
     {% endif %}
-
     {% if event.twitter_account %}
-    <p><span class="glyphicon glyphicon-user"></span>&nbsp;<a id="event_twitter" href="http://twitter.com/{{ event.twitter_account|urlencode }}" target="_blank">@{{ event.twitter_account }}</a></p>
+    <span class="glyphicon glyphicon-user"></span>
+    <span class="event-twitter"><a href="http://twitter.com/{{ event.twitter_account|urlencode }}" target="_blank">@{{ event.twitter_account }}</a></span>
     {% endif %}
-
     {% if event.twitter_hashtags %}
-    <p id="event_hashtags">
-      <span class="glyphicon glyphicon-tag"></span>&nbsp;
+    <span class="glyphicon glyphicon-tag"></span>
+    <span class="event-hashtags">
       {% for tag in event.twitter_hashtags|split %}
       <a href="http://twitter.com/search?q=%23{{ tag[1:]|urlencode }}" target="_blank">{{ tag }}</a>
       {% endfor %}
-    </p>
     {% endif %}
-
-    <p itemprop="location"><span class="glyphicon glyphicon-globe"></span>&nbsp;{{ event|event_venue_and_location }}</p>
-
-    <p>
-        <a class="btn btn-default" href="{{ url_for('event_ics', id=event.id) }}">Add to calendar</a>
-        <a class="btn btn-default" href="{{ event|build_google_calendar_link|safe }}">Add to Google calendar</a>
-    </p>
-    {% if logged_in %}
+    </span>
+    <span class="glyphicon glyphicon-globe"></span>
+    <span class="event-location" itemprop="location">{{ event|event_venue_and_location }}</span>
+  </div>
+  <p>
+      <a class="btn btn-default" href="{{ url_for('event_ics', id=event.id) }}">Add to calendar</a>
+      <a class="btn btn-default" href="{{ event|build_google_calendar_link|safe }}">Add to Google calendar</a>
+  </p>
+  {% if logged_in %}
+  <div class="internal-data">
     <p>
       {% if event.series %}
       Part of the <a href="{{ url_for('view_series', series_id=event.series.id) }}">{{ event.series.name }} event series</a>.
       {% else %}
       Not part of a series.
       {% endif %}
-    </p>
-    <div class="internal_data">
-      <p>Created on: {{ event.created_at|datetimeformat('%d %B %Y %H:%M') }}.<br/>
+      <br/>
+      Created on: {{ event.created_at|datetimeformat('%d %B %Y %H:%M') }}.<br/>
       {% if event.created_at != event.last_modified_at %}
       Last modified on: {{ event.last_modified_at|datetimeformat('%d %B %Y %H:%M') }}.
       {% else %}
-      Never modified since.
+      Never modified.
       {% endif %}
-      </p>
-    </div>
-    <a class="btn btn-sm btn-default" href="{{ url_for('edit_event', id=event.id) }}">Edit</a>
-    <a class="btn btn-sm btn-default" href="{{ url_for('duplicate_event', id=event.id) }}">Duplicate</a>
-    <a class="btn btn-sm btn-danger" id="delete-button" href="{{ url_for('delete_event', id=event.id) }}">Delete</a>
-    {% endif %}
+    </p>
   </div>
-
-{#    <img style="opacity: 0;position: absolute;top:-1000; left:0" src="{{ url_for('static', filename='img/gameconfs_pinterest.jpg') }}">#}
+  <a class="btn btn-sm btn-default" href="{{ url_for('edit_event', id=event.id) }}">Edit</a>
+  <a class="btn btn-sm btn-default" href="{{ url_for('duplicate_event', id=event.id) }}">Duplicate</a>
+  <a class="btn btn-sm btn-danger" id="delete-button" href="{{ url_for('delete_event', id=event.id) }}">Delete</a>
+  {% endif %}
 {% endblock %}
-
 {% if logged_in %}
 {% block end_of_body %}
 <script src="{{ url_for('static', filename='js/event-editing.js') }}"></script>
