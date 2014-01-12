@@ -154,7 +154,7 @@ class Event(db.Model):
     city = relationship('City')
 
     series_id = Column(Integer, ForeignKey('series.id'), nullable=True)
-    series = relationship('Series', backref=backref('series', lazy='lazy'))
+    series = relationship('Series', backref=backref('events', lazy='lazy'))
 
     def is_not_in_a_city(self):
         return self.city_id is None
