@@ -68,7 +68,7 @@ def search():
     return render_template('search.html', body_id="search", search_string=search_string, found_events=found_events)
 
 
-@app.route('/event/<id>')
+@app.route('/event/<int:id>')
 def view_event(id):
     try:
         event = Event.query.filter(Event.id == id).one()
@@ -156,7 +156,7 @@ def view_place_past(place_name):
     return render_template('place_past.html', body_id='place', events=events, location=location)
 
 
-@app.route('/series/<series_id>')
+@app.route('/series/<int:series_id>')
 def view_series(series_id):
     try:
         series = Series.query.filter(Series.id == series_id).one()
@@ -216,7 +216,7 @@ def create_new_event():
                            view_name='create_new_event')
 
 
-@app.route('/event/<id>/duplicate', methods=("GET", "POST"))
+@app.route('/event/<int:id>/duplicate', methods=("GET", "POST"))
 @roles_required('admin')
 def duplicate_event(id):
     if request.method == "GET":
@@ -284,7 +284,7 @@ def duplicate_event(id):
     return render_template('edit_event.html', body_id="edit-event", form=form, event_id=id, view_name='duplicate_event')
 
 
-@app.route('/event/<id>/edit', methods=("GET", "POST"))
+@app.route('/event/<int:id>/edit', methods=("GET", "POST"))
 @roles_required('admin')
 def edit_event(id):
     try:
@@ -337,7 +337,7 @@ def is_duplicate_event(_event):
     return len(events) > 0
 
 
-@app.route('/event/<id>/delete', methods=("GET", "POST"))
+@app.route('/event/<int:id>/delete', methods=("GET", "POST"))
 @roles_required('admin')
 def delete_event(id):
     try:
@@ -350,7 +350,7 @@ def delete_event(id):
     return redirect(url_for('index'))
 
 
-@app.route('/event/<id>/ics')
+@app.route('/event/<int:id>/ics')
 def event_ics(id):
     try:
         event = Event.query.filter(Event.id == id).one()
