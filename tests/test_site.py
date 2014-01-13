@@ -159,6 +159,18 @@ class SiteTestCase(unittest.TestCase):
         assert "California" in rv.data
         assert "March" in rv.data
 
+    def test_place_page(self):
+        rv = self.c.get('/place/california')
+        assert "GDC" not in rv.data
+        assert "San Francisco" not in rv.data
+
+    def test_place_past_page(self):
+        rv = self.c.get('/place/california/past')
+        assert "GDC" in rv.data
+        assert "San Francisco" in rv.data
+        assert "California" in rv.data
+        assert "March" in rv.data
+
     def test_event_page(self):
         rv = self.c.get('/event/1')
         assert "Stagconf" in rv.data
