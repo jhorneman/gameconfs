@@ -57,6 +57,7 @@ def create_app(_run_mode):
     # To be extra sure default_config doesn't change this behavior, we set it to False again,
     # because we want to make sure we don't run debug in production by accident.
     app.config["DEBUG"] = False
+    app.cache = None
 
     # Dev run mode
     if _run_mode == "dev":
@@ -64,6 +65,8 @@ def create_app(_run_mode):
         app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
         app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
         toolbar = DebugToolbarExtension(app)
+        from werkzeug.contrib.cache import SimpleCache
+        app.cache = SimpleCache()
 
     # Test run mode
     elif _run_mode == "test":
@@ -77,7 +80,11 @@ def create_app(_run_mode):
         app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
         app_run_args['port'] = int(os.environ['PORT'])
         app_run_args['host'] = '0.0.0.0'
+
         set_up_logging()
+
+        import bmemcached
+        app.cache = bmemcached.Client(os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','), os.environ.get('MEMCACHEDCLOUD_USERNAME'), os.environ.get('MEMCACHEDCLOUD_PASSWORD'))
 
     elif _run_mode == "vagrant-test":
         app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
