@@ -21,7 +21,7 @@
         {% else %}
         <td>{{ event.start_date.day }} - {{ event.end_date.day }}</td>
         {% endif %}
-        <td><a href="{{ url_for('event', _external=True, id=event.id) }}">{{ event.name }}</a></td>
+        <td><a href="{{ url_for('view_event', _external=True, id=event.id) }}">{{ event.name }}</a></td>
         </tr>
     {% endfor %}
     </tbody>

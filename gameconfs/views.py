@@ -68,14 +68,13 @@ def search():
     return render_template('search.html', body_id="search", search_string=search_string, found_events=found_events)
 
 
-#TODO: Improve view name
 @app.route('/event/<id>')
-def event(id):
+def view_event(id):
     try:
         event = Event.query.filter(Event.id == id).one()
     except sqlalchemy.orm.exc.NoResultFound:
         abort(404)
-    return render_template('event.html', body_id="view-event", event=event, today=date.today())
+    return render_template('event.html', body_id="view_event", event=event, today=date.today())
 
 
 #TODO: Improve view name
@@ -215,7 +214,7 @@ def create_new_event():
         else:
             db.session.add(new_event)
             db.session.commit()
-            return redirect(url_for('event', id=new_event.id))
+            return redirect(url_for('view_event', id=new_event.id))
     return render_template('edit_event.html', body_id="edit-event", form=form, event_id=None,
                            view_name='create_new_event')
 
@@ -283,7 +282,7 @@ def duplicate_event(id):
         else:
             db.session.add(new_event)
             db.session.commit()
-            return redirect(url_for('event', id=new_event.id))
+            return redirect(url_for('view_event', id=new_event.id))
 
     return render_template('edit_event.html', body_id="edit-event", form=form, event_id=id, view_name='duplicate_event')
 
@@ -328,7 +327,7 @@ def edit_event(id):
                 flash(e.flash_message, "error")
         else:
             db.session.commit()
-            return redirect(url_for('event', id=event.id))
+            return redirect(url_for('view_event', id=event.id))
 
     return render_template('edit_event.html', body_id="edit-event", form=form, event_id=event.id, view_name='edit_event')
 
@@ -397,7 +396,7 @@ def recent_feed():
                  title_type='text',
                  content=render_template('recent_feed_entry.html', event=event),
                  content_type='text/html',
-                 url=url_for('event', id=event.id, _external=True),
+                 url=url_for('view_event', id=event.id, _external=True),
                  updated=event.created_at,
                  author='Gameconfs',
                  published=event.created_at)
@@ -423,7 +422,7 @@ def today_feed():
                  title_type='text',
                  content=render_template('today_feed_entry.txt', event=event),
                  content_type='text/plain',
-                 url=url_for('event', id=event.id, _external=True),
+                 url=url_for('view_event', id=event.id, _external=True),
                  updated=start_datetime,
                  author='Gameconfs',
                  published=start_datetime)

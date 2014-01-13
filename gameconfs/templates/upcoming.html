@@ -9,7 +9,7 @@
   {% for event in month_group.list %}
     <div class="event-entry">
         <span class="event-date">{{ monthly_date_or_range(event) }}</span>
-        <span class="event-name"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
+        <span class="event-name"><a href="{{ url_for('view_event', id=event.id) }}">{{ event.name }}</a></span>
         <span class="event-location">{{ event|event_location }}</span>
     </div>
   {% endfor %}

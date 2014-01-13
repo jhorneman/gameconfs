@@ -7,7 +7,7 @@
   <div class="ad-hoc-event-list">
   {% for event in found_events %}
     <div class="event-entry">
-        <span class="event-name"><a href="{{ url_for('event', id=event.id) }}">{{ event.name }}</a></span>
+        <span class="event-name"><a href="{{ url_for('view_event', id=event.id) }}">{{ event.name }}</a></span>
         <span class="event-date">{{ adhoc_date_or_range(event) }}</span>
         <span class="event-location">{{ event|event_location }}</span>
     </div>
