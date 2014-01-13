@@ -77,9 +77,8 @@ def view_event(id):
     return render_template('event.html', body_id="view_event", event=event, today=date.today())
 
 
-#TODO: Improve view name
 @app.route('/upcoming')
-def upcoming():
+def view_upcoming_events():
     today = date.today()
     end_of_upcoming_period = today + timedelta(days=90)
 

@@ -29,7 +29,7 @@
     <button type="submit" class="btn btn-sm btn-primary">Search</button>
   </form>
   </p>
-  <p>Browse <a href="{{  url_for('upcoming') }}">upcoming events</a>.</p>
+  <p>Browse <a href="{{  url_for('view_upcoming_events') }}">upcoming events</a>.</p>
   <p>Browse by year:<br/>
   {% for year in range(min_year, max_year + 1) %}
     <a href="{{ url_for('year', year=year) }}">{{ year }}</a>
