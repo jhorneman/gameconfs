@@ -11,7 +11,7 @@ from sqlalchemy.orm import *
 from sqlalchemy.sql.expression import *
 from gameconfs import app, db
 from gameconfs.models import *
-from gameconfs.filters import event_venue_and_location, event_location
+from gameconfs.jinja_filters import event_venue_and_location, event_location
 from gameconfs.forms import EventForm, SearchForm
 from gameconfs.helpers import *
 

@@ -35,7 +35,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask_principal import Principal
 from flask.ext.security import Security, SQLAlchemyUserDatastore
 from flask.ext.mail import Mail
-from filters import init_template_filters
+from jinja_filters import init_template_filters
 
 
 # Set to None so code will fail screaming if create_app or run_app haven't been called
