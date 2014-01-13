@@ -117,12 +117,6 @@ def urlencode(_value):
     return urllib.urlencode([("", _value.encode('utf8'))])[1:]
 
 
-#TODO: Remove this after switch to Flask 0.10
-def change_scheme(_url, _scheme):
-    assert _url.startswith("http://")
-    return _scheme + '://' + _url[len('http://'):]
-
-
 def build_google_calendar_link(_event):
     return "http://www.google.com/calendar/event?" + urllib.urlencode(dict(
         action='TEMPLATE',
