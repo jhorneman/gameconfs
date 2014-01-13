@@ -1,6 +1,7 @@
 import os
 from datetime import date, datetime, timedelta, time
 import operator
+from calendar import monthrange
 import icalendar
 import pytz
 from flask import render_template, request, abort, send_from_directory, flash, redirect, url_for, Response
@@ -81,6 +82,8 @@ def view_event(id):
 def view_upcoming_events():
     today = date.today()
     end_of_upcoming_period = today + timedelta(days=90)
+    end_of_upcoming_period = date(end_of_upcoming_period.year, end_of_upcoming_period.month,
+                                  monthrange(end_of_upcoming_period.year, end_of_upcoming_period.month)[1])
 
     q = Event.query.\
         order_by(Event.start_date.asc()).\
