@@ -27,15 +27,15 @@
   {% endfor %}
   </div>
   {% if location == "other" %}
-  <p>Browse <a href="{{ url_for('place_past', place=location) }}">past events</a>.</p>
+  <p>Browse <a href="{{ url_for('view_place_past', place_name=location) }}">past events</a>.</p>
 	{% else %}
-  <p>Browse <a href="{{ url_for('place_past', place=location) }}">past events</a> in {{ location  }}.</p>
+  <p>Browse <a href="{{ url_for('view_place_past', place_name=location) }}">past events</a> in {{ location  }}.</p>
   {% endif %}
 	{% else %}
   {% if location == "other" %}
-  <p>We don't know of any other events in {{ year }}. Browse <a href="{{ url_for('place_past', place=location) }}">past events</a>.</p>
+  <p>We don't know of any other events in {{ year }}. Browse <a href="{{ url_for('view_place_past', place_name=location) }}">past events</a>.</p>
 	{% else %}
-  <p>We don't know of any events in {{ location }} in {{ year }}. Browse <a href="{{ url_for('place_past', place=location) }}">past events in {{ location }}</a>.</p>
+  <p>We don't know of any events in {{ location }} in {{ year }}. Browse <a href="{{ url_for('view_place_past', place_name=location) }}">past events in {{ location }}</a>.</p>
   {% endif %}
   {% endif %}
 {% endblock %}

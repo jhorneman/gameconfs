@@ -32,7 +32,7 @@
   <p>Browse <a href="{{  url_for('view_upcoming_events') }}">upcoming events</a>.</p>
   <p>Browse by year:<br/>
   {% for year in range(min_year, max_year + 1) %}
-    <a href="{{ url_for('year', year=year) }}">{{ year }}</a>
+    <a href="{{ url_for('view_year', year=year) }}">{{ year }}</a>
   {% endfor %}
   </p>
   <p>Browse by country:<br/>
@@ -41,7 +41,7 @@
     {% if loop.index0 % 2 == 0 %}
     <div>
     {%  endif %}
-      <a href="{{ url_for('place', place=country.name.lower()) }}">{{ country.name }}</a>
+      <a href="{{ url_for('view_place', place_name=country.name.lower()) }}">{{ country.name }}</a>
     {% if loop.index0 % 2 == 1 %}
     </div>
     {% endif %}
@@ -56,7 +56,7 @@
     {% if loop.index0 % 2 == 0 %}
     <div>
     {%  endif %}
-      <a href="{{ url_for('place', place=continent.name.lower()) }}">{{ continent.name }}</a>
+      <a href="{{ url_for('view_place', place_name=continent.name.lower()) }}">{{ continent.name }}</a>
     {% if loop.index0 % 2 == 1 %}
     </div>
     {% endif %}

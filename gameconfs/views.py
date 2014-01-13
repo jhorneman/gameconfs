@@ -91,9 +91,8 @@ def view_upcoming_events():
     return render_template('upcoming.html', body_id='upcoming', events=events)
 
 
-#TODO: Improve view name
 @app.route('/year/<int:year>')
-def year(year):
+def view_year(year):
     # Make sure the year is valid (compared to our data)
     min_year, max_year = get_year_range()
     if year < min_year or year > max_year:
@@ -107,10 +106,9 @@ def year(year):
     return render_template('year.html', body_id='year', events=events, year=year)
 
 
-#TODO: Improve view name and parameter
-@app.route('/place/<place>')
-def place(place):
-    if place == "other":
+@app.route('/place/<place_name>')
+def view_place(place_name):
+    if place_name == "other":
         q = Event.query.\
             filter(Event.city == None).\
             order_by(Event.start_date.asc())
@@ -122,7 +120,7 @@ def place(place):
             join(Country.continent).\
             order_by(Event.start_date.asc())
 
-        (q, location) = filter_by_place_name(q, place)
+        (q, location) = filter_by_place_name(q, place_name)
         if not location:
             abort(404)
 
@@ -134,9 +132,9 @@ def place(place):
                            year=today.year)
 
 
-@app.route('/place/<place>/past')
-def place_past(place):
-    if place == "other":
+@app.route('/place/<place_name>/past')
+def view_place_past(place_name):
+    if place_name == "other":
         q = Event.query.\
             filter(Event.city == None).\
             order_by(Event.start_date.asc())
@@ -148,7 +146,7 @@ def place_past(place):
             join(Country.continent).\
             order_by(Event.start_date.asc())
 
-        (q, location) = filter_by_place_name(q, place)
+        (q, location) = filter_by_place_name(q, place_name)
         if not location:
             abort(404)
 
