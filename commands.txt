@@ -57,3 +57,15 @@ To install PostgreSQL locally:
 sudo ln -s /usr/lib/libpq.5.3.dylib /usr/lib/libpq.5.dylib
 
 (See this: http://superuser.com/questions/352005/os-x-lion-web-sharing-cant-start)
+
+To stop Python output from being buffered:
+
+1. Use the -u command line switch
+2. Wrap sys.stdout in an object that flushes after every write
+3. Set PYTHONUNBUFFERED env var
+4. sys.stdout = os.fdopen(sys.stdout.fileno(), 'w', 0)
+
+See:
+    http://stackoverflow.com/questions/107705/python-output-buffering
+    http://algorithmicallyrandom.blogspot.fr/2009/10/python-tips-and-tricks-flushing-stdout.html
+    http://stackoverflow.com/questions/107705/python-output-buffering
