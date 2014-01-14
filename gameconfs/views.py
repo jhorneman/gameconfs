@@ -27,7 +27,7 @@ def inject_offline_mode():
     return dict(offline_mode=app.config["OFFLINE"])
 
 @app.teardown_request
-def flush_stdout():
+def flush_stdout(whatevs):
     sys.stdout.flush()
 
 
