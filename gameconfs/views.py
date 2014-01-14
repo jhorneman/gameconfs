@@ -72,7 +72,10 @@ def search():
 @app.route('/event/<int:id>')
 def view_event(id):
     try:
-        event = Event.query.filter(Event.id == id).one()
+        event = Event.query.\
+            filter(Event.id == id).\
+            options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
+            one()
     except sqlalchemy.orm.exc.NoResultFound:
         abort(404)
     return render_template('event.html', body_id="view-event", event=event, today=date.today())
@@ -121,7 +124,8 @@ def view_place(place_name):
             join(Event.city).\
             join(City.country).\
             join(Country.continent).\
-            order_by(Event.start_date.asc())
+            order_by(Event.start_date.asc()).\
+            options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
 
         (q, location) = filter_by_place_name(q, place_name)
         if not location:
@@ -147,7 +151,8 @@ def view_place_past(place_name):
             join(Event.city).\
             join(City.country).\
             join(Country.continent).\
-            order_by(Event.start_date.asc())
+            order_by(Event.start_date.asc()).\
+            options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
 
         (q, location) = filter_by_place_name(q, place_name)
         if not location:
@@ -168,7 +173,8 @@ def view_series(series_id):
 
     q = Event.query.\
         order_by(Event.start_date.desc()).\
-        filter(Event.series_id == series_id)
+        filter(Event.series_id == series_id).\
+        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
     events = q.all()
 
     return render_template('series.html', body_id='series', events=events, series=series)
@@ -395,7 +401,11 @@ def recent_feed():
                     subtitle_type='text')
 
     #TODO: This will miss events if more than 15 are added at once, which occasionally happens.
-    events = Event.query.order_by(Event.created_at.desc()).limit(15).all()
+    events = Event.query.\
+        order_by(Event.created_at.desc()).\
+        options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
+        limit(15).\
+        all()
     for event in events:
         feed.add(event.name + " - " + event_location(event),
                  title_type='text',
@@ -426,7 +436,10 @@ def today_feed():
                     subtitle='Events on Gameconfs starting today',
                     subtitle_type='text')
 
-    events = Event.query.filter(Event.start_date == date.today()).all()
+    events = Event.query.\
+        filter(Event.start_date == date.today()).\
+        options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
+        all()
     for event in events:
         start_datetime = datetime.combine(event.start_date, time.min)
         feed.add(event.name + " - " + event_location(event),
