@@ -27,6 +27,7 @@
 #
 # If this code grows we could move it into its own module instead of __init__.
 
+import sys
 import os
 import logging
 from flask import Flask
@@ -139,17 +140,21 @@ def create_app(_run_mode):
     return app, db
 
 
-def set_up_logging(_level=logging.WARNING):
-    handler = logging.StreamHandler()
-    # handler = logging.FileHandler('gameconfs.log')
+class StdoutHandler(logging.StreamHandler):
+    def __init__(self):
+        super(StdoutHandler, self).__init__(sys.stdout)
+
+    def emit(self, record):
+        super(StdoutHandler, self).emit(record)
+        super(StdoutHandler, self).flush()
+
+
+def set_up_logging(_level=logging.INFO):
+    handler = StdoutHandler()
     handler.setLevel(_level)
     handler.setFormatter(logging.Formatter('%(message)s'))
-
-    loggers = [logging.getLogger(''), app.logger, logging.getLogger('sqlalchemy'),
-               logging.getLogger('gameconfs.models')]
-    for logger in loggers:
-        logger.setLevel(_level)
-        logger.addHandler(handler)
+    app.logger.setLevel(_level)
+    app.logger.addHandler(handler)
 
 
 def run_app():
