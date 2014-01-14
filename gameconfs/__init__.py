@@ -47,8 +47,6 @@ db = SQLAlchemy()
 
 
 def create_app(_run_mode):
-    print "create_app"
-
     # Create Flask app
     global app
     app = Flask("gameconfs")
