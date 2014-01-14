@@ -1,1 +1,1 @@
-web: newrelic-admin run-program python -u ./manage.py run_server -r production
+web: newrelic-admin run-program gunicorn -b 0.0.0.0:$PORT -w 3 gameconfs.gunicorn:app
