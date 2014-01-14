@@ -1,6 +1,6 @@
+import sys
 import os
 from datetime import date, datetime, timedelta, time
-import operator
 from calendar import monthrange
 import icalendar
 import pytz
@@ -25,6 +25,10 @@ def inject_logged_in_status():
 @app.context_processor
 def inject_offline_mode():
     return dict(offline_mode=app.config["OFFLINE"])
+
+@app.teardown_request
+def flush_stdout():
+    sys.stdout.flush()
 
 
 @app.route('/')
