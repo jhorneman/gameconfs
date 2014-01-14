@@ -3,6 +3,7 @@
 {% block content %}
   <h1>Upcoming events</h1>
   {% if events %}
+  <p>Here are events between today and {{ until_date|nice_date }} {{ until_date.year }}.</p>
   <div class="monthly-event-list">
 	{% for month_group in events|sort(attribute='start_date')|groupby('year_month_index') %}
 	<h4>{{ month_group.grouper|index_to_month|nice_month }} {{ month_group.grouper|index_to_year }}</h4>

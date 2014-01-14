@@ -91,7 +91,7 @@ def view_upcoming_events():
         options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
     events = q.all()
 
-    return render_template('upcoming.html', body_id='upcoming', events=events)
+    return render_template('upcoming.html', body_id='upcoming', events=events, until_date=end_of_upcoming_period)
 
 
 @app.route('/year/<int:year>')
