@@ -380,6 +380,11 @@ def event_ics(id):
 
 @app.route('/recent.atom')
 def recent_feed():
+    if current_app.cache:
+        cached_value = current_app.cache.get("recent-feed")
+        if cached_value:
+            return cached_value
+
     feed = AtomFeed('Gameconfs - New events',
                     title_type='text',
                     url=request.url_root,
@@ -401,7 +406,13 @@ def recent_feed():
                  author='Gameconfs',
                  published=event.created_at)
 
-    return feed.get_response()
+    response = feed.get_response()
+
+    if current_app.cache:
+        current_app.cache.set("recent-feed", response, 60*60*24)
+        current_app.logger.info("Stored recent feed in cache")
+
+    return response
 
 
 @app.route('/today.atom')
