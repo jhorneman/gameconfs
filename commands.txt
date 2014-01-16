@@ -69,3 +69,14 @@ See:
     http://stackoverflow.com/questions/107705/python-output-buffering
     http://algorithmicallyrandom.blogspot.fr/2009/10/python-tips-and-tricks-flushing-stdout.html
     http://stackoverflow.com/questions/107705/python-output-buffering
+
+Memcached (installed using Homebrew):
+
+To have launchd start memcached at login:
+    ln -sfv /usr/local/opt/memcached/*.plist ~/Library/LaunchAgents
+Then to load memcached now:
+    launchctl load ~/Library/LaunchAgents/homebrew.mxcl.memcached.plist
+Or, if you don't want/need launchctl, you can just run:
+    /usr/local/opt/memcached/bin/memcached
+
+-d to daemonize
