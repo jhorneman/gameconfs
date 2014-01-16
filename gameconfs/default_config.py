@@ -10,3 +10,7 @@ MAIL_USERNAME = 'admin@gameconfs.com'
 MAIL_PASSWORD = 'svBDhLckdekx8JjePemFM2KB'
 MAIL_USE_TLS = True
 MAIL_DEFAULT_SENDER = 'admin@gameconfs.com'
+
+# Flask Cache
+CACHE_KEY_PREFIX = 'GC:'
+CACHE_NO_NULL_WARNING = True
