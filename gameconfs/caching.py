@@ -28,9 +28,4 @@ def bmemcached_cache(app, config, args, kwargs):
 def set_up_cache(_app):
     from flask.ext.cache import Cache
     _app.cache = Cache()
-    _app.cache.init_app(_app, config={
-        'CACHE_TYPE': 'gameconfs.caching.bmemcached_cache',
-        'CACHE_MEMCACHED_SERVERS': ['0.0.0.0:11211'],
-        'CACHE_MEMCACHED_USERNAME': None,
-        'CACHE_MEMCACHED_PASSWORD': None
-    })
+    _app.cache.init_app(_app)
