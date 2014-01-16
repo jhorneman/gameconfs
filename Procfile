@@ -1,1 +1,1 @@
-web: newrelic-admin run-program gunicorn -b 0.0.0.0:$PORT -w 3 gameconfs.gunicorn:app
+web: newrelic-admin run-program gunicorn -b 0.0.0.0:$PORT --env GAMECONFS_RUN_ENV=heroku -w 3 gameconfs.gunicorn:app
