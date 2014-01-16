@@ -1,10 +1,16 @@
 import json
-from flask import Blueprint, render_template
+from flask import Blueprint
 from sqlalchemy.orm import joinedload
-from gameconfs.models import Series, City, Country
+from gameconfs.models import Series, City, Event
 
 
 data_blueprint = Blueprint('data', __name__,url_prefix='/data', template_folder='templates', static_folder='static')
+
+
+@data_blueprint.route('/events.json')
+def events():
+    data = Event.query.order_by(Event.name).all()
+    return json.dumps([d.name for d in data])
 
 
 @data_blueprint.route('/series.json')
