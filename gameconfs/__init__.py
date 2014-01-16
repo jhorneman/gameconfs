@@ -11,7 +11,7 @@
 #   test       - for automated testing.
 #   production - for live operations.
 #
-# The run environment defaults to 'local' and can be overridden by setting the GAMECONFS_RUN_ENV
+# The run environment is only valid in production mode, and is set using the GAMECONFS_RUN_ENV
 # environment variable.
 #
 # The following run environments are supported:
@@ -47,12 +47,23 @@ def create_app(_run_mode=None):
     global app
     app = Flask("gameconfs")
 
+    # Load kill switches
+    app.config["GAMECONFS_KILL_CACHE"] = os.environ.get("GAMECONFS_KILL_CACHE", False)
+
     # Load default configuration
-    app.config.from_object('gameconfs.default_config')
+    app.config.from_object("gameconfs.default_config")
 
     # Dev run mode
     if _run_mode == "dev":
         app.config["DEBUG"] = True
+
+        app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
+
+        app.config["CACHE_TYPE"] = "gameconfs.caching.bmemcached_cache"
+        app.config["CACHE_MEMCACHED_SERVERS"] = ["0.0.0.0:11211"]
+        app.config["CACHE_MEMCACHED_USERNAME"] = None
+        app.config["CACHE_MEMCACHED_PASSWORD"] = None
+
         app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
         toolbar = DebugToolbarExtension(app)
 
@@ -60,49 +71,33 @@ def create_app(_run_mode=None):
     elif _run_mode == "test":
         app.config["DEBUG"] = True
         app.config["TESTING"] = True
+        app.config["GAMECONFS_KILL_CACHE"] = True
         app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
 
     # Production run mode
     elif _run_mode == "production":
-        app.config["CACHE_TYPE"] = "gameconfs.caching.bmemcached_cache"
-        set_up_logging()
+        # Get additional configuration based on run environment
+        run_environment = os.environ.get("GAMECONFS_RUN_ENV", "local")
+        if run_environment == "heroku":
+            # Get configuration data from Heroku environment variables
+            app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 
-    elif _run_mode == "vagrant-test":
+            app.config["CACHE_TYPE"] = "gameconfs.caching.bmemcached_cache"
+            app.config["CACHE_MEMCACHED_SERVERS"] = os.environ.get("MEMCACHEDCLOUD_SERVERS").split(",")
+            app.config["CACHE_MEMCACHED_USERNAME"] = os.environ.get("MEMCACHEDCLOUD_USERNAME")
+            app.config["CACHE_MEMCACHED_PASSWORD"] = os.environ.get("MEMCACHEDCLOUD_PASSWORD")
+
+            app_run_args["port"] = int(os.environ["PORT"])
+            app_run_args["host"] = "0.0.0.0"
+
+        elif run_environment == "vagrant":
+            app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
+
         set_up_logging()
 
     # Unrecognized run mode
     else:
         logging.error("Did not recognize run mode '%s'" % _run_mode)
-        return (None, None)
-
-    # Get additional configuration based on run environment
-    run_environment = os.environ.get('GAMECONFS_RUN_ENV', 'local')
-    if run_environment == "local":
-        app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
-
-        app.config["CACHE_TYPE"] = "gameconfs.caching.bmemcached_cache"
-
-        app.config["CACHE_MEMCACHED_SERVERS"] = ["0.0.0.0:11211"]
-        app.config["CACHE_MEMCACHED_USERNAME"] = None
-        app.config["CACHE_MEMCACHED_PASSWORD"] = None
-
-    elif run_environment == "heroku":
-        # Get configuration data from Heroku environment variables
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-
-        app.config['CACHE_MEMCACHED_SERVERS'] = os.environ.get('MEMCACHEDCLOUD_SERVERS').split(',')
-        app.config['CACHE_MEMCACHED_USERNAME'] = os.environ.get('MEMCACHEDCLOUD_USERNAME')
-        app.config['CACHE_MEMCACHED_PASSWORD'] = os.environ.get('MEMCACHEDCLOUD_PASSWORD')
-
-        app_run_args['port'] = int(os.environ['PORT'])
-        app_run_args['host'] = '0.0.0.0'
-
-    elif run_environment == "vagrant":
-        app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
-
-    # Unrecognized run environment
-    else:
-        logging.error("Did not recognize run environment '%s'" % run_environment)
         return (None, None)
 
     # Initialize the database
@@ -114,15 +109,15 @@ def create_app(_run_mode=None):
     # (Hang new variables off app to avoid terrible circular import issues.)
     # app.config['SECURITY_PASSWORD_HASH'] = 'pbkdf2_sha512'
     # app.config['SECURITY_PASSWORD_SALT'] = '4tjDFbMVTbmVYULHbj2baaGk'
-    app.config['SECURITY_EMAIL_SENDER'] = 'admin@gameconfs.com'
+    app.config["SECURITY_EMAIL_SENDER"] = "admin@gameconfs.com"
 
     app.user_datastore = SQLAlchemyUserDatastore(db, models.User, models.Role)
     app.security = Security(app, app.user_datastore)
 
     # Initialize the cache
-    app.cache = None
-    if not os.environ.get('GAMECONFS_KILL_CACHE', None):
-        set_up_cache(app)
+    if app.config["GAMECONFS_KILL_CACHE"]:
+        app.config["CACHE_TYPE"] = "null"
+    set_up_cache(app)
 
     # Load the Principal extension
     app.principals = Principal(app)
