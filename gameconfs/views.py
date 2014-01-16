@@ -1,5 +1,6 @@
 import sys
 import os
+import operator
 from datetime import date, datetime, timedelta, time
 from calendar import monthrange
 import icalendar
