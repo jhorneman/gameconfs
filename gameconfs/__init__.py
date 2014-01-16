@@ -37,6 +37,7 @@ from flask_principal import Principal
 from flask.ext.security import Security, SQLAlchemyUserDatastore
 from flask.ext.mail import Mail
 from jinja_filters import init_template_filters
+from caching import set_up_cache
 
 
 # Set to None so code will fail screaming if create_app or run_app haven't been called
@@ -66,8 +67,7 @@ def create_app(_run_mode):
         app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
         app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
         toolbar = DebugToolbarExtension(app)
-        from werkzeug.contrib.cache import SimpleCache
-        app.cache = SimpleCache()
+        set_up_cache(app)
 
     # Test run mode
     elif _run_mode == "test":
@@ -84,8 +84,9 @@ def create_app(_run_mode):
 
         set_up_logging()
 
-        import bmemcached
-        app.cache = bmemcached.Client(os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','), os.environ.get('MEMCACHEDCLOUD_USERNAME'), os.environ.get('MEMCACHEDCLOUD_PASSWORD'))
+        #TODO: TURN BACK ON / REFACTOR
+        # import bmemcached
+        # app.cache = bmemcached.Client(os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','), os.environ.get('MEMCACHEDCLOUD_USERNAME'), os.environ.get('MEMCACHEDCLOUD_PASSWORD'))
 
     elif _run_mode == "vagrant-test":
         app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
