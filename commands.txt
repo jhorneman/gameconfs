@@ -80,3 +80,7 @@ Or, if you don't want/need launchctl, you can just run:
     /usr/local/opt/memcached/bin/memcached
 
 -d to daemonize
+
+To get more debug output out of Gunicorn:
+
+--debug --log-level debug

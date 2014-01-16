@@ -1,31 +1,26 @@
 # This module encapsulates everything related to selecting and loading configurations,
 # creating the Flask app, and running it.
 #
-# We need the following run modes:
-#   dev        - local, personal development server.
-#   test       - used for automated testing.
-#   production - deployed on Heroku.
+# The application's behavior depends on:
+#   the RUN MODE - how the application behaves, the role it's in
+#   the RUN ENVIRONMENT - where it's running and how it connects to external services
+#   KILL SWITCHES - used to turn off certain features, overriding the run mode and the run environment
 #
-# Don't use environment variables for local configurations.
-# Environment variables are annoying to set locally (global machine changes for a single project).
-# Also we need to be able to run multiple servers on one machine (for dev/team).
+# The following run modes are supported:
+#   dev        - for development.
+#   test       - for automated testing.
+#   production - for live operations.
 #
-# For production configuration, use whichever environment variables Heroku provides.
-# But isolate this so it can be easily changed if we need to deploy somewhere else.
+# The run environment is only valid in production mode, and is set using the GAMECONFS_RUN_ENV
+# environment variable.
 #
-# Make production the default configuration so we never run in debug mode on the server by
-# accident. 
-#
-# Isolate secrets and make it so they're only deployed if necessary
-# (Can't really think of anything - there are secrets but they're needed in production. But
-#  keep it mind.)
-#
-# Bundle default and per-configuration settings in clear places.
+# The following run environments are supported:
+#   local   - a developers' local machine.
+#   heroku  - on Heroku or locally using Foreman.
+#   vagrant - in a VM managed using Vagrant.
 #
 # Running the app also depends on the configuration. So we can't just create the app here,
-# we also need to run it.
-#
-# If this code grows we could move it into its own module instead of __init__.
+# we also need to provide a function to run it.
 
 import sys
 import os
@@ -37,6 +32,7 @@ from flask_principal import Principal
 from flask.ext.security import Security, SQLAlchemyUserDatastore
 from flask.ext.mail import Mail
 from jinja_filters import init_template_filters
+from caching import set_up_cache
 
 
 # Set to None so code will fail screaming if create_app or run_app haven't been called
@@ -46,49 +42,57 @@ app_run_args = {}
 db = SQLAlchemy()
 
 
-def create_app(_run_mode):
+def create_app(_run_mode=None):
     # Create Flask app
     global app
     app = Flask("gameconfs")
 
-    # Load default configuration
-    app.config.from_object('gameconfs.default_config')
+    # Load kill switches
+    app.config["GAMECONFS_KILL_CACHE"] = os.environ.get("GAMECONFS_KILL_CACHE", False)
 
-    # app.debug and app.config["DEBUG"] do the same thing. app.debug defaults to False.
-    # To be extra sure default_config doesn't change this behavior, we set it to False again,
-    # because we want to make sure we don't run debug in production by accident.
-    app.config["DEBUG"] = False
-    app.cache = None
+    # Load default configuration
+    app.config.from_object("gameconfs.default_config")
 
     # Dev run mode
     if _run_mode == "dev":
         app.config["DEBUG"] = True
+
         app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
+
+        app.config["CACHE_TYPE"] = "gameconfs.caching.bmemcached_cache"
+        app.config["CACHE_MEMCACHED_SERVERS"] = ["0.0.0.0:11211"]
+        app.config["CACHE_MEMCACHED_USERNAME"] = None
+        app.config["CACHE_MEMCACHED_PASSWORD"] = None
+
         app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
         toolbar = DebugToolbarExtension(app)
-        from werkzeug.contrib.cache import SimpleCache
-        app.cache = SimpleCache()
 
     # Test run mode
     elif _run_mode == "test":
         app.config["DEBUG"] = True
         app.config["TESTING"] = True
+        app.config["GAMECONFS_KILL_CACHE"] = True
         app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
 
     # Production run mode
     elif _run_mode == "production":
-        # Get configuration data from Heroku environment variables
-        app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL')
-        app_run_args['port'] = int(os.environ['PORT'])
-        app_run_args['host'] = '0.0.0.0'
+        # Get additional configuration based on run environment
+        run_environment = os.environ.get("GAMECONFS_RUN_ENV", "local")
+        if run_environment == "heroku":
+            # Get configuration data from Heroku environment variables
+            app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
 
-        set_up_logging()
+            app.config["CACHE_TYPE"] = "gameconfs.caching.bmemcached_cache"
+            app.config["CACHE_MEMCACHED_SERVERS"] = os.environ.get("MEMCACHEDCLOUD_SERVERS").split(",")
+            app.config["CACHE_MEMCACHED_USERNAME"] = os.environ.get("MEMCACHEDCLOUD_USERNAME")
+            app.config["CACHE_MEMCACHED_PASSWORD"] = os.environ.get("MEMCACHEDCLOUD_PASSWORD")
 
-        import bmemcached
-        app.cache = bmemcached.Client(os.environ.get('MEMCACHEDCLOUD_SERVERS').split(','), os.environ.get('MEMCACHEDCLOUD_USERNAME'), os.environ.get('MEMCACHEDCLOUD_PASSWORD'))
+            app_run_args["port"] = int(os.environ["PORT"])
+            app_run_args["host"] = "0.0.0.0"
 
-    elif _run_mode == "vagrant-test":
-        app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
+        elif run_environment == "vagrant":
+            app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
+
         set_up_logging()
 
     # Unrecognized run mode
@@ -105,10 +109,15 @@ def create_app(_run_mode):
     # (Hang new variables off app to avoid terrible circular import issues.)
     # app.config['SECURITY_PASSWORD_HASH'] = 'pbkdf2_sha512'
     # app.config['SECURITY_PASSWORD_SALT'] = '4tjDFbMVTbmVYULHbj2baaGk'
-    app.config['SECURITY_EMAIL_SENDER'] = 'admin@gameconfs.com'
+    app.config["SECURITY_EMAIL_SENDER"] = "admin@gameconfs.com"
 
     app.user_datastore = SQLAlchemyUserDatastore(db, models.User, models.Role)
     app.security = Security(app, app.user_datastore)
+
+    # Initialize the cache
+    if app.config["GAMECONFS_KILL_CACHE"]:
+        app.config["CACHE_TYPE"] = "null"
+    set_up_cache(app)
 
     # Load the Principal extension
     app.principals = Principal(app)

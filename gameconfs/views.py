@@ -99,6 +99,7 @@ def view_upcoming_events():
 
 
 @app.route('/year/<int:year>')
+@app.cache.cached(timeout=60)
 def view_year(year):
     # Make sure the year is valid (compared to our data)
     min_year, max_year = get_year_range()
