@@ -4,11 +4,6 @@ DEBUG = False
 OFFLINE = False
 
 # Flask Mail
-MAIL_SERVER = 'smtp.gmail.com'
-MAIL_PORT = 587
-MAIL_USERNAME = 'admin@gameconfs.com'
-MAIL_PASSWORD = 'svBDhLckdekx8JjePemFM2KB'
-MAIL_USE_TLS = True
 MAIL_DEFAULT_SENDER = 'admin@gameconfs.com'
 
 # Flask Cache

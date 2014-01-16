@@ -31,7 +31,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask_principal import Principal
 from flask.ext.security import Security, SQLAlchemyUserDatastore
 from flask.ext.mail import Mail
-from jinja_filters import init_template_filters
+from jinja_filters import set_up_jinja_filters
 from caching import set_up_cache
 
 
@@ -87,6 +87,12 @@ def create_app(_run_mode=None):
             app.config["CACHE_MEMCACHED_USERNAME"] = os.environ.get("MEMCACHEDCLOUD_USERNAME")
             app.config["CACHE_MEMCACHED_PASSWORD"] = os.environ.get("MEMCACHEDCLOUD_PASSWORD")
 
+            app.config["MAIL_SERVER"] = "smtp.mandrillapp.com"
+            app.config["MAIL_PORT"] = 587
+            app.config["MAIL_USERNAME"] = os.environ.get("MANDRILL_USERNAME")
+            app.config["MAIL_PASSWORD"] = os.environ.get("MANDRILL_APIKEY")
+            app.config["MAIL_USE_TLS"] = True
+
             app_run_args["port"] = int(os.environ["PORT"])
             app_run_args["host"] = "0.0.0.0"
 
@@ -138,8 +144,8 @@ def create_app(_run_mode=None):
     from gameconfs.admin import admin_blueprint
     app.register_blueprint(admin_blueprint)
 
-    # Set up Jinja2 filters
-    init_template_filters(app)
+    # Set up Jinja 2 filters
+    set_up_jinja_filters(app)
 
     # Set up email
     app.mail = Mail(app)
