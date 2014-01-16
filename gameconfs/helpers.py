@@ -59,7 +59,6 @@ def get_year_range():
         cached_value = current_app.cache.get("min-max-year")
         if cached_value:
             min_year, max_year = map(int, cached_value.split("-"))
-            current_app.logger.info("Retrieved min and max year from cache: %s %s" % (min_year, max_year))
             return min_year, max_year
 
     min_year = db.session.query(func.min(Event.start_date)).one()[0].year
@@ -67,7 +66,6 @@ def get_year_range():
 
     if current_app.cache:
         current_app.cache.set("min-max-year", "%s-%s" % (min_year, max_year), 60*60*24)
-        current_app.logger.info("Stored min and max year in cache: %s %s" % (min_year, max_year))
 
     return min_year, max_year
 
