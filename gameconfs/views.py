@@ -184,6 +184,8 @@ class EventSaveException(Exception):
 @app.route('/new', methods=("GET", "POST"))
 @roles_required('admin')
 def create_new_event():
+    abort(404) # TODO:REMOVE
+
     form = EventForm()
     if form.validate_on_submit():
         new_event = Event()
@@ -224,6 +226,7 @@ def create_new_event():
 @app.route('/event/<int:id>/duplicate', methods=("GET", "POST"))
 @roles_required('admin')
 def duplicate_event(id):
+    abort(404) # TODO:REMOVE
     if request.method == "GET":
         try:
             original_event = Event.query.filter(Event.id == id).one()
@@ -292,6 +295,8 @@ def duplicate_event(id):
 @app.route('/event/<int:id>/edit', methods=("GET", "POST"))
 @roles_required('admin')
 def edit_event(id):
+    abort(404) # TODO:REMOVE
+
     try:
         event = Event.query.filter(Event.id == id).one()
     except sqlalchemy.orm.exc.NoResultFound:
@@ -345,6 +350,8 @@ def is_duplicate_event(_event):
 @app.route('/event/<int:id>/delete', methods=("GET", "POST"))
 @roles_required('admin')
 def delete_event(id):
+    abort(404) # TODO:REMOVE
+
     try:
         event = Event.query.filter(Event.id == id).one()
     except sqlalchemy.orm.exc.NoResultFound:
