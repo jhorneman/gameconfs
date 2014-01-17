@@ -64,8 +64,7 @@ def create_app(_run_mode=None):
         app.config["CACHE_MEMCACHED_USERNAME"] = None
         app.config["CACHE_MEMCACHED_PASSWORD"] = None
 
-        app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False
-        toolbar = DebugToolbarExtension(app)
+        DebugToolbarExtension(app)
 
     # Test run mode
     elif _run_mode == "test":
