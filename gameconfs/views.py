@@ -32,7 +32,27 @@ def editing_kill_check(f):
     return decorated_function
 
 
+# From http://flask.pocoo.org/docs/patterns/viewdecorators/
+def templated(template=None):
+    def decorator(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            template_name = template
+            if template_name is None:
+                template_name = request.endpoint \
+                    .replace('.', '/') + '.html'
+            ctx = f(*args, **kwargs)
+            if ctx is None:
+                ctx = {}
+            elif not isinstance(ctx, dict):
+                return ctx
+            return render_template(template_name, **ctx)
+        return decorated_function
+    return decorator
+
+
 @app.route('/')
+@templated()
 def index():
     today = date.today()
     q = Event.query.\
@@ -52,8 +72,14 @@ def index():
         all()
     continents.append({"name": "Other"})
 
-    return render_template('index.html', body_id="index", ongoing_events=ongoing_events, min_year=min_year,
-                           max_year=max_year, countries=countries, continents=continents, form=SearchForm())
+    return {"body_id": "index",
+            "ongoing_events": ongoing_events,
+            "min_year": min_year,
+            "max_year": max_year,
+            "countries": countries,
+            "continents": continents,
+            "form": SearchForm()
+    }
 
 
 @app.route('/search', methods=("GET", "POST"))
@@ -473,18 +499,21 @@ def today_feed():
 
 
 @app.route('/about')
+@templated()
 def about():
-    return render_template('about.html')
+    return
 
 
 @app.route('/other')
+@templated()
 def other():
-    return render_template('other.html')
+    return
 
 
 @app.route('/notifications')
+@templated()
 def notifications():
-    return render_template('notifications.html')
+    return
 
 
 @app.route('/sponsoring')
