@@ -384,7 +384,11 @@ def is_duplicate_event(_event):
 # @editing_kill_check
 # @roles_required('admin')
 def delete_event(id):
-    app.logger.warning("An attempt was made to delete event %d from IP %s" % (id, request.remote_addr))
+    if 'X-Forwarded-For' in request.headers:
+        forwarded_ip = " (%s)" % request.headers['X-Forwarded-For']
+    else:
+        forwarded_ip = ""
+    app.logger.warning("An attempt to delete event %d was made from IP %s" % (id, request.remote_addr) + forwarded_ip)
     return render_template('page_not_found.html'), 404
 
     # try:
