@@ -43,6 +43,7 @@ def create_app(_run_mode=None):
 
     # Load kill switches
     app.config["GAMECONFS_KILL_CACHE"] = os.environ.get("GAMECONFS_KILL_CACHE", False)
+    app.config["GAMECONFS_KILL_EDITING"] = os.environ.get("GAMECONFS_KILL_EDITING", False)
 
     # Load default configuration
     app.config.from_object("gameconfs.default_config")
