@@ -48,9 +48,9 @@ class City(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(250), nullable=False)
     country_id = Column(Integer, ForeignKey('countries.id'), nullable=False)
-    country = relationship('Country', backref=backref('cities', lazy='lazy'))
+    country = relationship('Country', backref=backref('cities', lazy='select'))
     state_id = Column(Integer, ForeignKey('states.id'))
-    state = relationship('State', backref=backref('cities', lazy='lazy'))
+    state = relationship('State', backref=backref('cities', lazy='select'))
 
     def __init__(self, _name):
         self.name = _name
@@ -66,7 +66,7 @@ class State(db.Model):
     name = Column(String(250), nullable=False)
     short_name = Column(String(50), nullable=False)
     country_id = Column(Integer, ForeignKey('countries.id'), nullable=False)
-    country = relationship('Country', backref=backref('states', lazy='lazy'))
+    country = relationship('Country', backref=backref('states', lazy='select'))
 
     def __init__(self, _name, _short_name = ""):
         self.name = _name
@@ -82,7 +82,7 @@ class Country(db.Model):
     id = Column(Integer, primary_key=True)
     name = Column(String(250), unique=True, nullable=False)
     continent_id = Column(Integer, ForeignKey('continents.id'), nullable=False)
-    continent = relationship('Continent', backref=backref('countries', lazy='lazy'))
+    continent = relationship('Continent', backref=backref('countries', lazy='select'))
     has_states = Column(Boolean)
 
     def __init__(self, _name):
@@ -154,7 +154,7 @@ class Event(db.Model):
     city = relationship('City')
 
     series_id = Column(Integer, ForeignKey('series.id'), nullable=True)
-    series = relationship('Series', backref=backref('events', lazy='lazy'))
+    series = relationship('Series', backref=backref('events', lazy='select'))
 
     def is_not_in_a_city(self):
         return self.city_id is None
