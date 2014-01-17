@@ -64,12 +64,14 @@ def create_app(_run_mode=None):
         app.config["CACHE_MEMCACHED_USERNAME"] = None
         app.config["CACHE_MEMCACHED_PASSWORD"] = None
 
+        app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False  # Otherwise this gets annoying real fast
         DebugToolbarExtension(app)
 
     # Test run mode
     elif _run_mode == "test":
         app.config["DEBUG"] = True
         app.config["TESTING"] = True
+        app.config["WTF_CSRF_ENABLED"] = False  # Or CSRF checks will fail
         app.config["GAMECONFS_KILL_CACHE"] = True
         app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
 
