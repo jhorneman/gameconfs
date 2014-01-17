@@ -1,11 +1,11 @@
-import sys
 import os
 import operator
+from functools import wraps
 from datetime import date, datetime, timedelta, time
 from calendar import monthrange
 import icalendar
 import pytz
-from flask import render_template, request, abort, send_from_directory, flash, redirect, url_for, Response
+from flask import render_template, request, send_from_directory, flash, redirect, url_for, Response
 from flask.ext.security.decorators import roles_required
 from flask.ext.login import current_user
 from werkzeug.contrib.atom import AtomFeed
@@ -20,7 +20,16 @@ from gameconfs.query_helpers import *
 
 @app.context_processor
 def inject_common_values():
-    return dict(logged_in=current_user and current_user.is_authenticated())
+    return dict(logged_in=current_user and current_user.is_authenticated() and not current_app.config["GAMECONFS_KILL_EDITING"])
+
+
+def editing_kill_check(f):
+    @wraps(f)
+    def decorated_function(*args, **kwargs):
+        if current_app.config["GAMECONFS_KILL_EDITING"]:
+            return render_template('page_not_found.html'), 404
+        return f(*args, **kwargs)
+    return decorated_function
 
 
 @app.route('/')
@@ -73,7 +82,7 @@ def view_event(id):
             options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
             one()
     except sqlalchemy.orm.exc.NoResultFound:
-        abort(404)
+        return render_template('page_not_found.html'), 404
     return render_template('event.html', body_id="view-event", event=event, today=date.today())
 
 
@@ -99,7 +108,7 @@ def view_year(year):
     # Make sure the year is valid (compared to our data)
     min_year, max_year = get_year_range()
     if year < min_year or year > max_year:
-        abort(404)
+        return render_template('page_not_found.html'), 404
 
     q = filter_by_year(Event.query, year).\
         options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
@@ -125,7 +134,7 @@ def view_place(place_name):
 
         (q, location) = filter_by_place_name(q, place_name)
         if not location:
-            abort(404)
+            return render_template('page_not_found.html'), 404
 
     today = date.today()
     q = filter_by_period(q, today.year, 1, 12)
@@ -152,7 +161,7 @@ def view_place_past(place_name):
 
         (q, location) = filter_by_place_name(q, place_name)
         if not location:
-            abort(404)
+            return render_template('page_not_found.html'), 404
 
     q = q.filter(Event.start_date < date(date.today().year, 1, 1))
     events = q.all()
@@ -165,7 +174,7 @@ def view_series(series_id):
     try:
         series = Series.query.filter(Series.id == series_id).one()
     except sqlalchemy.orm.exc.NoResultFound:
-        abort(404)
+        return render_template('page_not_found.html'), 404
 
     q = Event.query.\
         order_by(Event.start_date.desc()).\
@@ -182,10 +191,9 @@ class EventSaveException(Exception):
 
 
 @app.route('/new', methods=("GET", "POST"))
+@editing_kill_check
 @roles_required('admin')
 def create_new_event():
-    abort(404) # TODO:REMOVE
-
     form = EventForm()
     if form.validate_on_submit():
         new_event = Event()
@@ -224,14 +232,14 @@ def create_new_event():
 
 
 @app.route('/event/<int:id>/duplicate', methods=("GET", "POST"))
+@editing_kill_check
 @roles_required('admin')
 def duplicate_event(id):
-    abort(404) # TODO:REMOVE
     if request.method == "GET":
         try:
             original_event = Event.query.filter(Event.id == id).one()
         except sqlalchemy.orm.exc.NoResultFound:
-            abort(404)
+            return render_template('page_not_found.html'), 404
 
         new_event = Event()
         new_event.name = original_event.name
@@ -293,14 +301,13 @@ def duplicate_event(id):
 
 
 @app.route('/event/<int:id>/edit', methods=("GET", "POST"))
+@editing_kill_check
 @roles_required('admin')
 def edit_event(id):
-    abort(404) # TODO:REMOVE
-
     try:
         event = Event.query.filter(Event.id == id).one()
     except sqlalchemy.orm.exc.NoResultFound:
-        abort(404)
+        return render_template('page_not_found.html'), 404
 
     address = ""
     if event.is_in_a_city():
@@ -348,10 +355,9 @@ def is_duplicate_event(_event):
 
 
 @app.route('/event/<int:id>/delete', methods=("GET", "POST"))
+@editing_kill_check
 @roles_required('admin')
 def delete_event(id):
-    abort(404) # TODO:REMOVE
-
     try:
         event = Event.query.filter(Event.id == id).one()
     except sqlalchemy.orm.exc.NoResultFound:
@@ -367,7 +373,7 @@ def event_ics(id):
     try:
         event = Event.query.filter(Event.id == id).one()
     except sqlalchemy.orm.exc.NoResultFound:
-        abort(404)
+        return render_template('page_not_found.html'), 404
 
     cal = icalendar.Calendar()
     cal.add('prodid', '-//Game event//gameconfs.com//')
