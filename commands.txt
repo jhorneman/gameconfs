@@ -84,3 +84,7 @@ Or, if you don't want/need launchctl, you can just run:
 To get more debug output out of Gunicorn:
 
 --debug --log-level debug
+
+To view a deleted file in git:
+
+git show $(git rev-list --max-count=1 --all -- { filename })^:{ filename }
