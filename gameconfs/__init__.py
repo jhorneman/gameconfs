@@ -1,9 +1,9 @@
-# This module encapsulates everything related to selecting and loading configurations,
-# creating the Flask app, and running it.
+# This module encapsulates everything related to creating the Flask app, including selecting and
+# loading configurations.
 #
 # The application's behavior depends on:
-#   the RUN MODE - how the application behaves, the role it's in
-#   the RUN ENVIRONMENT - where it's running and how it connects to external services
+#   the RUN MODE - the role it's in,
+#   the RUN ENVIRONMENT - where it's running (how it connects to external services), and
 #   KILL SWITCHES - used to turn off certain features, overriding the run mode and the run environment
 #
 # The following run modes are supported:
@@ -18,11 +18,7 @@
 #   local   - a developers' local machine.
 #   heroku  - on Heroku or locally using Foreman.
 #   vagrant - in a VM managed using Vagrant.
-#
-# Running the app also depends on the configuration. So we can't just create the app here,
-# we also need to provide a function to run it.
 
-import sys
 import os
 import logging
 from flask import Flask
@@ -32,13 +28,11 @@ from flask_principal import Principal
 from flask.ext.security import Security, SQLAlchemyUserDatastore
 from flask.ext.mail import Mail
 from jinja_filters import set_up_jinja_filters
-from caching import set_up_cache
+from .caching import set_up_cache
+from .app_logging import set_up_logging
 
 
-# Set to None so code will fail screaming if create_app or run_app haven't been called
-app = None
-app_run_args = {}
-
+app = None  # Set to None so code will fail screaming if create_app hasn't been called
 db = SQLAlchemy()
 
 
@@ -94,18 +88,15 @@ def create_app(_run_mode=None):
             app.config["MAIL_PASSWORD"] = os.environ.get("MANDRILL_APIKEY")
             app.config["MAIL_USE_TLS"] = True
 
-            app_run_args["port"] = int(os.environ["PORT"])
-            app_run_args["host"] = "0.0.0.0"
-
         elif run_environment == "vagrant":
             app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
 
-        set_up_logging()
+        set_up_logging(app)
 
     # Unrecognized run mode
     else:
         logging.error("Did not recognize run mode '%s'" % _run_mode)
-        return (None, None)
+        return None, None
 
     # Initialize the database
     global db
@@ -152,29 +143,3 @@ def create_app(_run_mode=None):
     app.mail = Mail(app)
 
     return app, db
-
-
-class StdoutHandler(logging.StreamHandler):
-    def __init__(self):
-        super(StdoutHandler, self).__init__(sys.stdout)
-
-    def emit(self, record):
-        super(StdoutHandler, self).emit(record)
-        super(StdoutHandler, self).flush()
-
-
-def set_up_logging(_level=logging.INFO):
-    handler = StdoutHandler()
-    handler.setLevel(_level)
-    handler.setFormatter(logging.Formatter('%(message)s'))
-    app.logger.setLevel(_level)
-    app.logger.addHandler(handler)
-
-
-def run_app():
-    # Run the application
-    # See flask/app.py run() for the implementation of run().
-    # See http://werkzeug.pocoo.org/docs/serving/ for the parameters of Werkzeug's run_simple().
-    # If the debug parameter is not set, Flask does not change app.debug, which is set from
-    # the DEBUG app config variable, which we've set in create_app().
-    app.run(**app_run_args)

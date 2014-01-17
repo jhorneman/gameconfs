@@ -1,4 +1,4 @@
-from gameconfs import create_app, run_app
+from gameconfs import create_app
 
-create_app("dev")
-run_app()
+app, db = create_app("dev")
+app.run()
