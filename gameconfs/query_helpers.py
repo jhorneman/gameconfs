@@ -50,6 +50,10 @@ def filter_by_period_start_end(_query, _period_start, _period_end):
                              and_(Event.end_date >= _period_start, Event.end_date < _period_end)))
 
 
+def filter_by_year(_query, _year):
+    return _query.filter(extract("year", Event.start_date) == _year)
+
+
 def filter_by_newer_than(_query, _threshold):
     return _query.filter(Event.last_modified_at > _threshold)
 

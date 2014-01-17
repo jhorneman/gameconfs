@@ -15,7 +15,7 @@ from gameconfs import app, db
 from gameconfs.models import *
 from gameconfs.jinja_filters import event_venue_and_location, event_location
 from gameconfs.forms import EventForm, SearchForm
-from gameconfs.helpers import *
+from gameconfs.query_helpers import *
 
 
 # For convenience
@@ -106,8 +106,7 @@ def view_year(year):
     if year < min_year or year > max_year:
         abort(404)
 
-    q = Event.query
-    q = filter_by_period(q, year, 1, 12).\
+    q = filter_by_year(Event.query, year).\
         options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
     events = q.all()
 

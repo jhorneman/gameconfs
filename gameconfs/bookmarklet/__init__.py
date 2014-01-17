@@ -1,6 +1,6 @@
 import re
 from flask import Blueprint, render_template, request
-from gameconfs.helpers import *
+from gameconfs.query_helpers import *
 
 
 bookmarklet_blueprint = Blueprint('bookmarklet', __name__, url_prefix='/bookmarklet', template_folder='templates', static_folder='static')

@@ -1,7 +1,7 @@
 import os
 import json
 from flask import Blueprint, render_template, send_from_directory, request, abort
-from gameconfs.helpers import *
+from gameconfs.query_helpers import *
 
 
 widget_blueprint = Blueprint('widget', __name__,url_prefix='/widget', template_folder='templates', static_folder='static')
