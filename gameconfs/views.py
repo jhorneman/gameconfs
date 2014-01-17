@@ -381,17 +381,20 @@ def is_duplicate_event(_event):
 
 
 @app.route('/event/<int:id>/delete', methods=("GET", "POST"))
-@editing_kill_check
-@roles_required('admin')
+# @editing_kill_check
+# @roles_required('admin')
 def delete_event(id):
-    try:
-        event = Event.query.filter(Event.id == id).one()
-    except sqlalchemy.orm.exc.NoResultFound:
-        pass
-    else:
-        db.session.delete(event)
-        db.session.commit()
-    return redirect(url_for('index'))
+    app.logger.warning("An attempt was made to delete event %d from IP %s" % (id, request.remote_addr))
+    return render_template('page_not_found.html'), 404
+
+    # try:
+    #     event = Event.query.filter(Event.id == id).one()
+    # except sqlalchemy.orm.exc.NoResultFound:
+    #     pass
+    # else:
+    #     db.session.delete(event)
+    #     db.session.commit()
+    # return redirect(url_for('index'))
 
 
 @app.route('/event/<int:id>/ics')
