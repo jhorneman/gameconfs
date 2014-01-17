@@ -18,14 +18,9 @@ from gameconfs.forms import EventForm, SearchForm
 from gameconfs.query_helpers import *
 
 
-# For convenience
 @app.context_processor
-def inject_logged_in_status():
+def inject_common_values():
     return dict(logged_in=current_user and current_user.is_authenticated())
-
-@app.context_processor
-def inject_offline_mode():
-    return dict(offline_mode=app.config["OFFLINE"])
 
 
 @app.route('/')
