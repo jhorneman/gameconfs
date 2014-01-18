@@ -53,7 +53,6 @@ def templated(template=None):
 
 def make_date_cache_key(*args, **kwargs):
     cache_key = 'view/%s-%s' % (request.path, date.today().strftime("%Y%m%d"))
-    app.logger.info(cache_key)
     return cache_key.encode('utf-8')
 
 
