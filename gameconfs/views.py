@@ -51,6 +51,12 @@ def templated(template=None):
     return decorator
 
 
+def make_date_cache_key(*args, **kwargs):
+    cache_key = 'view/%s-%s' % (request.path, date.today().strftime("%Y%m%d"))
+    app.logger.info(cache_key)
+    return cache_key.encode('utf-8')
+
+
 @app.route('/')
 @templated()
 def index():
@@ -101,6 +107,7 @@ def search():
 
 
 @app.route('/event/<int:id>')
+@app.cache.cached(timeout=60*60*24)
 def view_event(id):
     try:
         event = Event.query.\
@@ -113,6 +120,7 @@ def view_event(id):
 
 
 @app.route('/upcoming')
+@app.cache.cached(timeout=60*60*24)
 def view_upcoming_events():
     today = date.today()
     end_of_upcoming_period = today + timedelta(days=90)
@@ -129,7 +137,7 @@ def view_upcoming_events():
 
 
 @app.route('/year/<int:year>')
-@app.cache.cached(timeout=60)
+@app.cache.cached(timeout=60*60*24)
 def view_year(year):
     # Make sure the year is valid (compared to our data)
     min_year, max_year = get_year_range()
@@ -144,6 +152,7 @@ def view_year(year):
 
 
 @app.route('/place/<place_name>')
+@app.cache.cached(timeout=60*60*24)
 def view_place(place_name):
     if place_name == "other":
         q = Event.query.\
@@ -171,6 +180,7 @@ def view_place(place_name):
 
 
 @app.route('/place/<place_name>/past')
+@app.cache.cached(timeout=60*60*24)
 def view_place_past(place_name):
     if place_name == "other":
         q = Event.query.\
@@ -381,24 +391,17 @@ def is_duplicate_event(_event):
 
 
 @app.route('/event/<int:id>/delete', methods=("GET", "POST"))
-# @editing_kill_check
-# @roles_required('admin')
+@editing_kill_check
+@roles_required('admin')
 def delete_event(id):
-    if 'X-Forwarded-For' in request.headers:
-        forwarded_ip = " (%s)" % request.headers['X-Forwarded-For']
+    try:
+        event = Event.query.filter(Event.id == id).one()
+    except sqlalchemy.orm.exc.NoResultFound:
+        pass
     else:
-        forwarded_ip = ""
-    app.logger.warning("An attempt to delete event %d was made from IP %s" % (id, request.remote_addr) + forwarded_ip)
-    return render_template('page_not_found.html'), 404
-
-    # try:
-    #     event = Event.query.filter(Event.id == id).one()
-    # except sqlalchemy.orm.exc.NoResultFound:
-    #     pass
-    # else:
-    #     db.session.delete(event)
-    #     db.session.commit()
-    # return redirect(url_for('index'))
+        db.session.delete(event)
+        db.session.commit()
+    return redirect(url_for('index'))
 
 
 @app.route('/event/<int:id>/ics')
@@ -427,12 +430,8 @@ def event_ics(id):
 
 
 @app.route('/recent.atom')
+@app.cache.cached(timeout=60*60*24)
 def recent_feed():
-    if current_app.cache:
-        cached_value = current_app.cache.get("recent-feed")
-        if cached_value:
-            return cached_value
-
     feed = AtomFeed('Gameconfs - New events',
                     title_type='text',
                     url=request.url_root,
@@ -458,16 +457,12 @@ def recent_feed():
                  author='Gameconfs',
                  published=event.created_at)
 
-    response = feed.get_response()
-
-    if current_app.cache:
-        current_app.cache.set("recent-feed", response, 60*60*24)
-        current_app.logger.info("Stored recent feed in cache")
-
-    return response
+    return feed.get_response()
+recent_feed.make_cache_key = make_date_cache_key
 
 
 @app.route('/today.atom')
+@app.cache.cached(timeout=60*60*24)
 def today_feed():
     feed = AtomFeed("Gameconfs - Today's events",
                     title_type='text',
@@ -494,6 +489,7 @@ def today_feed():
                  published=start_datetime)
 
     return feed.get_response()
+today_feed.make_cache_key = make_date_cache_key
 
 
 # from flask.ext.mail import Message
@@ -534,6 +530,7 @@ def sponsoring():
 
 
 @app.route('/stats')
+@app.cache.cached(timeout=60*60*24)
 def stats():
     # Get time stats
     time_stats = {}
@@ -577,6 +574,7 @@ def stats():
 
 
 @app.errorhandler(404)
+@app.cache.cached(timeout=60*60*24)
 def page_not_found(error):
     return render_template('page_not_found.html'), 404
 
