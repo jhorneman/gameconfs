@@ -18,9 +18,13 @@ from gameconfs.forms import EventForm, SearchForm
 from gameconfs.query_helpers import *
 
 
+def user_can_edit():
+    return current_user and current_user.is_authenticated() and not current_app.config["GAMECONFS_KILL_EDITING"]
+
+
 @app.context_processor
 def inject_common_values():
-    return dict(logged_in=current_user and current_user.is_authenticated() and not current_app.config["GAMECONFS_KILL_EDITING"])
+    return dict(logged_in=user_can_edit())
 
 
 def editing_kill_check(f):
@@ -106,7 +110,7 @@ def search():
 
 
 @app.route('/event/<int:id>')
-@app.cache.cached(timeout=60*60*24)
+@app.cache.cached(timeout=60*60*24, unless=user_can_edit)
 def view_event(id):
     try:
         event = Event.query.\
