@@ -39,7 +39,8 @@ db = SQLAlchemy()
 def create_app(_run_mode=None):
     # Create Flask app
     global app
-    app = Flask("gameconfs")
+    template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
+    app = Flask("gameconfs", template_folder=template_dir)
 
     # Load kill switches
     app.config["GAMECONFS_KILL_CACHE"] = os.environ.get("GAMECONFS_KILL_CACHE", False)
