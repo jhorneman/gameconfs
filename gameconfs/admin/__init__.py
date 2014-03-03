@@ -40,11 +40,16 @@ def view_events_without_series():
 @roles_required('admin')
 def view_problematic_events():
     problematic_events = []
+
     year_regex = re.compile(".*(20\d\d).*")
     for event in Event.query.filter(Event.name.op('~')(".*20\d\d.*")).order_by(Event.name).all():
         year = int(year_regex.match(event.name).group(1))
         if year != event.start_date.year:
             problematic_events.append(event)
+
+    q = Event.query.filter(not_(Event.event_url.startswith("http")))
+    problematic_events += q.all()
+
     return render_template('admin/problematic_events.html', problematic_events=problematic_events)
 
 
