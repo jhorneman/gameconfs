@@ -91,6 +91,11 @@ def index():
     }
 
 
+@app.route('/index.html')
+def index_html():
+    return redirect(url_for('index'), code=301)
+
+
 @app.route('/search', methods=("GET", "POST"))
 def search():
     if request.method == "POST":   # Form has no validation
@@ -154,9 +159,20 @@ def view_year(year):
     return render_template('year.html', body_id='year', events=events, year=year)
 
 
+# To deal with old URL scheme
+@app.route('/<int:year>/')
+@app.route('/<int:year>/<path:path>')
+def old_year(year, path=None):
+    return redirect(url_for('view_year', year=year), code=301)
+
+
 @app.route('/place/<place_name>')
 @app.cache.cached(timeout=60*60*24)
 def view_place(place_name):
+    # To deal with old URL scheme
+    if place_name == "online":
+        return redirect(url_for('view_place', place_name="other"), code=301)
+
     if place_name == "other":
         q = Event.query.\
             filter(Event.city == None).\
