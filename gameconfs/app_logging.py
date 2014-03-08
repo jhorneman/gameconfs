@@ -2,7 +2,6 @@
 
 import sys
 import logging
-import geocoder
 
 
 class StdoutHandler(logging.StreamHandler):
@@ -18,6 +17,5 @@ def set_up_logging(_app, _level=logging.INFO):
     handler = StdoutHandler()
     handler.setLevel(_level)
     handler.setFormatter(logging.Formatter('%(message)s'))
-    for logger in [_app.logger, geocoder.logger]:
-        logger.setLevel(_level)
-        logger.addHandler(handler)
+    _app.logger.setLevel(_level)
+    _app.logger.addHandler(handler)
