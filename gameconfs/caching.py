@@ -27,5 +27,12 @@ def bmemcached_cache(app, config, args, kwargs):
 
 def set_up_cache(_app):
     from flask.ext.cache import Cache
-    _app.cache = Cache()
-    _app.cache.init_app(_app)
+    try:
+        _app.cache = Cache(_app)
+    except EnvironmentError, e:
+        if e.errno == 61:
+            _app.logger.error("Couldn't connect to memcached - switching to null cache")
+            _app.config["CACHE_TYPE"] = "null"
+            _app.cache = Cache(_app)
+        else:
+            raise e
