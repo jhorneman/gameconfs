@@ -143,7 +143,7 @@ class GeocodeResults(object):
                 city_component_type = city_component_types_per_country.get(self.country, default_city_component_type)
                 component = self.find_address_component(city_component_type)
                 if not component:
-                    # Needed for very special cases (Hull, Quebec, Vilamoura, Portgual, and Hong Kong)
+                    # Needed for very special cases (Hull, Quebec, Vilamoura, Portugal, and Hong Kong)
                     for component_type in ["sublocality", "political"]:
                         component = self.find_address_component(component_type)
                         if component:
