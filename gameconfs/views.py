@@ -447,6 +447,41 @@ def event_ics(id):
 
     return Response(cal.to_ical(), status=200, mimetype='text/calendar')
 
+# <a href="{{ url_for('upcoming_ics', _external=True, _scheme="webcal") }}">Calendar</a>
+
+@app.route('/upcoming.ics')
+def upcoming_ics():
+    today = date.today()
+    end_of_upcoming_period = today + timedelta(days=90)
+    end_of_upcoming_period = date(end_of_upcoming_period.year, end_of_upcoming_period.month,
+                                  monthrange(end_of_upcoming_period.year, end_of_upcoming_period.month)[1])
+
+    q = Event.query.\
+        order_by(Event.start_date.asc()).\
+        filter(and_(Event.start_date > today, Event.start_date < end_of_upcoming_period)).\
+        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
+    events = q.all()
+
+    cal = icalendar.Calendar()
+    cal.add('prodid', '-//Game event//gameconfs.com//')
+    cal.add('version', '2.0')
+    cal.add('X-WR-CALNAME','Gameconfs')
+    cal.add('X-WR-CALDESC','Upcoming conferences, trade shows and events related to electronic games, from www.gameconfs.com.')
+
+    for event in events:
+        calendar_entry = icalendar.Event()
+        calendar_entry.add('summary', event.name)
+        calendar_entry.add('location', event_venue_and_location(event))
+        calendar_entry.add('url', event.event_url)
+        calendar_entry.add('dtstart', event.start_date)
+        calendar_entry.add('dtend', event.end_date + timedelta(days=1))
+        calendar_entry.add('dtstamp', datetime.now(pytz.utc))
+        calendar_entry['uid'] = u'{event_id}-{date}@gameconfs.com'.format(date=event.start_date, event_id=event.id)
+        calendar_entry.add('priority', 5)
+        cal.add_component(calendar_entry)
+
+    return Response(cal.to_ical(), status=200, mimetype='text/calendar')
+
 
 @app.route('/recent.atom')
 @app.cache.cached(timeout=60*60*24)
