@@ -8,4 +8,8 @@
   <p>What you can also do is pass that feed to another website called IFTTT ("If This Then That"). IFTTT allows you to say “IF there’s a new entry in the Gameconfs feed THEN send me an email”. They call this a recipe, and they make it really easy to create and use recipes. You can do a LOT more than just send emails by the way - I use it to automatically tweet on @gameconfs whenever a new event is added.</p>
   <p>To make things easier, I’ve created the recipe for you! It’s right <a href="https://ifttt.com/recipes/92298">here</a>. So all you need to do is create and IFTTT account, go to that link, click Use Recipe, and enter your email address.</p>
   <p>(Yahoo! Pipes should also work instead of IFTTT - I happen to use IFTTT. But since Atom is a standard format, it shouldn’t matter which site you use.)</p>
+
+  <h1>How to add all upcoming events to your calendar</h1>
+  <p>You can subscribe to all upcoming events <a href="{{ url_for('upcoming_ics', _external=True, _scheme="webcal") }}">here</a>.</p>
+  <p>Warning: There are a lot of events! This feature is still in an Alpha state, let me know how this works for you.</p>
 {% endblock %}

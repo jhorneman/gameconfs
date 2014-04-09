@@ -447,7 +447,6 @@ def event_ics(id):
 
     return Response(cal.to_ical(), status=200, mimetype='text/calendar')
 
-# <a href="{{ url_for('upcoming_ics', _external=True, _scheme="webcal") }}">Calendar</a>
 
 @app.route('/upcoming.ics')
 def upcoming_ics():
@@ -472,7 +471,7 @@ def upcoming_ics():
         calendar_entry = icalendar.Event()
         calendar_entry.add('summary', event.name)
         calendar_entry.add('location', event_venue_and_location(event))
-        calendar_entry.add('url', event.event_url)
+        calendar_entry.add('url', url_for('view_event', id=event.id, _external=True))
         calendar_entry.add('dtstart', event.start_date)
         calendar_entry.add('dtend', event.end_date + timedelta(days=1))
         calendar_entry.add('dtstamp', datetime.now(pytz.utc))
@@ -567,9 +566,9 @@ def other():
     return
 
 
-@app.route('/notifications')
+@app.route('/tools')
 @templated()
-def notifications():
+def tools():
     return
 
 
