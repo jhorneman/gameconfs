@@ -642,17 +642,22 @@ def page_not_found(error):
 
 
 @app.route('/favicon.ico')
-@app.cache.cached(timeout=60*60*24*365)
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
-                               'img/favicon.ico', mimetype='image/vnd.microsoft.icon')
+                               'img/icons/favicon.ico', mimetype='image/vnd.microsoft.icon')
+
+
+@app.route('/<regex("apple-touch-icon(-\d+x\d+)?.png"):filename>')
+def apple_touch_icon(filename):
+    return send_from_directory(os.path.join(app.root_path, 'static'),
+                               'img/icons/' + filename, mimetype='image/png')
 
 
 @app.route('/robots.txt')
-@app.cache.cached(timeout=60*60*24*365)
 def robots_txt():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'robots.txt', mimetype='text/plain')
+
 
 @app.route('/sitemap.xml')
 @app.cache.cached(timeout=60*60*24)

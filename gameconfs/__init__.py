@@ -27,6 +27,7 @@ from flask_debugtoolbar import DebugToolbarExtension
 from flask_principal import Principal
 from flask.ext.security import Security, SQLAlchemyUserDatastore
 from flask.ext.mail import Mail
+from werkzeug.routing import BaseConverter
 from jinja_filters import set_up_jinja_filters
 from .caching import set_up_cache
 from .app_logging import set_up_logging
@@ -34,6 +35,12 @@ from .app_logging import set_up_logging
 
 app = None  # Set to None so code will fail screaming if create_app hasn't been called
 db = SQLAlchemy()
+
+
+class RegexIconURLConverter(BaseConverter):
+    def __init__(self, url_map, *items):
+        super(RegexIconURLConverter, self).__init__(url_map)
+        self.regex = items[0]
 
 
 def create_app(_run_mode=None):
@@ -123,6 +130,7 @@ def create_app(_run_mode=None):
     app.principals = Principal(app)
 
     # Import the views, to apply the decorators which use the global app object.
+    app.url_map.converters['regex'] = RegexIconURLConverter
     import gameconfs.views
 
     # Register blueprints
