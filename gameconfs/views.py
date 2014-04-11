@@ -491,6 +491,8 @@ upcoming_ics.make_cache_key = make_date_cache_key
 @app.route('/recent.atom')
 @app.cache.cached(timeout=60*60*24)
 def recent_feed():
+    today = datetime.today()
+
     feed = AtomFeed('Gameconfs - New events',
                     title_type='text',
                     url=request.url_root,
@@ -502,6 +504,7 @@ def recent_feed():
 
     #TODO: This will miss events if more than 15 are added at once, which occasionally happens.
     events = Event.query.\
+        filter(Event.end_date >= today).\
         order_by(Event.created_at.desc()).\
         options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
         limit(15).\
