@@ -281,6 +281,7 @@ def create_new_event():
         else:
             db.session.add(new_event)
             db.session.commit()
+            app.cache.clear()
             return redirect(url_for('view_event', id=new_event.id))
     return render_template('edit_event.html', body_id="edit-event", form=form, event_id=None,
                            view_name='create_new_event')
@@ -350,6 +351,7 @@ def duplicate_event(id):
         else:
             db.session.add(new_event)
             db.session.commit()
+            app.cache.clear()
             return redirect(url_for('view_event', id=new_event.id))
 
     return render_template('edit_event.html', body_id="edit-event", form=form, event_id=id, view_name='duplicate_event')
@@ -396,6 +398,7 @@ def edit_event(id):
                 flash(e.flash_message, "error")
         else:
             db.session.commit()
+            app.cache.clear()
             return redirect(url_for('view_event', id=event.id))
 
     return render_template('edit_event.html', body_id="edit-event", form=form, event_id=event.id, view_name='edit_event')
@@ -420,6 +423,7 @@ def delete_event(id):
     else:
         db.session.delete(event)
         db.session.commit()
+        app.cache.clear()
     return redirect(url_for('index'))
 
 
@@ -449,6 +453,7 @@ def event_ics(id):
 
 
 @app.route('/upcoming.ics')
+@app.cache.cached(timeout=60*60*24)
 def upcoming_ics():
     today = date.today()
     end_of_upcoming_period = today + timedelta(days=90)
@@ -480,6 +485,7 @@ def upcoming_ics():
         cal.add_component(calendar_entry)
 
     return Response(cal.to_ical(), status=200, mimetype='text/calendar')
+upcoming_ics.make_cache_key = make_date_cache_key
 
 
 @app.route('/recent.atom')
@@ -556,18 +562,21 @@ today_feed.make_cache_key = make_date_cache_key
 
 @app.route('/about')
 @templated()
+@app.cache.cached(timeout=60*60*24)
 def about():
     return
 
 
 @app.route('/other')
 @templated()
+@app.cache.cached(timeout=60*60*24)
 def other():
     return
 
 
 @app.route('/tools')
 @templated()
+@app.cache.cached(timeout=60*60*24)
 def tools():
     return
 
@@ -627,23 +636,26 @@ def stats():
 
 
 @app.errorhandler(404)
-@app.cache.cached(timeout=60*60*24)
+@app.cache.cached(timeout=60*60*24*365)
 def page_not_found(error):
     return render_template('page_not_found.html'), 404
 
 
 @app.route('/favicon.ico')
+@app.cache.cached(timeout=60*60*24*365)
 def favicon():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'img/favicon.ico', mimetype='image/vnd.microsoft.icon')
 
 
 @app.route('/robots.txt')
+@app.cache.cached(timeout=60*60*24*365)
 def robots_txt():
     return send_from_directory(os.path.join(app.root_path, 'static'),
                                'robots.txt', mimetype='text/plain')
 
 @app.route('/sitemap.xml')
+@app.cache.cached(timeout=60*60*24)
 def sitemap():
     url_root = request.url_root[:-1]
     event_ids = [e[0] for e in db.session.query(Event.id).all()]
