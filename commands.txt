@@ -88,3 +88,7 @@ To get more debug output out of Gunicorn:
 To view a deleted file in git:
 
 git show $(git rev-list --max-count=1 --all -- { filename })^:{ filename }
+
+# Grunt
+
+grunt watch
