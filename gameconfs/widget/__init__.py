@@ -48,7 +48,7 @@ def data(version):
             join(Event.city). \
             join(City.country). \
             join(Country.continent)
-        q = filter_by_place_name(q, place_name)
+        q, place_name = filter_by_place_name(q, place_name)
     else:
         q = Event.query
     q = filter_by_period_start_end(q, period_start, period_end)
