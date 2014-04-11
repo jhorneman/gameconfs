@@ -1,5 +1,12 @@
 {% extends "layout.html" %}
-{% block title %}{{ event.name }} - Gameconfs{% endblock %}
+{% macro date_or_range(event) %}
+  {% if event.start_date == event.end_date %}
+  {{ event.start_date|nice_date }} {{ event.start_date.year }}
+  {% else %}
+  {{ event.start_date|nice_date }} until {{ event.end_date|nice_date }} {{ event.start_date.year }}
+  {% endif %}
+{% endmacro %}
+{% block title %}{{ event.name }} - {{ date_or_range(event) }} - Gameconfs{% endblock %}
 {% block content %}
   <div itemscope itemtype="http://schema.org/Event" class="event-entry">
     <h2 itemprop="name">{{ event.name }}</h2>
