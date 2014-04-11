@@ -1,11 +1,19 @@
 import bmemcached
 
+# bmemcached (https://github.com/jaysonsantos/python-binary-memcached/blob/master/bmemcached/client.py)
+# has a slightly different interface from what Flask-Cache expects
+# so we need to fix this
+# The 'timeout' keyword parameter is called 'time'
+# The 'clean' method is called 'flush_all'
 
-class TimeoutFixCacheClient(bmemcached.Client):
+
+class InterfaceFixCacheClient(bmemcached.Client):
     def __init__(self, *args, **kwargs):
-        super(TimeoutFixCacheClient, self).__init__(*args, **kwargs)
+        super(InterfaceFixCacheClient, self).__init__(*args, **kwargs)
 
     def __getattribute__(self, name):
+        if name == "clear":
+            name = "flush_all"
         attr = object.__getattribute__(self, name)
         if hasattr(attr, '__call__'):
             def wrapped(*args, **kwargs):
@@ -20,9 +28,9 @@ class TimeoutFixCacheClient(bmemcached.Client):
 
 
 def bmemcached_cache(app, config, args, kwargs):
-    return TimeoutFixCacheClient(servers=config['CACHE_MEMCACHED_SERVERS'],
-                          username=config['CACHE_MEMCACHED_USERNAME'],
-                          password=config['CACHE_MEMCACHED_PASSWORD'])
+    return InterfaceFixCacheClient(servers=config['CACHE_MEMCACHED_SERVERS'],
+                                   username=config['CACHE_MEMCACHED_USERNAME'],
+                                   password=config['CACHE_MEMCACHED_PASSWORD'])
 
 
 def set_up_cache(_app):
