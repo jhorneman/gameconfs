@@ -3,6 +3,9 @@
 {% block content %}
   <h1>Events in {{ year }}</h1>
   {% if events %}
+  {%  if year <= 2012 %}
+  <p>Events before May 2012 are patchy.</p>
+  {% endif %}
   <div class="monthly-event-list">
 	{% for month_group in events|sort(attribute='start_date')|groupby('start_date.month') %}
 	<a name="{{ month_group.grouper }}"></a>
