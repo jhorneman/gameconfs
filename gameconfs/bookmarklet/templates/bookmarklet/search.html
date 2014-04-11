@@ -11,7 +11,7 @@
     {% for event in found_events_by_string %}
     <tr>
         <td>{{ event.start_date|nice_date }} {{ event.start_date.year }}</td>
-        <td><a href="{{ url_for('view_event', id=event.id) }}">{{ event.name }}</a></td>
+        <td><a href="{{ url_for('view_event', event_id=event.id) }}">{{ event.name }}</a></td>
         <td>{{ event|event_location }}</td>
     </tr>
     {% endfor %}
@@ -29,7 +29,7 @@
     {% for event in found_events_by_url %}
     <tr>
         <td><span class="date">{{ event.start_date|nice_date }}</span><span class="short_date">{{ event.start_date|short_date }}</span> {{ event.start_date.year }}</td>
-        <td><a href="{{ url_for('view_event', id=event.id) }}">{{ event.name }}</a></td>
+        <td><a href="{{ url_for('view_event', event_id=event.id) }}">{{ event.name }}</a></td>
         <td>{{ event|event_location }}</td>
     </tr>
     {% endfor %}

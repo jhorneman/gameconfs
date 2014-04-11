@@ -114,17 +114,17 @@ def search():
     return render_template('search.html', body_id="search", search_string=search_string, found_events=found_events)
 
 
-@app.route('/event/<int:id>')
+@app.route('/event/<int:event_id>')
 @app.cache.cached(timeout=60*60*24, unless=user_can_edit)
-def view_event(id):
+def view_event(event_id):
     try:
         event = Event.query.\
-            filter(Event.id == id).\
+            filter(Event.id == event_id).\
             options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
             one()
     except sqlalchemy.orm.exc.NoResultFound:
         max_event_id = db.session.query(func.max(Event.id)).one()[0]
-        if 0 < id <= max_event_id:
+        if 0 < event_id <= max_event_id:
             return render_template('event_deleted.html'), 410
         else:
             return render_template('page_not_found.html'), 404
@@ -286,18 +286,18 @@ def create_new_event():
             db.session.add(new_event)
             db.session.commit()
             app.cache.clear()
-            return redirect(url_for('view_event', id=new_event.id))
+            return redirect(url_for('view_event', event_id=new_event.id))
     return render_template('edit_event.html', body_id="edit-event", form=form, event_id=None,
                            view_name='create_new_event')
 
 
-@app.route('/event/<int:id>/duplicate', methods=("GET", "POST"))
+@app.route('/event/<int:event_id>/duplicate', methods=("GET", "POST"))
 @editing_kill_check
 @roles_required('admin')
-def duplicate_event(id):
+def duplicate_event(event_id):
     if request.method == "GET":
         try:
-            original_event = Event.query.filter(Event.id == id).one()
+            original_event = Event.query.filter(Event.id == event_id).one()
         except sqlalchemy.orm.exc.NoResultFound:
             return render_template('page_not_found.html'), 404
 
@@ -356,17 +356,17 @@ def duplicate_event(id):
             db.session.add(new_event)
             db.session.commit()
             app.cache.clear()
-            return redirect(url_for('view_event', id=new_event.id))
+            return redirect(url_for('view_event', event_id=new_event.id))
 
-    return render_template('edit_event.html', body_id="edit-event", form=form, event_id=id, view_name='duplicate_event')
+    return render_template('edit_event.html', body_id="edit-event", form=form, event_id=event_id, view_name='duplicate_event')
 
 
-@app.route('/event/<int:id>/edit', methods=("GET", "POST"))
+@app.route('/event/<int:event_id>/edit', methods=("GET", "POST"))
 @editing_kill_check
 @roles_required('admin')
-def edit_event(id):
+def edit_event(event_id):
     try:
-        event = Event.query.filter(Event.id == id).one()
+        event = Event.query.filter(Event.id == event_id).one()
     except sqlalchemy.orm.exc.NoResultFound:
         return render_template('page_not_found.html'), 404
 
@@ -403,7 +403,7 @@ def edit_event(id):
         else:
             db.session.commit()
             app.cache.clear()
-            return redirect(url_for('view_event', id=event.id))
+            return redirect(url_for('view_event', event_id=event.id))
 
     return render_template('edit_event.html', body_id="edit-event", form=form, event_id=event.id, view_name='edit_event')
 
@@ -416,12 +416,12 @@ def is_duplicate_event(_event):
     return len(events) > 0
 
 
-@app.route('/event/<int:id>/delete', methods=("GET", "POST"))
+@app.route('/event/<int:event_id>/delete', methods=("GET", "POST"))
 @editing_kill_check
 @roles_required('admin')
-def delete_event(id):
+def delete_event(event_id):
     try:
-        event = Event.query.filter(Event.id == id).one()
+        event = Event.query.filter(Event.id == event_id).one()
     except sqlalchemy.orm.exc.NoResultFound:
         pass
     else:
@@ -431,10 +431,10 @@ def delete_event(id):
     return redirect(url_for('index'))
 
 
-@app.route('/event/<int:id>/ics')
-def event_ics(id):
+@app.route('/event/<int:event_id>/ics')
+def event_ics(event_id):
     try:
-        event = Event.query.filter(Event.id == id).one()
+        event = Event.query.filter(Event.id == event_id).one()
     except sqlalchemy.orm.exc.NoResultFound:
         return render_template('page_not_found.html'), 404
 
@@ -449,7 +449,7 @@ def event_ics(id):
     calendar_entry.add('dtstart', event.start_date)
     calendar_entry.add('dtend', event.end_date + timedelta(days=1))
     calendar_entry.add('dtstamp', datetime.now(pytz.utc))
-    calendar_entry['uid'] = u'{event_id}-{date}@gameconfs.com'.format(date=event.start_date, event_id=event.id)
+    calendar_entry['uid'] = u'{event_id}-{date}@gameconfs.com'.format(date=event.start_date, event_id=event_id)
     calendar_entry.add('priority', 5)
     cal.add_component(calendar_entry)
 
@@ -480,7 +480,7 @@ def upcoming_ics():
         calendar_entry = icalendar.Event()
         calendar_entry.add('summary', event.name)
         calendar_entry.add('location', event_venue_and_location(event))
-        calendar_entry.add('url', url_for('view_event', id=event.id, _external=True))
+        calendar_entry.add('url', url_for('view_event', event_id=event.id, _external=True))
         calendar_entry.add('dtstart', event.start_date)
         calendar_entry.add('dtend', event.end_date + timedelta(days=1))
         calendar_entry.add('dtstamp', datetime.now(pytz.utc))
@@ -518,7 +518,7 @@ def recent_feed():
                  title_type='text',
                  content=render_template('recent_feed_entry.html', event=event),
                  content_type='text/html',
-                 url=url_for('view_event', id=event.id, _external=True),
+                 url=url_for('view_event', event_id=event.id, _external=True),
                  updated=event.created_at,
                  author='Gameconfs',
                  published=event.created_at)
@@ -549,7 +549,7 @@ def today_feed():
                  title_type='text',
                  content=render_template('today_feed_entry.txt', event=event),
                  content_type='text/plain',
-                 url=url_for('view_event', id=event.id, _external=True),
+                 url=url_for('view_event', event_id=event.id, _external=True),
                  updated=start_datetime,
                  author='Gameconfs',
                  published=start_datetime)
