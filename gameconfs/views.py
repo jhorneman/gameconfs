@@ -123,7 +123,11 @@ def view_event(id):
             options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
             one()
     except sqlalchemy.orm.exc.NoResultFound:
-        return render_template('page_not_found.html'), 404
+        max_event_id = db.session.query(func.max(Event.id)).one()[0]
+        if 0 < id <= max_event_id:
+            return render_template('event_deleted.html'), 410
+        else:
+            return render_template('page_not_found.html'), 404
     return render_template('event.html', body_id="view-event", event=event, today=date.today())
 
 
