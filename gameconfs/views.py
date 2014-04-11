@@ -560,25 +560,11 @@ today_feed.make_cache_key = make_date_cache_key
 #     return "OK"
 
 
-@app.route('/about')
-@templated()
+@app.route('/<any(about, other, tools):page_name>')
 @app.cache.cached(timeout=60*60*24)
-def about():
-    return
-
-
-@app.route('/other')
-@templated()
-@app.cache.cached(timeout=60*60*24)
-def other():
-    return
-
-
-@app.route('/tools')
-@templated()
-@app.cache.cached(timeout=60*60*24)
-def tools():
-    return
+def static_page(page_name):
+    template_name = page_name + '.html'
+    return render_template(template_name)
 
 
 @app.route('/sponsoring')
