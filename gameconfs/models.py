@@ -1,3 +1,4 @@
+import re
 import logging
 from sqlalchemy import Column, Integer, String, ForeignKey, Date, DateTime, Boolean
 from sqlalchemy.orm import relationship, backref
@@ -155,6 +156,12 @@ class Event(db.Model):
 
     series_id = Column(Integer, ForeignKey('series.id'), nullable=True)
     series = relationship('Series', backref=backref('events', lazy='select'))
+
+    def __setattr__(self, name, value):
+        if name == "event_url":
+            if not re.match("^https?://", value):
+                value = "http://" + value
+        super(Event, self).__setattr__(name, value)
 
     def is_not_in_a_city(self):
         return self.city_id is None
