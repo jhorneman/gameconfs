@@ -18,10 +18,10 @@
 	<a name="{{ month_group.grouper }}"></a>
 	<h4>{{ month_group.grouper|nice_month }} {{ year }}</h4>
   {% for event in month_group.list %}
-    <div class="event-entry">
-        <span class="event-date">{{ monthly_date_or_range(event) }}</span>
-        <span class="event-name"><a href="{{ url_for('view_event', event_id=event.id) }}">{{ event.name }}</a></span>
-        <span class="event-location">{{ event|event_location }}</span>
+    <div class="event-entry clearfix">
+      <div class="event-date">{{ monthly_date_or_range(event) }}</div>
+      <div class="event-name"><a href="{{ url_for('view_event', event_id=event.id) }}">{{ event.name }}</a></div>
+      <div class="event-location">{{ event|event_location }}</div>
     </div>
   {% endfor %}
   {% endfor %}

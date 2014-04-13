@@ -74,26 +74,27 @@
     margin-bottom: 4px;
 }
 
-.monthly-event-list .event-entry > span {
+.monthly-event-list .event-entry > div {
     vertical-align: text-top;
 }
 
-.monthly-event-list .event-entry span.event-date {
+.monthly-event-list .event-entry div.event-date {
+    float: left;
     text-align: right;
     margin-right: 5px;
-    display: inline-block;
-    width: 50px;
+    width: 54px;
 }
 
-.monthly-event-list .event-entry span.event-name {
+.monthly-event-list .event-entry div.event-name {
+    float: left;
     padding-right: 1em;
-    display: inline-block;
-    width: 400px;
+    width: 300px;
 }
 
-.monthly-event-list .event-entry span.event-location {
-    display: inline-block;
-    width: 200px;
+.monthly-event-list .event-entry div.event-location {
+    float: left;
+    margin-left: 59px;
+    /*width: 200px;*/
 }
 
 .monthly-event-list + p {
@@ -163,27 +164,27 @@ body#view-event .event-entry span.glyphicon {
 
 body#view-event .event-entry span.event-date {
     display: inline-block;
-    width: 620px;
+    width: 400px;
 }
 
 body#view-event .event-entry span.event-url {
     display: inline-block;
-    width: 620px;
+    width: 400px;
 }
 
 body#view-event .event-entry span.event-twitter {
     display: inline-block;
-    width: 620px;
+    width: 400px;
 }
 
 body#view-event .event-entry span.event-hashtags {
     display: inline-block;
-    width: 620px;
+    width: 400px;
 }
 
 body#view-event .event-entry span.event-location {
     display: inline-block;
-    width: 620px;
+    width: 400px;
 }
 
 .internal-data {
