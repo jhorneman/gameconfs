@@ -5,7 +5,7 @@ from datetime import date, datetime, timedelta, time
 from calendar import monthrange
 import icalendar
 import pytz
-from flask import render_template, request, send_from_directory, flash, redirect, url_for, Response
+from flask import render_template, request, send_from_directory, flash, redirect, url_for, Response, make_response
 from flask.ext.security.decorators import roles_required
 from flask.ext.login import current_user
 from werkzeug.contrib.atom import AtomFeed
@@ -18,13 +18,29 @@ from gameconfs.forms import EventForm, SearchForm
 from gameconfs.query_helpers import *
 
 
+class Sponsor(object):
+    def __init__(self):
+        self.target_url = "http://www.intelligent-artifice.com/"
+        self.text = "Here are a few tasteful words about our lovely sponsor for this month."
+
+
 def user_can_edit():
     return current_user and current_user.is_authenticated() and not current_app.config["GAMECONFS_KILL_EDITING"]
 
 
+def sponsoring_turned_on():
+    return request.cookies.get("sponsoring") == "true"
+
+
 @app.context_processor
 def inject_common_values():
-    return dict(logged_in=user_can_edit())
+    common_values = {
+        "logged_in":    user_can_edit(),
+        "sponsor":      None
+    }
+    if sponsoring_turned_on():
+        common_values["sponsor"] = Sponsor()
+    return common_values
 
 
 def editing_kill_check(f):
@@ -558,15 +574,6 @@ def today_feed():
 today_feed.make_cache_key = make_date_cache_key
 
 
-# from flask.ext.mail import Message
-# @app.route('/email')
-# def send():
-#     msg = Message("Hello", recipients=["jhorneman@pobox.com"])
-#     msg.body = "Hello\nThis is a mail from your server\n\nBye\n"
-#     app.mail.send(msg)
-#     return "OK"
-
-
 @app.route('/<any(about, other, tools):page_name>')
 @app.cache.cached(timeout=60*60*24)
 def static_page(page_name):
@@ -574,14 +581,18 @@ def static_page(page_name):
     return render_template(template_name)
 
 
-@app.route('/sponsoring')
+@app.route('/sponsoring', methods=("GET", "POST"))
 def sponsoring():
-    class Sponsor(object):
-        def __init__(self):
-            self.target_url = "http://www.intelligent-artifice.com/"
-            self.image_filename = "placeholder_sponsor.jpg"
-
-    return render_template('sponsoring.html', sponsor=Sponsor())
+    if request.method == "POST":
+        if "on_button" in request.form:
+            resp = make_response(render_template('sponsoring.html', sponsoring_state=True, sponsor=Sponsor()))
+            resp.set_cookie("sponsoring", "true")
+        else:
+            resp = make_response(render_template('sponsoring.html', sponsoring_state=False, sponsor=None))
+            resp.set_cookie("sponsoring", "")
+        return resp
+    else:
+        return render_template('sponsoring.html', sponsoring_state=sponsoring_turned_on())
 
 
 @app.route('/stats')

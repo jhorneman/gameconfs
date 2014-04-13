@@ -2,5 +2,10 @@
 {% block title %}Sponsoring Gameconfs{% endblock %}
 {% block content %}
 	<h1>Sponsoring</h1>
-	<p>Blah.</p>
+  <form id="sponsoring" action="sponsoring"></form>
+  {% if sponsoring_state %}
+  <button type="submit" form="sponsoring" formmethod="post" class="btn btn-primary" name="off_button">Turn off</button>
+  {% else %}
+  <button type="submit" form="sponsoring" formmethod="post" class="btn btn-primary" name="on_button">Turn on</button>
+  {% endif %}
 {% endblock %}
