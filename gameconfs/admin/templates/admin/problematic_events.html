@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Problematic events{% endblock %}
 {% block content %}
-  <h1>Events that might have problems</h1>
+  <h2>Events that might have problems</h2>
   <p>Total number: {{ problematic_events|length }} events.</p>
   <div class="ad-hoc-event-list">
   {% for event in problematic_events %}

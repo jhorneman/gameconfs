@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}All series{% endblock %}
 {% block content %}
-  <h1>All event series</h1>
+  <h2>All event series</h2>
   <p>Total number: {{ all_series_data|length }} series.</p>
   {% for series_data in all_series_data %}
   <div>

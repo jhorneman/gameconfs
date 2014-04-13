@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}Upcoming events{% endblock %}
 {% block content %}
-  <h1>Upcoming events</h1>
+  <h2>Upcoming events</h2>
   {% if events %}
   <p>Here are events between today and {{ until_date|nice_date }} {{ until_date.year }}.</p>
   <div class="monthly-event-list">

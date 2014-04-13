@@ -8,9 +8,9 @@
 {% endblock %}
 {% block content %}
   {% if location == "other" %}
-  <h1>Events in {{ year }}</h1>
+  <h2>Events in {{ year }}</h2>
   {% else %}
-  <h1>Events in {{ location }} in {{ year }}</h1>
+  <h2>Events in {{ location }} in {{ year }}</h2>
   {% endif %}
   {% if events %}
   <div class="monthly-event-list">

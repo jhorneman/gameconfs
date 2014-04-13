@@ -1,7 +1,7 @@
 {% extends "layout.html" %}
 {% block title %}No series{% endblock %}
 {% block content %}
-  <h1>Events without series</h1>
+  <h2>Events without series</h2>
   <p>Total number: {{ events_without_series|length }} events.</p>
   <div class="ad-hoc-event-list">
   {% for event in events_without_series %}

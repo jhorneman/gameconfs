@@ -1,9 +1,9 @@
 {% extends "layout.html" %}
 {% block title %}Search bookmarklet{% endblock %}
 {% block content %}
-  <h1>Search results</h1>
+  <h2>Search results</h2>
   {% if search_string %}
-  <h2>Events called '{{ search_string }}'</h2>
+  <h3>Events called '{{ search_string }}'</h3>
   {% if found_events_by_string %}
   <div class="ad-hoc-event-list">
   {% for event in found_events_by_string %}
@@ -19,7 +19,7 @@
   {% endif %}
   {% endif %}
 
-  <h2>Events with {{ referring_url }}</h2>
+  <h3>Events with {{ referring_url }}</h3>
   {% if found_events_by_url %}
   <div class="ad-hoc-event-list">
   {% for event in found_events_by_url %}
