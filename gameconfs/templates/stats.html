@@ -1,5 +1,13 @@
 {% extends "layout.html" %}
 {% block content %}
+	<h2>Top {{ country_stats|length }} countries</h2>
+	<table class="table table-condensed stats bars" id="country-stats"></table>
+	<p>Total number of countries: <strong>{{ total_nr_countries }}</strong>.</p>
+	<br/>
+	<h2>Top {{ city_stats|length }} cities</h2>
+    <table class="table table-condensed stats bars" id="city-stats"></table>
+	<p>Total number of cities: <strong>{{ total_nr_cities }}</strong>.</p>
+	<br/>
 	<h2>Events by month</h2>
 	<table class="table table-condensed stats" id="time-stats">
 		<thead>
@@ -24,14 +32,6 @@
 		</tbody>
 	</table>
 	<p>Total number of events: <strong>{{ total_nr_events }}</strong>. Events before May 2012 are patchy.</p>
-	<br/>
-	<h2>Top {{ country_stats|length }} countries</h2>
-	<table class="table table-condensed stats bars" id="country-stats"></table>
-	<p>Total number of countries: <strong>{{ total_nr_countries }}</strong>.</p>
-	<br/>
-	<h2>Top {{ city_stats|length }} cities</h2>
-    <table class="table table-condensed stats bars" id="city-stats"></table>
-	<p>Total number of cities: <strong>{{ total_nr_cities }}</strong>.</p>
 {% endblock %}
 {% block end_of_body %}
 <script src="http://d3js.org/d3.v3.min.js"></script>
