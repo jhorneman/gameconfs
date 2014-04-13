@@ -70,12 +70,23 @@
       <a class="btn btn-sm btn-danger pull-right" href="{{ url_for('security.logout') }}">Sign out {{ current_user.user_name }}</a>
     </div>
     {% endif %}
-{#    {% if sponsor %}#}
-{#    <div id="sponsor"><div><a href="{{ sponsor.target_url }}" target="_blank"><img src="{{ url_for('static', filename='img/sponsors/' + sponsor.image_filename) }}"></a></div></div>#}
-{#    {% endif %}#}
-{% block content %}{% endblock %}
+    <div class="row">
+      <div class="col-md-8">
+        {% block content %}{% endblock %}
+      </div>
+      {% if sponsor %}
+      <div class="col-md-4">
+        <h2>&nbsp;</h2>
+        <div id="sponsor">
+          <p><span class="text-muted">This month's sponsor:</span><br/>
+          <a href="{{ sponsor.target_url }}" target="_blank">{{ sponsor.text }}</a></p>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+    <div class="clearfix"></div>
     <div class="footer">
-      <ul class="clearfix">
+      <ul>
         <li><a href="{{ url_for('index') }}">Home</a></li>
         <li><a href="{{ url_for('static_page', page_name='other') }}">More events</a></li>
         <li><a target="_blank" href="http://blog.gameconfs.com">Blog</a></li>
@@ -83,6 +94,7 @@
         <li><a href="{{ url_for('static_page', page_name='about') }}">About</a></li>
         <li><a href="{{ url_for('static_page', page_name='tools') }}">Tools</a></li>
       </ul>
+      <br/>
       <p class="text-muted">&copy; 2012-2014 Jurie Horneman</p>
     </div>
   </div>
