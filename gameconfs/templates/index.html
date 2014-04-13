@@ -38,30 +38,30 @@
   <p>Browse by country:<br/>
   <div class="browse-list">
   {% for country in countries %}
-    {% if loop.index0 % 2 == 0 %}
+    {% if loop.index0 is even %}
     <div>
     {%  endif %}
       <a href="{{ url_for('view_place', place_name=country.name.lower()) }}">{{ country.name }}</a>
-    {% if loop.index0 % 2 == 1 %}
+    {% if loop.index0 is odd %}
     </div>
     {% endif %}
   {% endfor %}
-  {% if loop.index0 % 2 != 0 %}
+  {% if countries | length is odd %}
   </div>
   {% endif %}
   </div></p>
   <p>Browse by continent:<br/>
   <div class="browse-list">
   {% for continent in continents %}
-    {% if loop.index0 % 2 == 0 %}
+    {% if loop.index0 is even %}
     <div>
-    {%  endif %}
+    {% endif %}
       <a href="{{ url_for('view_place', place_name=continent.name.lower()) }}">{{ continent.name }}</a>
-    {% if loop.index0 % 2 == 1 %}
+    {% if loop.index0 is odd %}
     </div>
     {% endif %}
   {% endfor %}
-  {% if loop.index0 % 2 != 0 %}
+  {% if continents | length is odd %}
   </div>
   {% endif %}
   </div></p>
