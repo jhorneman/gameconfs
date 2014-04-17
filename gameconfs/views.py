@@ -71,8 +71,18 @@ def templated(template=None):
     return decorator
 
 
+def make_cache_key():
+    cache_key = 'view%s' % request.path
+    if user_can_edit():
+        cache_key += "-edit"
+    if sponsoring_turned_on():
+        cache_key += "-sponsor"
+    app.logger.info(cache_key)
+    return cache_key
+
+
 def make_date_cache_key(*args, **kwargs):
-    cache_key = 'view/%s-%s' % (request.path, date.today().strftime("%Y%m%d"))
+    cache_key = 'view%s-%s' % (request.path, date.today().strftime("%Y%m%d"))
     return cache_key.encode('utf-8')
 
 
@@ -131,7 +141,7 @@ def search():
 
 
 @app.route('/event/<int:event_id>')
-@app.cache.cached(timeout=60*60*24, unless=user_can_edit)
+@app.cache.cached(timeout=60*60*24, unless=user_can_edit, key_prefix=make_cache_key)
 def view_event(event_id):
     try:
         event = Event.query.\
@@ -148,7 +158,7 @@ def view_event(event_id):
 
 
 @app.route('/upcoming')
-@app.cache.cached(timeout=60*60*24)
+@app.cache.cached(timeout=60*60*24, key_prefix=make_cache_key)
 def view_upcoming_events():
     today = date.today()
     end_of_upcoming_period = today + timedelta(days=90)
@@ -165,7 +175,7 @@ def view_upcoming_events():
 
 
 @app.route('/year/<int:year>')
-@app.cache.cached(timeout=60*60*24)
+@app.cache.cached(timeout=60*60*24, key_prefix=make_cache_key)
 def view_year(year):
     # Make sure the year is valid (compared to our data)
     min_year, max_year = get_year_range()
@@ -187,7 +197,7 @@ def old_year(year, path=None):
 
 
 @app.route('/place/<place_name>')
-@app.cache.cached(timeout=60*60*24)
+@app.cache.cached(timeout=60*60*24, key_prefix=make_cache_key)
 def view_place(place_name):
     # To deal with old URL scheme
     if place_name == "online":
@@ -219,7 +229,7 @@ def view_place(place_name):
 
 
 @app.route('/place/<place_name>/past')
-@app.cache.cached(timeout=60*60*24)
+@app.cache.cached(timeout=60*60*24, key_prefix=make_cache_key)
 def view_place_past(place_name):
     if place_name == "other":
         q = Event.query.\
@@ -575,7 +585,7 @@ today_feed.make_cache_key = make_date_cache_key
 
 
 @app.route('/<any(about, other, tools):page_name>')
-@app.cache.cached(timeout=60*60*24)
+@app.cache.cached(timeout=60*60*24, key_prefix=make_cache_key)
 def static_page(page_name):
     template_name = page_name + '.html'
     return render_template(template_name)
@@ -596,7 +606,7 @@ def sponsoring():
 
 
 @app.route('/stats')
-@app.cache.cached(timeout=60*60*24)
+@app.cache.cached(timeout=60*60*24, key_prefix=make_cache_key)
 def stats():
     # Get time stats
     time_stats = {}
@@ -640,7 +650,7 @@ def stats():
 
 
 @app.errorhandler(404)
-@app.cache.cached(timeout=60*60*24*365)
+@app.cache.cached(timeout=60*60*24*365, key_prefix=make_cache_key)
 def page_not_found(error):
     return render_template('page_not_found.html'), 404
 
@@ -669,3 +679,8 @@ def sitemap():
     url_root = request.url_root[:-1]
     event_ids = [e[0] for e in db.session.query(Event.id).all()]
     return render_template('sitemap.xml', url_root=url_root, event_ids=event_ids, mimetype='text/xml')
+
+
+@app.route('/webhook/submission_email', methods=("POST",))
+def submission_email_webhook():
+    pass
