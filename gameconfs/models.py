@@ -206,6 +206,7 @@ class Event(db.Model):
             return g.is_valid
         else:
             # No -> Online event, valid.
+            self.city = None
             return True
 
     def __repr__(self):
