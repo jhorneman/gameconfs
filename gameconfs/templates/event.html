@@ -11,14 +11,14 @@
   <div itemscope itemtype="http://schema.org/Event" class="event-entry">
     <h2 itemprop="name">{{ event.name }}</h2>
     <span class="glyphicon glyphicon-calendar"></span>
-    <span class="event-date">{{ adhoc_date_or_range(event) }}</span>
+    <span class="event-date">{{ adhoc_date_or_range(event) }}</span><br/>
     {% if event.event_url %}
     <span class="glyphicon glyphicon-link"></span>
-    <span class="event-url"><a itemprop="url" href="{{ event.event_url }}" target="_blank">{{ event.event_url|pretty_url }}</a></span>
+    <span class="event-url"><a itemprop="url" href="{{ event.event_url }}" target="_blank">{{ event.event_url|pretty_url }}</a></span><br/>
     {% endif %}
     {% if event.twitter_account %}
     <span class="glyphicon glyphicon-user"></span>
-    <span class="event-twitter"><a href="http://twitter.com/{{ event.twitter_account|urlencode }}" target="_blank">@{{ event.twitter_account }}</a></span>
+    <span class="event-twitter"><a href="http://twitter.com/{{ event.twitter_account|urlencode }}" target="_blank">@{{ event.twitter_account }}</a></span><br/>
     {% endif %}
     {% if event.twitter_hashtags %}
     <span class="glyphicon glyphicon-tag"></span>
@@ -26,10 +26,10 @@
       {% for tag in event.twitter_hashtags|split %}
       <a href="http://twitter.com/search?q=%23{{ tag[1:]|urlencode }}" target="_blank">{{ tag }}</a>
       {% endfor %}
+    </span><br/>
     {% endif %}
-    </span>
     <span class="glyphicon glyphicon-globe"></span>
-    <span class="event-location" itemprop="location">{{ event|event_venue_and_location }}</span>
+    <span class="event-location" itemprop="location">{{ event|event_venue_and_location }}</span><br/>
   </div>
   <p>
       <a class="btn btn-default" href="{{ url_for('event_ics', event_id=event.id) }}">Add to calendar</a>
