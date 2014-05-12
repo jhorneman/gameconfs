@@ -128,8 +128,13 @@ def search():
         form = SearchForm()
         search_string = form.search_string.data
         if search_string:
+            query_string = "%" + search_string + "%"
             q = Event.query.\
-                filter(Event.name.ilike("%" + search_string + "%")).\
+                filter(or_(Event.name.ilike(query_string),
+                           Event.event_url.ilike(query_string),
+                           Event.twitter_hashtags.ilike(query_string),
+                           Event.twitter_account.ilike(query_string))).\
+                options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
                 order_by(Event.start_date.desc())
             found_events = q.all()
         else:
