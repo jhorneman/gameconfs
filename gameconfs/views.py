@@ -10,7 +10,6 @@ from flask.ext.security.decorators import roles_required
 from flask.ext.login import current_user
 from werkzeug.contrib.atom import AtomFeed
 from sqlalchemy.orm import *
-from sqlalchemy.sql.expression import *
 from gameconfs import app, db
 from gameconfs.models import *
 from gameconfs.jinja_filters import event_venue_and_location, event_location
@@ -127,18 +126,7 @@ def search():
     if request.method == "POST":   # Form has no validation
         form = SearchForm()
         search_string = form.search_string.data
-        if search_string:
-            query_string = "%" + search_string + "%"
-            q = Event.query.\
-                filter(or_(Event.name.ilike(query_string),
-                           Event.event_url.ilike(query_string),
-                           Event.twitter_hashtags.ilike(query_string),
-                           Event.twitter_account.ilike(query_string))).\
-                options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
-                order_by(Event.start_date.desc())
-            found_events = q.all()
-        else:
-            found_events = []
+        found_events = search_events_by_string(search_string)
     else:
         search_string = ""
         found_events = []

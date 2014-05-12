@@ -1,9 +1,23 @@
 from datetime import date
 from sqlalchemy.sql.expression import *
-from sqlalchemy import func
+from sqlalchemy.orm import *
 from flask import current_app
 from gameconfs import db
 from gameconfs.models import Event, Country, City, State, Continent
+
+
+def search_events_by_string(_search_string):
+    if not _search_string:
+        return []
+    query_string = "%" + _search_string + "%"
+    q = Event.query.\
+        filter(or_(Event.name.ilike(query_string),
+                   Event.event_url.ilike(query_string),
+                   Event.twitter_hashtags.ilike(query_string),
+                   Event.twitter_account.ilike(query_string))).\
+        options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
+        order_by(Event.start_date.desc())
+    return q.all()
 
 
 def get_x_months_ago(_start_year, _start_month, _nr_months):

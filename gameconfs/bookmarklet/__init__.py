@@ -1,6 +1,6 @@
-import re
 from flask import Blueprint, render_template, request
-from gameconfs.query_helpers import *
+from gameconfs.models import Event
+from gameconfs.query_helpers import search_events_by_string
 
 
 bookmarklet_blueprint = Blueprint('bookmarklet', __name__, url_prefix='/bookmarklet', template_folder='templates', static_folder='static')
@@ -22,14 +22,7 @@ def search():
     # document_title = request.args.get('t', '').strip()
     referring_url = request.args.get('u', '').strip()
 
-    if not search_string:
-        found_events_by_string = []
-    else:
-        found_events_by_string = Event.query. \
-            filter(or_(Event.name.ilike('%' + search_string + '%'), Event.twitter_hashtags.ilike('%' + search_string + '%'),
-                       Event.twitter_account.ilike('%' + search_string + '%'), Event.event_url.ilike('%' + search_string + '%'))). \
-            order_by(Event.start_date). \
-            all()
+    found_events_by_string = search_events_by_string(search_string)
 
     search_url = referring_url
     if search_url.endswith('/'):
