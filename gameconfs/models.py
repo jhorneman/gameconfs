@@ -223,13 +223,19 @@ def set_up_location_data(_db_session, _geocoded):
 
     # Try to find the city
     try:
-        city = _db_session.query(City).\
+        city_query = _db_session.query(City).\
             filter(City.name == _geocoded.city).\
             join(City.country).\
             filter(Country.name == _geocoded.country).\
             join(Country.continent).\
-            filter(Continent.name == _geocoded.continent).\
-            one()
+            filter(Continent.name == _geocoded.continent)
+
+        if _geocoded.is_in_a_state:
+            city_query = city_query.\
+                join(City.state).\
+                filter(State.name == _geocoded.state)
+
+        city = city_query. one()
         logger.debug("Found city " + _geocoded.city)
 
         country = city.country
