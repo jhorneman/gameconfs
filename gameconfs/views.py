@@ -672,8 +672,3 @@ def sitemap():
     url_root = request.url_root[:-1]
     event_ids = [e[0] for e in db.session.query(Event.id).all()]
     return render_template('sitemap.xml', url_root=url_root, event_ids=event_ids, mimetype='text/xml')
-
-
-@app.route('/webhook/submission_email', methods=("POST",))
-def submission_email_webhook():
-    pass
