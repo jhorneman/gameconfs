@@ -1,10 +1,22 @@
+import logging
 import bmemcached
+from app_logging import add_logger
+
+
+logger = logging.getLogger(__name__)
+add_logger(logger)
+
 
 # bmemcached (https://github.com/jaysonsantos/python-binary-memcached/blob/master/bmemcached/client.py)
 # has a slightly different interface from what Flask-Cache expects
 # so we need to fix this
 # The 'timeout' keyword parameter is called 'time'
 # The 'clean' method is called 'flush_all'
+
+# Also, we catch most exceptions and quietly deal with them.
+# RedisLabs' memcached does service maintenance about once a month, and this breaks the app if
+# we don't catch it.
+# set_servers is the connection method, and we want those exceptions to propagate.
 
 
 class InterfaceFixCacheClient(bmemcached.Client):
@@ -20,7 +32,16 @@ class InterfaceFixCacheClient(bmemcached.Client):
                 if 'timeout' in kwargs:
                     kwargs['time'] = kwargs['timeout']
                     del kwargs['timeout']
-                result = attr(*args, **kwargs)
+
+                try:
+                    result = attr(*args, **kwargs)
+                except BaseException, e:
+                    if name == "set_servers":
+                        raise e
+                    else:
+                        logger.error("memcached error: " + str(e))
+                        result = None
+
                 return result
             return wrapped
         else:
