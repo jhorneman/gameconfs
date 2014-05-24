@@ -59,9 +59,9 @@ def filter_by_period(_query, _start_year, _start_month, _nr_months = 1):
     return filter_by_period_start_end(_query, period_start, period_end)
 
 
-def filter_by_period_start_end(_query, _period_start, _period_end):
-    return _query.filter(or_(and_(Event.start_date >= _period_start, Event.start_date < _period_end),
-                             and_(Event.end_date >= _period_start, Event.end_date < _period_end)))
+def filter_by_period_start_end(_query, _period_start, _day_after_period_end):
+    return _query.filter(or_(and_(Event.start_date >= _period_start, Event.start_date < _day_after_period_end),
+                             and_(Event.end_date >= _period_start, Event.end_date < _day_after_period_end)))
 
 
 def filter_by_year(_query, _year):
