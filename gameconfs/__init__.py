@@ -62,10 +62,10 @@ def create_app(_run_mode=None):
 
         app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
 
-        app.config["CACHE_TYPE"] = "gameconfs.caching.bmemcached_cache"
-        app.config["CACHE_MEMCACHED_SERVERS"] = ["0.0.0.0:11211"]
-        app.config["CACHE_MEMCACHED_USERNAME"] = None
-        app.config["CACHE_MEMCACHED_PASSWORD"] = None
+        # app.config["CACHE_TYPE"] = "gameconfs.caching.bmemcached_cache"
+        # app.config["CACHE_MEMCACHED_SERVERS"] = ["0.0.0.0:11211"]
+        # app.config["CACHE_MEMCACHED_USERNAME"] = None
+        # app.config["CACHE_MEMCACHED_PASSWORD"] = None
 
         app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False  # Otherwise this gets annoying real fast
         DebugToolbarExtension(app)
@@ -145,6 +145,9 @@ def create_app(_run_mode=None):
 
     from gameconfs.admin import admin_blueprint
     app.register_blueprint(admin_blueprint)
+
+    from gameconfs.api import api_blueprint
+    app.register_blueprint(api_blueprint)
 
     # Set up Jinja 2 filters
     set_up_jinja_filters(app)
