@@ -9,8 +9,7 @@ from flask import render_template, request, send_from_directory, flash, redirect
 from flask.ext.security.decorators import roles_required
 from flask.ext.login import current_user
 from werkzeug.contrib.atom import AtomFeed
-from sqlalchemy.orm import *
-from gameconfs import app, db
+from gameconfs import app
 from gameconfs.models import *
 from gameconfs.jinja_filters import event_venue_and_location, event_location
 from gameconfs.forms import EventForm, SearchForm
