@@ -53,6 +53,8 @@ def query_events(_query_object, _reporter):
         order_by(Event.start_date.asc()).\
         options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
 
+    valid_query = False
+
     # Date or date range filters
     if "date" in _query_object:
         query_date = get_date(_query_object, "date", _reporter)
@@ -61,6 +63,7 @@ def query_events(_query_object, _reporter):
 
         q = q.filter(or_(and_(Event.start_date >= query_date, Event.start_date <= query_date),
                          and_(Event.end_date >= query_date, Event.end_date <= query_date)))
+        valid_query = True
 
     elif "start-date" in _query_object:
         if "end-date" not in _query_object:
@@ -74,6 +77,7 @@ def query_events(_query_object, _reporter):
 
         q = q.filter(or_(and_(Event.start_date >= start_date, Event.start_date <= end_date),
                          and_(Event.end_date >= start_date, Event.end_date <= end_date)))
+        valid_query = True
 
     elif "end-date" in _query_object:
         _reporter("Found end date but not start date.")
@@ -84,6 +88,7 @@ def query_events(_query_object, _reporter):
     if place_name:
         if place_name == "online":
             place_name = "other"
+        valid_query = True
 
         if place_name == "other":
             q = q.filter(Event.city == None)
@@ -96,7 +101,12 @@ def query_events(_query_object, _reporter):
     # Event name filter
     event_name = get_string(_query_object, "event-name", _reporter)
     if event_name:
+        valid_query = True
         q = q.filter(Event.name.ilike("%" + event_name + "%"))
+
+    if not valid_query:
+        _reporter("Query must contain at least one criterion.")
+        return []
 
     return q.all()
 
