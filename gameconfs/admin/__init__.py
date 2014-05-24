@@ -1,4 +1,3 @@
-import re
 from datetime import date
 from flask import Blueprint, render_template
 from sqlalchemy.sql.expression import *
