@@ -64,10 +64,11 @@
       </div>
       {% if not kill_email %}
       <div class="pull-right">
-        <button class="btn btn-info" data-toggle="modal" data-target="#feedbackForm">Send feedback</button>
+        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#feedbackForm">Send feedback</button>
       </div>
       {% endif %}
     </div>
+    <div class="clearfix"></div>
     {% if logged_in %}
     <div id="admin-bar">
       <a class="btn btn-sm btn-primary" href="{{ url_for('admin.index') }}">Dashboard</a>
