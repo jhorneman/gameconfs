@@ -43,6 +43,16 @@ class RegexIconURLConverter(BaseConverter):
         self.regex = items[0]
 
 
+def load_kill_switch(_killswitch_name):
+    full_name = "GAMECONFS_" + _killswitch_name
+    switch_value = os.environ.get(full_name, False)
+    if isinstance(switch_value, basestring):
+        switch_value = switch_value.lower() in ["1", "yes", "y", "true"]
+    else:
+        switch_value = bool(switch_value)
+    app.config[full_name] = switch_value
+
+
 def create_app(_run_mode=None):
     # Create Flask app
     global app
@@ -50,8 +60,9 @@ def create_app(_run_mode=None):
     app = Flask("gameconfs", template_folder=template_dir)
 
     # Load kill switches
-    app.config["GAMECONFS_KILL_CACHE"] = os.environ.get("GAMECONFS_KILL_CACHE", False)
-    app.config["GAMECONFS_KILL_EDITING"] = os.environ.get("GAMECONFS_KILL_EDITING", False)
+    load_kill_switch("KILL_CACHE")
+    load_kill_switch("KILL_EDITING")
+    load_kill_switch("KILL_EMAIL")
 
     # Load default configuration
     app.config.from_object("gameconfs.default_config")
@@ -66,6 +77,9 @@ def create_app(_run_mode=None):
         # app.config["CACHE_MEMCACHED_SERVERS"] = ["0.0.0.0:11211"]
         # app.config["CACHE_MEMCACHED_USERNAME"] = None
         # app.config["CACHE_MEMCACHED_PASSWORD"] = None
+
+        app.config["MAIL_SERVER"] = "localhost"
+        app.config["MAIL_PORT"] = 1025
 
         app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False  # Otherwise this gets annoying real fast
         DebugToolbarExtension(app)

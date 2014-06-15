@@ -8,6 +8,7 @@ import pytz
 from flask import render_template, request, send_from_directory, flash, redirect, url_for, Response, make_response
 from flask.ext.security.decorators import roles_required
 from flask.ext.login import current_user
+from flask.ext.mail import Message
 from werkzeug.contrib.atom import AtomFeed
 from gameconfs import app
 from gameconfs.models import *
@@ -44,7 +45,8 @@ def sponsoring_turned_on():
 def inject_common_values():
     common_values = {
         "logged_in":    user_can_edit(),
-        "sponsor":      None
+        "sponsor":      None,
+        "kill_email":   app.config["GAMECONFS_KILL_EMAIL"]
     }
     if sponsoring_turned_on():
         common_values["sponsor"] = Sponsor()
@@ -557,7 +559,12 @@ recent_feed.make_cache_key = make_date_cache_key
 
 @app.route('/feedback', methods=("POST",))
 def feedback():
-    feedback_text = get_request_parameters()
+    if app.config["GAMECONFS_KILL_EMAIL"]:
+        return "", 500
+
+    msg = Message("User feedback", recipients=["admin@gameconfs.com"])
+    msg.body = get_request_parameters()
+    app.mail.send(msg)
     return ""
 
 

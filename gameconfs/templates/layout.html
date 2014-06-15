@@ -62,9 +62,11 @@
       <div class="pull-left">
         <p><strong>Gameconfs</strong> - a directory of game industry events.</p>
       </div>
+      {% if not kill_email %}
       <div class="pull-right">
         <button class="btn btn-info" data-toggle="modal" data-target="#feedbackForm">Send feedback</button>
       </div>
+      {% endif %}
     </div>
     {% if logged_in %}
     <div id="admin-bar">
@@ -102,6 +104,7 @@
       <br/>
       <p class="text-muted">&copy; 2012-2014 Jurie Horneman</p>
     </div>
+    {% if not kill_email %}
     <div class="modal fade" id="feedbackForm" tabindex="-1" role="dialog" aria-labelledby="feedbackFormLabel" aria-hidden="true">
       <div class="modal-header">
         <div class="modal-dialog">
@@ -124,6 +127,7 @@
         </div>
       </div>
     </div>
+    {% endif %}
   </div>
   <script src="{{ url_for('static', filename='js/all.min.js') }}"></script>
 {% block end_of_body %}{% endblock %}
