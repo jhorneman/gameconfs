@@ -20,7 +20,8 @@ module.exports = function(grunt) {
           'gameconfs/static/js/all.min.js': [
               'gameconfs/static/js/jquery-1.9.1.js',
               'gameconfs/static/js/jquery-ui.js',
-              'gameconfs/static/js/bootstrap.js'
+              'gameconfs/static/js/bootstrap.js',
+              'gameconfs/static/js/main.js'
           ]
         }
       }

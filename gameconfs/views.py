@@ -16,6 +16,16 @@ from gameconfs.forms import EventForm, SearchForm
 from gameconfs.query_helpers import *
 
 
+def get_request_parameters():
+    if request.data:
+        return request.data
+    else:
+        try:
+            return request.form.keys()[0]
+        except IndexError:
+            return None
+
+
 class Sponsor(object):
     def __init__(self):
         self.target_url = "http://www.intelligent-artifice.com/"
@@ -547,7 +557,8 @@ recent_feed.make_cache_key = make_date_cache_key
 
 @app.route('/feedback', methods=("POST",))
 def feedback():
-    return request.form['feedback']
+    feedback_text = get_request_parameters()
+    return ""
 
 
 @app.route('/today.atom')
