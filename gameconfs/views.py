@@ -545,6 +545,11 @@ def recent_feed():
 recent_feed.make_cache_key = make_date_cache_key
 
 
+@app.route('/feedback', methods=("POST",))
+def feedback():
+    return request.form['feedback']
+
+
 @app.route('/today.atom')
 @app.cache.cached(timeout=60*60*24)
 def today_feed():

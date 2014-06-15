@@ -225,7 +225,7 @@ table.bars .bar_label {
     margin-left: 0.5em;
 }
 
-/* Sponsor */
+/* Sponsoring */
 
 #sponsor a, #sponsor a:visited, #sponsor a:active, #sponsor a:focus {
     color: rgb(51, 51, 51);
@@ -234,4 +234,9 @@ table.bars .bar_label {
 
 #sponsor a:hover {
     background: #eee;
+}
+
+/* Feedback form */
+#feedbackForm form {
+    margin-bottom: 0;
 }

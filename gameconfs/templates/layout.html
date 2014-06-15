@@ -60,6 +60,9 @@
   <div class="container">
     <div class="title">
       <p><strong>Gameconfs</strong> - a directory of game industry events.</p>
+      <div class="pull-right">
+        <a href="#feedbackForm" class="btn btn-info" data-toggle="modal">Send feedback</a>
+      </div>
     </div>
     {% if logged_in %}
     <div id="admin-bar">
@@ -96,6 +99,21 @@
       </ul>
       <br/>
       <p class="text-muted">&copy; 2012-2014 Jurie Horneman</p>
+    </div>
+    <div id="feedbackForm" class="modal  fade" tabindex="-1">
+      <div class="modal-header">
+        <h3 id="myModalLabel">Hello</h3>
+      </div>
+      <form class="form-horizontal" method="POST" action="{{ url_for("feedback") }}">
+        <div class="modal-body">
+          <p>Is an event missing? Did you spot a mistake? Is there a feature you'd really like to see? Please let us know!</p>
+          <textarea id="feedbackText" class="input-block-level" name="feedback" placeholder="" rows="4"></textarea>
+        </div>
+        <div class="modal-footer">
+          <button type="submit" class="btn btn-primary">Save</button>
+          <a class="btn" data-dismiss="modal" href="/">Cancel</a>
+        </div>
+      </form>
     </div>
   </div>
   <script src="{{ url_for('static', filename='js/all.min.js') }}"></script>
