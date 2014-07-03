@@ -228,8 +228,11 @@ def view_place(place_name):
     q = filter_by_period(q, today.year, 1, 12)
     events = q.all()
 
+    is_in_uk = place_name.lower() == "united kingdom"
+    is_in_london = place_name.lower() == "london"
+
     return render_template('place.html', body_id='place', events=events, location=location,
-                           year=today.year)
+                           year=today.year, is_in_uk=is_in_uk, is_in_london=is_in_london)
 
 
 @app.route('/place/<place_name>/past')

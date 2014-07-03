@@ -12,6 +12,12 @@
   {% else %}
   <h2>Events in {{ location }} in {{ year }}</h2>
   {% endif %}
+  {% if is_in_london %}
+  <p>You may be able to find more London events at <a href="http://www.londongamediary.com" target="_blank">London Game Diary</a> or
+  <a href="http://www.gamingevents.co.uk" target="_blank">GamingEvents.co.uk</a>.</p>
+  {% elif is_in_uk %}
+  <p>You may be able to find more UK events on <a href="http://www.gamingevents.co.uk" target="_blank">GamingEvents.co.uk</a>.</p>
+  {% endif %}
   {% if events %}
   <div class="monthly-event-list">
 	{% for month_group in events|sort(attribute='start_date')|groupby('start_date.month') %}
