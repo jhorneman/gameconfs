@@ -229,6 +229,9 @@ def view_place(place_name):
     events = q.all()
 
     is_in_uk = place_name.lower() == "united kingdom"
+    if len(events) > 0:
+        if events[0].city.country_id == 5:
+            is_in_uk = True
     is_in_london = place_name.lower() == "london"
 
     return render_template('place.html', body_id='place', events=events, location=location,
