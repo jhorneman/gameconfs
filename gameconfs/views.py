@@ -141,7 +141,12 @@ def search():
     else:
         search_string = ""
         found_events = []
-    return render_template('search.html', body_id="search", search_string=search_string, found_events=found_events)
+    return render_template(
+        'search.html',
+        body_id="search",
+        search_string=search_string,
+        found_events=found_events,
+        form=SearchForm())
 
 
 @app.route('/event/<int:event_id>')

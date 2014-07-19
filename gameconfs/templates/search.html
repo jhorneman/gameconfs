@@ -16,4 +16,14 @@
 	{% else %}
   <p>We don't know of any events called "{{ search_string}}".</p>
   {% endif %}
+  <p><br/>
+  <form class="form-inline" method="POST" action="{{ url_for('search') }}">
+    {{ form.hidden_tag() }}
+    <div class="form-group">
+      <label class="sr-only" for="search">Event name</label>
+      {{ form.search_string(id="search", class="form-control input-sm", placeholder="Amazing game event") }}
+    </div>
+    <button type="submit" class="btn btn-sm btn-primary">Search again</button>
+  </form>
+  </p>
 {% endblock %}
