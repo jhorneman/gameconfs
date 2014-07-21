@@ -24,7 +24,6 @@ import logging
 from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
-from flask_principal import Principal
 from flask.ext.security import Security, SQLAlchemyUserDatastore
 from flask.ext.mail import Mail
 from werkzeug.routing import BaseConverter
@@ -139,9 +138,6 @@ def create_app(_run_mode=None):
     if app.config["GAMECONFS_KILL_CACHE"]:
         app.config["CACHE_TYPE"] = "null"
     set_up_cache(app)
-
-    # Load the Principal extension
-    app.principals = Principal(app)
 
     # Import the views, to apply the decorators which use the global app object.
     app.url_map.converters['regex'] = RegexIconURLConverter
