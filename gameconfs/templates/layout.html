@@ -40,15 +40,15 @@
       <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
       <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
     <![endif]-->
-    <script type="text/javascript">
-      var _gaq = _gaq || [];
-      _gaq.push(['_setAccount', 'UA-1597509-6']);
-      _gaq.push(['_trackPageview']);
-      (function() {
-        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
-        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
-        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
-      })();
+    <script>
+      (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+      (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+      m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
+
+      ga('create', 'UA-1597509-6', 'auto');
+      ga('send', 'pageview');
+
     </script>
     {% endif %}
   </head>
@@ -87,7 +87,14 @@
         <h2>&nbsp;</h2>
         <div id="sponsor">
           <p><span class="text-muted">This month's sponsor:</span><br/>
-          <a href="{{ sponsor.target_url }}" target="_blank">{{ sponsor.text }}</a></p>
+          <a href="{{ sponsor.target_url }}" onclick="trackSponsorLink('{{ sponsor.target_url }}'); return false;" target="_blank">
+          {% if sponsor.image_path %}
+            <img src="{{ url_for('static', filename=sponsor.image_path) }}" alt="{{ sponsor.alt_text }}">
+          {% endif %}
+          {% if sponsor.text %}
+            {{ sponsor.text }}
+          {% endif %}
+          </a></p>
         </div>
       </div>
       {% endif %}
