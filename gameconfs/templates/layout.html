@@ -89,7 +89,7 @@
           <p><span class="text-muted">This month's sponsor:</span><br/>
           <a href="{{ sponsor.target_url }}" onclick="trackSponsorLink('{{ sponsor.target_url }}'); return false;" target="_blank">
           {% if sponsor.image_path %}
-            <img src="{{ url_for('static', filename=sponsor.image_path) }}" alt="{{ sponsor.alt_text }}">
+            <img src="{{ url_for('static', filename=sponsor.image_path) }}" alt="{{ sponsor.alt_text }}" width="320">
           {% endif %}
           {% if sponsor.text %}
             {{ sponsor.text }}

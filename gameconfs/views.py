@@ -39,7 +39,7 @@ class GamingInsidersSponsor(object):
     def __init__(self):
         self.target_url = "http://www.gaminginsiders.com/register?utm_source=Gameconfs&utm_medium=sponsorship&utm_campaign=PricesGoUpMonday"
         self.text = None
-        self.image_path = "img/sponsors/gaming_insiders/AD1.jpg"
+        self.image_path = "img/sponsors/gaming_insiders/pricesgoupmonday.png"
         self.alt_text = ""
 
 
@@ -50,7 +50,8 @@ def user_can_edit():
 def sponsoring_turned_on():
     if app.config["GAMECONFS_KILL_SPONSORING"]:
         return False
-    return request.cookies.get("sponsoring") == "true"
+    return True
+    # return request.cookies.get("sponsoring") == "true"
 
 
 @app.context_processor
