@@ -62,6 +62,7 @@ def create_app(_run_mode=None):
     load_kill_switch("KILL_CACHE")
     load_kill_switch("KILL_EDITING")
     load_kill_switch("KILL_EMAIL")
+    load_kill_switch("KILL_SPONSORING")
 
     # Load default configuration
     app.config.from_object("gameconfs.default_config")
