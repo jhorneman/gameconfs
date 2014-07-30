@@ -633,7 +633,7 @@ def static_page(page_name):
 def sponsoring():
     if request.method == "POST":
         if "on_button" in request.form:
-            resp = make_response(render_template('sponsoring.html', sponsoring_state=True, sponsor=Sponsor()))
+            resp = make_response(render_template('sponsoring.html', sponsoring_state=True, sponsor=GamingInsidersSponsor()))
             resp.set_cookie("sponsoring", "true")
         else:
             resp = make_response(render_template('sponsoring.html', sponsoring_state=False, sponsor=None))
