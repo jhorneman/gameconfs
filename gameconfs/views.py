@@ -39,7 +39,7 @@ class GamingInsidersSponsor(object):
     def __init__(self):
         self.target_url = "http://www.gaminginsiders.com/?utm_source=Gameconfs&utm_medium=sponsorship&utm_campaign=PricesGoUpMonday"
         self.text = None
-        self.image_path = "img/sponsors/gaming_insiders/pricesgoupmonday.png"
+        self.image_path = "img/sponsors/gaming_insiders/gameconfsadaug5.png"
         self.alt_text = ""
 
 
