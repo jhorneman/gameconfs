@@ -29,7 +29,7 @@ def search():
         search_url = search_url[:-1]
     found_events_by_url = Event.query. \
         filter(Event.event_url.ilike('%' + search_url + '%')). \
-        order_by(Event.start_date). \
+        order_by(Event.start_date.desc()). \
         all()
 
     return render_template('bookmarklet/search.html', search_string=search_string,
