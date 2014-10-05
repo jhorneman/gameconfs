@@ -8,9 +8,6 @@ from gameconfs.geocoder import GeocodeResults
 
 
 class GeocoderTestCase(unittest.TestCase):
-    def __init__(self, *args, **kwargs):
-        unittest.TestCase.__init__(self, *args, **kwargs)
-
     def test_vienna(self):
         g = GeocodeResults("Naturhistorisches Museum in Vienna, Austria")
         ok_(g.is_valid)
