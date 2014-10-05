@@ -100,7 +100,7 @@ def make_cache_key():
         cache_key += "-edit"
     if sponsoring_turned_on():
         cache_key += "-sponsor"
-    app.logger.info(cache_key)
+    app.logger.info("Cache key: " + cache_key)
     return cache_key
 
 
