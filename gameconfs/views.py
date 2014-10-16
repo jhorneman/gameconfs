@@ -43,6 +43,14 @@ class GamingInsidersSponsor(object):
         self.alt_text = ""
 
 
+class GameConnectionSponsor(object):
+    def __init__(self):
+        self.target_url = "http://www.game-connection.com/conference"
+        self.text = None
+        self.image_path = "img/sponsors/game_connection.jpg"
+        self.alt_text = ""
+
+
 def user_can_edit():
     return current_user and current_user.is_authenticated() and not current_app.config["GAMECONFS_KILL_EDITING"]
 
@@ -62,7 +70,7 @@ def inject_common_values():
         "kill_email":   app.config["GAMECONFS_KILL_EMAIL"]
     }
     if sponsoring_turned_on():
-        common_values["sponsor"] = GamingInsidersSponsor()
+        common_values["sponsor"] = GameConnectionSponsor()
     return common_values
 
 
