@@ -70,7 +70,7 @@ def inject_common_values():
         "kill_email":   app.config["GAMECONFS_KILL_EMAIL"]
     }
     if sponsoring_turned_on():
-        common_values["sponsor"] = GameConnectionSponsor()
+        common_values["sponsor"] = None
     return common_values
 
 
