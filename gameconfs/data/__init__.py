@@ -26,5 +26,8 @@ def cities():
         options(joinedload('country')).\
         order_by(City.name).\
         all()
-    data = [{'value': d.name, 'country': d.country.name} for d in data]
+    data = [{
+                'value': '%s, %s' % (d.name, d.country.name),
+                'id': d.id
+            } for d in data]
     return json.dumps(data)

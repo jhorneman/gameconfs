@@ -40,11 +40,11 @@ function initEditEventPage() {
     $('#address').typeahead({
         name: 'cities',
         prefetch: '/data/cities.json',
-        template: function(datum) {
-            return '<p>'+datum.value+', '+datum.country+'</p>';
-        },
         limit: 10
     });
+
+    $('#address').on('typeahead:selected', cityAutoSelected);
+    $('#address').on('typeahead:autoCompleted', cityAutoSelected);
 
     $('#series').typeahead({
         name: 'series',
@@ -53,11 +53,15 @@ function initEditEventPage() {
     });
 
     $('#submit-button')
-        .on('click', function(evt) {
+        .on('click', function(_evt) {
             if (!isEventValid()) {
-                evt.preventDefault();
+                _evt.preventDefault();
             }
         });
+}
+
+function cityAutoSelected(_evt, _datum, _datasetName) {
+    $('#city_id').val(_datum.id);
 }
 
 // Doing this by hand instead of loading Modernizr just for this one function.

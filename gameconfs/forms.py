@@ -1,5 +1,5 @@
 from flask.ext.wtf import Form
-from wtforms import TextField
+from wtforms import TextField, HiddenField
 from wtforms.validators import InputRequired, ValidationError
 from flask.ext.wtf.html5 import URLField, DateField
 from datetime import date
@@ -15,6 +15,7 @@ class EventForm(Form):
     venue = TextField('Venue')
     address = TextField('City')
     series = TextField('Series')
+    city_id = HiddenField()
 
     def validate_end_date(form, field):
         if field.data < form.start_date.data:
