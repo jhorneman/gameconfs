@@ -336,19 +336,43 @@ def create_new_event():
                 db.session.add(series)
             new_event.series = series
 
+        # Try to extract a city ID from the hidden field set by the automcompletion system.
+        # This helps us avoid using geolocation if it's not necessary.
         try:
-            if not new_event.set_location(db.session, form.venue.data, form.address.data):
+            city_id = form.city_id.data
+            if city_id is not None:
+                city_id = int(city_id)
+        except ValueError:
+            city_id = None
+
+        try:
+            if city_id:
+                new_event.city_id = city_id
+
+                # TODO: Refactor this, it's copied from Event.set_location()
+                venue = form.venue.data
+                if venue is None:
+                    venue = ""
+                new_event.venue = venue.strip()
+
+                address_for_geocoding = form.address.data
+                if address_for_geocoding is None:
+                    address_for_geocoding = ""
+                new_event.address_for_geocoding = address_for_geocoding.strip()
+
+            elif not new_event.set_location(db.session, form.venue.data, form.address.data):
                 raise EventSaveException("Location setting failed.")
-        except EventSaveException as e:
+        except Exception as e:
             # Get rid of whatever was done to the session or it will cause trouble later
             db.session.expunge_all()
-            if e.flash_message:
+            if hasattr(e, "flash_message"):
                 flash(e.flash_message, "error")
         else:
             db.session.add(new_event)
             db.session.commit()
             app.cache.clear()
             return redirect(url_for('view_event', event_id=new_event.id))
+
     return render_template('edit_event.html', body_id="edit-event", form=form, event_id=None,
                            view_name='create_new_event')
 
