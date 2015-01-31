@@ -336,7 +336,7 @@ def create_new_event():
                 db.session.add(series)
             new_event.series = series
 
-        # Try to extract a city ID from the hidden field set by the automcompletion system.
+        # Try to extract a city ID from the hidden field set by the auto-completion system.
         # This helps us avoid using geolocation if it's not necessary.
         try:
             city_id = form.city_id.data
