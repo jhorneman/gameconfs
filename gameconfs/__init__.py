@@ -71,7 +71,7 @@ def create_app(_run_mode=None):
     if _run_mode == "dev":
         app.config["DEBUG"] = True
 
-        app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
+        app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gameconfs@localhost:5432/gameconfs"
 
         # app.config["CACHE_TYPE"] = "gameconfs.caching.bmemcached_cache"
         # app.config["CACHE_MEMCACHED_SERVERS"] = ["0.0.0.0:11211"]
