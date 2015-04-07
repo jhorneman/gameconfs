@@ -60,13 +60,11 @@
   <div class="container">
     <div class="title">
       <div class="pull-left">
-        <p><strong>Gameconfs</strong> - a directory of game industry events.</p>
+        <p><a href="{{ url_for('index') }}"><strong>Gameconfs</strong> - a directory of game industry events.</a></p>
       </div>
-      {% if not kill_email %}
       <div class="pull-right">
-        <button class="btn btn-sm btn-info" data-toggle="modal" data-target="#feedbackForm">Send feedback</button>
+        <a class="btn btn-sm btn-info" href="{{ url_for('submit_event') }}">Submit an event</a>
       </div>
-      {% endif %}
     </div>
     <div class="clearfix"></div>
     {% if logged_in %}
@@ -112,30 +110,6 @@
       <br/>
       <p class="text-muted">&copy; 2012-2014 Jurie Horneman</p>
     </div>
-    {% if not kill_email %}
-    <div class="modal fade" id="feedbackForm" tabindex="-1" role="dialog" aria-labelledby="feedbackFormLabel" aria-hidden="true">
-      <div class="modal-header">
-        <div class="modal-dialog">
-          <div class="modal-content">
-            <div class="modal-header">
-              <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-              <h4 class="modal-title" id="feedbackFormLabel">Hi there</h4>
-            </div>
-            <div class="modal-body">
-              <p>Is an event missing? Did you spot a mistake? Is there a feature you'd really like to see? Please let me know! <em>Add your email address if you want a reply :)</em></p>
-              <form>
-                <textarea id="feedbackText" class="form-control" name="feedback" placeholder="" rows="4"></textarea>
-              </form>
-            </div>
-            <div class="modal-footer">
-              <button class="btn btn-default" data-dismiss="modal">Cancel</button>
-              <button class="btn btn-primary" onclick="submitFeedbackDialog();">Send</button>
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    {% endif %}
   </div>
   <script src="{{ url_for('static', filename='js/all.min.js') }}"></script>
 {% block end_of_body %}{% endblock %}

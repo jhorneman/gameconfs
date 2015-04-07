@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+{% block title %}Submit an event{% endblock %}
+{% block content %}
+    <h2>Submit an event</h2>
+    <p>Can't find an event on Gameconfs? It's possible! Please let me know about it and I will add it.</p>
+    <p>(You did try searching, right?)<br/>
+    <form class="form-inline" method="POST" action="{{ url_for('search') }}">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        <label class="sr-only" for="search">Event name</label>
+        {{ form.search_string(id="search", class="form-control input-sm", placeholder="Amazing game event") }}
+      </div>
+      <button type="submit" class="btn btn-sm btn-primary">Search</button>
+    </form></p>
+    <p>Here are the rules:
+    <ul>
+    <li>No gambling events.</li>
+    <li>No small meetups or game jams - they're great but this is not the right site. (But maybe <a href="{{ url_for('static_page', page_name='other') }}">one of these</a> is.)</li>
+    <li>Must have some video game-related content.</li>
+    </ul></p>
+    <p>And here is what I need to know:
+    <ul>
+    <li>The title of the event. Include the abbreviated form, e.g. GDC, if appropriate.</li>
+    <li>The dates.</li>
+    <li>The URL of the event website.</li>
+    <li>The venue.</li>
+    <li>The city and country where it takes place.</li>
+    <li>The Twitter account for the event, if any.</li>
+    <li>The Twitter hashtag for the event, if any. Gameconfs will tweet it on the day of the event!</li>
+    </ul></p>
+    <p>Got all of that? Then please <a href="{{ mailto("admin@gameconfs.com", "I want to submit an event", "Hello Jurie.") }}">send me an email</a>. Thanks!</p>
+{% endblock %}

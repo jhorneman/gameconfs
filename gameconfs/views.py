@@ -5,6 +5,7 @@ from datetime import date, datetime, timedelta, time
 from calendar import monthrange
 import icalendar
 import pytz
+import urllib
 from flask import render_template, request, send_from_directory, flash, redirect, url_for, Response, make_response
 from flask.ext.security.decorators import roles_required
 from flask.ext.login import current_user
@@ -62,15 +63,32 @@ def sponsoring_turned_on():
     # return request.cookies.get("sponsoring") == "true"
 
 
+def mailto(_address, _subject=None, _body=None):
+    result = "mailto:" + _address
+
+    params = {}
+    if _subject:
+        params["subject"] = _subject
+    if _body:
+        params["body"] = _body
+
+    if len(params):
+        result += "?" + "&".join(["%s=%s" % (k, urllib.quote(v)) for k,v in params.items()])
+
+    return result
+
+
 @app.context_processor
 def inject_common_values():
     common_values = {
-        "logged_in":    user_can_edit(),
-        "sponsor":      None,
-        "kill_email":   app.config["GAMECONFS_KILL_EMAIL"]
+        "logged_in"     : user_can_edit(),
+        "sponsor"       : None,
+        "kill_email"    : app.config["GAMECONFS_KILL_EMAIL"],
+        "mailto"        : mailto
     }
     if sponsoring_turned_on():
         common_values["sponsor"] = None
+
     return common_values
 
 
@@ -138,13 +156,14 @@ def index():
         all()
     continents.append({"name": "Other"})
 
-    return {"body_id": "index",
-            "ongoing_events": ongoing_events,
-            "min_year": min_year,
-            "max_year": max_year,
-            "countries": countries,
-            "continents": continents,
-            "form": SearchForm()
+    return {
+        "body_id": "index",
+        "ongoing_events": ongoing_events,
+        "min_year": min_year,
+        "max_year": max_year,
+        "countries": countries,
+        "continents": continents,
+        "form": SearchForm()
     }
 
 
@@ -304,6 +323,15 @@ def view_series(series_id):
     events = q.all()
 
     return render_template('series.html', body_id='series', events=events, series=series)
+
+
+@app.route('/submit')
+@templated()
+def submit_event():
+    return {
+        "body_id": "submit",
+        "form": SearchForm()
+    }
 
 
 class EventSaveException(Exception):
