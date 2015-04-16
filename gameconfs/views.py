@@ -52,6 +52,14 @@ class GameConnectionSponsor(object):
         self.alt_text = ""
 
 
+class GameAIDevSponsor(object):
+    def __init__(self):
+        self.target_url = "http://nucl.ai/?utm_source=gameconfs&utm_medium=banner&utm_campaign=Gameconfs%20April%2015"
+        self.text = None
+        self.image_path = "img/sponsors/gameaidev/nuclai15_button5_320.png"
+        self.alt_text = ""
+
+
 def user_can_edit():
     return current_user and current_user.is_authenticated() and not current_app.config["GAMECONFS_KILL_EDITING"]
 
@@ -82,11 +90,11 @@ def mailto(_address, _subject=None, _body=None):
 def inject_common_values():
     common_values = {
         "logged_in"     : user_can_edit(),
-        "sponsor"       : None,
+        "sponsor"       : GameAIDevSponsor(),
         "kill_email"    : app.config["GAMECONFS_KILL_EMAIL"],
         "mailto"        : mailto
     }
-    if sponsoring_turned_on():
+    if not sponsoring_turned_on():
         common_values["sponsor"] = None
 
     return common_values
