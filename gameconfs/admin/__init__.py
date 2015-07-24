@@ -1,6 +1,7 @@
 from datetime import date
 from flask import Blueprint, render_template
 from sqlalchemy.sql.expression import *
+from sqlalchemy.orm import joinedload
 from flask.ext.security.decorators import roles_required
 from gameconfs.models import *
 from gameconfs.views import editing_kill_check
@@ -57,25 +58,32 @@ def view_problematic_events():
 @roles_required('admin')
 def view_events_due_for_update():
     today = date.today()
-    if today.month == 2 and today.day == 29:
-        a_year_ago = date(today.year-1, today.month, today.day-1)
-    else:
-        a_year_ago = date(today.year-1, today.month, today.day)
+
+    # We need to find a time that is a year plus the time since the last time we checked this ago.
+    # We assume this list will be checked at least every 6 months.
+    new_year = today.year - 1
+    new_month = today.month - 6
+    if new_month < 1:
+        new_year -= 1
+        new_month += 6
+    a_while_ago = date(new_year, new_month, today.day)
 
     events_due_for_update = Event.query.\
         filter(and_(Event.series_id == None,
-                    Event.start_date >= a_year_ago,
+                    Event.start_date >= a_while_ago,
                     Event.start_date < today)).\
         order_by(Event.start_date.asc()).\
+        options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
         all()
 
     for series in Series.query.all():
         event = Event.query.\
             filter(Event.series_id == series.id).\
             order_by(Event.start_date.desc()).\
+            options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
             first()
         if event:
-            if event.start_date >= a_year_ago and event.start_date < today:
+            if event.start_date >= a_while_ago and event.start_date < today:
                 events_due_for_update.append(event)
 
     events_due_for_update = sorted(events_due_for_update, key=lambda event: event.start_date)
