@@ -17,13 +17,13 @@ heroku pgbackups:restore DATABASE 'http://www.intelligent-artifice.com/data.dump
 
 To grab database backup from live server on Heroku:
 
-heroku pgbackups:capture --expire && curl -o latest.dump `heroku pgbackups:url`
+heroku pg:backups capture && curl -o latest.dump `heroku pg:backups public-url`
 
-(Source: https://devcenter.heroku.com/articles/heroku-postgres-import-export)
+(Source: https://devcenter.heroku.com/articles/heroku-postgres-backups)
 
 To import Heroku database backup into local Postgres:
 
-pg_restore --verbose --clean --no-acl --no-owner --host localhost --port 5432 --username "gdcal-dev" --dbname "gdcal-dev" latest.dump
+pg_restore --verbose --clean --no-acl --no-owner --host localhost --port 5432 --username "gameconfs" --dbname "gameconfs" latest.dump
 
 (The user is important! See: http://www.softr.li/blog/2012/07/25/postgresql-schema-owner-altered-during-dump-prevent-access-from-rails)
 
