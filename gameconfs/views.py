@@ -90,7 +90,7 @@ def mailto(_address, _subject=None, _body=None):
 def inject_common_values():
     common_values = {
         "logged_in"     : user_can_edit(),
-        "sponsor"       : GameAIDevSponsor(),
+        "sponsor"       : None,
         "kill_email"    : app.config["GAMECONFS_KILL_EMAIL"],
         "mailto"        : mailto
     }
