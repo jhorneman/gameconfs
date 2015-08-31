@@ -1,4 +1,5 @@
 from datetime import date
+import calendar
 from flask import Blueprint, render_template
 from sqlalchemy.sql.expression import *
 from sqlalchemy.orm import joinedload
@@ -62,11 +63,18 @@ def view_events_due_for_update():
     # We need to find a time that is a year plus the time since the last time we checked this ago.
     # We assume this list will be checked at least every 6 months.
     new_year = today.year - 1
+
     new_month = today.month - 6
     if new_month < 1:
         new_year -= 1
         new_month += 6
-    a_while_ago = date(new_year, new_month, today.day)
+
+    new_day = today.day
+    last_day_of_month = calendar.monthrange(new_year, new_month)[1]
+    if new_day > last_day_of_month:
+        new_day = last_day_of_month
+
+    a_while_ago = date(new_year, new_month, new_day)
 
     events_due_for_update = Event.query.\
         filter(and_(Event.series_id == None,
