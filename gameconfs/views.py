@@ -89,10 +89,11 @@ def mailto(_address, _subject=None, _body=None):
 @app.context_processor
 def inject_common_values():
     common_values = {
-        "logged_in"     : user_can_edit(),
-        "sponsor"       : None,
-        "kill_email"    : app.config["GAMECONFS_KILL_EMAIL"],
-        "mailto"        : mailto
+        "logged_in"       : user_can_edit(),
+        "sponsor"         : None,
+        "kill_email"      : app.config["GAMECONFS_KILL_EMAIL"],
+        "kill_ce_retarget": app.config["GAMECONFS_KILL_CE_RETARGET"],
+        "mailto"          : mailto
     }
     if not sponsoring_turned_on():
         common_values["sponsor"] = None
