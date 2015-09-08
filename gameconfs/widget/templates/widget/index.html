@@ -7,7 +7,7 @@
     <script src="{{ url_for('widget.script', _external=True, version='1') }}" type="text/javascript"></script>
     <br/>
     <h2>How to add it to a website</h2>
-    <p>The widget is easy to integrate. You just need to add two lines two your website's HTML. First, put:</p>
+    <p>The widget is easy to integrate. You just need to add two lines to your website's HTML. First, put:</p>
     <pre>&lt;div id="gameconfs-widget-container" data-nr-months="3" data-place="Europe" data-width="240" data-height="400"&gt;&lt;/div&gt;</pre>
     <p>where you want the widget to appear. You may want to change some of those parameters; this is explained below. Then, put:</p>
     <pre>&lt;script src="http://www.gameconfs.com/widget/v1/script.js" type="text/javascript"&gt;&lt;/script&gt;</pre>
@@ -19,7 +19,9 @@
         <li><strong>data-place</strong>: The continent, country, state or city you want to show events for. Optional. The default is to leave this parameter out, which shows events in the whole world.</li>
         <li><strong>data-width</strong>: The width of the widget in pixels. Optional. The default is 240.</li>
         <li><strong>data-height</strong>: The height of the widget in pixels. Optional. The default is 400.</li>
+        <li><strong>no-css</strong>: Set this to true if you don't want the widget to inject CSS. Optional. See below.</li>
     </ul>
+    <p>If you tell the widget not to inject CSS, all the styling is entirely up to you. This is an option for advanced users.</p>
     <h2>How to add it to a Wordpress blog</h2>
     <p>Download the <a href="{{ url_for('widget.static', filename='dl/gameconfs-widget.php') }}">Wordpress widget</a>, put it in your wp-content/plugins directory, and install it using your Wordpress administration interface. You can set all of the widget's parameters there.</p>
     <h2>FAQ</h2>

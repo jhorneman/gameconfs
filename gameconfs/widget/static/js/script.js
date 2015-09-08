@@ -46,24 +46,28 @@
                 nrMonths,
                 widgetWidth,
                 widgetHeight,
+                injectCSS,
                 jsonpURL;
 
             container = $('#gameconfs-widget-container');
             container.addClass('cleanslate');
-
-            /* Append CSS to head */
-            css_link = $("<link>", {
-                rel: "stylesheet",
-                type: "text/css",
-                href: "http://www.gameconfs.com/widget/v1/widget.css"
-            });
-            css_link.appendTo('head');
 
             /* Load widget parameters */
             place = container.data('place');
             nrMonths = container.data('nr-months') || 3;
             widgetWidth = container.data('width') || 240;
             widgetHeight = container.data('height') || 400;
+            injectCSS = !container.data('no-css');
+
+            if (injectCSS) {
+                /* Append CSS to head */
+                css_link = $("<link>", {
+                    rel: "stylesheet",
+                    type: "text/css",
+                    href: "http://www.gameconfs.com/widget/v1/widget.css"
+                });
+                css_link.appendTo('head');
+            }
 
             /* Load and inject HTML */
             jsonpURL = "http://www.gameconfs.com/widget/v1/data.json?nr-months=" + encodeURIComponent(nrMonths);
@@ -73,7 +77,9 @@
             jsonpURL += "&callback=?";
             $.getJSON(jsonpURL, function(data) {
                 container.html(data.html);
-                container.attr('style', 'width: ' + widgetWidth + 'px !important; height: ' + widgetHeight + 'px !important;')
+                if (injectCSS) {
+                    container.attr('style', 'width: ' + widgetWidth + 'px !important; height: ' + widgetHeight + 'px !important;')
+                }
             });
         });
     }
