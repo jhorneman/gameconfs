@@ -30,7 +30,11 @@ def data(version):
         abort(400)
 
     # Get number of months, make sure it's a reasonable value
-    nr_months = int(request.args.get('nr-months', 3))
+    nr_months = 3
+    try:
+        nr_months = int(request.args.get('nr-months', 3))
+    except ValueError:
+        pass
     if nr_months < 1:
         nr_months = 1
     elif nr_months > 12:
