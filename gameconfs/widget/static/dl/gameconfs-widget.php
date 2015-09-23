@@ -2,10 +2,12 @@
 /*
 Plugin Name: Gameconfs Widget
 Plugin URI: http://www.gameconfs.com/widget
-Description: Displays a list of game conferences and events
+Description: A widget with a list of game conferences and events from Gameconfs.com.
+Version: 1.0
 Author: Jurie Horneman
-Version: 0.1
 Author URI: http://www.gameconfs.com/about
+License: GPL2
+License URI: https://www.gnu.org/licenses/gpl-2.0.html
 */
  
  

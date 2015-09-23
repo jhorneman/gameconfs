@@ -6,7 +6,9 @@
     <div id="gameconfs-widget-container" data-nr-months="3" data-place="Europe" data-width="240" data-height="400"></div>
     <script src="{{ url_for('widget.script', _external=True, version='1') }}" type="text/javascript"></script>
     <br/>
-    <h2>How to add it to a website</h2>
+    <h2>How to add it to a WordPress blog</h2>
+    <p>Just go to the <a href="https://wordpress.org/plugins/gameconfs-widget/" target="_blank">plugin page in the official WordPress plugin directory</a> and follow the instructions there.</p>
+    <h2>How to add it to any website</h2>
     <p>The widget is easy to integrate. You just need to add two lines to your website's HTML. First, put:</p>
     <pre>&lt;div id="gameconfs-widget-container" data-nr-months="3" data-place="Europe" data-width="240" data-height="400"&gt;&lt;/div&gt;</pre>
     <p>where you want the widget to appear. You may want to change some of those parameters; this is explained below. Then, put:</p>
@@ -27,11 +29,9 @@
     <h2>FAQ</h2>
     <p>Here are the answers to some questions you might have:</p>
     <p><strong>How stable is this widget?</strong></p>
-    <p>I've had this running on my own blog for a pretty long time, and I've not had any problems with it.</p>
+    <p>I've had this running on my own blog since May 2013, and I've not had any problems with it.</p>
     <p><strong>Can your widget damage my site?</strong></p>
     <p>I don't see how: it injects some HTML and CSS into the page. The worse case I can imagine is it makes your site look odd. But I make no guarantees.</p>
-    <p><strong>Are you going to submit the Wordpress plugin to the official Wordpress plugin directory?</strong></p>
-    <p>If enough people ask for it.</p>
     <p><strong>How does the widget work?</strong></p>
     <p>The script uses jQuery to insert its own CSS into your page and to load some HTML from the Gameconfs server (using JSONP). It tries to play nice with your Javascript, jQuery and CSS.</p>
     <p><strong>Do you take feature requests?</strong></p>
