@@ -1,7 +1,6 @@
 # coding=utf-8
 
 import logging
-import unittest
 from nose.tools import *
 from testfixtures import LogCapture
 from gameconfs.geocoder import GeocodeResults
