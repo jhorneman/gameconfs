@@ -47,16 +47,22 @@ def data(version):
 
     period_start, period_end = get_month_period(year, today.month, nr_months)
 
-    if place_name:
-        q = Event.query. \
-            join(Event.city). \
-            join(City.country). \
-            join(Country.continent)
-        q, place_name = filter_by_place_name(q, place_name)
-    else:
-        q = Event.query
+    q = Event.query.\
+        join(Event.city).\
+        join(City.country).\
+        join(Country.continent).\
+        order_by(Event.start_date.asc()).\
+        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
     q = filter_by_period_start_end(q, period_start, period_end)
-    events = q.all()
+
+    if place_name:
+        q, found_location_name = filter_by_place_name(q, place_name)
+        if found_location_name:
+            events = q.all()
+        else:
+            events = []
+    else:
+        events = q.all()
 
     html = render_template('widget/contents.html', events=events, year=year, today=today,
                            period_start=period_start, period_end=period_end,

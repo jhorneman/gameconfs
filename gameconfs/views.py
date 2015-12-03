@@ -261,22 +261,16 @@ def view_place(place_name):
     if place_name == "online":
         return redirect(url_for('view_place', place_name="other"), code=301)
 
-    if place_name == "other":
-        q = Event.query.\
-            filter(Event.city == None).\
-            order_by(Event.start_date.asc())
-        location = "other"
-    else:
-        q = Event.query.\
-            join(Event.city).\
-            join(City.country).\
-            join(Country.continent).\
-            order_by(Event.start_date.asc()).\
-            options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
+    q = Event.query.\
+        join(Event.city).\
+        join(City.country).\
+        join(Country.continent).\
+        order_by(Event.start_date.asc()).\
+        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
 
-        (q, location) = filter_by_place_name(q, place_name)
-        if not location:
-            return render_template('page_not_found.html'), 404
+    (q, location) = filter_by_place_name(q, place_name)
+    if not location:
+        return render_template('page_not_found.html'), 404
 
     today = date.today()
     q = filter_by_period(q, today.year, 1, 12)
@@ -295,22 +289,16 @@ def view_place(place_name):
 @app.route('/place/<place_name>/past')
 @app.cache.cached(timeout=60*60*24, key_prefix=make_cache_key)
 def view_place_past(place_name):
-    if place_name == "other":
-        q = Event.query.\
-            filter(Event.city == None).\
-            order_by(Event.start_date.asc())
-        location = "other"
-    else:
-        q = Event.query.\
-            join(Event.city).\
-            join(City.country).\
-            join(Country.continent).\
-            order_by(Event.start_date.asc()).\
-            options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
+    q = Event.query.\
+        join(Event.city).\
+        join(City.country).\
+        join(Country.continent).\
+        order_by(Event.start_date.asc()).\
+        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
 
-        (q, location) = filter_by_place_name(q, place_name)
-        if not location:
-            return render_template('page_not_found.html'), 404
+    (q, location) = filter_by_place_name(q, place_name)
+    if not location:
+        return render_template('page_not_found.html'), 404
 
     q = q.filter(Event.start_date < date(date.today().year, 1, 1))
     events = q.all()

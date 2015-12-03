@@ -158,8 +158,9 @@ def create_app(_run_mode=None):
     from gameconfs.admin import admin_blueprint
     app.register_blueprint(admin_blueprint)
 
-    from gameconfs.api import api_blueprint
+    from gameconfs.api import api_blueprint, set_up_api_blueprint
     app.register_blueprint(api_blueprint)
+    set_up_api_blueprint(app)
 
     # Set up Jinja 2 filters
     set_up_jinja_filters(app)

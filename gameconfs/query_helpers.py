@@ -89,6 +89,12 @@ def get_year_range():
 
 
 def filter_by_place_name(_query, _place_name):
+    if _place_name == "online":
+        _place_name = "other"
+
+    if _place_name == "other":
+        return _query.filter(Event.city == None), _place_name
+
     country = Country.query. \
         filter(Country.name.ilike(_place_name)). \
         first()
