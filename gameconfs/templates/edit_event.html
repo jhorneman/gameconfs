@@ -48,10 +48,10 @@ New event - Gameconfs
 
 {% block content %}
 {% if event_id %}
-<form class="form-horizontal" method="POST" action="{{ url_for(view_name, event_id=event_id) }}">
+<form class="form-horizontal" autocorrect=off autocomplete=off method="POST" action="{{ url_for(view_name, event_id=event_id) }}">
   <legend>Edit event data</legend>
 {% else %}
-<form class="form-horizontal" method="POST" action="{{ url_for(view_name) }}">
+<form class="form-horizontal" autocorrect=off autocomplete=off method="POST" action="{{ url_for(view_name) }}">
   <legend>Enter data for a new event</legend>
 {% endif %}
   {{ flash() }}
