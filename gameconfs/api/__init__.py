@@ -1,5 +1,6 @@
 from datetime import datetime
 import logging
+import types
 import json
 from flask import Blueprint, request, jsonify
 from gameconfs.app_logging import add_logger
@@ -11,7 +12,7 @@ from json_api_helpers import set_up_JSON_api_error_handlers
 logger = logging.getLogger(__name__)
 add_logger(logger)
 
-api_blueprint = Blueprint('api', __name__, url_prefix='/api')
+api_blueprint = Blueprint("api", __name__, url_prefix="/api")
 
 
 def set_up_api_blueprint(_app):
@@ -31,8 +32,18 @@ class InvalidUsage(Exception):
 
     def to_dict(self):
         rv = dict(self.payload or ())
-        rv['message'] = self.message
+        rv["message"] = self.message
         return rv
+
+
+def get_request_parameters():
+    if request.data:
+        try:
+            return json.loads(request.data)
+        except ValueError, e:
+            raise InvalidUsage("Couldn't decode request parameter JSON: " + e.message)
+    else:
+        return request.form
 
 
 def get_string_from_JSON_object(_JSON_object, _field_name):
@@ -82,15 +93,12 @@ def convert_events_for_JSON(_events):
     return result
 
 
-@api_blueprint.route('/v1/search_events', methods=("POST",))
+@api_blueprint.route("/v1/search_events", methods=("POST",))
 def search_events():
     # Get and decode request parameters, raise exception if this is not possible.
-    if not request.data:
+    request_parameters = get_request_parameters()
+    if not request_parameters:
         raise InvalidUsage("No query parameters found in request.")
-    try:
-        request_parameters = json.loads(request.data)
-    except ValueError, e:
-        raise InvalidUsage("Couldn't decode request parameter JSON: " + e.message)
 
     # Start with base query.
     q = Event.query.\
@@ -98,7 +106,7 @@ def search_events():
         join(City.country).\
         join(Country.continent).\
         order_by(Event.start_date.asc()).\
-        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
+        options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
 
     found_query_criterion = False
 
@@ -120,7 +128,7 @@ def search_events():
         end_date = get_date_from_JSON_object(request_parameters, "endDate")
 
         if end_date < start_date:
-            raise InvalidUsage("End date may not be before start data.")
+            raise InvalidUsage("End date may not be before start date.")
         if start_date < today or end_date < today:
             raise InvalidUsage("Can't search in the past.")
 
@@ -166,12 +174,16 @@ def search_events():
     return response
 
 
-@api_blueprint.route('/v1/upcoming')
+@api_blueprint.route("/v1/upcoming")
 def upcoming_events():
+    request_parameters = get_request_parameters()
+    if not request_parameters:
+        raise InvalidUsage("No query parameters found in request.")
+
     # Get parameters.
     nr_months = 3
-    if "nrMonths" in request.args:
-        nr_months = request.args["nrMonths"]
+    if "nrMonths" in request_parameters:
+        nr_months = request_parameters["nrMonths"]
         try:
             nr_months = int(nr_months)
         except ValueError:
@@ -182,7 +194,11 @@ def upcoming_events():
     elif nr_months > 12:
         raise InvalidUsage("nrMonths may not be higher than 12.")
 
-    place_name = request.args.get('place', None)
+    place_name = None
+    if "place" in request_parameters:
+        place_name = request_parameters["place"]
+        if not isinstance(place_name, types.StringTypes):
+            raise InvalidUsage("Could not parse place value '{0}'.".format(place_name))
 
     # Get time period.
     today = datetime.today()
@@ -194,7 +210,7 @@ def upcoming_events():
         join(City.country).\
         join(Country.continent).\
         order_by(Event.start_date.asc()).\
-        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
+        options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
     q = filter_by_period_start_end(q, period_start, period_end)
 
     found_location_name = None
