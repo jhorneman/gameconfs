@@ -161,6 +161,9 @@ class Event(db.Model):
         if name == "event_url":
             if not re.match("^https?://", value):
                 value = "http://" + value
+        elif name == "twitter_account":
+            if value.startswith("@"):
+                value = value[1:]
         super(Event, self).__setattr__(name, value)
 
     def is_not_in_a_city(self):
