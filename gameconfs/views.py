@@ -184,8 +184,8 @@ def index_html():
 @app.route('/search', methods=("GET", "POST"))
 def search():
     if request.method == "POST":   # Form has no validation
-        form = SearchForm()
-        search_string = form.search_string.data
+        search_form = SearchForm()
+        search_string = search_form.search_string.data
         found_events = search_events_by_string(search_string)
     else:
         search_string = ""
@@ -340,31 +340,31 @@ class EventSaveException(Exception):
 @editing_kill_check
 @roles_required('admin')
 def create_new_event():
-    form = EventForm()
-    if form.validate_on_submit():
+    event_form = EventForm()
+    if event_form.validate_on_submit():
         new_event = Event()
         now = datetime.now()
         new_event.created_at = now
         new_event.last_modified_at = now
-        new_event.name = form.name.data
-        new_event.start_date = form.start_date.data
-        new_event.end_date = form.end_date.data
-        new_event.event_url = form.event_url.data
-        new_event.twitter_hashtags = form.twitter_hashtags.data
-        new_event.twitter_account = form.twitter_account.data
+        new_event.name = event_form.name.data
+        new_event.start_date = event_form.start_date.data
+        new_event.end_date = event_form.end_date.data
+        new_event.event_url = event_form.event_url.data
+        new_event.twitter_hashtags = event_form.twitter_hashtags.data
+        new_event.twitter_account = event_form.twitter_account.data
 
-        if form.series.data:
+        if event_form.series.data:
             try:
-                series = Series.query.filter(Series.name == form.series.data).one()
+                series = Series.query.filter(Series.name == event_form.series.data).one()
             except sqlalchemy.orm.exc.NoResultFound:
-                series = Series(form.series.data)
+                series = Series(event_form.series.data)
                 db.session.add(series)
             new_event.series = series
 
         # Try to extract a city ID from the hidden field set by the auto-completion system.
         # This helps us avoid using geolocation if it's not necessary.
         try:
-            city_id = form.city_id.data
+            city_id = event_form.city_id.data
             if city_id is not None:
                 city_id = int(city_id)
         except ValueError:
@@ -375,17 +375,17 @@ def create_new_event():
                 new_event.city_id = city_id
 
                 # TODO: Refactor this, it's copied from Event.set_location()
-                venue = form.venue.data
+                venue = event_form.venue.data
                 if venue is None:
                     venue = ""
                 new_event.venue = venue.strip()
 
-                address_for_geocoding = form.address.data
+                address_for_geocoding = event_form.address.data
                 if address_for_geocoding is None:
                     address_for_geocoding = ""
                 new_event.address_for_geocoding = address_for_geocoding.strip()
 
-            elif not new_event.set_location(db.session, form.venue.data, form.address.data):
+            elif not new_event.set_location(db.session, event_form.venue.data, event_form.address.data):
                 raise EventSaveException("Location setting failed.")
         except Exception as e:
             # Get rid of whatever was done to the session or it will cause trouble later
@@ -398,7 +398,7 @@ def create_new_event():
             app.cache.clear()
             return redirect(url_for('view_event', event_id=new_event.id))
 
-    return render_template('edit_event.html', body_id="edit-event", form=form, event_id=None,
+    return render_template('edit_event.html', body_id="edit-event", event_form=event_form, event_id=None,
                            view_name='create_new_event')
 
 
@@ -428,32 +428,32 @@ def duplicate_event(event_id):
         if original_event.is_in_a_city():
             address = original_event.city_and_state_or_country()
 
-        form = EventForm(obj=new_event, address=address)
+        event_form = EventForm(obj=new_event, address=address)
     else:
         new_event = Event()
-        form = EventForm()
+        event_form = EventForm()
 
-    if form.validate_on_submit():
+    if event_form.validate_on_submit():
         now = datetime.now()
         new_event.created_at = now
         new_event.last_modified_at = now
-        new_event.name = form.name.data
-        new_event.start_date = form.start_date.data
-        new_event.end_date = form.end_date.data
-        new_event.event_url = form.event_url.data
-        new_event.twitter_hashtags = form.twitter_hashtags.data
-        new_event.twitter_account = form.twitter_account.data
+        new_event.name = event_form.name.data
+        new_event.start_date = event_form.start_date.data
+        new_event.end_date = event_form.end_date.data
+        new_event.event_url = event_form.event_url.data
+        new_event.twitter_hashtags = event_form.twitter_hashtags.data
+        new_event.twitter_account = event_form.twitter_account.data
 
-        if form.series.data:
+        if event_form.series.data:
             try:
-                series = Series.query.filter(Series.name == form.series.data).one()
+                series = Series.query.filter(Series.name == event_form.series.data).one()
             except sqlalchemy.orm.exc.NoResultFound:
-                series = Series(form.series.data)
+                series = Series(event_form.series.data)
                 db.session.add(series)
             new_event.series = series
 
         try:
-            if not new_event.set_location(db.session, form.venue.data, form.address.data):
+            if not new_event.set_location(db.session, event_form.venue.data, event_form.address.data):
                 raise EventSaveException("Location setting failed.")
             if is_duplicate_event(new_event):
                 raise EventSaveException("Another event with the same name already exists for this year.")
@@ -469,7 +469,7 @@ def duplicate_event(event_id):
             app.cache.clear()
             return redirect(url_for('view_event', event_id=new_event.id))
 
-    return render_template('edit_event.html', body_id="edit-event", form=form, event_id=event_id, view_name='duplicate_event')
+    return render_template('edit_event.html', body_id="edit-event", event_form=event_form, event_id=event_id, view_name='duplicate_event')
 
 
 @app.route('/event/<int:event_id>/edit', methods=("GET", "POST"))
@@ -485,26 +485,26 @@ def edit_event(event_id):
     if event.is_in_a_city():
         address = event.city_and_state_or_country()
 
-    form = EventForm(obj=event, address=address)
-    if form.validate_on_submit():
+    event_form = EventForm(obj=event, address=address)
+    if event_form.validate_on_submit():
         event.last_modified_at = datetime.now()
-        event.name = form.name.data
-        event.start_date = form.start_date.data
-        event.end_date = form.end_date.data
-        event.event_url = form.event_url.data
-        event.twitter_hashtags = form.twitter_hashtags.data
-        event.twitter_account = form.twitter_account.data
+        event.name = event_form.name.data
+        event.start_date = event_form.start_date.data
+        event.end_date = event_form.end_date.data
+        event.event_url = event_form.event_url.data
+        event.twitter_hashtags = event_form.twitter_hashtags.data
+        event.twitter_account = event_form.twitter_account.data
 
-        if form.series.data:
+        if event_form.series.data:
             try:
-                series = Series.query.filter(Series.name == form.series.data).one()
+                series = Series.query.filter(Series.name == event_form.series.data).one()
             except sqlalchemy.orm.exc.NoResultFound:
-                series = Series(form.series.data)
+                series = Series(event_form.series.data)
                 db.session.add(series)
             event.series = series
 
         try:
-            if not event.set_location(db.session, form.venue.data, form.address.data):
+            if not event.set_location(db.session, event_form.venue.data, event_form.address.data):
                 raise EventSaveException("Location setting failed.")
         except EventSaveException as e:
             # Get rid of whatever was done to the session or it will cause trouble later
@@ -516,7 +516,7 @@ def edit_event(event_id):
             app.cache.clear()
             return redirect(url_for('view_event', event_id=event.id))
 
-    return render_template('edit_event.html', body_id="edit-event", form=form, event_id=event.id, view_name='edit_event')
+    return render_template('edit_event.html', body_id="edit-event", event_form=event_form, event_id=event.id, view_name='edit_event')
 
 
 def is_duplicate_event(_event):

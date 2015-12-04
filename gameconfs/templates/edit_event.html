@@ -55,17 +55,17 @@ New event - Gameconfs
   <legend>Enter data for a new event</legend>
 {% endif %}
   {{ flash() }}
-  {{ form.hidden_tag() }}
-  {{ form.city_id() }}
-  {{ form_control(form.name, "Game Developers Conference 2013") }}
-  {{ form_control(form.start_date, class="datepicker") }}
-  {{ form_control(form.end_date, class="datepicker") }}
-  {{ form_control(form.event_url, "http://www.gdconf.com") }}
-  {{ form_control(form.twitter_account, "Official_GDC", show_at_symbol=True) }}
-  {{ form_control(form.twitter_hashtags, "#gdc #gdc13") }}
-  {{ form_control(form.venue, "Moscone Conference Center") }}
-  {{ form_control(form.address, "San Francisco, USA (leave empty for online/worldwide events)") }}
-  {{ form_control(form.series, "Series name (optional)") }}
+  {{ event_form.hidden_tag() }}
+  {{ event_form.city_id() }}
+  {{ form_control(event_form.name, "Game Developers Conference 2013") }}
+  {{ form_control(event_form.start_date, class="datepicker") }}
+  {{ form_control(event_form.end_date, class="datepicker") }}
+  {{ form_control(event_form.event_url, "http://www.gdconf.com") }}
+  {{ form_control(event_form.twitter_account, "Official_GDC", show_at_symbol=True) }}
+  {{ form_control(event_form.twitter_hashtags, "#gdc #gdc13") }}
+  {{ form_control(event_form.venue, "Moscone Conference Center") }}
+  {{ form_control(event_form.address, "San Francisco, USA (leave empty for online/worldwide events)") }}
+  {{ form_control(event_form.series, "Series name (optional)") }}
   <div class="form-group">
     <div class="col-sm-offset-3 col-sm-9">
         <button type="submit" id="submit-button" class="btn btn-primary">Save</button>
