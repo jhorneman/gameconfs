@@ -172,7 +172,7 @@ def index():
         "max_year": max_year,
         "countries": countries,
         "continents": continents,
-        "form": SearchForm()
+        "search_form": SearchForm()
     }
 
 
@@ -195,7 +195,7 @@ def search():
         body_id="search",
         search_string=search_string,
         found_events=found_events,
-        form=SearchForm())
+        search_form=SearchForm())
 
 
 @app.route('/event/<int:event_id>')
@@ -327,7 +327,7 @@ def view_series(series_id):
 def submit_event():
     return {
         "body_id": "submit",
-        "form": SearchForm()
+        "search_form": SearchForm()
     }
 
 
