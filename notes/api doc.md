@@ -90,7 +90,7 @@ The HTTP status will be 404 when no events were found.
 
 ### Examples
 
-    http://127.0.0.1:5000/api/v1/upcoming
+    www.gameconfs.com/api/v1/upcoming
 
 Returns events happening in the next three months all over the world.
 
