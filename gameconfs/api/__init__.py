@@ -36,37 +36,14 @@ class InvalidUsage(Exception):
         return rv
 
 
-def get_request_parameters():
-    if request.data:
-        try:
-            return json.loads(request.data)
-        except ValueError, e:
-            raise InvalidUsage("Couldn't decode request parameter JSON: " + e.message)
-    else:
-        return request.form
-
-
-def get_string_from_JSON_object(_JSON_object, _field_name):
-    try:
-        retrieved_string = _JSON_object[_field_name]
-    except KeyError:
-        raise InvalidUsage("Couldn't find field '{0}' in query.".format(_field_name))
-
-    if not isinstance(retrieved_string, basestring):
-        raise InvalidUsage("Query field '{0}' is not a string.".format(_field_name))
-
-    return retrieved_string.strip()
-
-
-def get_date_from_JSON_object(_object, _field_name):
-    date_string = get_string_from_JSON_object(_object, _field_name)
+def parse_date(_date_as_string):
+    _date_as_string = _date_as_string.strip()
     try:
         # For dates formatted like this: 2012-04-23
         # See also: http://stackoverflow.com/questions/10286204/the-right-json-date-format
-        retrieved_date = datetime.strptime(date_string, "%Y-%m-%d")
+        retrieved_date = datetime.strptime(_date_as_string, "%Y-%m-%d")
     except ValueError:
-        raise InvalidUsage("Couldn't parse date '{0}' in query field '{1}'.".format(date_string,_field_name))
-
+        raise InvalidUsage("Couldn't parse date '{0}'.".format(_date_as_string))
     return retrieved_date
 
 
@@ -93,12 +70,10 @@ def convert_events_for_JSON(_events):
     return result
 
 
-@api_blueprint.route("/v1/search_events", methods=("POST",))
+@api_blueprint.route("/v1/search_events")
 def search_events():
-    # Get and decode request parameters, raise exception if this is not possible.
-    request_parameters = get_request_parameters()
-    if not request_parameters:
-        raise InvalidUsage("No query parameters found in request.")
+     # For GET requests, which is what we have, we can only get the parameters from the URL arguments.
+    request_parameters = request.args
 
     # Start with base query.
     q = Event.query.\
@@ -114,18 +89,18 @@ def search_events():
     today = datetime.today()
     if "date" in request_parameters:
         found_query_criterion = True
-        query_date = get_date_from_JSON_object(request_parameters, "date")
+        query_date = parse_date(request_parameters["date"])
         if query_date < today:
             raise InvalidUsage("Can't search in the past.")
         q = q.filter(and_(Event.start_date <= query_date, query_date <= Event.end_date))
 
     elif "startDate" in request_parameters:
         if "endDate" not in request_parameters:
-            raise InvalidUsage("Found start date query field but no end date.")
+            raise InvalidUsage("Found start date argument but no end date.")
         found_query_criterion = True
 
-        start_date = get_date_from_JSON_object(request_parameters, "startDate")
-        end_date = get_date_from_JSON_object(request_parameters, "endDate")
+        start_date = parse_date(request_parameters["startDate"])
+        end_date = parse_date(request_parameters["endDate"])
 
         if end_date < start_date:
             raise InvalidUsage("End date may not be before start date.")
@@ -136,27 +111,34 @@ def search_events():
                          and_(Event.end_date >= start_date, Event.end_date <= end_date)))
 
     elif "endDate" in request_parameters:
-        raise InvalidUsage("Found end date query field but no start date.")
+        raise InvalidUsage("Found end date argument but no start date.")
 
     else:
         q = q.filter(Event.end_date >= today)
 
     # Check for and apply event name filter.
     if "eventName" in request_parameters:
-        found_query_criterion = True
-        event_name = get_string_from_JSON_object(request_parameters, "eventName")
-        q = q.filter(Event.name.ilike("%" + event_name + "%"))
+        event_name = request_parameters["eventName"].strip()
+        if len(event_name) > 0:
+            found_query_criterion = True
+            event_name = request_parameters["eventName"].strip()
+            q = q.filter(Event.name.ilike("%" + event_name + "%"))
+        else:
+            raise InvalidUsage("Event name argument was empty.")
 
     # Check for and apply place name filter.
     # Do this last because we will either query or skip.
     found_location_name = None
     if "place" in request_parameters:
-        place_name = get_string_from_JSON_object(request_parameters, "place")
-        q, found_location_name = filter_by_place_name(q, place_name)
-        if found_location_name:
-            found_events = q.all()
+        place_name = request_parameters["place"].strip()
+        if len(place_name) == 0:
+            raise InvalidUsage("Place argument was empty.")
         else:
-            found_events = []
+            q, found_location_name = filter_by_place_name(q, place_name)
+            if found_location_name:
+                found_events = q.all()
+            else:
+                found_events = []
     else:
         if not found_query_criterion:
             raise InvalidUsage("Query must contain at least one criterion.")
@@ -176,9 +158,8 @@ def search_events():
 
 @api_blueprint.route("/v1/upcoming")
 def upcoming_events():
-    request_parameters = get_request_parameters()
-    if not request_parameters:
-        raise InvalidUsage("No query parameters found in request.")
+     # For GET requests, which is what we have, we can only get the parameters from the URL arguments.
+    request_parameters = request.args
 
     # Get parameters.
     nr_months = 3
@@ -196,9 +177,9 @@ def upcoming_events():
 
     place_name = None
     if "place" in request_parameters:
-        place_name = request_parameters["place"]
-        if not isinstance(place_name, types.StringTypes):
-            raise InvalidUsage("Could not parse place value '{0}'.".format(place_name))
+        place_name = request_parameters["place"].strip()
+        if len(place_name) == 0:
+            raise InvalidUsage("Place argument was empty.")
 
     # Get time period.
     today = datetime.today()
