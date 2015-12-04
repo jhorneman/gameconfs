@@ -212,7 +212,7 @@ def view_event(event_id):
             return render_template('event_deleted.html'), 410
         else:
             return render_template('page_not_found.html'), 404
-    return render_template('event.html', body_id="view-event", event=event, today=date.today())
+    return render_template('event.html', body_id="view-event", event=event, today=date.today(), search_form=SearchForm())
 
 
 @app.route('/upcoming')
