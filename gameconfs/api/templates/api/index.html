@@ -1,0 +1,255 @@
+{% extends "layout.html" %}
+{% block title %}Gameconfs API{% endblock %}
+{% block content %}
+<h1 id="thegameconfsapi">The Gameconfs API</h1>
+
+<p>Gameconfs has an API you can call over HTTP using GET requests.</p>
+
+<p>The base URL is</p>
+
+<pre><code>www.gameconfs.com/api/v1
+</code></pre>
+
+<p>The parameters are strings encoded as URL parameters (e.g. use %20 for spaces).</p>
+
+<p>The results are returned in a JSON object.</p>
+
+<p>The HTTP status code is used to indicate if there was a problem, e.g. 400 (bad request), 404 (no results found), 500 (internal error).</p>
+
+<h2 id="search_events">/search_events</h2>
+
+<p>Searches for events. You cannot search in the past.</p>
+
+<h3 id="parameters">Parameters</h3>
+
+<p>Dates must be in the format &#8220;yyyy-mm-dd&#8221;, so for example &#8220;2016&#8211;07&#8211;19&#8221; represents July 19th 2016.</p>
+
+<p>All parameters are optional but you must pass at least one search criterion.</p>
+
+<table class="table">
+<colgroup>
+<col style="text-align:left;"/>
+<col style="text-align:left;"/>
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Parameter</th>
+	<th style="text-align:left;">Meaning</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">date</td>
+	<td style="text-align:left;">The date you want to search for events. If you pass date, start and end date parameters are ignored. Optional: when no date or date range is passed, all events starting from today are searched.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">startDate</td>
+	<td style="text-align:left;">The start of the date range you want to search for events. Must be accompanied by endDate. Optional: when no date or date range is passed, all events starting from today are searched.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">endDate</td>
+	<td style="text-align:left;">The end of the date range you want to search for events. Must be accompanied by startDate.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">eventName</td>
+	<td style="text-align:left;">The name of the event you&#8217;re searching for.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">place</td>
+	<td style="text-align:left;">The continent, country, state or city you want to search for events. Optional: when left out, events from all over the world are searched.</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="results">Results</h3>
+
+<p>The HTTP status will be 404 when no events were found.</p>
+
+<table class="table">
+<colgroup>
+<col style="text-align:left;"/>
+<col style="text-align:left;"/>
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Field</th>
+	<th style="text-align:left;">Meaning</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">message</td>
+	<td style="text-align:left;">Only occurs when something went wrong. Explains the problem.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">searchedLocationName</td>
+	<td style="text-align:left;">The place parameter you sent, or null if it was left out.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">foundLocationName</td>
+	<td style="text-align:left;">The place that was found, or null if there was no place parameter.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">nrFoundEvents</td>
+	<td style="text-align:left;">The number of found events.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">results</td>
+	<td style="text-align:left;">An array with data per found event. See below for a description of the event data.</td>
+</tr>
+</tbody>
+</table>
+
+<p>Each event has the following structure:</p>
+
+<table class="table">
+<colgroup>
+<col style="text-align:left;"/>
+<col style="text-align:left;"/>
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Field</th>
+	<th style="text-align:left;">Meaning</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">name</td>
+	<td style="text-align:left;">The name of the event.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">venue</td>
+	<td style="text-align:left;">The venue.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">startDate</td>
+	<td style="text-align:left;">The start date (in the same format as date parameters).</td>
+</tr>
+<tr>
+	<td style="text-align:left;">endDate</td>
+	<td style="text-align:left;">The end date.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">eventUrl</td>
+	<td style="text-align:left;">The URL of the event&#8217;s website.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">city</td>
+	<td style="text-align:left;">The city the event takes place in.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">state</td>
+	<td style="text-align:left;">The state (if Gameconfs tracks states for this country, otherwise null).</td>
+</tr>
+<tr>
+	<td style="text-align:left;">country</td>
+	<td style="text-align:left;">The country.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">continent</td>
+	<td style="text-align:left;">The continent.</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="examples">Examples</h3>
+
+<pre><code>www.gameconfs.com/api/v1/search_events?date=2016-07-19
+</code></pre>
+
+<p>Returns a list of events that take place on 19th of July 2016.</p>
+
+<h2 id="upcoming">/upcoming</h2>
+
+<p>Returns upcoming events.</p>
+
+<h3 id="parameters">Parameters</h3>
+
+<table class="table">
+<colgroup>
+<col style="text-align:left;"/>
+<col style="text-align:left;"/>
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Parameter</th>
+	<th style="text-align:left;">Meaning</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">nrMonths</td>
+	<td style="text-align:left;">Number of months from today you want to get upcoming events for. Must be between 1 and 12. Optional: defaults to 3.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">place</td>
+	<td style="text-align:left;">The continent, country, state or city you want to get upcoming events for. Optional: when left out, events from all over the world are returned.</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="results">Results</h3>
+
+<p>The HTTP status will be 404 when no events were found.</p>
+
+<table class="table">
+<colgroup>
+<col style="text-align:left;"/>
+<col style="text-align:left;"/>
+</colgroup>
+
+<thead>
+<tr>
+	<th style="text-align:left;">Field</th>
+	<th style="text-align:left;">Meaning</th>
+</tr>
+</thead>
+
+<tbody>
+<tr>
+	<td style="text-align:left;">message</td>
+	<td style="text-align:left;">Only occurs when something went wrong. Explains the problem.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">searchedLocationName</td>
+	<td style="text-align:left;">The place parameter you sent, or null if it was left out.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">foundLocationName</td>
+	<td style="text-align:left;">The place that was found, or null if there was no place parameter.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">nrMonths</td>
+	<td style="text-align:left;">The number of months value that was used.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">nrFoundEvents</td>
+	<td style="text-align:left;">The number of found events.</td>
+</tr>
+<tr>
+	<td style="text-align:left;">results</td>
+	<td style="text-align:left;">An array with data per found event. See search_events, above, for a description of the event data.</td>
+</tr>
+</tbody>
+</table>
+
+<h3 id="examples">Examples</h3>
+
+<pre><code>http://127.0.0.1:5000/api/v1/upcoming
+</code></pre>
+
+<p>Returns events happening in the next three months all over the world.</p>
+
+<h2 id="questionsfeedback">Questions? Feedback?</h2>
+
+<p><a href="mailto:admin@gameconfs.com">Email me</a>.</p>
+{% endblock %}

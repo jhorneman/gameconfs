@@ -16,9 +16,9 @@ test_event = {
 }
 
 
-def test_no_slug_404s():
+def test_index_works():
     r = requests.get(base_url)
-    assert r.status_code == 404
+    assert r.status_code == 200
 
 
 def test_wrong_slug_404s():

@@ -1,8 +1,8 @@
 {% extends "layout.html" %}
-{% block title %}Gameconfs Notifications{% endblock %}
+{% block title %}Gameconfs Tools{% endblock %}
 {% block content %}
-	<h2>How to get notified when an event is added</h2>
-	<p>There's an easy way to be notified whenever a new event is added to Gameconfs, and you don't need to register here or anything.</p>
+  <h2>How to get notified when an event is added</h2>
+  <p>There's an easy way to be notified whenever a new event is added to Gameconfs, and you don't need to register here or anything.</p>
   <p>Gameconfs provides an Atom (similar to RSS) feed of recently added events. The URL of the feed is <a href="{{ url_for('recent_feed', _external=True) }}">{{ url_for('recent_feed', _external=True) }}</a>, or you can just use www.gameconfs.com through the magic of feed auto-discovery.</p>
   <p>So what can you do with this feed? Well, for one, you can subscribe to it in the RSS reader of your choice, like NetNewsWire or Reeder if you’re on a Mac.</p>
   <p>What you can also do is pass that feed to another website called IFTTT ("If This Then That"). IFTTT allows you to say “IF there’s a new entry in the Gameconfs feed THEN send me an email”. They call this a recipe, and they make it really easy to create and use recipes. You can do a LOT more than just send emails by the way - I use it to automatically tweet on @gameconfs whenever a new event is added.</p>
@@ -15,4 +15,7 @@
 
   <h2>How to add Gameconfs to your own website</h2>
   <p>You can add Gameconfs to your own website, either as a WordPress plugin if you're using WordPress, or just using two lines of HTML. Find out how to do that <a href="{{ url_for('widget.index') }}">here</a>.</p>
+
+  <h2>How to access Gameconfs by API</h2>
+  <p>Gameconfs has an API which allows you to search for events or retrieve upcoming events. Find out how to use it <a href="{{ url_for('api.index') }}">here</a>.</p>
 {% endblock %}

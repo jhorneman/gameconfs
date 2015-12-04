@@ -1,8 +1,5 @@
 from datetime import datetime
-import logging
-import types
-import json
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template
 from gameconfs.app_logging import add_logger
 from gameconfs.models import *
 from gameconfs.query_helpers import *
@@ -12,7 +9,7 @@ from json_api_helpers import set_up_JSON_api_error_handlers
 logger = logging.getLogger(__name__)
 add_logger(logger)
 
-api_blueprint = Blueprint("api", __name__, url_prefix="/api")
+api_blueprint = Blueprint("api", __name__, url_prefix="/api", template_folder="templates")
 
 
 def set_up_api_blueprint(_app):
@@ -68,6 +65,11 @@ def convert_events_for_JSON(_events):
             })
         result.append(event_data)
     return result
+
+
+@api_blueprint.route('/')
+def index():
+    return render_template('api/index.html')
 
 
 @api_blueprint.route("/v1/search_events")
