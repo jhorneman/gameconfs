@@ -1,170 +1,24 @@
-{% macro monthly_date_or_range(event) %}
-  {% if event.start_date == event.end_date %}
-  <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date.day }}</span>
-  <span itemprop="endDate" content="{{ event.end_date|microdata_date }}"></span>
-  {% else %}
-  <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date.day }}</span>-<span itemprop="endDate" content="{{ event.end_date|microdata_date }}">{{ event.end_date.day }}</span>
-  {% endif %}
-{% endmacro %}
-{% macro adhoc_date_or_range(event) %}
-  {% if event.start_date == event.end_date %}
-  <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }} {{ event.start_date.year }}</span>
-  <span itemprop="endDate" content="{{ event.end_date|microdata_date }}"></span>
-  {% else %}
-  <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }}</span> until <span itemprop="endDate" content="{{ event.end_date|microdata_date }}">{{ event.end_date|nice_date }} {{ event.start_date.year }}</span>
-  {% endif %}
-{% endmacro %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>{% block title %}Gameconfs{% endblock %}</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <meta name="description" content="The world's most comprehensive directory of conferences, trade shows and events related to electronic games.">
-  <link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css') }}">
-  <link rel="icon" href="/favicon.ico" type="image/x-icon">
-  <link rel="apple-touch-icon" href="/apple-touch-icon.png">
-  <link rel="apple-touch-icon" sizes="57x57" href="/apple-touch-icon-57x57.png">
-  <link rel="apple-touch-icon" sizes="72x72" href="/apple-touch-icon-72x72.png">
-  <link rel="apple-touch-icon" sizes="76x76" href="/apple-touch-icon-76x76.png">
-  <link rel="apple-touch-icon" sizes="114x114" href="/apple-touch-icon-114x114.png">
-  <link rel="apple-touch-icon" sizes="120x120" href="/apple-touch-icon-120x120.png">
-  <link rel="apple-touch-icon" sizes="144x144" href="/apple-touch-icon-144x144.png">
-  <link rel="apple-touch-icon" sizes="152x152" href="/apple-touch-icon-152x152.png">
-  <link href="{{ url_for('recent_feed') }}" rel="alternate" title="Recent Changes" type="application/atom+xml">
-{% block head %}{% endblock %}
-{% if not offline_mode %}
-  <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
-  <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
-  <!--[if lt IE 9]>
-    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-    <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-  <![endif]-->
-  <script>
-    (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-    (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-    m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-    })(window,document,'script','//www.google-analytics.com/analytics.js','ga');
-    ga('create', 'UA-1597509-6', 'auto');
-    ga('send', 'pageview');
-  </script>
-  {% if not kill_ce_retarget %}
-  <script>(function() {
-    var _fbq = window._fbq || (window._fbq = []);
-    if (!_fbq.loaded) {
-    var fbds = document.createElement('script');
-    fbds.async = true;
-    fbds.src = '//connect.facebook.net/en_US/fbds.js';
-    var s = document.getElementsByTagName('script')[0];
-    s.parentNode.insertBefore(fbds, s);
-    _fbq.loaded = true;
-    }
-    _fbq.push(['addPixelId', '470029339846466']);
-    })();
-    window._fbq = window._fbq || [];
-    window._fbq.push(['track', 'PixelInitialized', {}]);
-  </script>
-  <noscript><img height="1" width="1" alt="" style="display:none" src="https://www.facebook.com/tr?id=470029339846466&amp;ev=PixelInitialized" /></noscript>
-{% endif %}
-{% endif %}
-</head>
-{% if body_id %}
-<body id="{{ body_id }}">
-{% else %}
-<body>
-{% endif %}
-  <div class="container">
-    <div class="title">
-      <div class="pull-left">
-        <p><a href="{{ url_for('index') }}"><strong>Gameconfs</strong> - a directory of game industry events.</a></p>
-      </div>
-      <div class="pull-right">
-        <a class="btn btn-sm btn-info" href="{{ url_for('submit_event') }}">Submit an event</a>
-      </div>
-    </div>
-    <div class="clearfix"></div>
-    {% if logged_in %}
-    <div id="admin-bar">
-      {% if search_form %}
-      <form class="form-inline" method="POST" action="{{ url_for('search') }}">
-        <a class="btn btn-sm btn-primary" href="{{ url_for('admin.index') }}">Dashboard</a>
-        {% if not body_id or body_id != "edit-event" %}
-        <a class="btn btn-sm btn-default" href="{{ url_for('create_new_event') }}">New event</a>
-        {% endif %}
-        {{ search_form.hidden_tag() }}
-        &nbsp;&nbsp;
-        <div class="form-group">
-          {{ search_form.search_string(id="search", class="form-control input-sm", placeholder="Amazing game event") }}
-        </div>
-        <button type="submit" class="btn btn-sm btn-default">Search</button>
-        <a class="btn btn-sm btn-danger pull-right" href="{{ url_for('security.logout') }}">Sign out {{ current_user.user_name }}</a>
-      </form>
-      {% else %}
-      <a class="btn btn-sm btn-primary" href="{{ url_for('admin.index') }}">Dashboard</a>
-      {% if not body_id or body_id != "edit-event" %}
-      <a class="btn btn-sm btn-default" href="{{ url_for('create_new_event') }}">New event</a>
+{% extends "base.html" %}
+{% block center %}
+<div class="row">
+  <div class="col-md-8">
+    {% block content %}{% endblock %}
+  </div>
+  {% if sponsor %}
+  <div class="col-md-4">
+    <h2>&nbsp;</h2>
+    <div id="sponsor">
+      <p><span class="text-muted">This month's sponsor:</span><br/>
+      <a href="{{ sponsor.target_url }}" onclick="trackSponsorLink('{{ sponsor.target_url }}'); return false;" target="_blank">
+      {% if sponsor.image_path %}
+        <img src="{{ url_for('static', filename=sponsor.image_path) }}" alt="{{ sponsor.alt_text }}" width="320">
       {% endif %}
-      <a class="btn btn-sm btn-danger pull-right" href="{{ url_for('security.logout') }}">Sign out {{ current_user.user_name }}</a>
-       {% endif %}
-    </div>
-    {% endif %}
-    <div class="row">
-      <div class="col-md-8">
-        {% block content %}{% endblock %}
-      </div>
-      {% if sponsor %}
-      <div class="col-md-4">
-        <h2>&nbsp;</h2>
-        <div id="sponsor">
-          <p><span class="text-muted">This month's sponsor:</span><br/>
-          <a href="{{ sponsor.target_url }}" onclick="trackSponsorLink('{{ sponsor.target_url }}'); return false;" target="_blank">
-          {% if sponsor.image_path %}
-            <img src="{{ url_for('static', filename=sponsor.image_path) }}" alt="{{ sponsor.alt_text }}" width="320">
-          {% endif %}
-          {% if sponsor.text %}
-            {{ sponsor.text }}
-          {% endif %}
-          </a></p>
-        </div>
-      </div>
+      {% if sponsor.text %}
+        {{ sponsor.text }}
       {% endif %}
-    </div>
-    <div class="clearfix"></div>
-    <div class="footer">
-      <ul>
-        <li><a href="{{ url_for('index') }}">Home</a></li>
-        <li><a href="{{ url_for('static_page', page_name='other') }}">More events</a></li>
-        <li><a target="_blank" href="http://blog.gameconfs.com">Blog</a></li>
-        <li><a href="{{ url_for('stats') }}">Stats</a></li>
-        <li><a href="{{ url_for('static_page', page_name='about') }}">About</a></li>
-        <li><a href="{{ url_for('static_page', page_name='tools') }}">Tools</a></li>
-      </ul>
-      <br/>
-      <p class="text-muted">&copy; 2012-2015 Jurie Horneman</p>
+      </a></p>
     </div>
   </div>
-  <script src="{{ url_for('static', filename='js/all.min.js') }}"></script>
-{% block end_of_body %}{% endblock %}
-{% if not offline_mode %}
-<script src="//static.getclicky.com/js" type="text/javascript"></script>
-<script type="text/javascript">try{ clicky.init(66602292); }catch(e){}</script>
-<noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/66602292ns.gif" /></p></noscript>
-{% if not kill_ce_retarget %}
-<script type="text/javascript">
-/* <![CDATA[ */
-var google_conversion_id = 1042973873;
-var google_custom_params = window.google_tag_params;
-var google_remarketing_only = true;
-/* ]]> */
-</script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-</script>
-<noscript>
-<div style="display:inline;">
-<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/1042973873/?value=0&amp;guid=ON&amp;script=0"/>
+  {% endif %}
 </div>
-</noscript>
-{% endif %}
-{% endif %}
-</body>
-</html>
+{% endblock %}
