@@ -16,7 +16,7 @@ class EventForm(Form):
     address = StringField('City')
     series = StringField('Series')
     city_id = HiddenField()
-    is_published = BooleanField()
+    is_published = BooleanField(default=True)
 
     def validate_end_date(form, field):
         if field.data < form.start_date.data:
