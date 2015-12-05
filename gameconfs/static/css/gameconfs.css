@@ -67,7 +67,7 @@
 
 #admin-bar {
     margin-top: 1em;
-    margin-bottom: -0.5em;
+    /*margin-bottom: -0.5em;*/
 }
 
 /* Monthly event lists */
@@ -151,6 +151,11 @@
     color: red;
 }
 
+/* (Bootstrap rule doesn't work.) */
+.checkbox input[type=checkbox] {
+    margin-top: 4px;
+}
+
 /* Main page */
 
 body#index .browse-list > div > a {
@@ -159,6 +164,10 @@ body#index .browse-list > div > a {
 }
 
 /* Event page */
+
+body#view-event h2.unpublished {
+    text-decoration: line-through;
+}
 
 body#view-event .event-entry {
     margin-bottom: 1em;
@@ -248,10 +257,4 @@ table.bars .bar_label {
 
 #feedbackForm form {
     margin-bottom: 0;
-}
-
-/* Forms */
-/* (Bootstrap rule doesn't work.) */
-.checkbox input[type=checkbox] {
-    margin-top: 4px;
 }
