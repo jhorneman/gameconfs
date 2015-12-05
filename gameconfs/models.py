@@ -1,7 +1,7 @@
 import re
 import logging
-from sqlalchemy import Column, Integer, String, ForeignKey, Date, DateTime, Boolean
-from sqlalchemy.orm import relationship, backref
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, DateTime, Boolean, Enum
+from sqlalchemy.orm import relationship, backref, joinedload
 import sqlalchemy.orm
 from flask.ext.security import UserMixin, RoleMixin
 from gameconfs import db
@@ -120,6 +120,9 @@ class Series(db.Model):
         return self.name
 
 
+publish_states = Enum('draft', 'published', name='publish_states')
+
+
 class Event(db.Model):
     __tablename__ = 'events'
 
@@ -156,6 +159,29 @@ class Event(db.Model):
 
     series_id = Column(Integer, ForeignKey('series.id'), nullable=True)
     series = relationship('Series', backref=backref('events', lazy='select'))
+
+    publish_status = Column(publish_states, default='draft')
+
+    @staticmethod
+    def base_query(_only_published=True, _with_location=True, _sorted_by_date=True):
+        query = Event.query\
+
+        if _only_published:
+            query = query.filter(Event.publish_status == 'published')
+
+        if _with_location:
+            query = query.join(Event.city).\
+                join(City.country).\
+                join(Country.continent).\
+                options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
+
+        if _sorted_by_date:
+            query = query.order_by(Event.start_date.asc(), Event.end_date.asc())
+
+        return query
+
+    def is_published(self):
+        return self.publish_status == 'published'
 
     def __setattr__(self, name, value):
         if name == "event_url":

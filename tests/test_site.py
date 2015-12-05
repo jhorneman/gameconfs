@@ -78,6 +78,7 @@ class SiteTestCase(unittest.TestCase):
         new_event = Event()
         new_event.created_at = now
         new_event.last_modified_at = now
+        new_event.publish_status = 'published'
         new_event.name = "Stagconf"
         new_event.start_date = datetime.date(this_year, 8, 14)
         new_event.end_date = datetime.date(this_year, 8, 14)
@@ -91,6 +92,7 @@ class SiteTestCase(unittest.TestCase):
         new_event = Event()
         new_event.created_at = now
         new_event.last_modified_at = now
+        new_event.publish_status = 'published'
         new_event.name = "GDC"
         new_event.start_date = datetime.date(this_year-1, 3, 31)
         new_event.end_date = datetime.date(this_year-1, 4, 1)
@@ -104,6 +106,7 @@ class SiteTestCase(unittest.TestCase):
         new_event = Event()
         new_event.created_at = now
         new_event.last_modified_at = now
+        new_event.publish_status = 'published'
         new_event.name = "Someconf"
         new_event.start_date = datetime.date(this_year, 5, 25)
         new_event.end_date = datetime.date(this_year, 5, 27)

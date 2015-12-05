@@ -78,13 +78,7 @@ def search_events():
     request_parameters = request.args
 
     # Start with base query.
-    q = Event.query.\
-        join(Event.city).\
-        join(City.country).\
-        join(Country.continent).\
-        order_by(Event.start_date.asc()).\
-        options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
-
+    q = Event.base_query()
     found_query_criterion = False
 
     # Check for and apply date or date range filters.
@@ -188,12 +182,7 @@ def upcoming_events():
     period_start, period_end = get_month_period(today.year, today.month, nr_months)
 
     # Find events.
-    q = Event.query.\
-        join(Event.city).\
-        join(City.country).\
-        join(Country.continent).\
-        order_by(Event.start_date.asc()).\
-        options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
+    q = Event.base_query()
     q = filter_by_period_start_end(q, period_start, period_end)
 
     found_location_name = None

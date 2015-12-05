@@ -47,12 +47,7 @@ def data(version):
 
     period_start, period_end = get_month_period(year, today.month, nr_months)
 
-    q = Event.query.\
-        join(Event.city).\
-        join(City.country).\
-        join(Country.continent).\
-        order_by(Event.start_date.asc()).\
-        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
+    q = Event.base_query()
     q = filter_by_period_start_end(q, period_start, period_end)
 
     if place_name:

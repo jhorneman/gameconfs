@@ -148,10 +148,8 @@ def make_date_cache_key(*args, **kwargs):
 @templated()
 def index():
     today = date.today()
-    q = Event.query.\
-        order_by(Event.start_date.asc()).\
-        filter(and_(Event.start_date <= today, Event.end_date >= today)).\
-        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
+    q = Event.base_query().\
+        filter(and_(Event.start_date <= today, Event.end_date >= today))
     ongoing_events = q.all()
 
     min_year, max_year = get_year_range()
@@ -202,9 +200,8 @@ def search():
 @app.cache.cached(timeout=60*60*24, unless=user_can_edit, key_prefix=make_cache_key)
 def view_event(event_id):
     try:
-        event = Event.query.\
+        event = Event.base_query().\
             filter(Event.id == event_id).\
-            options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
             one()
     except sqlalchemy.orm.exc.NoResultFound:
         max_event_id = db.session.query(func.max(Event.id)).one()[0]
@@ -223,10 +220,8 @@ def view_upcoming_events():
     end_of_upcoming_period = date(end_of_upcoming_period.year, end_of_upcoming_period.month,
                                   monthrange(end_of_upcoming_period.year, end_of_upcoming_period.month)[1])
 
-    q = Event.query.\
-        order_by(Event.start_date.asc()).\
-        filter(and_(Event.start_date > today, Event.start_date < end_of_upcoming_period)).\
-        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
+    q = Event.base_query().\
+        filter(and_(Event.start_date > today, Event.start_date < end_of_upcoming_period))
     events = q.all()
 
     return render_template('upcoming.html', body_id='upcoming', events=events, until_date=end_of_upcoming_period)
@@ -240,9 +235,7 @@ def view_year(year):
     if year < min_year or year > max_year:
         return render_template('page_not_found.html'), 404
 
-    q = filter_by_year(Event.query, year).\
-        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
-    events = q.all()
+    events = filter_by_year(Event.base_query(), year).all()
 
     return render_template('year.html', body_id='year', events=events, year=year)
 
@@ -261,13 +254,7 @@ def view_place(place_name):
     if place_name == "online":
         return redirect(url_for('view_place', place_name="other"), code=301)
 
-    q = Event.query.\
-        join(Event.city).\
-        join(City.country).\
-        join(Country.continent).\
-        order_by(Event.start_date.asc()).\
-        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
-
+    q = Event.base_query()
     (q, location) = filter_by_place_name(q, place_name)
     if not location:
         return render_template('page_not_found.html'), 404
@@ -289,13 +276,7 @@ def view_place(place_name):
 @app.route('/place/<place_name>/past')
 @app.cache.cached(timeout=60*60*24, key_prefix=make_cache_key)
 def view_place_past(place_name):
-    q = Event.query.\
-        join(Event.city).\
-        join(City.country).\
-        join(Country.continent).\
-        order_by(Event.start_date.asc()).\
-        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
-
+    q = Event.base_query()
     (q, location) = filter_by_place_name(q, place_name)
     if not location:
         return render_template('page_not_found.html'), 404
@@ -313,11 +294,7 @@ def view_series(series_id):
     except sqlalchemy.orm.exc.NoResultFound:
         return render_template('page_not_found.html'), 404
 
-    q = Event.query.\
-        order_by(Event.start_date.desc()).\
-        filter(Event.series_id == series_id).\
-        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
-    events = q.all()
+    events = Event.base_query().filter(Event.series_id == series_id).all()
 
     return render_template('series.html', body_id='series', events=events, series=series)
 
@@ -575,11 +552,9 @@ def upcoming_ics():
     end_of_upcoming_period = date(end_of_upcoming_period.year, end_of_upcoming_period.month,
                                   monthrange(end_of_upcoming_period.year, end_of_upcoming_period.month)[1])
 
-    q = Event.query.\
-        order_by(Event.start_date.asc()).\
+    events = Event.base_query().\
         filter(and_(Event.start_date > today, Event.start_date < end_of_upcoming_period)).\
-        options(joinedload('city'), joinedload('city.country'), joinedload('city.state'))
-    events = q.all()
+        all()
 
     cal = icalendar.Calendar()
     cal.add('prodid', '-//Game event//gameconfs.com//')
@@ -618,10 +593,9 @@ def recent_feed():
                     subtitle_type='text')
 
     #TODO: This will miss events if more than 15 are added at once, which occasionally happens.
-    events = Event.query.\
+    events = Event.base_query(_sorted_by_date=False).\
         filter(Event.end_date >= today).\
         order_by(Event.created_at.desc()).\
-        options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
         limit(15).\
         all()
     for event in events:
@@ -661,9 +635,8 @@ def today_feed():
                     subtitle='Events on Gameconfs starting today',
                     subtitle_type='text')
 
-    events = Event.query.\
+    events = Event.base_query().\
         filter(Event.start_date == date.today()).\
-        options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
         all()
     for event in events:
         start_datetime = datetime.combine(event.start_date, time.min)
@@ -721,7 +694,7 @@ def stats():
     # Get city stats
     city_stats = []
     for city_id, name in db.session.query(City.id, City.name):
-        city_stats.append((name, Event.query.filter(Event.city_id == city_id).count()))
+        city_stats.append((name, Event.base_query(_with_location=False, _sorted_by_date=False).filter(Event.city_id == city_id).count()))
     city_stats = sorted(city_stats, key=operator.itemgetter(1), reverse=True)[:10]
     total_nr_cities = City.query.count()
 
@@ -738,7 +711,7 @@ def stats():
     total_nr_countries = Country.query.count()
 
     # Get total number of events
-    total_nr_events = Event.query.count()
+    total_nr_events = Event.base_query(_with_location=False, _sorted_by_date=False).count()
 
     return render_template('stats.html', time_stats=time_stats, country_stats=country_stats,
         city_stats=city_stats, total_nr_events=total_nr_events, total_nr_cities=total_nr_cities,

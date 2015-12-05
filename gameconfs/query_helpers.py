@@ -10,13 +10,11 @@ def search_events_by_string(_search_string):
     if not _search_string:
         return []
     query_string = "%" + _search_string + "%"
-    q = Event.query.\
+    q = Event.base_query().\
         filter(or_(Event.name.ilike(query_string),
                    Event.event_url.ilike(query_string),
                    Event.twitter_hashtags.ilike(query_string),
-                   Event.twitter_account.ilike(query_string))).\
-        options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
-        order_by(Event.start_date.desc())
+                   Event.twitter_account.ilike(query_string)))
     return q.all()
 
 
