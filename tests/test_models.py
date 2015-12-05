@@ -1,6 +1,5 @@
 import sqlalchemy.orm
 from nose.tools import *
-from gameconfs import geocoder
 from gameconfs.models import *
 from utils import TestCaseUsingDatabase
 
