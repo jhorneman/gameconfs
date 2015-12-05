@@ -187,6 +187,12 @@ class Event(db.Model):
         self.publish_status = 'published' if value else 'draft'
     is_published = property(get_is_published, set_is_published)
 
+    def get_last_checked_at(self):
+        return self.last_modified_at
+    def set_last_checked_at(self, value):
+        pass
+    last_checked_at = property(get_last_checked_at, set_last_checked_at)
+
     def __setattr__(self, name, value):
         if name == "event_url":
             if not re.match("^https?://", value):
