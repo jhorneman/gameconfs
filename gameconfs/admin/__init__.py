@@ -96,4 +96,9 @@ def view_events_due_for_update():
 
     events_due_for_update = sorted(events_due_for_update, key=lambda event: event.start_date)
 
-    return render_template('admin/events_due_for_update.html', events_due_for_update=events_due_for_update)
+    return render_template(
+        'admin/events_due_for_update.html',
+        events_due_for_update=events_due_for_update,
+        body_id='events_update',
+        full_width=True
+    )

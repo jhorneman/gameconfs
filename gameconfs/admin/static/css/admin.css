@@ -1,3 +1,5 @@
+/* Main page */
+
 ul.button-list {
     padding-left: 0px;
 }
@@ -5,4 +7,16 @@ ul.button-list {
 .button-list li {
     list-style-type: none;
     margin-bottom: 4px;
+}
+
+/* Events update page */
+
+body#events_update table {
+    table-layout: fixed;
+}
+
+body#events_update td{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
