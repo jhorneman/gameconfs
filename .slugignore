@@ -2,7 +2,5 @@ doc
 notes
 tests
 *.pyc
-commands.txt
-run_tests.py
 package.json
 node_modules
