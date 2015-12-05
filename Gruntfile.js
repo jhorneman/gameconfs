@@ -8,7 +8,8 @@ module.exports = function(grunt) {
           'gameconfs/static/css/all.min.css': [
               'gameconfs/static/css/jquery-ui.css',
               'gameconfs/static/css/bootstrap.min.css',
-              'gameconfs/static/css/gameconfs.css'
+              'gameconfs/static/css/gameconfs.css',
+              'gameconfs/admin/static/css/admin.css'
           ]
         }
       }
@@ -29,7 +30,7 @@ module.exports = function(grunt) {
 
     watch: {
       css: {
-        files: ['gameconfs/static/css/gameconfs.css'],
+        files: ['gameconfs/static/css/gameconfs.css', 'gameconfs/admin/static/css/admin.css'],
         tasks: ['cssmin'],
         options: {
           livereload: true
