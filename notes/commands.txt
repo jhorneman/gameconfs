@@ -1,13 +1,12 @@
+TODO: Turn this into Markdown, update because we're now using Postgresapp.
+
 To make psycopg2 use OpenSSL 1.0.0:
 
 export DYLD_LIBRARY_PATH=/usr/local/Cellar/openssl/1.0.1c/lib
 
-or:
-
-sudo ln -s /Library/PostgreSQL/9.2/lib/libssl.1.0.0.dylib /usr/lib
-$ sudo ln -s /Library/PostgreSQL/9.2/lib/libcrypto.1.0.0.dylib /usr/lib
-
 To dump database for Heroku:
+
+(Won't work anymore)
 
 /Library/PostgreSQL/9.2/bin/pg_dump --host localhost --port 5432 --username "postgres" -Fc --no-acl --no-owner --verbose --file "/Users/jhorneman/Desktop/data.dump" "gdcal-dev"
 
@@ -42,21 +41,6 @@ heroku pgbackups
 To upload to Heroku:
 
 git push heroku master
-
-To install PostgreSQL locally:
-
-- OS X has a crippled version of Postgres pre-installed.
-- Currently, we have the EnterpriseDB distribution installed.
-- In /Library/PostgreSQL/9.2/ is pg_env.sh, a shell script that points Postgres commands to the installed version, not the crippled version.
-- In /Library/PostgreSQL/9.2/ is uninstall-postgresql, an uninstaller.
-- There is a PostreSQL 9.2 folder in /Applications.
-- Data is stored in ~/dev/PostgreSQL/9.2/data.
-
-"dyld: Library not loaded: /usr/lib/libpq.5.dylib" - do this to fix it:
-
-sudo ln -s /usr/lib/libpq.5.3.dylib /usr/lib/libpq.5.dylib
-
-(See this: http://superuser.com/questions/352005/os-x-lion-web-sharing-cant-start)
 
 To stop Python output from being buffered:
 
