@@ -8,7 +8,7 @@
     {% endif %}
       {{ field.label(class="col-sm-3 control-label") }}
       <div class="col-sm-9">
-        {%  if show_at_symbol %}
+        {% if show_at_symbol %}
         <div class="input-group"><span class="input-group-addon">@</span>{{ field(class=class + " form-control", placeholder=placeholder) }}</div>
         {% else %}
         {{ field(class=class + " form-control", placeholder=placeholder) }}
@@ -44,7 +44,7 @@ New event - Gameconfs
 {% block head %}
     <link rel="stylesheet" href="{{ url_for('static', filename='css/datepicker.css') }}">
     <link rel="stylesheet" href="{{ url_for('static', filename='css/typeahead.css') }}">
-{%  endblock %}
+{% endblock %}
 
 {% block content %}
 {% if event_id %}
@@ -66,6 +66,15 @@ New event - Gameconfs
   {{ form_control(event_form.venue, "Moscone Conference Center") }}
   {{ form_control(event_form.address, "San Francisco, USA (leave empty for online/worldwide events)") }}
   {{ form_control(event_form.series, "Series name (optional)") }}
+  <div class="form-group">
+    <div class="col-sm-offset-3 col-sm-9">
+      <div class="checkbox">
+        <label>
+          {{ event_form.is_published() }}Published
+        </label>
+      </div>
+    </div>
+  </div>
   <div class="form-group">
     <div class="col-sm-offset-3 col-sm-9">
         <button type="submit" id="submit-button" class="btn btn-primary">Save</button>

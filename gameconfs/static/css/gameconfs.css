@@ -219,7 +219,7 @@ table.bars tr td {
 	border: none;
 }
 
-tabl.bars tr td:nth-child(1) {
+table.bars tr td:nth-child(1) {
     text-align: right;
 }
 
@@ -245,6 +245,13 @@ table.bars .bar_label {
 }
 
 /* Feedback form */
+
 #feedbackForm form {
     margin-bottom: 0;
+}
+
+/* Forms */
+/* (Bootstrap rule doesn't work.) */
+.checkbox input[type=checkbox] {
+    margin-top: 4px;
 }
