@@ -329,7 +329,7 @@ def create_new_event():
         new_event.event_url = event_form.event_url.data
         new_event.twitter_hashtags = event_form.twitter_hashtags.data
         new_event.twitter_account = event_form.twitter_account.data
-        new_event.is_published = event_form.is_published
+        new_event.is_published = event_form.is_published.data
 
         if event_form.series.data:
             try:
@@ -422,7 +422,7 @@ def duplicate_event(event_id):
         new_event.event_url = event_form.event_url.data
         new_event.twitter_hashtags = event_form.twitter_hashtags.data
         new_event.twitter_account = event_form.twitter_account.data
-        new_event.is_published = event_form.is_published
+        new_event.is_published = event_form.is_published.data
 
         if event_form.series.data:
             try:
@@ -474,7 +474,7 @@ def edit_event(event_id):
         event.event_url = event_form.event_url.data
         event.twitter_hashtags = event_form.twitter_hashtags.data
         event.twitter_account = event_form.twitter_account.data
-        event.is_published = event_form.is_published
+        event.is_published = event_form.is_published.data
 
         if event_form.series.data:
             try:
