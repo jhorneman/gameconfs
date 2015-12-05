@@ -50,6 +50,9 @@
       {% else %}
       Never modified.
       {% endif %}
+      {% if not event.is_published %}
+      Not published.
+      {% endif %}
     </p>
   </div>
   <a class="btn btn-sm btn-default" href="{{ url_for('edit_event', event_id=event.id) }}">Edit</a>
