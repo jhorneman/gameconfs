@@ -10,7 +10,8 @@ def search_events_by_string(_search_string):
     if not _search_string:
         return []
     query_string = "%" + _search_string + "%"
-    q = Event.base_query().\
+    q = Event.base_query(_sorted_by_date=False).\
+        order_by(Event.start_date.desc(), Event.end_date.asc()).\
         filter(or_(Event.name.ilike(query_string),
                    Event.event_url.ilike(query_string),
                    Event.twitter_hashtags.ilike(query_string),
