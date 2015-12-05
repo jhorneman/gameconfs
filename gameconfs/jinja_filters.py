@@ -1,6 +1,6 @@
 import sys
 import inspect
-from datetime import date, timedelta
+from datetime import date, datetime, timedelta
 import urllib
 
 
@@ -16,24 +16,23 @@ def set_up_jinja_filters(_app):
 __all__ = [set_up_jinja_filters]
 
 
-# http://flask.pocoo.org/snippets/33/
-# By Sean Vieira
-# Adapted
-def friendly_time(dt, past_="ago", 
-    future_="from now", 
-    default="just now"):
+# Adapted http://flask.pocoo.org/snippets/33/ by Sean Vieira.
+def friendly_time(_date, past_="ago", future_ = "from now", default = "just now"):
     """
     Returns string representing "time since"
     or "time until" e.g.
     3 days ago, 5 hours from now etc.
     """
 
+    if isinstance(_date, datetime):
+        _date = date(_date.year, _date.month, _date.day)
+
     today = date.today()
-    if today > dt:
-        diff = today - dt
+    if today > _date:
+        diff = today - _date
         dt_is_past = True
     else:
-        diff = dt - today
+        diff = _date - today
         dt_is_past = False
 
     periods = (
@@ -45,9 +44,9 @@ def friendly_time(dt, past_="ago",
 
     for period, singular, plural in periods:
         if period:
-            return "%d %s %s" % (period, \
-                singular if period == 1 else plural, \
-                past_ if dt_is_past else future_)
+            return "%d %s %s" % (period,
+                                 singular if period == 1 else plural,
+                                 past_ if dt_is_past else future_)
 
     return default
 
@@ -72,6 +71,16 @@ def nice_month(_month):
 def short_month(_month):
     month = date(2012, _month, 1)   # Year is irrelevant
     return "{0}".format(month.strftime("%b"))
+
+
+def short_range(_event):
+    if _event.start_date == _event.end_date:
+        return "{0} {1}".format(short_date(_event.start_date), _event.start_date.year)
+    else:
+        if _event.start_date.month == _event.end_date.month:
+            return "{0}-{1} {2}".format(short_date(_event.start_date), _event.end_date.day, _event.start_date.year)
+        else:
+            return "{0}-{1} {2}".format(short_date(_event.start_date), short_date(_event.end_date), _event.start_date.year)
 
 
 def index_to_month(_index):
