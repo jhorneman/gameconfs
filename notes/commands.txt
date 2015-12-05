@@ -6,13 +6,11 @@ export DYLD_LIBRARY_PATH=/usr/local/Cellar/openssl/1.0.1c/lib
 
 To dump database for Heroku:
 
-(Won't work anymore)
-
-/Library/PostgreSQL/9.2/bin/pg_dump --host localhost --port 5432 --username "postgres" -Fc --no-acl --no-owner --verbose --file "/Users/jhorneman/Desktop/data.dump" "gdcal-dev"
+pg_dump --host localhost --port 5432 --username "gameconfs" -Fc --no-acl --no-owner --verbose --file "/Users/jhorneman/Desktop/data.dump" "gameconfs"
 
 To import data dump into Heroku database:
 
-heroku pgbackups:restore DATABASE 'http://www.intelligent-artifice.com/data.dump' --confirm gameconfs
+heroku pg:backups restore 'http://www.intelligent-artifice.com/data.dump' DATABASE -a gameconfs --confirm gameconfs
 
 To grab database backup from live server on Heroku:
 
