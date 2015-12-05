@@ -18,6 +18,7 @@ enum = sa.Enum('draft', 'published', name='publish_states')
 
 
 def upgrade():
+    op.execute("DROP TYPE IF EXISTS publish_states;")
     op.execute("CREATE TYPE publish_states AS ENUM ('draft', 'published');")
     op.add_column('events', sa.Column('publish_status', enum, server_default='published'))
 
