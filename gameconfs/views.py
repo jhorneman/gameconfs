@@ -200,7 +200,7 @@ def search():
 @app.cache.cached(timeout=60*60*24, unless=user_can_edit, key_prefix=make_cache_key)
 def view_event(event_id):
     try:
-        event = Event.base_query().\
+        event = Event.base_query(_only_published=not user_can_edit()).\
             filter(Event.id == event_id).\
             one()
     except sqlalchemy.orm.exc.NoResultFound:
@@ -329,6 +329,7 @@ def create_new_event():
         new_event.event_url = event_form.event_url.data
         new_event.twitter_hashtags = event_form.twitter_hashtags.data
         new_event.twitter_account = event_form.twitter_account.data
+        new_event.is_published = event_form.is_published
 
         if event_form.series.data:
             try:
@@ -400,6 +401,7 @@ def duplicate_event(event_id):
         new_event.venue = original_event.venue
         new_event.address_for_geocoding = original_event.address_for_geocoding
         new_event.series = original_event.series
+        new_event.is_published = original_event.is_published
 
         address = ""
         if original_event.is_in_a_city():
@@ -420,6 +422,7 @@ def duplicate_event(event_id):
         new_event.event_url = event_form.event_url.data
         new_event.twitter_hashtags = event_form.twitter_hashtags.data
         new_event.twitter_account = event_form.twitter_account.data
+        new_event.is_published = event_form.is_published
 
         if event_form.series.data:
             try:
@@ -471,6 +474,7 @@ def edit_event(event_id):
         event.event_url = event_form.event_url.data
         event.twitter_hashtags = event_form.twitter_hashtags.data
         event.twitter_account = event_form.twitter_account.data
+        event.is_published = event_form.is_published
 
         if event_form.series.data:
             try:
