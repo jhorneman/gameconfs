@@ -1,0 +1,23 @@
+<div id="admin-bar">
+  {% if search_form %}
+  <form class="form-inline" method="POST" action="{{ url_for('search') }}">
+    <a class="btn btn-sm btn-primary" href="{{ url_for('admin.index') }}">Dashboard</a>
+    {% if not body_id or body_id != "edit-event" %}
+    <a class="btn btn-sm btn-default" href="{{ url_for('create_new_event') }}">New event</a>
+    {% endif %}
+    {{ search_form.hidden_tag() }}
+    &nbsp;&nbsp;
+    <div class="form-group">
+      {{ search_form.search_string(id="search", class="form-control input-sm", placeholder="Amazing game event") }}
+    </div>
+    <button type="submit" class="btn btn-sm btn-default">Search</button>
+    <a class="btn btn-sm btn-danger pull-right" href="{{ url_for('security.logout') }}">Sign out {{ current_user.user_name }}</a>
+  </form>
+  {% else %}
+  <a class="btn btn-sm btn-primary" href="{{ url_for('admin.index') }}">Dashboard</a>
+  {% if not body_id or body_id != "edit-event" %}
+  <a class="btn btn-sm btn-default" href="{{ url_for('create_new_event') }}">New event</a>
+  {% endif %}
+  <a class="btn btn-sm btn-danger pull-right" href="{{ url_for('security.logout') }}">Sign out {{ current_user.user_name }}</a>
+   {% endif %}
+</div>

@@ -74,54 +74,13 @@
 <body>
 {% endif %}
   <div class="container">
-    <div class="title">
-      <div class="pull-left">
-        <p><a href="{{ url_for('index') }}"><strong>Gameconfs</strong> - a directory of game industry events.</a></p>
-      </div>
-      <div class="pull-right">
-        <a class="btn btn-sm btn-info" href="{{ url_for('submit_event') }}">Submit an event</a>
-      </div>
-    </div>
-    <div class="clearfix"></div>
+    {% include 'header.html' %}
     {% if logged_in %}
-    <div id="admin-bar">
-      {% if search_form %}
-      <form class="form-inline" method="POST" action="{{ url_for('search') }}">
-        <a class="btn btn-sm btn-primary" href="{{ url_for('admin.index') }}">Dashboard</a>
-        {% if not body_id or body_id != "edit-event" %}
-        <a class="btn btn-sm btn-default" href="{{ url_for('create_new_event') }}">New event</a>
-        {% endif %}
-        {{ search_form.hidden_tag() }}
-        &nbsp;&nbsp;
-        <div class="form-group">
-          {{ search_form.search_string(id="search", class="form-control input-sm", placeholder="Amazing game event") }}
-        </div>
-        <button type="submit" class="btn btn-sm btn-default">Search</button>
-        <a class="btn btn-sm btn-danger pull-right" href="{{ url_for('security.logout') }}">Sign out {{ current_user.user_name }}</a>
-      </form>
-      {% else %}
-      <a class="btn btn-sm btn-primary" href="{{ url_for('admin.index') }}">Dashboard</a>
-      {% if not body_id or body_id != "edit-event" %}
-      <a class="btn btn-sm btn-default" href="{{ url_for('create_new_event') }}">New event</a>
-      {% endif %}
-      <a class="btn btn-sm btn-danger pull-right" href="{{ url_for('security.logout') }}">Sign out {{ current_user.user_name }}</a>
-       {% endif %}
-    </div>
+    {% include 'admin_bar.html' %}
     {% endif %}
     {% block center %}{% endblock %}
     <div class="clearfix"></div>
-    <div class="footer">
-      <ul>
-        <li><a href="{{ url_for('index') }}">Home</a></li>
-        <li><a href="{{ url_for('static_page', page_name='other') }}">More events</a></li>
-        <li><a target="_blank" href="http://blog.gameconfs.com">Blog</a></li>
-        <li><a href="{{ url_for('stats') }}">Stats</a></li>
-        <li><a href="{{ url_for('static_page', page_name='about') }}">About</a></li>
-        <li><a href="{{ url_for('static_page', page_name='tools') }}">Tools</a></li>
-      </ul>
-      <br/>
-      <p class="text-muted">&copy; 2012-2015 Jurie Horneman</p>
-    </div>
+    {% include 'footer.html' %}
   </div>
   <script src="{{ url_for('static', filename='js/all.min.js') }}"></script>
 {% block end_of_body %}{% endblock %}
