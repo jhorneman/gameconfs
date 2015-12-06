@@ -1,4 +1,5 @@
-from datetime import datetime, date
+import re
+from datetime import datetime
 from flask import Blueprint, request, jsonify, render_template
 from gameconfs.app_logging import add_logger
 from gameconfs.models import *
@@ -236,6 +237,27 @@ def upcoming_events():
     })
     if len(found_events) == 0:
         response.status_code = 404
+    return response
+
+
+
+@api_blueprint.route('/', defaults={'path': ''})
+@api_blueprint.route('/<path:path>')
+def not_found(path):
+    m = re.match(r"v(\d+)/(\S*)\??", path)
+    if not m:
+        message = "'{0}' is not a valid API path.".format(path)
+    else:
+        requested_API_version = int(m.group(1))
+        if requested_API_version != 1:
+            message = "{0} is not a valid API version number.".format(requested_API_version)
+        else:
+            message = "'{0}' is not a valid API endpoint.".format(m.group(2))
+
+    response = jsonify({
+        "message": message
+    })
+    response.status_code = 404
     return response
 
 
