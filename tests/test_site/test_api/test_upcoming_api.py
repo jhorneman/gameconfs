@@ -6,15 +6,15 @@ from .. import SiteTestCase
 from . import base_url, test_event
 
 
-class APITestCase(SiteTestCase):
+class UpcomingEventsAPITestCase(SiteTestCase):
     def call_api(self, _params):
         return self.c.get(base_url + "v1/upcoming", query_string=_params)
     
-    def test_upcoming_post_returns_405(self):
+    def test_post_returns_405(self):
         r = self.c.post(base_url + "v1/upcoming", query_string={})
         assert r.status_code == 405
-    
-    def test_upcoming_no_data_fails(self):
+
+    def test_no_data_fails(self):
         r = self.call_api({})
         assert r.status_code == 200
         data = json.loads(r.data)
@@ -23,7 +23,7 @@ class APITestCase(SiteTestCase):
         assert data["nrFoundEvents"] > 0
         assert len(data["results"]) == data["nrFoundEvents"]
 
-    def test_upcoming_wrong_data_fails(self):
+    def test_wrong_data_fails(self):
         r = self.call_api({"blah": 0})
         assert r.status_code == 200
         data = json.loads(r.data)
@@ -32,13 +32,13 @@ class APITestCase(SiteTestCase):
         assert data["nrFoundEvents"] > 0
         assert len(data["results"]) == data["nrFoundEvents"]
 
-    def test_upcoming_nr_months_wrong_format(self):
+    def test_nr_months_wrong_format(self):
         r = self.call_api({"nrMonths": "FIVE"})
         assert r.status_code == 400
         data = json.loads(r.data)
         assert data["message"].startswith("Could not parse nrMonths value")
 
-    def test_upcoming_nr_months_illegal_values(self):
+    def test_nr_months_illegal_values(self):
         r = self.call_api({"nrMonths": -1})
         assert r.status_code == 400
         data = json.loads(r.data)
@@ -54,7 +54,7 @@ class APITestCase(SiteTestCase):
         data = json.loads(r.data)
         eq_(data["message"], "nrMonths may not be higher than 12.")
 
-    def test_upcoming_nr_months_legal_values(self):
+    def test_nr_months_legal_values(self):
         r = self.call_api({"nrMonths": 1})
         assert r.status_code == 200
         data = json.loads(r.data)
@@ -71,7 +71,7 @@ class APITestCase(SiteTestCase):
         assert data["nrFoundEvents"] > 0
         assert len(data["results"]) == data["nrFoundEvents"]
 
-    def test_upcoming_place_empty(self):
+    def test_place_empty(self):
         r = self.call_api({"place": " "})
         assert r.status_code == 400
         data = json.loads(r.data)
