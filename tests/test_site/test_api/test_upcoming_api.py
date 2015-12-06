@@ -22,7 +22,7 @@ class UpcomingEventsAPITestCase(SiteTestCase):
         r = self.c.post(base_url + "v1/upcoming", query_string={})
         assert r.status_code == 405
 
-    def test_wrong_data_fails(self):
+    def test_wrong_parameters_fails(self):
         data = self.call_api({"blah": 0}, 400)
         assert data["message"].startswith("Did not recognize parameter")
 
