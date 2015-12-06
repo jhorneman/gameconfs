@@ -37,17 +37,28 @@ class APITestCase(SiteTestCase):
 
 
 class BasicAPITestCase(SiteTestCase):
-    def test_index_works(self):
+    def test_index_returns_HTML(self):
         r = self.c.get(api_base_url)
         assert r.status_code == 200
         assert r.content_type.startswith('text/html')
 
-    def test_wrong_slug_returns_404(self):
-        r = self.c.get(api_base_url + "v1/screw_up")
+    def test_wrong_path_returns_404(self):
+        r = self.c.get(api_base_url + "completely_wrong")
         eq_(r.status_code, 404)
         eq_(r.content_type, 'application/json')
+        data = json.loads(r.data)
+        assert data["message"].endswith("not a valid API path.")
 
-    def test_wrong_version_returns_404(self):
+    def test_wrong_API_version_returns_404(self):
         r = self.c.get(api_base_url + "v0/upcoming")
         eq_(r.status_code, 404)
         eq_(r.content_type, 'application/json')
+        data = json.loads(r.data)
+        assert data["message"].endswith("not a valid API version number.")
+
+    def test_wrong_API_endpoint_returns_404(self):
+        r = self.c.get(api_base_url + "v1/completely_wrong")
+        eq_(r.status_code, 404)
+        eq_(r.content_type, 'application/json')
+        data = json.loads(r.data)
+        assert data["message"].endswith("not a valid API endpoint.")
