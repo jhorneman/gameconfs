@@ -2,6 +2,7 @@ import os
 import json
 from flask import Blueprint, render_template, send_from_directory, request, abort
 from gameconfs.query_helpers import *
+from gameconfs.today import get_today
 
 
 widget_blueprint = Blueprint('widget', __name__,url_prefix='/widget', template_folder='templates', static_folder='static')
@@ -42,19 +43,25 @@ def data(version):
 
     place_name = request.args.get('place', None)
 
-    today = date.today()
+    today = get_today()
     year = today.year
 
     period_start, period_end = get_month_period(year, today.month, nr_months)
 
-    q = Event.base_query()
+    q = filter_published_only(Event.query)
+    q = order_by_newest_event(q)
     q = filter_by_period_start_end(q, period_start, period_end)
 
     if place_name:
-        q = q.join(Event.city).\
-            join(City.country).\
-            join(Country.continent)
-        q, found_location_name = filter_by_place_name(q, place_name)
+        if place_name == "other":
+            q = q.filter(Event.city == None)
+            found_location_name = "other"
+        else:
+            q = q.join(Event.city).\
+                join(City.country).\
+                join(Country.continent).\
+                options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
+            q, found_location_name = filter_by_place_name(q, place_name)
         if found_location_name:
             events = q.all()
         else:
