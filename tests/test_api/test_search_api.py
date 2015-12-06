@@ -106,3 +106,27 @@ def test_search_place_empty():
     assert r.status_code == 400
     json = r.json()
     eq_(json["message"], "Place argument was empty.")
+
+
+def test_search_place_with_results():
+    r = requests.get(base_url + "v1/search_events", params={"place": "Vienna"})
+    assert r.status_code == 200
+    json = r.json()
+    assert "message" not in json
+    eq_(json["foundLocationName"], "Vienna")
+    assert json["nrFoundEvents"] > 0
+    assert len(json["results"]) == json["nrFoundEvents"]
+    for result in json["results"]:
+        eq_(result["city"], "Vienna")
+        eq_(result["country"], "Austria")
+        eq_(result["continent"], "Europe")
+
+
+def test_search_place_with_no_results():
+    r = requests.get(base_url + "v1/search_events", params={"place": "Vatican City"})
+    assert r.status_code == 404
+    json = r.json()
+    assert "message" not in json
+    eq_(json["foundLocationName"], None)
+    assert json["nrFoundEvents"] == 0
+    assert len(json["results"]) == json["nrFoundEvents"]
