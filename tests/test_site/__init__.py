@@ -1,3 +1,40 @@
 # -*- coding: utf-8 -*-
 
-from __future__ import absolute_import
+import unittest
+from gameconfs import create_app
+from tests.mock_data import load_geo_data, load_mock_events, load_mock_user
+
+
+app, db = create_app("test")
+
+
+class SiteTestCase(unittest.TestCase):
+    def setUp(self):
+        global app, db
+        self.app = app
+        self.db = db
+        self.c = self.app.test_client()
+
+        with self.app.test_request_context():
+            self.db.create_all()
+            self.db_session = self.db.session
+            self.load_data()
+
+    def tearDown(self):
+        with self.app.test_request_context():
+            self.db_session.remove()
+            self.db.drop_all()
+
+    def load_data(self):
+        load_geo_data(self.db_session)
+        load_mock_events(self.db_session)
+        load_mock_user(self.db_session, self.app.user_datastore)
+
+    def login(self, _email, _password):
+        return self.c.post('/login', data=dict(
+            email=_email,
+            password=_password
+        ), follow_redirects=True)
+
+    def logout(self):
+        return self.c.get('/logout', follow_redirects=True)
