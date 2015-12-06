@@ -193,7 +193,8 @@ def search():
         body_id="search",
         search_string=search_string,
         found_events=found_events,
-        search_form=SearchForm())
+        search_form=SearchForm()
+    )
 
 
 @app.route('/event/<int:event_id>')
@@ -254,7 +255,10 @@ def view_place(place_name):
     if place_name == "online":
         return redirect(url_for('view_place', place_name="other"), code=301)
 
-    q = Event.base_query()
+    q = Event.base_query().\
+        join(Event.city).\
+        join(City.country).\
+        join(Country.continent)
     (q, location) = filter_by_place_name(q, place_name)
     if not location:
         return render_template('page_not_found.html'), 404
@@ -263,11 +267,12 @@ def view_place(place_name):
     q = filter_by_period(q, today.year, 1, 12)
     events = q.all()
 
+    # TODO: Generalize this
     is_in_uk = place_name.lower() == "united kingdom"
     if len(events) > 0:
         if events[0].city and events[0].city.country_id == 5:
             is_in_uk = True
-    is_in_london = place_name.lower() == "london"
+    is_in_london = place_name.lower() == "london" and is_in_uk
 
     return render_template('place.html', body_id='place', events=events, location=location,
                            year=today.year, is_in_uk=is_in_uk, is_in_london=is_in_london)
@@ -276,7 +281,10 @@ def view_place(place_name):
 @app.route('/place/<place_name>/past')
 @app.cache.cached(timeout=60*60*24, key_prefix=make_cache_key)
 def view_place_past(place_name):
-    q = Event.base_query()
+    q = Event.base_query().\
+        join(Event.city).\
+        join(City.country).\
+        join(Country.continent)
     (q, location) = filter_by_place_name(q, place_name)
     if not location:
         return render_template('page_not_found.html'), 404
@@ -698,14 +706,17 @@ def stats():
     # Get city stats
     city_stats = []
     for city_id, name in db.session.query(City.id, City.name):
-        city_stats.append((name, Event.base_query(_with_location=False, _sorted_by_date=False).filter(Event.city_id == city_id).count()))
+        q = Event.base_query(_with_location=False, _sorted_by_date=False).\
+            join(Event.city).\
+            filter(Event.city_id == city_id)
+        city_stats.append((name, q.count()))
     city_stats = sorted(city_stats, key=operator.itemgetter(1), reverse=True)[:10]
     total_nr_cities = City.query.count()
 
     # Get country stats
     country_stats = []
     for country_id, name in db.session.query(Country.id, Country.name):
-        count = db.session.query(Event).\
+        count = Event.base_query(_with_location=False, _sorted_by_date=False).\
             join(Event.city).\
             join(City.country).\
             filter(City.country_id == country_id).\

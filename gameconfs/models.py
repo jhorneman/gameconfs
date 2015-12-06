@@ -170,11 +170,7 @@ class Event(db.Model):
             query = query.filter(Event.publish_status == 'published')
 
         if _with_location:
-            # query = query.options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
-            query = query.join(Event.city).\
-                join(City.country).\
-                join(Country.continent).\
-                options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
+            query = query.options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
 
         if _sorted_by_date:
             query = query.order_by(Event.start_date.asc(), Event.end_date.asc())

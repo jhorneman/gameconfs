@@ -130,6 +130,9 @@ def search_events():
         if len(place_name) == 0:
             raise InvalidUsage("Place argument was empty.")
         else:
+            q = q.join(Event.city).\
+                join(City.country).\
+                join(Country.continent)
             q, found_location_name = filter_by_place_name(q, place_name)
             if found_location_name:
                 found_events = q.all()
@@ -187,6 +190,9 @@ def upcoming_events():
 
     found_location_name = None
     if place_name:
+        q = q.join(Event.city).\
+            join(City.country).\
+            join(Country.continent)
         q, found_location_name = filter_by_place_name(q, place_name)
         if found_location_name:
             found_events = q.all()

@@ -51,6 +51,9 @@ def data(version):
     q = filter_by_period_start_end(q, period_start, period_end)
 
     if place_name:
+        q = q.join(Event.city).\
+            join(City.country).\
+            join(Country.continent)
         q, found_location_name = filter_by_place_name(q, place_name)
         if found_location_name:
             events = q.all()
