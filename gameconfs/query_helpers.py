@@ -10,7 +10,7 @@ def search_events_by_string(_search_string):
     if not _search_string:
         return []
     query_string = "%" + _search_string + "%"
-    q = Event.base_query(_sorted_by_date=False).\
+    q = filter_published_only(Event.query).\
         order_by(Event.start_date.desc(), Event.end_date.asc()).\
         filter(or_(Event.name.ilike(query_string),
                    Event.event_url.ilike(query_string),
@@ -40,6 +40,14 @@ def get_month_period(_start_year, _start_month, _nr_months = 1):
     end_year, end_month = get_x_months_away(_start_year, _start_month, _nr_months)
     period_end = date(end_year, end_month, 1)
     return period_start, period_end
+
+
+def order_by_newest_event(_query):
+    return _query.order_by(Event.start_date.asc(), Event.end_date.asc())
+
+
+def filter_published_only(_query):
+    return _query.filter(Event.publish_status == 'published')
 
 
 def filter_by_place(_query, _continent, _country, _state, _city):
