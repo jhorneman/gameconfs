@@ -162,21 +162,6 @@ class Event(db.Model):
 
     publish_status = Column(publish_states, default='draft')
 
-    @staticmethod
-    def base_query(_only_published=True, _with_location=True, _sorted_by_date=True):
-        query = Event.query\
-
-        if _only_published:
-            query = query.filter(Event.publish_status == 'published')
-
-        if _with_location:
-            query = query.options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
-
-        if _sorted_by_date:
-            query = query.order_by(Event.start_date.asc(), Event.end_date.asc())
-
-        return query
-
     def get_is_published(self):
         return self.publish_status == 'published'
     def set_is_published(self, value):
