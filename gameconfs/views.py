@@ -16,7 +16,7 @@ from gameconfs.models import *
 from gameconfs.jinja_filters import event_venue_and_location, event_location
 from gameconfs.forms import EventForm, SearchForm
 from gameconfs.query_helpers import *
-from today import get_today
+from today import get_today, get_now
 
 
 def get_request_parameters():
@@ -357,7 +357,7 @@ def create_new_event():
     event_form = EventForm()
     if event_form.validate_on_submit():
         new_event = Event()
-        now = datetime.now()
+        now = get_now()
         new_event.created_at = now
         new_event.last_modified_at = now
         new_event.name = event_form.name.data
@@ -450,7 +450,7 @@ def duplicate_event(event_id):
         event_form = EventForm()
 
     if event_form.validate_on_submit():
-        now = datetime.now()
+        now = get_now()
         new_event.created_at = now
         new_event.last_modified_at = now
         new_event.name = event_form.name.data
@@ -504,7 +504,7 @@ def edit_event(event_id):
 
     event_form = EventForm(obj=event, address=address)
     if event_form.validate_on_submit():
-        event.last_modified_at = datetime.now()
+        event.last_modified_at = get_now()
         event.name = event_form.name.data
         event.start_date = event_form.start_date.data
         event.end_date = event_form.end_date.data
@@ -631,7 +631,7 @@ def recent_feed():
     feed = AtomFeed('Gameconfs - New events',
                     title_type='text',
                     url=request.url_root,
-                    updated=datetime.now(),
+                    updated=get_now(),
                     feed_url=request.url,
                     author='Gameconfs',
                     subtitle='New events on Gameconfs',
@@ -675,7 +675,7 @@ def today_feed():
     feed = AtomFeed("Gameconfs - Today's events",
                     title_type='text',
                     url=request.url_root,
-                    updated=datetime.now(),
+                    updated=get_now(),
                     feed_url=request.url,
                     author='Gameconfs',
                     subtitle='Events on Gameconfs starting today',

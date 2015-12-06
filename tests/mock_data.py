@@ -5,6 +5,7 @@ import codecs
 import json
 import datetime
 from gameconfs.models import Event, City, State, Country, Continent
+from gameconfs.today import get_now
 
 
 SCRIPT_DIR = os.path.abspath(os.path.dirname(__file__)) + os.sep
@@ -55,8 +56,8 @@ def load_geo_data(_db_session):
 
 
 def load_mock_events(_db_session):
-    now = datetime.datetime.now()
-    this_year = now.date().year
+    now = get_now()
+    this_year = now.year
 
     new_event = Event()
     new_event.created_at = now

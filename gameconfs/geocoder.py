@@ -11,10 +11,10 @@
 import sys
 import os
 import logging
-import datetime
 import codecs
 import json
 import requests
+from gameconfs.today import get_now
 
 
 logger = logging.getLogger(__name__)
@@ -109,7 +109,7 @@ class GeocodeResults(object):
 
             # Store in cache if results were OK
             if results["status"] == u"OK":
-                GeocodeResults.cache_dict[_query] = (datetime.datetime.now().strftime("%Y%m%dT%H%M%S"), results)
+                GeocodeResults.cache_dict[_query] = (get_now().strftime("%Y%m%dT%H%M%S"), results)
 
         # Interpret results
         if results["status"] == u"OK":
