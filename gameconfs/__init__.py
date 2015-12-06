@@ -87,6 +87,11 @@ def create_app(_run_mode=None):
 
     # Test run mode
     elif _run_mode == "test":
+        # Override today so it's always the same value.
+        from datetime import date
+        from gameconfs.today import override_today
+        override_today(date(2014, 5, 25))
+
         app.config["DEBUG"] = True
         app.config["TESTING"] = True
         app.config["WTF_CSRF_ENABLED"] = False  # Or CSRF checks will fail
