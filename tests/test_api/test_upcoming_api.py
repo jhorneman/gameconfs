@@ -5,13 +5,17 @@ import requests
 from . import base_url, test_event
 
 
+def call_api(_params):
+    return requests.get(base_url + "v1/upcoming", params=_params)
+
+
 def test_upcoming_post_returns_405():
     r = requests.post(base_url + "v1/upcoming", params={})
     assert r.status_code == 405
 
 
 def test_upcoming_no_data_fails():
-    r = requests.get(base_url + "v1/upcoming", params={})
+    r = call_api({})
     assert r.status_code == 200
     json = r.json()
     assert "message" not in json
@@ -21,7 +25,7 @@ def test_upcoming_no_data_fails():
 
 
 def test_upcoming_wrong_data_fails():
-    r = requests.get(base_url + "v1/upcoming", params={"blah": 0})
+    r = call_api({"blah": 0})
     assert r.status_code == 200
     json = r.json()
     assert "message" not in json
@@ -31,31 +35,31 @@ def test_upcoming_wrong_data_fails():
 
 
 def test_upcoming_nr_months_wrong_format():
-    r = requests.get(base_url + "v1/upcoming", params={"nrMonths": "FIVE"})
+    r = call_api({"nrMonths": "FIVE"})
     assert r.status_code == 400
     json = r.json()
     assert json["message"].startswith("Could not parse nrMonths value")
 
 
 def test_upcoming_nr_months_illegal_values():
-    r = requests.get(base_url + "v1/upcoming", params={"nrMonths": -1})
+    r = call_api({"nrMonths": -1})
     assert r.status_code == 400
     json = r.json()
     eq_(json["message"], "nrMonths must be at least 1.")
 
-    r = requests.get(base_url + "v1/upcoming", params={"nrMonths": 0})
+    r = call_api({"nrMonths": 0})
     assert r.status_code == 400
     json = r.json()
     eq_(json["message"], "nrMonths must be at least 1.")
 
-    r = requests.get(base_url + "v1/upcoming", params={"nrMonths": 13})
+    r = call_api({"nrMonths": 13})
     assert r.status_code == 400
     json = r.json()
     eq_(json["message"], "nrMonths may not be higher than 12.")
 
 
 def test_upcoming_nr_months_legal_values():
-    r = requests.get(base_url + "v1/upcoming", params={"nrMonths": 1})
+    r = call_api({"nrMonths": 1})
     assert r.status_code == 200
     json = r.json()
     assert "message" not in json
@@ -63,7 +67,7 @@ def test_upcoming_nr_months_legal_values():
     assert json["nrFoundEvents"] > 0
     assert len(json["results"]) == json["nrFoundEvents"]
 
-    r = requests.get(base_url + "v1/upcoming", params={"nrMonths": 12})
+    r = call_api({"nrMonths": 12})
     assert r.status_code == 200
     json = r.json()
     assert "message" not in json
@@ -73,7 +77,7 @@ def test_upcoming_nr_months_legal_values():
 
 
 def test_upcoming_place_empty():
-    r = requests.get(base_url + "v1/upcoming", params={"place": " "})
+    r = call_api({"place": " "})
     assert r.status_code == 400
     json = r.json()
     eq_(json["message"], "Place argument was empty.")
