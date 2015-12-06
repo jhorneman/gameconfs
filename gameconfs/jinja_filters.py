@@ -2,6 +2,7 @@ import sys
 import inspect
 from datetime import date, datetime, timedelta
 import urllib
+from today import get_today
 
 
 def set_up_jinja_filters(_app):
@@ -27,7 +28,7 @@ def friendly_time(_date, past_="ago", future_ = "from now", default = "just now"
     if isinstance(_date, datetime):
         _date = date(_date.year, _date.month, _date.day)
 
-    today = date.today()
+    today = get_today()
     if today > _date:
         diff = today - _date
         dt_is_past = True

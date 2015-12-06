@@ -2,13 +2,13 @@ from flask.ext.wtf import Form
 from wtforms import StringField, HiddenField, BooleanField
 from wtforms.validators import InputRequired, ValidationError
 from flask.ext.wtf.html5 import URLField, DateField
-from datetime import date
+from today import get_today
 
 
 class EventForm(Form):
     name = StringField('Name', validators=[InputRequired()])
-    start_date = DateField('Start date', validators=[InputRequired()], default=date.today())
-    end_date = DateField('End date', validators=[InputRequired()], default=date.today())
+    start_date = DateField('Start date', validators=[InputRequired()], default=get_today())
+    end_date = DateField('End date', validators=[InputRequired()], default=get_today())
     event_url = URLField('URL', validators=[InputRequired()])
     twitter_hashtags = StringField('Hashtags')
     twitter_account = StringField('Twitter account')

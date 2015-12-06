@@ -6,6 +6,7 @@ from sqlalchemy.orm import joinedload
 from flask.ext.security.decorators import roles_required
 from gameconfs.models import *
 from gameconfs.views import editing_kill_check
+from gameconfs.today import get_today
 
 
 admin_blueprint = Blueprint('admin', __name__,url_prefix='/admin', template_folder='templates', static_folder='static')
@@ -58,7 +59,7 @@ def view_problematic_events():
 @editing_kill_check
 @roles_required('admin')
 def view_events_due_for_update():
-    today = date.today()
+    today = get_today()
 
     # We need to find a time that is a year plus the time since the last time we checked this ago.
     # We assume this list will be checked at least every 6 months.
