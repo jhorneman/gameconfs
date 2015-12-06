@@ -8,7 +8,7 @@ from gameconfs.models import Event, City, State, Country, Continent
 
 
 SCRIPT_DIR = os.path.abspath(os.path.dirname(__file__)) + os.sep
-
+mock_data_dir = os.path.join(SCRIPT_DIR, 'mock_data')
 
 app, db = create_app("test")
 
@@ -32,7 +32,7 @@ class SiteTestCase(unittest.TestCase):
 
     def load_data(self):
         continents_by_id = {}
-        with codecs.open(SCRIPT_DIR + 'continents.json', 'r', 'utf-8') as f:
+        with codecs.open(os.path.join(mock_data_dir, 'continents.json'), 'r', 'utf-8') as f:
             for continent_data in json.load(f):
                 continents_by_id[continent_data['id']] = continent_data['name']
                 new_continent = Continent(continent_data['name'])
@@ -40,7 +40,7 @@ class SiteTestCase(unittest.TestCase):
         self.db_session.commit()
 
         countries_by_id = {}
-        with codecs.open(SCRIPT_DIR + 'countries.json', 'r', 'utf-8') as f:
+        with codecs.open(os.path.join(mock_data_dir, 'countries.json'), 'r', 'utf-8') as f:
             for country_data in json.load(f):
                 countries_by_id[country_data['id']] = country_data['name']
                 new_country = Country(country_data['name'])
@@ -50,7 +50,7 @@ class SiteTestCase(unittest.TestCase):
         self.db_session.commit()
 
         states_by_id = {}
-        with codecs.open(SCRIPT_DIR + 'states.json', 'r', 'utf-8') as f:
+        with codecs.open(os.path.join(mock_data_dir, 'states.json'), 'r', 'utf-8') as f:
             for state_data in json.load(f):
                 states_by_id[state_data['id']] = state_data['name']
                 new_state = State(state_data['name'], state_data['short_name'])
@@ -60,7 +60,7 @@ class SiteTestCase(unittest.TestCase):
         self.db_session.commit()
 
         cities_by_id = {}
-        with codecs.open(SCRIPT_DIR + 'cities.json', 'r', 'utf-8') as f:
+        with codecs.open(os.path.join(mock_data_dir, 'cities.json'), 'r', 'utf-8') as f:
             for city_data in json.load(f):
                 cities_by_id[city_data['id']] = city_data['name']
                 new_city = City(city_data['name'])
