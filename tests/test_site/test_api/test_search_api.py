@@ -1,25 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import json
 from nose.tools import *
-from .. import SiteTestCase
-from . import base_url, test_event
+from . import APITestCase, test_event
 
 
-class SearchAPITestCase(SiteTestCase):
-    def call_api(self, _params, _expected_status):
-        r = self.c.get(base_url + "v1/search_events", query_string=_params)
-        assert r.status_code == _expected_status, "Expected status code to be {0}, got {1}.".format(_expected_status, r.status_code)
-        if _expected_status == 405:
-            return None
-        data = json.loads(r.data)
-        if _expected_status == 200:
-            assert "message" not in data
-            assert len(data["results"]) == data["nrFoundEvents"]
-        return data
+class SearchAPITestCase(APITestCase):
+    def __init__(self, *args, **kwargs):
+        super(SearchAPITestCase, self).__init__(*args, **kwargs)
+        self.base_url += "v1/search_events"
 
     def test_post_returns_405(self):
-        r = self.c.post(base_url + "v1/search_events", query_string={})
+        r = self.c.post(self.base_url + "v1/search_events", query_string={})
         assert r.status_code == 405
 
     def test_no_data_fails(self):
@@ -28,7 +19,7 @@ class SearchAPITestCase(SiteTestCase):
 
     def test_wrong_parameters_fails(self):
         data = self.call_api({"blah": 0}, 400)
-        eq_(data["message"], "Query must contain at least one criterion.")
+        assert data["message"].startswith("Did not recognize parameter")
 
     def test_right_date(self):
         data = self.call_api({"date": test_event["startDate"]}, 200)

@@ -1,25 +1,16 @@
 # -*- coding: utf-8 -*-
 
-import json
 from nose.tools import *
-from .. import SiteTestCase
-from . import base_url, test_event
+from . import APITestCase
 
 
-class UpcomingEventsAPITestCase(SiteTestCase):
-    def call_api(self, _params, _expected_status):
-        r = self.c.get(base_url + "v1/upcoming", query_string=_params)
-        assert r.status_code == _expected_status, "Expected status code to be {0}, got {1}.".format(_expected_status, r.status_code)
-        if _expected_status == 405:
-            return None
-        data = json.loads(r.data)
-        if _expected_status == 200:
-            assert "message" not in data
-            assert len(data["results"]) == data["nrFoundEvents"]
-        return data
+class UpcomingEventsAPITestCase(APITestCase):
+    def __init__(self, *args, **kwargs):
+        super(UpcomingEventsAPITestCase, self).__init__(*args, **kwargs)
+        self.base_url += "v1/upcoming"
 
     def test_post_returns_405(self):
-        r = self.c.post(base_url + "v1/upcoming", query_string={})
+        r = self.c.post(self.base_url + "v1/upcoming", query_string={})
         assert r.status_code == 405
 
     def test_wrong_parameters_fails(self):
