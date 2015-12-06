@@ -255,13 +255,18 @@ def view_place(place_name):
     if place_name == "online":
         return redirect(url_for('view_place', place_name="other"), code=301)
 
-    q = Event.base_query().\
-        join(Event.city).\
-        join(City.country).\
-        join(Country.continent)
-    (q, location) = filter_by_place_name(q, place_name)
-    if not location:
-        return render_template('page_not_found.html'), 404
+    if place_name == "other":
+        q = Event.base_query().\
+            filter(Event.city == None)
+        location = "other"
+    else:
+        q = Event.base_query().\
+            join(Event.city).\
+            join(City.country).\
+            join(Country.continent)
+        (q, location) = filter_by_place_name(q, place_name)
+        if not location:
+            return render_template('page_not_found.html'), 404
 
     today = date.today()
     q = filter_by_period(q, today.year, 1, 12)
@@ -281,13 +286,18 @@ def view_place(place_name):
 @app.route('/place/<place_name>/past')
 @app.cache.cached(timeout=60*60*24, key_prefix=make_cache_key)
 def view_place_past(place_name):
-    q = Event.base_query().\
-        join(Event.city).\
-        join(City.country).\
-        join(Country.continent)
-    (q, location) = filter_by_place_name(q, place_name)
-    if not location:
-        return render_template('page_not_found.html'), 404
+    if place_name == "other":
+        q = Event.base_query().\
+            filter(Event.city == None)
+        location = "other"
+    else:
+        q = Event.base_query().\
+            join(Event.city).\
+            join(City.country).\
+            join(Country.continent)
+        (q, location) = filter_by_place_name(q, place_name)
+        if not location:
+            return render_template('page_not_found.html'), 404
 
     q = q.filter(Event.start_date < date(date.today().year, 1, 1))
     events = q.all()
@@ -513,7 +523,7 @@ def is_duplicate_event(_event):
         filter(Event.name == _event.name).\
         filter(extract("year", Event.start_date) == extract("year", _event.start_date)).\
         all()
-    return len(events) > 0
+    return len([event for event in events if event.id != _event.id]) > 0
 
 
 @app.route('/event/<int:event_id>/delete', methods=("GET", "POST"))
