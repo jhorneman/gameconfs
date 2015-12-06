@@ -1,4 +1,4 @@
-from datetime import datetime
+from datetime import datetime, date
 from flask import Blueprint, request, jsonify, render_template
 from gameconfs.app_logging import add_logger
 from gameconfs.models import *
@@ -42,7 +42,7 @@ def parse_date(_date_as_string):
         retrieved_date = datetime.strptime(_date_as_string, "%Y-%m-%d")
     except ValueError:
         raise InvalidUsage("Couldn't parse date '{0}'.".format(_date_as_string))
-    return retrieved_date
+    return date(retrieved_date.year, retrieved_date.month, retrieved_date.day)
 
 
 def convert_events_for_JSON(_events):
@@ -80,7 +80,7 @@ def search_events():
 
     # Make sure we only received parameters we know.
     for param in request_parameters.keys():
-        if param not in ["data", "startDate", "endDate", "eventName", "place"]:
+        if param not in ["date", "startDate", "endDate", "eventName", "place"]:
             raise InvalidUsage("Did not recognize parameter {0}.".format(param))
 
     # Start with base query.
