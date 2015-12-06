@@ -7,116 +7,88 @@ from . import base_url, test_event
 
 
 class SearchAPITestCase(SiteTestCase):
-    def call_api(self, _params):
-        return self.c.get(base_url + "v1/search_events", query_string=_params)
+    def call_api(self, _params, _expected_status):
+        r = self.c.get(base_url + "v1/search_events", query_string=_params)
+        assert r.status_code == _expected_status, "Expected status code to be {0}, got {1}.".format(_expected_status, r.status_code)
+        if _expected_status == 405:
+            return None
+        data = json.loads(r.data)
+        if _expected_status == 200:
+            assert "message" not in data
+            assert len(data["results"]) == data["nrFoundEvents"]
+        return data
 
     def test_post_returns_405(self):
         r = self.c.post(base_url + "v1/search_events", query_string={})
         assert r.status_code == 405
 
     def test_no_data_fails(self):
-        r = self.call_api({})
-        assert r.status_code == 400
-        data = json.loads(r.data)
+        data = self.call_api({}, 400)
         eq_(data["message"], "Query must contain at least one criterion.")
 
-    def test_wrong_data_fails(self):
-        r = self.call_api({"blah": 0})
-        assert r.status_code == 400
-        data = json.loads(r.data)
+    def test_wrong_parameters_fails(self):
+        data = self.call_api({"blah": 0}, 400)
         eq_(data["message"], "Query must contain at least one criterion.")
 
     def test_right_date(self):
-        r = self.call_api({"date": test_event["startDate"]})
-        assert r.status_code == 200
-        data = json.loads(r.data)
-        assert "message" not in data
+        data = self.call_api({"date": test_event["startDate"]}, 200)
         eq_(data["foundLocationName"], None)
         assert data["nrFoundEvents"] > 0
-        assert len(data["results"]) == data["nrFoundEvents"]
         result = data["results"][0]
         eq_(result["name"], test_event["name"])
         eq_(result["city"], test_event["city"])
         eq_(result["country"], test_event["country"])
 
     def test_date_wrong_format(self):
-        r = self.call_api({"date": "May 5th 2012"})
-        assert r.status_code == 400
-        data = json.loads(r.data)
+        data = self.call_api({"date": "May 5th 2012"}, 400)
         assert data["message"].startswith("Couldn't parse date")
 
     def test_date_in_past(self):
-        r = self.call_api({"date": "2012-01-01"})
-        assert r.status_code == 400
-        data = json.loads(r.data)
+        data = self.call_api({"date": "2012-01-01"}, 400)
         eq_(data["message"], "Can't search in the past.")
 
     def test_start_date_but_no_end_date(self):
-        r = self.call_api({"startDate": test_event["startDate"]})
-        assert r.status_code == 400
-        data = json.loads(r.data)
+        data = self.call_api({"startDate": test_event["startDate"]}, 400)
         eq_(data["message"], "Found start date argument but no end date.")
 
     def test_end_date_but_no_start_date(self):
-        r = self.call_api({"endDate": test_event["startDate"]})
-        assert r.status_code == 400
-        data = json.loads(r.data)
+        data = self.call_api({"endDate": test_event["startDate"]}, 400)
         eq_(data["message"], "Found end date argument but no start date.")
 
     def test_start_date_wrong_format(self):
-        r = self.call_api({"startDate": "May 5th 2012", "endDate": test_event["endDate"]})
-        assert r.status_code == 400
-        data = json.loads(r.data)
+        data = self.call_api({"startDate": "May 5th 2012", "endDate": test_event["endDate"]}, 400)
         assert data["message"].startswith("Couldn't parse date")
 
     def test_start_date_in_past(self):
-        r = self.call_api({"startDate": "2012-01-01", "endDate": test_event["endDate"]})
-        assert r.status_code == 400
-        data = json.loads(r.data)
+        data = self.call_api({"startDate": "2012-01-01", "endDate": test_event["endDate"]}, 400)
         eq_(data["message"], "Can't search in the past.")
 
     def test_end_date_wrong_format(self):
-        r = self.call_api({"startDate": test_event["startDate"], "endDate": "May 5th 2012"})
-        assert r.status_code == 400
-        data = json.loads(r.data)
+        data = self.call_api({"startDate": test_event["startDate"], "endDate": "May 5th 2012"}, 400)
         assert data["message"].startswith("Couldn't parse date")
 
     def test_end_date_before_start_date(self):
-        r = self.call_api({"startDate": test_event["endDate"], "endDate": test_event["startDate"]})
-        assert r.status_code == 400
-        data = json.loads(r.data)
+        data = self.call_api({"startDate": test_event["endDate"], "endDate": test_event["startDate"]}, 400)
         eq_(data["message"], "End date may not be before start date.")
 
     def test_event_name_empty(self):
-        r = self.call_api({"eventName": " "})
-        assert r.status_code == 400
-        data = json.loads(r.data)
+        data = self.call_api({"eventName": " "}, 400)
         eq_(data["message"], "Event name argument was empty.")
 
     def test_place_empty(self):
-        r = self.call_api({"place": " "})
-        assert r.status_code == 400
-        data = json.loads(r.data)
+        data = self.call_api({"place": " "}, 400)
         eq_(data["message"], "Place argument was empty.")
 
     def test_place_with_results(self):
-        r = self.call_api({"place": "Vienna"})
-        assert r.status_code == 200
-        data = json.loads(r.data)
-        assert "message" not in data
+        data = self.call_api({"place": "Vienna"}, 200)
         eq_(data["foundLocationName"], "Vienna")
         assert data["nrFoundEvents"] > 0
-        assert len(data["results"]) == data["nrFoundEvents"]
         for result in data["results"]:
             eq_(result["city"], "Vienna")
             eq_(result["country"], "Austria")
             eq_(result["continent"], "Europe")
 
     def test_place_with_no_results(self):
-        r = self.call_api({"place": "Vatican City"})
-        assert r.status_code == 404
-        data = json.loads(r.data)
-        assert "message" not in data
+        data = self.call_api({"place": "Vatican City"}, 404)
         eq_(data["foundLocationName"], None)
         assert data["nrFoundEvents"] == 0
-        assert len(data["results"]) == data["nrFoundEvents"]
