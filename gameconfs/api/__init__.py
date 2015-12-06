@@ -4,6 +4,7 @@ from gameconfs.app_logging import add_logger
 from gameconfs.models import *
 from gameconfs.query_helpers import *
 from json_api_helpers import set_up_JSON_api_error_handlers
+from gameconfs.today import get_today
 
 
 logger = logging.getLogger(__name__)
@@ -77,12 +78,19 @@ def search_events():
      # For GET requests, which is what we have, we can only get the parameters from the URL arguments.
     request_parameters = request.args
 
+    # Make sure we only received parameters we know.
+    for param in request_parameters.keys():
+        if param not in ["data", "startDate", "endDate", "eventName", "place"]:
+            raise InvalidUsage("Did not recognize parameter {0}.".format(param))
+
     # Start with base query.
-    q = Event.base_query()
+    q = filter_published_only(Event.query)
+    q = order_by_newest_event(q)
+
     found_query_criterion = False
 
     # Check for and apply date or date range filters.
-    today = datetime.today()
+    today = get_today()
     if "date" in request_parameters:
         found_query_criterion = True
         query_date = parse_date(request_parameters["date"])
@@ -130,10 +138,16 @@ def search_events():
         if len(place_name) == 0:
             raise InvalidUsage("Place argument was empty.")
         else:
-            q = q.join(Event.city).\
-                join(City.country).\
-                join(Country.continent)
-            q, found_location_name = filter_by_place_name(q, place_name)
+            if place_name == "other":
+                q = q.filter(Event.city == None)
+                found_location_name = "other"
+            else:
+                q = q.join(Event.city).\
+                    join(City.country).\
+                    join(Country.continent).\
+                    options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
+                q, found_location_name = filter_by_place_name(q, place_name)
+
             if found_location_name:
                 found_events = q.all()
             else:
@@ -160,6 +174,11 @@ def upcoming_events():
      # For GET requests, which is what we have, we can only get the parameters from the URL arguments.
     request_parameters = request.args
 
+    # Make sure we only received parameters we know.
+    for param in request_parameters.keys():
+        if param not in ["nrMonths", "place"]:
+            raise InvalidUsage("Did not recognize parameter {0}.".format(param))
+
     # Get parameters.
     nr_months = 3
     if "nrMonths" in request_parameters:
@@ -181,19 +200,26 @@ def upcoming_events():
             raise InvalidUsage("Place argument was empty.")
 
     # Get time period.
-    today = datetime.today()
+    today = get_today()
     period_start, period_end = get_month_period(today.year, today.month, nr_months)
 
     # Find events.
-    q = Event.base_query()
+    q = filter_published_only(Event.query)
+    q = order_by_newest_event(q)
     q = filter_by_period_start_end(q, period_start, period_end)
 
     found_location_name = None
     if place_name:
-        q = q.join(Event.city).\
-            join(City.country).\
-            join(Country.continent)
-        q, found_location_name = filter_by_place_name(q, place_name)
+        if place_name == "other":
+            q = q.filter(Event.city == None)
+            found_location_name = "other"
+        else:
+            q = q.join(Event.city).\
+                join(City.country).\
+                join(Country.continent).\
+                options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
+            q, found_location_name = filter_by_place_name(q, place_name)
+
         if found_location_name:
             found_events = q.all()
         else:
