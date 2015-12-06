@@ -1,12 +1,8 @@
-import os
 import unittest
 import datetime
 from gameconfs import create_app
 from tests.mock_data import load_geo_data, load_mock_events, load_mock_user
 
-
-SCRIPT_DIR = os.path.abspath(os.path.dirname(__file__)) + os.sep
-mock_data_dir = os.path.join(SCRIPT_DIR, 'mock_data')
 
 app, db = create_app("test")
 
