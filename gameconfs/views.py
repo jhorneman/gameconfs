@@ -1,7 +1,7 @@
 import os
 import operator
 from functools import wraps
-from datetime import date, datetime, timedelta, time
+from datetime import datetime, timedelta, time
 from calendar import monthrange
 import icalendar
 import pytz
@@ -16,6 +16,7 @@ from gameconfs.models import *
 from gameconfs.jinja_filters import event_venue_and_location, event_location
 from gameconfs.forms import EventForm, SearchForm
 from gameconfs.query_helpers import *
+from today import get_today
 
 
 def get_request_parameters():
@@ -140,16 +141,18 @@ def make_cache_key():
 
 
 def make_date_cache_key(*args, **kwargs):
-    cache_key = 'view%s-%s' % (request.path, date.today().strftime("%Y%m%d"))
+    cache_key = 'view%s-%s' % (request.path, get_today().strftime("%Y%m%d"))
     return cache_key.encode('utf-8')
 
 
 @app.route('/')
 @templated()
 def index():
-    today = date.today()
-    q = Event.base_query().\
+    today = get_today()
+    q = filter_published_only(Event.query).\
+        options(joinedload("city"), joinedload("city.country"), joinedload("city.state")).\
         filter(and_(Event.start_date <= today, Event.end_date >= today))
+    q = order_by_newest_event(q)
     ongoing_events = q.all()
 
     min_year, max_year = get_year_range()
@@ -201,28 +204,32 @@ def search():
 @app.cache.cached(timeout=60*60*24, unless=user_can_edit, key_prefix=make_cache_key)
 def view_event(event_id):
     try:
-        event = Event.base_query(_only_published=not user_can_edit()).\
-            filter(Event.id == event_id).\
-            one()
+        q = Event.query.filter(Event.id == event_id).\
+            options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
+        if not user_can_edit():
+            q = filter_published_only(q)
+        event = q.one()
     except sqlalchemy.orm.exc.NoResultFound:
         max_event_id = db.session.query(func.max(Event.id)).one()[0]
         if 0 < event_id <= max_event_id:
             return render_template('event_deleted.html'), 410
         else:
             return render_template('page_not_found.html'), 404
-    return render_template('event.html', body_id="view-event", event=event, today=date.today(), search_form=SearchForm())
+    return render_template('event.html', body_id="view-event", event=event, today=get_today(), search_form=SearchForm())
 
 
 @app.route('/upcoming')
 @app.cache.cached(timeout=60*60*24, key_prefix=make_cache_key)
 def view_upcoming_events():
-    today = date.today()
+    today = get_today()
     end_of_upcoming_period = today + timedelta(days=90)
     end_of_upcoming_period = date(end_of_upcoming_period.year, end_of_upcoming_period.month,
                                   monthrange(end_of_upcoming_period.year, end_of_upcoming_period.month)[1])
 
-    q = Event.base_query().\
+    q = filter_published_only(Event.query).\
+        options(joinedload("city"), joinedload("city.country"), joinedload("city.state")).\
         filter(and_(Event.start_date > today, Event.start_date < end_of_upcoming_period))
+    q = order_by_newest_event(q)
     events = q.all()
 
     return render_template('upcoming.html', body_id='upcoming', events=events, until_date=end_of_upcoming_period)
@@ -236,7 +243,12 @@ def view_year(year):
     if year < min_year or year > max_year:
         return render_template('page_not_found.html'), 404
 
-    events = filter_by_year(Event.base_query(), year).all()
+    q = filter_published_only(Event.query).\
+        options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
+    q = order_by_newest_event(q)
+    q = filter_by_year(q, year)
+
+    events = q.all()
 
     return render_template('year.html', body_id='year', events=events, year=year)
 
@@ -256,20 +268,22 @@ def view_place(place_name):
         return redirect(url_for('view_place', place_name="other"), code=301)
 
     if place_name == "other":
-        q = Event.base_query().\
+        q = filter_published_only(Event.query).\
             filter(Event.city == None)
         location = "other"
     else:
-        q = Event.base_query().\
+        q = filter_published_only(Event.query).\
             join(Event.city).\
             join(City.country).\
-            join(Country.continent)
+            join(Country.continent).\
+            options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
         (q, location) = filter_by_place_name(q, place_name)
         if not location:
             return render_template('page_not_found.html'), 404
 
-    today = date.today()
+    today = get_today()
     q = filter_by_period(q, today.year, 1, 12)
+    q = order_by_newest_event(q)
     events = q.all()
 
     # TODO: Generalize this
@@ -287,19 +301,21 @@ def view_place(place_name):
 @app.cache.cached(timeout=60*60*24, key_prefix=make_cache_key)
 def view_place_past(place_name):
     if place_name == "other":
-        q = Event.base_query().\
+        q = filter_published_only(Event.query).\
             filter(Event.city == None)
         location = "other"
     else:
-        q = Event.base_query().\
+        q = filter_published_only(Event.query).\
             join(Event.city).\
             join(City.country).\
-            join(Country.continent)
+            join(Country.continent).\
+            options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
         (q, location) = filter_by_place_name(q, place_name)
         if not location:
             return render_template('page_not_found.html'), 404
 
-    q = q.filter(Event.start_date < date(date.today().year, 1, 1))
+    q = q.filter(Event.start_date < date(get_today().year, 1, 1))
+    q = order_by_newest_event(q)
     events = q.all()
 
     return render_template('place_past.html', body_id='place', events=events, location=location)
@@ -312,10 +328,10 @@ def view_series(series_id):
     except sqlalchemy.orm.exc.NoResultFound:
         return render_template('page_not_found.html'), 404
 
-    events = Event.base_query(_sorted_by_date=False).\
-        filter(Event.series_id == series_id).\
-        order_by(Event.start_date.desc()).\
-        all()
+    q = filter_published_only(Event.query).\
+        filter(Event.series_id == series_id)
+    q = order_by_newest_event(q)
+    events = q.all()
 
     return render_template('series.html', body_id='series', events=events, series=series)
 
@@ -526,6 +542,7 @@ def is_duplicate_event(_event):
         filter(Event.name == _event.name).\
         filter(extract("year", Event.start_date) == extract("year", _event.start_date)).\
         all()
+    # TODO: Find out why we need this check (SQLAlchemy upgrade?)
     return len([event for event in events if event.id != _event.id]) > 0
 
 
@@ -547,7 +564,8 @@ def delete_event(event_id):
 @app.route('/event/<int:event_id>/ics')
 def event_ics(event_id):
     try:
-        event = Event.query.filter(Event.id == event_id).one()
+        q = filter_published_only(Event.query).filter(Event.id == event_id)
+        event = q.one()
     except sqlalchemy.orm.exc.NoResultFound:
         return render_template('page_not_found.html'), 404
 
@@ -572,14 +590,16 @@ def event_ics(event_id):
 @app.route('/upcoming.ics')
 @app.cache.cached(timeout=60*60*24)
 def upcoming_ics():
-    today = date.today()
+    today = get_today()
     end_of_upcoming_period = today + timedelta(days=90)
     end_of_upcoming_period = date(end_of_upcoming_period.year, end_of_upcoming_period.month,
                                   monthrange(end_of_upcoming_period.year, end_of_upcoming_period.month)[1])
 
-    events = Event.base_query().\
-        filter(and_(Event.start_date > today, Event.start_date < end_of_upcoming_period)).\
-        all()
+    q = filter_published_only(Event.query).\
+        options(joinedload("city"), joinedload("city.country"), joinedload("city.state")).\
+        filter(and_(Event.start_date > today, Event.start_date < end_of_upcoming_period))
+    q = order_by_newest_event(q)
+    events = q.all()
 
     cal = icalendar.Calendar()
     cal.add('prodid', '-//Game event//gameconfs.com//')
@@ -606,7 +626,7 @@ upcoming_ics.make_cache_key = make_date_cache_key
 @app.route('/recent.atom')
 @app.cache.cached(timeout=60*60*24)
 def recent_feed():
-    today = datetime.today()
+    today = get_today()
 
     feed = AtomFeed('Gameconfs - New events',
                     title_type='text',
@@ -618,7 +638,8 @@ def recent_feed():
                     subtitle_type='text')
 
     #TODO: This will miss events if more than 15 are added at once, which occasionally happens.
-    events = Event.base_query(_sorted_by_date=False).\
+    events = filter_published_only(Event.query).\
+        options(joinedload("city"), joinedload("city.country"), joinedload("city.state")).\
         filter(Event.end_date >= today).\
         order_by(Event.created_at.desc()).\
         limit(15).\
@@ -660,8 +681,9 @@ def today_feed():
                     subtitle='Events on Gameconfs starting today',
                     subtitle_type='text')
 
-    events = Event.base_query().\
-        filter(Event.start_date == date.today()).\
+    events = filter_published_only(Event.query).\
+        order_by(Event.end_date.asc()).\
+        filter(Event.start_date == get_today()).\
         all()
     for event in events:
         start_datetime = datetime.combine(event.start_date, time.min)
@@ -719,7 +741,8 @@ def stats():
     # Get city stats
     city_stats = []
     for city_id, name in db.session.query(City.id, City.name):
-        q = Event.base_query(_with_location=False, _sorted_by_date=False).\
+        q = filter_published_only(Event.query).\
+            options(joinedload("city")).\
             join(Event.city).\
             filter(Event.city_id == city_id)
         city_stats.append((name, q.count()))
@@ -729,7 +752,8 @@ def stats():
     # Get country stats
     country_stats = []
     for country_id, name in db.session.query(Country.id, Country.name):
-        count = Event.base_query(_with_location=False, _sorted_by_date=False).\
+        count = filter_published_only(Event.query).\
+            options(joinedload("city"), joinedload("city.country")).\
             join(Event.city).\
             join(City.country).\
             filter(City.country_id == country_id).\
@@ -739,7 +763,7 @@ def stats():
     total_nr_countries = Country.query.count()
 
     # Get total number of events
-    total_nr_events = Event.base_query(_with_location=False, _sorted_by_date=False).count()
+    total_nr_events = filter_published_only(Event.query).count()
 
     return render_template('stats.html', time_stats=time_stats, country_stats=country_stats,
         city_stats=city_stats, total_nr_events=total_nr_events, total_nr_cities=total_nr_cities,
