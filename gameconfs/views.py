@@ -312,7 +312,10 @@ def view_series(series_id):
     except sqlalchemy.orm.exc.NoResultFound:
         return render_template('page_not_found.html'), 404
 
-    events = Event.base_query().filter(Event.series_id == series_id).all()
+    events = Event.base_query(_sorted_by_date=False).\
+        filter(Event.series_id == series_id).\
+        order_by(Event.start_date.desc()).\
+        all()
 
     return render_template('series.html', body_id='series', events=events, series=series)
 
