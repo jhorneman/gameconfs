@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 import datetime
-import requests
+from .. import SiteTestCase
 
 
-base_url = "http://127.0.0.1:5000/api/"
+base_url = "/api/"
 
 test_event = {
     "startDate": datetime.date(2016, 7, 18),
@@ -16,16 +16,15 @@ test_event = {
 }
 
 
-def test_index_works():
-    r = requests.get(base_url)
-    assert r.status_code == 200
+class APITestCase(SiteTestCase):
+    def test_index_works(self):
+        r = self.c.get(base_url)
+        assert r.status_code == 200
 
+    def test_wrong_slug_404s(self):
+        r = self.c.get(base_url + "v1/screw_up")
+        assert r.status_code == 404
 
-def test_wrong_slug_404s():
-    r = requests.get(base_url + "v1/screw_up")
-    assert r.status_code == 404
-
-
-def test_wrong_version_404s():
-    r = requests.get(base_url + "v0/upcoming")
-    assert r.status_code == 404
+    def test_wrong_version_404s(self):
+        r = self.c.get(base_url + "v0/upcoming")
+        assert r.status_code == 404
