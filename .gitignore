@@ -1,2 +1,4 @@
 /wordpress/
+/dumps/
 *.dump
+*.paw
