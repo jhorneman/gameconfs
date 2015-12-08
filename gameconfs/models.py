@@ -198,7 +198,7 @@ class Event(db.Model):
         address = self.city.name
         if self.city.country.has_states:
             if self.city.name not in geocoder.cities_without_states_or_countries:
-                address += ", " + self.city.state.name
+                address += ", " + self.city.state.name + ", " + self.city.country.name
         elif self.city.name not in geocoder.cities_without_states_or_countries:
             address += ", " + self.city.country.name
         return address
