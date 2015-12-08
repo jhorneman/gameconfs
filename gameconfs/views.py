@@ -1,7 +1,7 @@
 import os
 import operator
 from functools import wraps
-from datetime import datetime, timedelta, time
+from datetime import datetime, date, timedelta, time
 from calendar import monthrange
 import icalendar
 import pytz
