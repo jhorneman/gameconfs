@@ -49,22 +49,10 @@ class UpcomingEventsAPITestCase(APITestCase):
 
     # NEVER an unpublished event
 
-    # A unpublished event in Europe at 1 month out
-    # B unpublished event in Asia at 1 month out
-    # C unpublished event in Other at 1 month out
-
-    # D published event in Europe at 1 month out
-    # E published event in Asia at 1 month out
-    # F published event in Other at 1 month out
-
-    # G published event in Europe at 3 months out
-    # H published event in Asia at 3 months out
-
-    # I published event in Europe at 12 months out
-    # J published event in Asia at 12 months out
-
-    # K published event in Europe at 13 months out
-    # L published event in Asia at 13 months out
+    def test_no_parameters_succeeds(self):
+        data = self.call_api({}, 200)
+        eq_(data["foundLocationName"], None)
+        eq_(data["nrFoundEvents"], 5)
 
     def test_nr_months_legal_values_succeeds(self):
         data = self.call_api({"nrMonths": 1}, 200)
@@ -74,9 +62,3 @@ class UpcomingEventsAPITestCase(APITestCase):
         data = self.call_api({"nrMonths": 12}, 200)
         eq_(data["foundLocationName"], None)
         assert data["nrFoundEvents"] > 0
-
-    # def test_wrong_data_fails(self):
-    #     data = self.call_api({"blah": 0}, 200)
-    #     eq_(data["foundLocationName"], None)
-    #     assert data["nrFoundEvents"] > 0
-    #     assert len(data["results"]) == data["nrFoundEvents"]
