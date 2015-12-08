@@ -19,12 +19,11 @@ test_event = {
 
 
 class APITestCase(SiteTestCase):
-    def __init__(self, *args, **kwargs):
-        super(APITestCase, self).__init__(*args, **kwargs)
-        self.base_url = api_base_url
+    def get_base_url(self):
+        return api_base_url
 
     def call_api(self, _params, _expected_status):
-        r = self.c.get(self.base_url, query_string=_params)
+        r = self.c.get(self.get_base_url(), query_string=_params)
         assert r.status_code == _expected_status, "Expected status code to be {0}, got {1}.".format(_expected_status, r.status_code)
         assert r.content_type == 'application/json'
         if _expected_status == 405:

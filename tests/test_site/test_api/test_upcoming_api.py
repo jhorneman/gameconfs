@@ -5,12 +5,11 @@ from . import APITestCase
 
 
 class UpcomingEventsAPITestCase(APITestCase):
-    def __init__(self, *args, **kwargs):
-        super(UpcomingEventsAPITestCase, self).__init__(*args, **kwargs)
-        self.base_url += "v1/upcoming"
+    def get_base_url(self):
+        return super(UpcomingEventsAPITestCase, self).get_base_url() + "v1/upcoming"
 
     def test_post_returns_405(self):
-        r = self.c.post(self.base_url + "v1/upcoming", query_string={})
+        r = self.c.post(self.get_base_url() + "v1/upcoming", query_string={})
         assert r.status_code == 405
 
     def test_wrong_parameters_fails(self):

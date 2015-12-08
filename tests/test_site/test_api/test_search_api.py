@@ -5,12 +5,11 @@ from . import APITestCase, test_event
 
 
 class SearchAPITestCase(APITestCase):
-    def __init__(self, *args, **kwargs):
-        super(SearchAPITestCase, self).__init__(*args, **kwargs)
-        self.base_url += "v1/search_events"
+    def get_base_url(self):
+        return super(SearchAPITestCase, self).get_base_url() + "v1/search_events"
 
     def test_post_returns_405(self):
-        r = self.c.post(self.base_url + "v1/search_events", query_string={})
+        r = self.c.post(self.get_base_url() + "v1/search_events", query_string={})
         assert r.status_code == 405
 
     def test_no_data_fails(self):
