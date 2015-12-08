@@ -35,7 +35,7 @@ def get_x_months_away(_start_year, _start_month, _nr_months):
         return _start_year + 1, final_month - 12
 
 
-def get_month_period(_start_year, _start_month, _nr_months = 1):
+def get_month_period(_start_year, _start_month, _nr_months=1):
     period_start = date(_start_year, _start_month, 1)
     end_year, end_month = get_x_months_away(_start_year, _start_month, _nr_months)
     period_end = date(end_year, end_month, 1)
@@ -47,7 +47,7 @@ def order_by_newest_event(_query):
 
 
 def filter_published_only(_query):
-    return _query.filter(Event.publish_status == 'published')
+    return _query.filter(Event.publish_status == "published")
 
 
 def filter_by_place(_query, _continent, _country, _state, _city):
