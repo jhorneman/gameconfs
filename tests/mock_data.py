@@ -8,6 +8,9 @@ from gameconfs.models import Event, City, State, Country, Continent
 from gameconfs.today import get_now
 
 
+__all__ = ["load_geo_data", "load_mock_user", "load_old_mock_events"]
+
+
 SCRIPT_DIR = os.path.abspath(os.path.dirname(__file__)) + os.sep
 mock_data_dir = os.path.join(SCRIPT_DIR, 'mock_data')
 
@@ -55,7 +58,7 @@ def load_geo_data(_db_session):
     _db_session.commit()
 
 
-def load_mock_events(_db_session):
+def load_old_mock_events(_db_session):
     now = get_now()
     this_year = now.year
 

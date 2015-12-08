@@ -2,7 +2,7 @@
 
 import unittest
 from gameconfs import create_app
-from tests.mock_data import load_geo_data, load_mock_events, load_mock_user
+import tests.mock_data as mock_data
 
 
 app, db = create_app("test")
@@ -19,6 +19,7 @@ class SiteTestCase(unittest.TestCase):
             self.db.create_all()
             self.db_session = self.db.session
             self.load_data()
+            mock_data.load_old_mock_events(self.db_session)
 
     def tearDown(self):
         with self.app.test_request_context():
@@ -26,9 +27,8 @@ class SiteTestCase(unittest.TestCase):
             self.db.drop_all()
 
     def load_data(self):
-        load_geo_data(self.db_session)
-        load_mock_events(self.db_session)
-        load_mock_user(self.db_session, self.app.user_datastore)
+        mock_data.load_geo_data(self.db_session)
+        mock_data.load_mock_user(self.db_session, self.app.user_datastore)
 
     def login(self, _email, _password):
         return self.c.post('/login', data=dict(
