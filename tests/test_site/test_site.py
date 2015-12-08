@@ -1,8 +1,13 @@
 import datetime
 from . import SiteTestCase
+from tests.mock_data import load_old_mock_events
 
 
 class BasicSiteTestCase(SiteTestCase):
+    def load_data(self):
+        super(BasicSiteTestCase, self).load_data()
+        load_old_mock_events(self.db_session)
+
     def test_index_page(self):
         rv = self.c.get('/')
         assert "Austria" in rv.data

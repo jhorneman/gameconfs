@@ -19,7 +19,6 @@ class SiteTestCase(unittest.TestCase):
             self.db.create_all()
             self.db_session = self.db.session
             self.load_data()
-            mock_data.load_old_mock_events(self.db_session)
 
     def tearDown(self):
         with self.app.test_request_context():
