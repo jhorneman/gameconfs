@@ -77,7 +77,7 @@ def index():
 
 @api_blueprint.route("/v1/search_events")
 def search_events():
-     # For GET requests, which is what we have, we can only get the parameters from the URL arguments.
+    # For GET requests, which is what we have, we can only get the parameters from the URL arguments.
     request_parameters = request.args
 
     # Make sure we only received parameters we know.
@@ -173,7 +173,7 @@ def search_events():
 
 @api_blueprint.route("/v1/upcoming")
 def upcoming_events():
-     # For GET requests, which is what we have, we can only get the parameters from the URL arguments.
+    # For GET requests, which is what we have, we can only get the parameters from the URL arguments.
     request_parameters = request.args
 
     # Make sure we only received parameters we know.
