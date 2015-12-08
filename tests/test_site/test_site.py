@@ -1,4 +1,4 @@
-import datetime
+from gameconfs.today import get_today
 from . import SiteTestCase
 from tests.mock_data import load_old_mock_events
 
@@ -28,7 +28,7 @@ class BasicSiteTestCase(SiteTestCase):
         assert "August" in rv.data
 
     def test_year_page(self):
-        rv = self.c.get('/year/%s' % (datetime.date.today().year - 1))
+        rv = self.c.get('/year/%s' % (get_today().year - 1))
         assert "GDC" in rv.data
         assert "San Francisco" in rv.data
         assert "California" in rv.data

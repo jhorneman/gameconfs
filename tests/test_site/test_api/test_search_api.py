@@ -73,7 +73,7 @@ class SearchAPITestCase(APITestCase):
     def test_place_with_results(self):
         data = self.call_api({"place": "Paris"}, 200)
         eq_(data["foundLocationName"], "Paris")
-        eq_(data["nrFoundEvents"], 4)
+        eq_(data["nrFoundEvents"], 6)
         for result in data["results"]:
             eq_(result["city"], "Paris")
             eq_(result["country"], "France")
