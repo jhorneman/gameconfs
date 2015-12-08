@@ -282,7 +282,7 @@ def view_place(place_name):
             return render_template('page_not_found.html'), 404
 
     today = get_today()
-    q = filter_by_period(q, today.year, 1, 12)
+    q = filter_by_year(q, today.year)
     q = order_by_newest_event(q)
     events = q.all()
 

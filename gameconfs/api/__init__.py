@@ -1,5 +1,6 @@
 import re
 from datetime import datetime
+from dateutil import relativedelta
 from flask import Blueprint, request, jsonify, render_template
 from gameconfs.app_logging import add_logger
 from gameconfs.models import *
@@ -201,13 +202,13 @@ def upcoming_events():
             raise InvalidUsage("Place argument was empty.")
 
     # Get time period.
-    today = get_today()
-    period_start, period_end = get_month_period(today.year, today.month, nr_months)
+    start_date = get_today()
+    end_date = start_date + relativedelta(days=1, months=nr_months)
 
     # Find events.
     q = filter_published_only(Event.query)
     q = order_by_newest_event(q)
-    q = filter_by_period_start_end(q, period_start, period_end)
+    q = filter_by_period_start_end(q, start_date, end_date)
 
     found_location_name = None
     if place_name:

@@ -1,4 +1,3 @@
-from datetime import date
 from sqlalchemy.sql.expression import *
 from sqlalchemy.orm import *
 from flask import current_app
@@ -17,29 +16,6 @@ def search_events_by_string(_search_string):
                    Event.twitter_hashtags.ilike(query_string),
                    Event.twitter_account.ilike(query_string)))
     return q.all()
-
-
-def get_x_months_ago(_start_year, _start_month, _nr_months):
-    final_month = _start_month - _nr_months
-    if final_month >= 1:
-        return _start_year, final_month
-    else:
-        return _start_year - 1, final_month + 12
-
-
-def get_x_months_away(_start_year, _start_month, _nr_months):
-    final_month = _start_month + _nr_months
-    if final_month <= 12:
-        return _start_year, final_month
-    else:
-        return _start_year + 1, final_month - 12
-
-
-def get_month_period(_start_year, _start_month, _nr_months=1):
-    period_start = date(_start_year, _start_month, 1)
-    end_year, end_month = get_x_months_away(_start_year, _start_month, _nr_months)
-    period_end = date(end_year, end_month, 1)
-    return period_start, period_end
 
 
 def order_by_newest_event(_query):
@@ -61,14 +37,9 @@ def filter_by_place(_query, _continent, _country, _state, _city):
     return q
 
 
-def filter_by_period(_query, _start_year, _start_month, _nr_months = 1):
-    period_start, period_end = get_month_period(_start_year, _start_month, _nr_months)
-    return filter_by_period_start_end(_query, period_start, period_end)
-
-
-def filter_by_period_start_end(_query, _period_start, _day_after_period_end):
-    return _query.filter(or_(and_(Event.start_date >= _period_start, Event.start_date < _day_after_period_end),
-                             and_(Event.end_date >= _period_start, Event.end_date < _day_after_period_end)))
+def filter_by_period_start_end(_query, _period_start, _period_end):
+    return _query.filter(or_(and_(Event.start_date >= _period_start, Event.start_date <= _period_end),
+                             and_(Event.end_date >= _period_start, Event.end_date <= _period_end)))
 
 
 def filter_by_year(_query, _year):

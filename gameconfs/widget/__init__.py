@@ -1,5 +1,6 @@
 import os
 import json
+from dateutil import relativedelta
 from flask import Blueprint, render_template, send_from_directory, request, abort
 from gameconfs.query_helpers import *
 from gameconfs.today import get_today
@@ -44,13 +45,13 @@ def data(version):
     place_name = request.args.get('place', None)
 
     today = get_today()
-    year = today.year
 
-    period_start, period_end = get_month_period(year, today.month, nr_months)
+    start_date = today
+    end_date = start_date + relativedelta(months=nr_months)
 
     q = filter_published_only(Event.query)
     q = order_by_newest_event(q)
-    q = filter_by_period_start_end(q, period_start, period_end)
+    q = filter_by_period_start_end(q, start_date, end_date)
 
     if place_name:
         if place_name == "other":
@@ -69,7 +70,6 @@ def data(version):
     else:
         events = q.all()
 
-    html = render_template('widget/contents.html', events=events, year=year, today=today,
-                           period_start=period_start, period_end=period_end,
+    html = render_template('widget/contents.html', events=events, today=today,
                            nr_months=nr_months, place_name=place_name)
     return "%s({'html':%s})" % (callback, json.dumps(html))
