@@ -1,0 +1,82 @@
+[
+  {
+    "name": "Europe 1 month ago",
+    "start_date": "2014-04-01",
+    "city": "Paris"
+  },
+  {
+    "name": "Asia 1 month ago",
+    "start_date": "2014-04-02",
+    "city": "Tokyo"
+  },
+  {
+    "name": "Other 1 month ago",
+    "start_date": "2014-04-03"
+  },
+
+  {
+    "publish_status": "draft",
+    "name": "Unpublished Europe 1 month out",
+    "start_date": "2014-06-01",
+    "city": "Paris"
+  },
+  {
+    "publish_status": "draft",
+    "name": "Unpublished Asia 1 month out",
+    "start_date": "2014-06-02",
+    "city": "Tokyo"
+  },
+  {
+    "publish_status": "draft",
+    "name": "Unpublished Other 1 month out",
+    "start_date": "2014-06-03"
+  },
+
+  {
+    "name": "Europe 1 month out",
+    "start_date": "2014-06-01",
+    "city": "Paris"
+  },
+  {
+    "name": "Asia 1 month out",
+    "start_date": "2014-06-02",
+    "city": "Tokyo"
+  },
+  {
+    "name": "Other 1 month out",
+    "start_date": "2014-06-03"
+  },
+
+  {
+    "name": "Europe 3 months out",
+    "start_date": "2014-08-01",
+    "city": "Paris"
+  },
+  {
+    "name": "Asia 3 months out",
+    "start_date": "2014-08-02",
+    "city": "Tokyo"
+  },
+
+  {
+    "name": "Europe 12 months out",
+    "start_date": "2015-05-01",
+    "city": "Paris"
+  },
+  {
+    "name": "Asia 12 months out",
+    "start_date": "2015-05-02",
+    "city": "Tokyo"
+  },
+
+  {
+    "name": "Europe 13 months out",
+    "start_date": "2015-06-01",
+    "city": "Paris"
+  },
+  {
+    "name": "Asia 13 months out",
+    "start_date": "2015-06-02",
+    "city": "Tokyo"
+  }
+]

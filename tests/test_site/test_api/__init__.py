@@ -4,6 +4,7 @@ import datetime
 import json
 from nose.tools import *
 from .. import SiteTestCase
+from tests.mock_data import load_api_mock_events
 
 
 api_base_url = "/api/"
@@ -19,6 +20,10 @@ test_event = {
 
 
 class APITestCase(SiteTestCase):
+    def load_data(self):
+        super(APITestCase, self).load_data()
+        load_api_mock_events(self.db_session)
+
     def get_base_url(self):
         return api_base_url
 
