@@ -33,6 +33,13 @@
   },
 
   {
+    "name": "Europe overlapping past today",
+    "start_date": "2014-05-20",
+    "end_date": "2014-05-31",
+    "city": "Paris"
+  },
+
+  {
     "name": "Europe 1 month out",
     "start_date": "2014-06-01",
     "city": "Paris"
@@ -67,6 +74,13 @@
     "name": "Asia 12 months out",
     "start_date": "2015-05-02",
     "city": "Tokyo"
+  },
+
+  {
+    "name": "Europe overlapping past 12 months",
+    "start_date": "2015-05-20",
+    "end_date": "2015-05-31",
+    "city": "Paris"
   },
 
   {

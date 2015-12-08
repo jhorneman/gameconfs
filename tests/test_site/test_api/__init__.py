@@ -37,7 +37,25 @@ class APITestCase(SiteTestCase):
         if _expected_status == 200:
             assert "message" not in data
             assert len(data["results"]) == data["nrFoundEvents"]
+            if "place" not in _params:
+                eq_(data["foundLocationName"], None)
         return data
+
+    @staticmethod
+    def check_events(_results, _test_func=None):
+        for result in _results:
+            ok_("name" in result)
+            ok_("eventUrl" in result)
+            ok_("startDate" in result)
+            ok_("endDate" in result)
+            ok_("venue" in result)
+            if "city" in result:
+                ok_("country" in result)
+                ok_("continent" in result)
+            event_name = result["name"].lower()
+            ok_("unpublished" not in event_name)
+            if _test_func:
+                ok_(_test_func(result))
 
 
 class BasicAPITestCase(SiteTestCase):
