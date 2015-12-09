@@ -74,10 +74,7 @@ class SearchAPITestCase(APITestCase):
         data = self.call_api({"place": "Paris"}, 200)
         eq_(data["foundLocationName"], "Paris")
         eq_(data["nrFoundEvents"], 6)
-        for result in data["results"]:
-            eq_(result["city"], "Paris")
-            eq_(result["country"], "France")
-            eq_(result["continent"], "Europe")
+        APITestCase.check_events(data["results"], lambda e: e["city"] == "Paris")
 
     def test_place_with_no_results(self):
         data = self.call_api({"place": "Vatican City"}, 404)
