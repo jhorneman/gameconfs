@@ -9,15 +9,6 @@ from tests.mock_data import load_api_mock_events
 
 api_base_url = "/api/"
 
-test_event = {
-    "startDate": datetime.date(2016, 7, 18),
-    "endDate": datetime.date(2016, 7, 20),
-    "place": "Vienna",
-    "city": "Vienna",
-    "country": "Austria",
-    "name": "nucl.ai 2016"
-}
-
 
 class APITestCase(SiteTestCase):
     def load_data(self):
