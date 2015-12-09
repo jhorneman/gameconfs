@@ -56,33 +56,40 @@ class UpcomingEventsAPITestCase(APITestCase):
     def test_place_and_no_months_succeeds(self):
         data = self.call_api({"place": "Paris"}, 200)
         eq_(data["nrFoundEvents"], 3)
+        eq_(data["foundLocationName"], "Paris")
         APITestCase.check_events(data["results"], lambda e: e["city"] == "Paris")
 
     def test_place_and_1_month_succeeds(self):
         data = self.call_api({"place": "Paris", "nrMonths": 1}, 200)
         eq_(data["nrFoundEvents"], 2)
+        eq_(data["foundLocationName"], "Paris")
         APITestCase.check_events(data["results"], lambda e: e["city"] == "Paris")
 
     def test_place_and_12_months_succeeds(self):
         data = self.call_api({"place": "Paris", "nrMonths": 12}, 200)
         eq_(data["nrFoundEvents"], 5)
+        eq_(data["foundLocationName"], "Paris")
         APITestCase.check_events(data["results"], lambda e: e["city"] == "Paris")
 
     def test_other_place_and_no_months_succeeds(self):
         data = self.call_api({"place": "other"}, 200)
         eq_(data["nrFoundEvents"], 1)
+        eq_(data["foundLocationName"], "other")
         APITestCase.check_events(data["results"], lambda e: "city" not in e)
 
     def test_other_place_and_1_month_fails(self):
         data = self.call_api({"place": "other", "nrMonths": 1}, 404)
+        eq_(data["foundLocationName"], "other")
         ok_("message" not in data)
 
     def test_other_place_and_2_months_succeeds(self):
         data = self.call_api({"place": "other", "nrMonths": 2}, 200)
         eq_(data["nrFoundEvents"], 1)
+        eq_(data["foundLocationName"], "other")
         APITestCase.check_events(data["results"], lambda e: "city" not in e)
 
     def test_other_place_and_12_months_succeeds(self):
         data = self.call_api({"place": "other", "nrMonths": 12}, 200)
         eq_(data["nrFoundEvents"], 1)
+        eq_(data["foundLocationName"], "other")
         APITestCase.check_events(data["results"], lambda e: "city" not in e)
