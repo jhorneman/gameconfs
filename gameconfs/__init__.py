@@ -92,7 +92,6 @@ def create_app(_run_mode=None):
         from gameconfs.today import override_today
         override_today(date(2014, 5, 25))
 
-        app.config["DEBUG"] = True
         app.config["TESTING"] = True
         app.config["WTF_CSRF_ENABLED"] = False  # Or CSRF checks will fail
         app.config["GAMECONFS_KILL_CACHE"] = True
