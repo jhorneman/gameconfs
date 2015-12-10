@@ -1,6 +1,6 @@
 from datetime import date
 import calendar
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, jsonify
 from sqlalchemy.sql.expression import *
 from sqlalchemy.orm import joinedload
 from flask.ext.security.decorators import roles_required
@@ -79,6 +79,7 @@ def view_events_due_for_update():
 
     events_due_for_update = Event.query.\
         filter(and_(Event.series_id == None,
+                    Event.is_being_checked == True,
                     Event.start_date >= a_while_ago,
                     Event.start_date < today)).\
         order_by(Event.start_date.asc()).\
@@ -92,7 +93,7 @@ def view_events_due_for_update():
             options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
             first()
         if event:
-            if event.start_date >= a_while_ago and event.start_date < today:
+            if event.start_date >= a_while_ago and event.start_date < today and event.is_being_checked:
                 events_due_for_update.append(event)
 
     events_due_for_update = sorted(events_due_for_update, key=lambda event: event.start_date)
@@ -103,3 +104,57 @@ def view_events_due_for_update():
         body_id='events_update',
         full_width=True
     )
+
+
+@admin_blueprint.route('/event/<int:event_id>/set_last_checked', methods=("POST",))
+@editing_kill_check
+@roles_required('admin')
+def event_set_last_checked(event_id):
+    try:
+        event = Event.query.filter(Event.id == event_id).one()
+    except sqlalchemy.orm.exc.NoResultFound:
+        raise InvalidUsage("Could not find event.", 404)
+    else:
+        event.last_checked_at = get_today()
+        db.session.commit()
+        return jsonify({})
+
+
+@admin_blueprint.route('/event/<int:event_id>/toggle_checking', methods=("POST",))
+@editing_kill_check
+@roles_required('admin')
+def event_toggle_checking(event_id):
+    try:
+        event = Event.query.filter(Event.id == event_id).one()
+    except sqlalchemy.orm.exc.NoResultFound:
+        raise InvalidUsage("Could not find event.", 404)
+    else:
+        event.is_being_checked = not event.is_being_checked
+        db.session.commit()
+        return jsonify({
+            "newState": event.is_being_checked
+        })
+
+
+# See http://flask.pocoo.org/docs/0.10/patterns/apierrors/
+class InvalidUsage(Exception):
+    status_code = 400
+
+    def __init__(self, message, status_code=None, payload=None):
+        Exception.__init__(self)
+        self.message = message
+        if status_code is not None:
+            self.status_code = status_code
+        self.payload = payload
+
+    def to_dict(self):
+        rv = dict(self.payload or ())
+        rv["message"] = self.message
+        return rv
+
+
+@admin_blueprint.errorhandler(InvalidUsage)
+def handle_invalid_usage(error):
+    response = jsonify(error.to_dict())
+    response.status_code = error.status_code
+    return response

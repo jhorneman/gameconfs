@@ -6,29 +6,36 @@
         <h2>Events that might be due for an update</h2>
         <p>Total number: {{ events_due_for_update|length }} events.</p>
         <table class="table table-condensed table-striped">
-        <col width="300px" />
-        <col width="60px" />
-        <col width="40px" />
-        <col width="60px" />
+          <col width="300px" />
+          <col width="60px" />
+          <col width="40px" />
+          <col width="60px" />
+          <col width="20px" />
           <thead>
             <tr>
                 <td class="event-name">Name</td>
                 <td class="event-date">Date</td>
                 <td class="event-url">Web</td>
                 <td class="last-checked"></td>
+                <td class="is-being-checked"></td>
             </tr>
         </thead>
         <tbody>
         {% for event in events_due_for_update %}
-        <tr>
+        <tr data-event-id="{{event.id}}">
             <td class="event-name"><a href="{{ url_for('duplicate_event', event_id=event.id) }}" target="_blank">{{ event.name }}</a></td>
             <td class="event-date">{{ event.start_date.month|short_month }} {{ event.start_date.year }}</td>
             <td class="event-url"><a href="{{ event.event_url }}" target="_blank">Visit</a></td>
             <td class="last-checked">{{ event.last_checked_at|friendly_time }}</td>
+            <td class="is-being-checked"><input type="checkbox" checked={{"y" if event.is_being_checked else "n"}} /></td>
         </tr>
         {% endfor %}
         </tbody>
         </table>
    </div>
 </div>
+{% endblock %}
+
+{% block end_of_body %}
+<script src="{{ url_for('admin.static', filename='js/admin.js') }}"></script>
 {% endblock %}

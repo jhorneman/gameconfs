@@ -15,7 +15,15 @@ body#events_update table {
     table-layout: fixed;
 }
 
-body#events_update td{
+body#events_update table tr.not-being-checked {
+    color: #d3d3d3;
+}
+
+body#events_update table tr.not-being-checked a {
+    color: #d3d3d3;
+}
+
+body#events_update td {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;

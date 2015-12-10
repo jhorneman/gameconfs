@@ -16,23 +16,6 @@ def set_up_api_blueprint(_app):
     set_up_JSON_api_error_handlers(_app, api_blueprint)
 
 
-# See http://flask.pocoo.org/docs/0.10/patterns/apierrors/
-class InvalidUsage(Exception):
-    status_code = 400
-
-    def __init__(self, message, status_code=None, payload=None):
-        Exception.__init__(self)
-        self.message = message
-        if status_code is not None:
-            self.status_code = status_code
-        self.payload = payload
-
-    def to_dict(self):
-        rv = dict(self.payload or ())
-        rv["message"] = self.message
-        return rv
-
-
 def parse_date(_date_as_string):
     _date_as_string = _date_as_string.strip()
     try:
@@ -90,6 +73,23 @@ def not_found(path):
     })
     response.status_code = 404
     return response
+
+
+# See http://flask.pocoo.org/docs/0.10/patterns/apierrors/
+class InvalidUsage(Exception):
+    status_code = 400
+
+    def __init__(self, message, status_code=None, payload=None):
+        Exception.__init__(self)
+        self.message = message
+        if status_code is not None:
+            self.status_code = status_code
+        self.payload = payload
+
+    def to_dict(self):
+        rv = dict(self.payload or ())
+        rv["message"] = self.message
+        return rv
 
 
 @api_blueprint.errorhandler(InvalidUsage)
