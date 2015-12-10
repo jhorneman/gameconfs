@@ -3,7 +3,7 @@
 import os
 import codecs
 import json
-import datetime
+from datetime import datetime
 import sqlalchemy.orm
 from gameconfs.models import Event, City, State, Country, Continent
 from gameconfs.today import get_now
@@ -60,7 +60,7 @@ def load_geo_data(_db_session):
 
 
 def parse_date(_date_as_string):
-    return datetime.datetime.strptime(_date_as_string, "%Y-%m-%d")
+    return datetime.strptime(_date_as_string, "%Y-%m-%d")
 
 
 def load_mock_events(_db_session):
