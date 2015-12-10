@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
 import json
+from datetime import datetime
 from nose.tools import *
+from gameconfs.today import get_today
 from .. import SiteTestCase
 
 
@@ -39,6 +41,10 @@ class APITestCase(SiteTestCase):
                 ok_("continent" in result)
             event_name = result["name"].lower()
             ok_("unpublished" not in event_name)
+            start_date = datetime.date(datetime.strptime(result["startDate"], "%Y-%m-%d"))
+            end_date = datetime.date(datetime.strptime(result["endDate"], "%Y-%m-%d"))
+            ok_(start_date <= end_date)
+            ok_(end_date >= get_today())
             if _test_func:
                 ok_(_test_func(result))
 
