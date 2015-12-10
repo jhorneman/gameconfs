@@ -28,6 +28,7 @@ class SiteTestCase(unittest.TestCase):
     def load_data(self):
         mock_data.load_geo_data(self.db_session)
         mock_data.load_mock_user(self.db_session, self.app.user_datastore)
+        mock_data.load_mock_events(self.db_session)
 
     def login(self, _email, _password):
         return self.c.post('/login', data=dict(

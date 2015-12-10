@@ -63,10 +63,10 @@ def parse_date(_date_as_string):
     return datetime.datetime.strptime(_date_as_string, "%Y-%m-%d")
 
 
-def load_api_mock_events(_db_session):
+def load_mock_events(_db_session):
     now = get_now()
 
-    with codecs.open(os.path.join(mock_data_dir, "api_test_events.json"), "r", "utf-8") as f:
+    with codecs.open(os.path.join(mock_data_dir, "events.json"), "r", "utf-8") as f:
         for event_data in json.load(f):
             new_event = Event()
             new_event.created_at = now
@@ -89,57 +89,7 @@ def load_api_mock_events(_db_session):
     _db_session.commit()
 
 
-def load_old_mock_events(_db_session):
-    now = get_now()
-    this_year = now.year
-
-    new_event = Event()
-    new_event.created_at = now
-    new_event.last_modified_at = now
-    new_event.publish_status = "published"
-    new_event.name = "Stagconf"
-    new_event.start_date = datetime.date(this_year, 8, 14)
-    new_event.end_date = datetime.date(this_year, 8, 14)
-    new_event.event_url = "http://www.stagconf.com/"
-    new_event.twitter_hashtags = ""
-    new_event.twitter_account = ""
-    new_event.venue = "Naturhistorisches Museum"
-    new_event.city = _db_session.query(City).filter(City.name == "Vienna").first()
-    _db_session.add(new_event)
-
-    new_event = Event()
-    new_event.created_at = now
-    new_event.last_modified_at = now
-    new_event.publish_status = "published"
-    new_event.name = "GDC"
-    new_event.start_date = datetime.date(this_year-1, 3, 31)
-    new_event.end_date = datetime.date(this_year-1, 4, 1)
-    new_event.event_url = "http://www.gdconf.com/"
-    new_event.twitter_hashtags = ""
-    new_event.twitter_account = ""
-    new_event.venue = "Moscone"
-    new_event.city = _db_session.query(City).filter(City.name == "San Francisco").one()
-    _db_session.add(new_event)
-
-    new_event = Event()
-    new_event.created_at = now
-    new_event.last_modified_at = now
-    new_event.publish_status = "published"
-    new_event.name = "Someconf"
-    new_event.start_date = datetime.date(this_year, 5, 25)
-    new_event.end_date = datetime.date(this_year, 5, 27)
-    new_event.event_url = "http://www.someconf.com/"
-    new_event.twitter_hashtags = ""
-    new_event.twitter_account = ""
-    new_event.venue = "St. Paul's Cathedral"
-    new_event.city = _db_session.query(City).filter(City.name == "London").first()
-    _db_session.add(new_event)
-
-    _db_session.commit()
-
-
 def load_mock_user(_db_session, _user_datastore):
-    # Create user data
     admin_role = _user_datastore.create_role(name="admin")
     user = _user_datastore.create_user(user_name="Test", email="test@gameconfs.com", password="test")
     _user_datastore.add_role_to_user(user, admin_role)
