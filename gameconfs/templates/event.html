@@ -10,9 +10,9 @@
 {% block content %}
   <div itemscope itemtype="http://schema.org/Event" class="event-entry">
     {% if event.is_published %}
-    <h2 itemprop="name">{{ event.name }}</h2>
+    <h2 itemprop="name" class="event-name">{{ event.name }}</h2>
     {% else %}
-    <h2 itemprop="name" class="unpublished">{{ event.name }}</h2>
+    <h2 itemprop="name" class="event-name unpublished">{{ event.name }}</h2>
     {% endif %}
     <span class="glyphicon glyphicon-calendar"></span>
     <span class="event-date">{{ adhoc_date_or_range(event) }}</span><br/>
