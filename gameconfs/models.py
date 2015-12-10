@@ -1,7 +1,8 @@
 import re
 import logging
-from sqlalchemy import Column, Integer, String, ForeignKey, Date, DateTime, Boolean, Enum
-from sqlalchemy.orm import relationship, backref, joinedload
+from datetime import datetime
+from sqlalchemy import Column, Integer, String, ForeignKey, Date, DateTime, Boolean, Enum, text
+from sqlalchemy.orm import relationship, backref
 import sqlalchemy.orm
 from flask.ext.security import UserMixin, RoleMixin
 from gameconfs import db
@@ -168,11 +169,9 @@ class Event(db.Model):
         self.publish_status = 'published' if value else 'draft'
     is_published = property(get_is_published, set_is_published)
 
-    def get_last_checked_at(self):
-        return self.last_modified_at
-    def set_last_checked_at(self, value):
-        pass
-    last_checked_at = property(get_last_checked_at, set_last_checked_at)
+    # This server default works for SQLite but not PostgreSQL.
+    last_checked_at = Column(DateTime, default=datetime(2011, 1, 1), server_default=text("(DATETIME('2011-01-01'))"))
+    is_being_checked = Column(Boolean, default=True, server_default=text("TRUE"))
 
     def __setattr__(self, name, value):
         if name == "event_url":
