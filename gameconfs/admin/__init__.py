@@ -1,5 +1,6 @@
 from datetime import date
 import calendar
+from dateutil.relativedelta import *
 from flask import Blueprint, render_template, jsonify
 from sqlalchemy.sql.expression import *
 from sqlalchemy.orm import joinedload
@@ -104,6 +105,18 @@ def view_events_due_for_update():
         body_id='events_update',
         full_width=True
     )
+
+
+@admin_blueprint.app_template_filter(name="due_color")
+def select_due_color_class(_date):
+    diff = relativedelta(_date, get_today())
+    if diff.years < 0 or diff.months < -6:
+        return "overdue"
+    if diff.years == 0 and diff.months < -3:
+        return "due"
+    if diff.years >= 0 and diff.months >= -1:
+        return "recently-checked"
+    return ""
 
 
 @admin_blueprint.route('/event/<int:event_id>/set_last_checked', methods=("POST",))

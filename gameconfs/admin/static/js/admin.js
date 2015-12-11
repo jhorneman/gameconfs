@@ -18,6 +18,9 @@ function initEventsUpdatePage() {
         $.post(ajax_url)
         .done(function(data, textStatus, jqXHR) {
             $('td.last-checked', rowEl).html('Checked');
+            rowEl.removeClass('overdue');
+            rowEl.removeClass('due');
+            rowEl.addClass('recently-checked');
         })
         .fail(function(jqXHR, textStatus, errorThrown) {
             console.error("Call to " + ajax_url + " failed. Status: " + textStatus + ", error: '" + errorThrown + "'.");
