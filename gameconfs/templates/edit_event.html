@@ -58,8 +58,41 @@ New event - Gameconfs
   {{ event_form.hidden_tag() }}
   {{ event_form.city_id() }}
   {{ form_control(event_form.name, "Game Developers Conference 2013") }}
-  {{ form_control(event_form.start_date, class="datepicker") }}
-  {{ form_control(event_form.end_date, class="datepicker") }}
+
+  {% if event_form.start_date.errors %}
+  <div class="form-group has-error">
+  {% else %}
+  <div class="form-group">
+  {% endif %}
+    {{ event_form.start_date.label(class="col-sm-3 control-label") }}
+    <div class="col-sm-6">
+      {{ event_form.start_date(class="datepicker form-control") }}
+      {% if event_form.start_date.errors %}
+      <span class="help-inline">{% for error in event_form.start_date.errors %}{{ error }} {% endfor %}</span>
+      {% else %}
+    {% endif %}
+    </div>
+    <div class="col-sm-2">
+      <a class="btn btn-default" id="add-one-year-btn" href="#">+1 year</a>
+    </div>
+  </div>
+
+
+  {% if event_form.end_date.errors %}
+  <div class="form-group has-error">
+  {% else %}
+  <div class="form-group">
+  {% endif %}
+    {{ event_form.end_date.label(class="col-sm-3 control-label") }}
+    <div class="col-sm-6">
+      {{ event_form.end_date(class="datepicker form-control") }}
+      {% if event_form.end_date.errors %}
+      <span class="help-inline">{% for error in event_form.end_date.errors %}{{ error }} {% endfor %}</span>
+      {% else %}
+    {% endif %}
+    </div>
+  </div>
+
   {{ form_control(event_form.event_url, "http://www.gdconf.com") }}
   {{ form_control(event_form.twitter_account, "Official_GDC", show_at_symbol=True) }}
   {{ form_control(event_form.twitter_hashtags, "#gdc #gdc13") }}

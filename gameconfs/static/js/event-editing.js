@@ -36,15 +36,17 @@ function isEventValid() {
 function initEditEventPage() {
     setUpDatePickers();
 
+    var addressField = $('#address');
+
     // Set up typeahead
-    $('#address').typeahead({
+    addressField.typeahead({
         name: 'cities',
         prefetch: '/data/cities.json',
         limit: 10
     });
 
-    $('#address').on('typeahead:selected', cityAutoSelected);
-    $('#address').on('typeahead:autoCompleted', cityAutoSelected);
+    addressField.on('typeahead:selected', cityAutoSelected);
+    addressField.on('typeahead:autoCompleted', cityAutoSelected);
 
     $('#series').typeahead({
         name: 'series',
@@ -52,12 +54,25 @@ function initEditEventPage() {
         limit: 10
     });
 
+    $('#add-one-year-btn')
+    .on('click', function(_evt) {
+        addOneYear('#start_date');
+        addOneYear('#end_date');
+    });
+
     $('#submit-button')
-        .on('click', function(_evt) {
-            if (!isEventValid()) {
-                _evt.preventDefault();
-            }
-        });
+    .on('click', function(_evt) {
+        if (!isEventValid()) {
+            _evt.preventDefault();
+        }
+    });
+}
+
+function addOneYear(_datePickerId) {
+    var datePickerData = $(_datePickerId).data('datepicker'),
+        currentDate = datePickerData.date;
+    currentDate.setFullYear(currentDate.getFullYear() + 1);
+    datePickerData.setValue(currentDate);
 }
 
 function cityAutoSelected(_evt, _datum, _datasetName) {
