@@ -85,19 +85,20 @@ def view_events_due_for_update():
                     Event.start_date < today)).\
         order_by(Event.start_date.asc()).\
         options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
+        limit(15).\
         all()
 
-    for series in Series.query.all():
-        event = Event.query.\
-            filter(Event.series_id == series.id).\
-            order_by(Event.start_date.desc()).\
-            options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
-            first()
-        if event:
-            if event.start_date >= a_while_ago and event.start_date < today and event.is_being_checked:
-                events_due_for_update.append(event)
+    # for series in Series.query.all():
+    #     event = Event.query.\
+    #         filter(Event.series_id == series.id).\
+    #         order_by(Event.start_date.desc()).\
+    #         options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
+    #         first()
+    #     if event:
+    #         if event.start_date >= a_while_ago and event.start_date < today and event.is_being_checked:
+    #             events_due_for_update.append(event)
 
-    events_due_for_update = sorted(events_due_for_update, key=lambda event: event.start_date)
+    events_due_for_update = sorted(events_due_for_update, cmp=compare_events_due_for_update)
 
     return render_template(
         'admin/events_due_for_update.html',
@@ -105,6 +106,13 @@ def view_events_due_for_update():
         body_id='events_update',
         full_width=True
     )
+
+
+def compare_events_due_for_update(_a, _b):
+    c = cmp(_a.last_checked_at, _b.last_checked_at)
+    if c != 0:
+        return c
+    return cmp(_a.start_date, _b.start_date)
 
 
 @admin_blueprint.app_template_filter(name="due_color")

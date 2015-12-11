@@ -7,18 +7,18 @@
         <p>Total number: {{ events_due_for_update|length }} events.</p>
         <table class="table table-condensed table-striped">
           <col width="30px" />
+          <col width="30px" />
           <col width="290px" />
           <col width="50px" />
-          <col width="30px" />
           <col width="60px" />
           <col width="20px" />
           <thead>
             <tr>
                 <td></td>
+                <td class="event-url"></td>
                 <td class="event-name">Name</td>
                 <td class="event-date">Date</td>
-                <td class="event-url">Web</td>
-                <td class="last-checked"></td>
+                <td class="last-checked">Checked</td>
                 <td class="is-being-checked"></td>
             </tr>
         </thead>
@@ -26,9 +26,9 @@
         {% for event in events_due_for_update %}
         <tr data-event-id="{{event.id}}" class="{{event.last_checked_at|due_color}}">
             <td><a href="{{ url_for('duplicate_event', event_id=event.id) }}" target="_blank">Dup</a></td>
+            <td class="event-url"><a href="{{ event.event_url }}" target="_blank">Visit</a></td>
             <td class="event-name"><a href="{{ url_for('view_event', event_id=event.id) }}" target="_blank">{{ event.name }}</a></td>
             <td class="event-date">{{ event.start_date.month|short_month }} {{ event.start_date.year }}</td>
-            <td class="event-url"><a href="{{ event.event_url }}" target="_blank">Visit</a></td>
             <td class="last-checked">{{ event.last_checked_at|friendly_time }}</td>
             <td class="is-being-checked"><input type="checkbox" {{"checked" if event.is_being_checked else ""}} /></td>
         </tr>

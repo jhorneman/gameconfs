@@ -17,16 +17,15 @@ body#events_update table {
 
 
 body#events_update table tr.recently-checked td.last-checked {
-    background-color: lightgreen;
+    color: green;
 }
 
 body#events_update table tr.due td.last-checked {
-    background-color: #ffff00;
+    color: orange;
 }
 
 body#events_update table tr.overdue td.last-checked {
-    background-color: red;
-    color: #ffffff;
+    color: red;
 }
 
 
