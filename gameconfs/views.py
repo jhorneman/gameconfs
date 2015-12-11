@@ -329,8 +329,8 @@ def view_series(series_id):
         return render_template('page_not_found.html'), 404
 
     q = filter_published_only(Event.query).\
-        filter(Event.series_id == series_id)
-    q = order_by_newest_event(q)
+        filter(Event.series_id == series_id).\
+        order_by(Event.start_date.desc(), Event.end_date.asc())
     events = q.all()
 
     return render_template('series.html', body_id='series', events=events, series=series)
