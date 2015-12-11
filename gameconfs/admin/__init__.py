@@ -85,18 +85,17 @@ def view_events_due_for_update():
                     Event.start_date < today)).\
         order_by(Event.start_date.asc()).\
         options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
-        limit(15).\
         all()
 
-    # for series in Series.query.all():
-    #     event = Event.query.\
-    #         filter(Event.series_id == series.id).\
-    #         order_by(Event.start_date.desc()).\
-    #         options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
-    #         first()
-    #     if event:
-    #         if event.start_date >= a_while_ago and event.start_date < today and event.is_being_checked:
-    #             events_due_for_update.append(event)
+    for series in Series.query.all():
+        event = Event.query.\
+            filter(Event.series_id == series.id).\
+            order_by(Event.start_date.desc()).\
+            options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
+            first()
+        if event:
+            if event.start_date >= a_while_ago and event.start_date < today and event.is_being_checked:
+                events_due_for_update.append(event)
 
     events_due_for_update = sorted(events_due_for_update, cmp=compare_events_due_for_update)
 
