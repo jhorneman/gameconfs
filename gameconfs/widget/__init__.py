@@ -1,6 +1,6 @@
 import os
 import json
-from dateutil import relativedelta
+from dateutil.relativedelta import *
 from flask import Blueprint, render_template, send_from_directory, request, abort
 from gameconfs.query_helpers import *
 from gameconfs.today import get_today
