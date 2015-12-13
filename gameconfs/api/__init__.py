@@ -1,9 +1,8 @@
-import re
-from datetime import datetime, date
+from datetime import date
 from flask import Blueprint, jsonify, render_template
 from gameconfs.app_logging import add_logger
 from gameconfs.models import *
-from json_api_helpers import set_up_JSON_api_error_handlers
+from gameconfs.json_api_helpers import set_up_JSON_api_error_handlers
 
 
 logger = logging.getLogger(__name__)
@@ -12,7 +11,7 @@ add_logger(logger)
 api_blueprint = Blueprint("api", __name__, url_prefix="/api", template_folder="templates")
 
 
-def set_up_api_blueprint(_app):
+def set_up_blueprint(_app):
     set_up_JSON_api_error_handlers(_app, api_blueprint)
 
 
@@ -60,13 +59,13 @@ def index():
 def not_found(path):
     m = re.match(r"v(\d+)/(\S*)\??", path)
     if not m:
-        message = "'{0}' is not a valid API path.".format(path)
+        message = "'{0}' is not a valid path.".format(path)
     else:
         requested_API_version = int(m.group(1))
         if requested_API_version != 1:
-            message = "{0} is not a valid API version number.".format(requested_API_version)
+            message = "{0} is not a valid version number.".format(requested_API_version)
         else:
-            message = "'{0}' is not a valid API endpoint.".format(m.group(2))
+            message = "'{0}' is not a valid endpoint.".format(m.group(2))
 
     response = jsonify({
         "message": message

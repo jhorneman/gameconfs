@@ -151,7 +151,9 @@ def create_app(_run_mode=None):
 
     # Register blueprints
     from gameconfs.widget import widget_blueprint
+    from gameconfs.widget import set_up_blueprint as set_up_widget_blueprint
     app.register_blueprint(widget_blueprint)
+    set_up_widget_blueprint(app)
 
     from gameconfs.bookmarklet import bookmarklet_blueprint
     app.register_blueprint(bookmarklet_blueprint)
@@ -162,7 +164,8 @@ def create_app(_run_mode=None):
     from gameconfs.admin import admin_blueprint
     app.register_blueprint(admin_blueprint)
 
-    from gameconfs.api import api_blueprint, set_up_api_blueprint
+    from gameconfs.api import api_blueprint
+    from gameconfs.api import set_up_blueprint as set_up_api_blueprint
     app.register_blueprint(api_blueprint)
     set_up_api_blueprint(app)
 

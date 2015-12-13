@@ -17,7 +17,7 @@ class APITestCase(SiteTestCase):
     def call_api(self, _params, _expected_status):
         r = self.c.get(self.get_base_url(), query_string=_params)
         assert r.status_code == _expected_status, "Expected status code to be {0}, got {1}.".format(_expected_status, r.status_code)
-        assert r.content_type == 'application/json'
+        eq_(r.content_type, 'application/json')
         if _expected_status == 405:
             return None
         data = json.loads(r.data)
@@ -60,18 +60,18 @@ class BasicAPITestCase(SiteTestCase):
         eq_(r.status_code, 404)
         eq_(r.content_type, 'application/json')
         data = json.loads(r.data)
-        assert data["message"].endswith("not a valid API path.")
+        assert data["message"].endswith("not a valid path.")
 
     def test_wrong_API_version_returns_404(self):
         r = self.c.get(api_base_url + "v0/upcoming")
         eq_(r.status_code, 404)
         eq_(r.content_type, 'application/json')
         data = json.loads(r.data)
-        assert data["message"].endswith("not a valid API version number.")
+        assert data["message"].endswith("not a valid version number.")
 
     def test_wrong_API_endpoint_returns_404(self):
         r = self.c.get(api_base_url + "v1/completely_wrong")
         eq_(r.status_code, 404)
         eq_(r.content_type, 'application/json')
         data = json.loads(r.data)
-        assert data["message"].endswith("not a valid API endpoint.")
+        assert data["message"].endswith("not a valid endpoint.")

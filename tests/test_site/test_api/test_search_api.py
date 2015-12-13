@@ -12,7 +12,7 @@ class SearchAPITestCase(APITestCase):
         r = self.c.post(self.get_base_url() + "v1/search_events", query_string={})
         assert r.status_code == 405
 
-    def test_no_data_fails(self):
+    def test_no_parameters_fails(self):
         data = self.call_api({}, 400)
         eq_(data["message"], "Query must contain at least one criterion.")
 
