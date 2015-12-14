@@ -68,7 +68,7 @@ def user_can_edit():
 def sponsoring_turned_on():
     if app.config["GAMECONFS_KILL_SPONSORING"]:
         return False
-    return True
+    return False
     # return request.cookies.get("sponsoring") == "true"
 
 
@@ -137,7 +137,7 @@ def make_cache_key():
     if sponsoring_turned_on():
         cache_key += "-sponsor"
     app.logger.info("Cache key: " + cache_key)
-    return cache_key
+    return cache_key.encode('utf-8')
 
 
 def make_date_cache_key(*args, **kwargs):
