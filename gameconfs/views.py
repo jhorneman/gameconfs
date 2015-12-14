@@ -136,13 +136,13 @@ def make_cache_key():
         cache_key += "-edit"
     if sponsoring_turned_on():
         cache_key += "-sponsor"
-    app.logger.info("Cache key: " + cache_key)
-    return cache_key.encode('utf-8')
+    app.logger.debug("Cache key: " + cache_key)
+    return cache_key.encode('utf-8')     # IMPORTANT! memcached will complain if passed Unicode
 
 
 def make_date_cache_key(*args, **kwargs):
     cache_key = 'view%s-%s' % (request.path, get_today().strftime("%Y%m%d"))
-    return cache_key.encode('utf-8')
+    return cache_key.encode('utf-8')     # IMPORTANT! memcached will complain if passed Unicode
 
 
 @app.route('/')
