@@ -1,3 +1,4 @@
+import types
 import logging
 import bmemcached
 from app_logging import add_logger
@@ -40,10 +41,6 @@ class InterfaceFixCacheClient(bmemcached.Client):
                         raise e
                     else:
                         logger.error("memcached error in method {0}: {1}.".format(name, str(e)))
-                        for arg in args:
-                            logger.error("Argument: {0}({1}).".format(arg, type(arg)))
-                        for arg_name, arg in kwargs.items():
-                            logger.error("Argument: {0}: {1}({2}).".format(arg_name, arg, type(arg)))
                         result = None
 
                 return result
