@@ -40,7 +40,10 @@ class InterfaceFixCacheClient(bmemcached.Client):
                         raise e
                     else:
                         logger.error("memcached error in method {0}: {1}.".format(name, str(e)))
-                        logger.error("First argument: {0}({1}).".format(args[0], type(args[0])))
+                        for arg in args:
+                            logger.error("Argument: {0}({1}).".format(arg, type(arg)))
+                        for arg_name, arg in kwargs.items():
+                            logger.error("Argument: {0}: {1}({2}).".format(arg_name, arg, type(arg)))
                         result = None
 
                 return result
