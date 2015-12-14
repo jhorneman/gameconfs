@@ -3,7 +3,6 @@
 import re
 import json
 from nose.tools import *
-from gameconfs.today import get_today
 from .. import SiteTestCase
 from bs4 import BeautifulSoup, Tag
 
