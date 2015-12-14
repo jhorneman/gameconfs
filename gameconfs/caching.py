@@ -39,7 +39,7 @@ class InterfaceFixCacheClient(bmemcached.Client):
                     if name == "set_servers":
                         raise e
                     else:
-                        logger.error("memcached error: " + str(e))
+                        logger.error("memcached error in method {0}: {1}.".format(name, str(e)))
                         result = None
 
                 return result
