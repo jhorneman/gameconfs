@@ -46,7 +46,7 @@ def data():
 
     # Make sure we only received parameters we know.
     for param in request_parameters.keys():
-        if param not in ["callback", "nr-months", "place"]:
+        if param not in ["callback", "nr-months", "place", "_"]:
             raise InvalidUsage("Did not recognize parameter {0}.".format(param))
 
     # Fail if no JSONP callback name was given.
