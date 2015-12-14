@@ -74,6 +74,10 @@ def short_month(_month):
     return "{0}".format(month.strftime("%b"))
 
 
+def nr_months(_nr_months):
+    return "{0} months".format(_nr_months) if _nr_months > 1 else "month"
+
+
 def short_range(_event):
     if _event.start_date == _event.end_date:
         return "{0} {1}".format(short_date(_event.start_date), _event.start_date.year)

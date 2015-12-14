@@ -1,7 +1,7 @@
 {% if place_name %}
-<h2>Game events in the next {{ nr_months }} months in {{ place_name|definite_country }}</h2>
+<h2>Game events in the next {{ nr_months|nr_months }} in {{ place_name|definite_country }}</h2>
 {% else %}
-<h2>Game events in the next {{ nr_months }} months</h2>
+<h2>Game events in the next {{ nr_months|nr_months }} months</h2>
 {% endif %}
 
 {% if events %}
