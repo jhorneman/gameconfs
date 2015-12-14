@@ -5,6 +5,7 @@ import json
 from nose.tools import *
 from gameconfs.today import get_today
 from .. import SiteTestCase
+from bs4 import BeautifulSoup, Tag
 
 
 base_url = "/widget/"
@@ -24,11 +25,21 @@ class WidgetTestCase(SiteTestCase):
             ok_(r.content_type.startswith('text/html'))
             m = re.match(_params["callback"] + r"\(\{'html':\"(.*)\"\}\)$", r.data)
             ok_(m, "Expected to parse returned HTML.")
-            return m.group(1)
+            soup = BeautifulSoup(m.group(1), 'html.parser')
+            return soup
         else:
             eq_(r.content_type, 'application/json')
             data = json.loads(r.data)
             return data
+
+    @staticmethod
+    def gather_events_from_widget_html(_html):
+        events = []
+        for table in _html.find_all("table"):
+            for row in table.find_all("tr"):
+                link = row.find_all("a")[0]
+                events.append(link.text)
+        return events
 
     def test_index_returns_HTML(self):
         r = self.c.get(base_url)
@@ -99,4 +110,71 @@ class WidgetTestCase(SiteTestCase):
 
     def test_place_not_found_returns_empty_html(self):
         html = self.call_api({"callback": "JSONP", "place": "Vatican City"}, 200)
-        assert "The Gameconfs database contains no events satisfying these criteria." in html
+        paragraph = html.find_all("p")[0]
+        eq_(paragraph.text, "The Gameconfs database contains no events satisfying these criteria.")
+        events = WidgetTestCase.gather_events_from_widget_html(html)
+        eq_(len(events), 0)
+
+    def test_no_month_or_place_succeeds(self):
+        html = self.call_api({"callback": "JSONP"}, 200)
+        events = WidgetTestCase.gather_events_from_widget_html(html)
+        eq_(len(events), 6)
+
+    def test_no_place_and_1_month_succeeds(self):
+        html = self.call_api({"callback": "JSONP", "nr-months": 1}, 200)
+        events = WidgetTestCase.gather_events_from_widget_html(html)
+        eq_(len(events), 3)
+
+    def test_no_place_and_12_months_succeeds(self):
+        html = self.call_api({"callback": "JSONP", "nr-months": 12}, 200)
+        events = WidgetTestCase.gather_events_from_widget_html(html)
+        eq_(len(events), 9)
+
+    def test_place_and_no_months_succeeds(self):
+        html = self.call_api({"callback": "JSONP", "place": "Paris"}, 200)
+        h2 = html.find_all("h2")[0]
+        eq_(h2.text, "Game events in the next 3 months in Paris")
+        events = WidgetTestCase.gather_events_from_widget_html(html)
+        eq_(len(events), 3)
+
+    def test_place_and_1_month_succeeds(self):
+        html = self.call_api({"callback": "JSONP", "nr-months": 1, "place": "Paris"}, 200)
+        h2 = html.find_all("h2")[0]
+        eq_(h2.text, "Game events in the next month in Paris")
+        events = WidgetTestCase.gather_events_from_widget_html(html)
+        eq_(len(events), 2)
+
+    def test_place_and_12_months_succeeds(self):
+        html = self.call_api({"callback": "JSONP", "nr-months": 12, "place": "Paris"}, 200)
+        h2 = html.find_all("h2")[0]
+        eq_(h2.text, "Game events in the next 12 months in Paris")
+        events = WidgetTestCase.gather_events_from_widget_html(html)
+        eq_(len(events), 5)
+
+    def test_other_place_and_no_months_succeeds(self):
+        html = self.call_api({"callback": "JSONP", "place": "other"}, 200)
+        h2 = html.find_all("h2")[0]
+        eq_(h2.text, "Game events in the next 3 months in other")
+        events = WidgetTestCase.gather_events_from_widget_html(html)
+        eq_(len(events), 1)
+
+    def test_other_place_and_1_month_succeeds(self):
+        html = self.call_api({"callback": "JSONP", "nr-months": 1, "place": "other"}, 200)
+        h2 = html.find_all("h2")[0]
+        eq_(h2.text, "Game events in the next month in other")
+        events = WidgetTestCase.gather_events_from_widget_html(html)
+        eq_(len(events), 0)
+
+    def test_other_place_and_2_months_succeeds(self):
+        html = self.call_api({"callback": "JSONP", "nr-months": 2, "place": "other"}, 200)
+        h2 = html.find_all("h2")[0]
+        eq_(h2.text, "Game events in the next 2 months in other")
+        events = WidgetTestCase.gather_events_from_widget_html(html)
+        eq_(len(events), 1)
+
+    def test_other_place_and_12_months_succeeds(self):
+        html = self.call_api({"callback": "JSONP", "nr-months": 12, "place": "other"}, 200)
+        h2 = html.find_all("h2")[0]
+        eq_(h2.text, "Game events in the next 12 months in other")
+        events = WidgetTestCase.gather_events_from_widget_html(html)
+        eq_(len(events), 1)
