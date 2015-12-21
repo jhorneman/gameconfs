@@ -2,7 +2,7 @@ import os
 import re
 import json
 from dateutil.relativedelta import *
-from flask import Blueprint, render_template, send_from_directory, request, abort, jsonify
+from flask import Blueprint, render_template, send_from_directory, request, jsonify
 from gameconfs.query_helpers import *
 from gameconfs.today import get_today
 from gameconfs.json_api_helpers import set_up_JSON_api_error_handlers
