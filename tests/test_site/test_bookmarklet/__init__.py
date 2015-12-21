@@ -1,10 +1,8 @@
 # -*- coding: utf-8 -*-
 
-import re
-import json
 from nose.tools import *
 from .. import SiteTestCase
-from bs4 import BeautifulSoup, Tag
+from bs4 import BeautifulSoup
 
 
 base_url = "/bookmarklet/"
@@ -23,15 +21,6 @@ class BookmarkletTestCase(SiteTestCase):
         else:
             return None
 
-    @staticmethod
-    def gather_events_from_bookmarklet_html(_html):
-        events = []
-        for table in _html.find_all("table"):
-            for row in table.find_all("tr"):
-                link = row.find_all("a")[0]
-                events.append(link.text)
-        return events
-
     def test_index_returns_HTML(self):
         r = self.c.get(base_url)
         assert r.status_code == 200
@@ -44,7 +33,7 @@ class BookmarkletTestCase(SiteTestCase):
     def test_bookmarklet_js_succeeds(self):
         r = self.c.get(base_url + "js/search.js")
         eq_(r.status_code, 200)
-        ok_(r.content_type.startswith('text/javascript'))
+        ok_(r.content_type.startswith('text/html'))  # Note the html type. See bookmarklet code for details.
 
     def test_data_no_params_succeeds(self):
         data = self.call_api({}, 200)
