@@ -1,4 +1,6 @@
-from flask import Blueprint, render_template, request
+import os
+import re
+from flask import Blueprint, render_template, request, send_from_directory
 from gameconfs.models import Event
 from gameconfs.query_helpers import search_events_by_string
 
@@ -13,7 +15,7 @@ def index():
 
 @bookmarklet_blueprint.route('/js/search.js')
 def search_js():
-    return render_template('bookmarklet/search.js')
+    return send_from_directory(os.path.join(bookmarklet_blueprint.root_path, 'static/js'), 'search.js', mimetype='text/javascript')
 
 
 @bookmarklet_blueprint.route('/search')
@@ -24,13 +26,16 @@ def search():
 
     found_events_by_string = search_events_by_string(search_string)
 
-    search_url = referring_url
-    if search_url.endswith('/'):
-        search_url = search_url[:-1]
-    found_events_by_url = Event.query. \
-        filter(Event.event_url.ilike('%' + search_url + '%')). \
-        order_by(Event.start_date.desc()). \
-        all()
+    # Strip http or https, www., trailing slash.
+    # It's better to search for less data and get a few false positives than to have lots of false negatives.
+    match = re.match(r"^(http|https)?://(www.)?(?P<url>.*?)/?$", referring_url, re.IGNORECASE)
+    if match:
+        found_events_by_url = Event.query. \
+            filter(Event.event_url.ilike('%' + match.group('url') + '%')). \
+            order_by(Event.start_date.desc()). \
+            all()
+    else:
+        found_events_by_url = []
 
     return render_template('bookmarklet/search.html', search_string=search_string,
                            referring_url=referring_url, found_events_by_string=found_events_by_string,
