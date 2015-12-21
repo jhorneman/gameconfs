@@ -33,7 +33,8 @@
     "publish_status": "draft",
     "name": "Unpublished Europe 1 month out",
     "start_date": "2014-06-01",
-    "city": "Paris"
+    "city": "Paris",
+    "url": "http://computationalcreativity.net/iccc2016/"
   },
   {
     "publish_status": "draft",
@@ -51,13 +52,15 @@
     "name": "Europe overlapping past today",
     "start_date": "2014-05-20",
     "end_date": "2014-05-31",
-    "city": "Paris"
+    "city": "Paris",
+    "url": "http://computationalcreativity.net/iccc2016/"
   },
 
   {
     "name": "Europe 1 month out",
     "start_date": "2014-06-01",
-    "city": "Paris"
+    "city": "Paris",
+    "url": "http://computationalcreativity.net/iccc2016/"
   },
   {
     "name": "Asia 1 month out",

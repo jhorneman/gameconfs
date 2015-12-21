@@ -75,7 +75,7 @@ def load_mock_events(_db_session):
             new_event.name = event_data["name"]
             new_event.start_date = parse_date(event_data["start_date"])
             new_event.end_date = parse_date(event_data.get("end_date", event_data["start_date"]))
-            new_event.event_url = "http://www.gameconfs.com/"
+            new_event.event_url = event_data.get("url", "http://www.gameconfs.com/")
             new_event.twitter_hashtags = ""
             new_event.twitter_account = ""
             new_event.venue = "Venue for " + event_data["name"]
