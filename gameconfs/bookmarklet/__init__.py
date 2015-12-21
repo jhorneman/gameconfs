@@ -15,7 +15,8 @@ def index():
 
 @bookmarklet_blueprint.route('/js/search.js')
 def search_js():
-    return send_from_directory(os.path.join(bookmarklet_blueprint.root_path, 'static/js'), 'search.js', mimetype='text/javascript')
+    # We're returning this as text/html because we're running it through render_template.
+    return render_template('bookmarklet/search.js')
 
 
 @bookmarklet_blueprint.route('/search')
