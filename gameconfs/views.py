@@ -37,30 +37,6 @@ class DemoSponsor(object):
         self.alt_text = ""
 
 
-class GamingInsidersSponsor(object):
-    def __init__(self):
-        self.target_url = "http://www.gaminginsiders.com/?utm_source=Gameconfs&utm_medium=sponsorship&utm_campaign=PricesGoUpMonday"
-        self.text = None
-        self.image_path = "img/sponsors/gaming_insiders/september2014.png"
-        self.alt_text = ""
-
-
-class GameConnectionSponsor(object):
-    def __init__(self):
-        self.target_url = "http://www.game-connection.com/"
-        self.text = None
-        self.image_path = "img/sponsors/game_connection/GCA2015.png"
-        self.alt_text = ""
-
-
-class GameAIDevSponsor(object):
-    def __init__(self):
-        self.target_url = "http://nucl.ai/?utm_source=gameconfs&utm_medium=banner&utm_campaign=Gameconfs%20April%2015"
-        self.text = None
-        self.image_path = "img/sponsors/gameaidev/nuclai15_button5_320.png"
-        self.alt_text = ""
-
-
 def user_can_edit():
     return current_user and current_user.is_authenticated and not current_app.config["GAMECONFS_KILL_EDITING"]
 
