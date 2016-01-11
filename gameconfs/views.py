@@ -776,17 +776,3 @@ def sitemap():
     url_root = request.url_root[:-1]
     event_ids = [e[0] for e in db.session.query(Event.id).all()]
     return render_template('sitemap.xml', url_root=url_root, event_ids=event_ids, mimetype='text/xml')
-
-
-from flask.ext.principal import RoleNeed, Permission
-
-@app.route('/secret')
-@templated()
-def secret():
-    perm = Permission(RoleNeed('admin'))
-    return {
-        "current_user_exists": current_user is not None,
-        "current_user_authenticated": current_user.is_authenticated(),
-        "editing_killed": current_app.config["GAMECONFS_KILL_EDITING"],
-        "is_admin": perm.can()
-    }
