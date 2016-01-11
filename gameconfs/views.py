@@ -38,7 +38,7 @@ class DemoSponsor(object):
 
 
 def user_can_edit():
-    return current_user and current_user.is_authenticated and not current_app.config["GAMECONFS_KILL_EDITING"]
+    return current_user and current_user.is_active and current_user.is_authenticated and not current_app.config["GAMECONFS_KILL_EDITING"]
 
 
 def sponsoring_turned_on():
