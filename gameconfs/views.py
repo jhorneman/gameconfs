@@ -37,32 +37,8 @@ class DemoSponsor(object):
         self.alt_text = ""
 
 
-class GamingInsidersSponsor(object):
-    def __init__(self):
-        self.target_url = "http://www.gaminginsiders.com/?utm_source=Gameconfs&utm_medium=sponsorship&utm_campaign=PricesGoUpMonday"
-        self.text = None
-        self.image_path = "img/sponsors/gaming_insiders/september2014.png"
-        self.alt_text = ""
-
-
-class GameConnectionSponsor(object):
-    def __init__(self):
-        self.target_url = "http://www.game-connection.com/"
-        self.text = None
-        self.image_path = "img/sponsors/game_connection/GCA2015.png"
-        self.alt_text = ""
-
-
-class GameAIDevSponsor(object):
-    def __init__(self):
-        self.target_url = "http://nucl.ai/?utm_source=gameconfs&utm_medium=banner&utm_campaign=Gameconfs%20April%2015"
-        self.text = None
-        self.image_path = "img/sponsors/gameaidev/nuclai15_button5_320.png"
-        self.alt_text = ""
-
-
 def user_can_edit():
-    return current_user and current_user.is_authenticated and not current_app.config["GAMECONFS_KILL_EDITING"]
+    return current_user and current_user.is_active and current_user.is_authenticated and not current_app.config["GAMECONFS_KILL_EDITING"]
 
 
 def sponsoring_turned_on():
@@ -90,11 +66,11 @@ def mailto(_address, _subject=None, _body=None):
 @app.context_processor
 def inject_common_values():
     common_values = {
-        "logged_in"       : user_can_edit(),
-        "sponsor"         : None,
-        "kill_email"      : app.config["GAMECONFS_KILL_EMAIL"],
+        "logged_in": user_can_edit(),
+        "sponsor": None,
+        "kill_email": app.config["GAMECONFS_KILL_EMAIL"],
         "kill_ce_retarget": app.config["GAMECONFS_KILL_CE_RETARGET"],
-        "mailto"          : mailto
+        "mailto": mailto
     }
     if not sponsoring_turned_on():
         common_values["sponsor"] = None
@@ -800,17 +776,3 @@ def sitemap():
     url_root = request.url_root[:-1]
     event_ids = [e[0] for e in db.session.query(Event.id).all()]
     return render_template('sitemap.xml', url_root=url_root, event_ids=event_ids, mimetype='text/xml')
-
-
-from flask.ext.principal import RoleNeed, Permission
-
-@app.route('/secret')
-@templated()
-def secret():
-    perm = Permission(RoleNeed('admin'))
-    return {
-        "current_user_exists": current_user is not None,
-        "current_user_authenticated": current_user.is_authenticated(),
-        "editing_killed": current_app.config["GAMECONFS_KILL_EDITING"],
-        "is_admin": perm.can()
-    }
