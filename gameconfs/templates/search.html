@@ -7,7 +7,11 @@
   <div class="ad-hoc-event-list">
   {% for event in found_events %}
     <div class="event-entry">
+        {% if event.is_published %}
         <span class="event-name"><a href="{{ url_for('view_event', event_id=event.id) }}">{{ event.name }}</a></span>
+        {% else %}
+        <span class="event-name unpublished"><a href="{{ url_for('view_event', event_id=event.id) }}">{{ event.name }}</a></span>
+        {% endif %}
         <span class="event-date">{{ adhoc_date_or_range(event) }}</span>
         <span class="event-location">{{ event|event_location }}</span>
     </div>
