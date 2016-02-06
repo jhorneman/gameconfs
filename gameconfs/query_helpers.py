@@ -5,11 +5,11 @@ from gameconfs import db
 from gameconfs.models import Event, Country, City, State, Continent
 
 
-def search_events_by_string(_search_string):
+def search_events_by_string(_search_string, _dont_filter_published_only):
     if not _search_string:
         return []
     query_string = "%" + _search_string + "%"
-    q = filter_published_only(Event.query).\
+    q = maybe_filter_published_only(Event.query, _dont_filter_published_only).\
         order_by(Event.start_date.desc(), Event.end_date.asc()).\
         filter(or_(Event.name.ilike(query_string),
                    Event.event_url.ilike(query_string),
@@ -24,6 +24,10 @@ def order_by_newest_event(_query):
 
 def filter_published_only(_query):
     return _query.filter(Event.publish_status == "published")
+
+
+def maybe_filter_published_only(_query, _dont_filter_published_only):
+    return _query if _dont_filter_published_only else _query.filter(Event.publish_status == "published")
 
 
 def filter_by_place(_query, _continent, _country, _state, _city):

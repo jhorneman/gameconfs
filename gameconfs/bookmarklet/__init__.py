@@ -1,8 +1,8 @@
-import os
 import re
-from flask import Blueprint, render_template, request, send_from_directory
+from flask import Blueprint, render_template, request
 from gameconfs.models import Event
 from gameconfs.query_helpers import search_events_by_string
+from gameconfs.views import user_can_edit
 
 
 bookmarklet_blueprint = Blueprint('bookmarklet', __name__, url_prefix='/bookmarklet', template_folder='templates', static_folder='static')
@@ -25,7 +25,7 @@ def search():
     # document_title = request.args.get('t', '').strip()
     referring_url = request.args.get('u', '').strip()
 
-    found_events_by_string = search_events_by_string(search_string)
+    found_events_by_string = search_events_by_string(search_string, user_can_edit())
 
     # Strip http or https, www., trailing slash.
     # It's better to search for less data and get a few false positives than to have lots of false negatives.

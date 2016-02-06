@@ -125,7 +125,7 @@ def make_date_cache_key(*args, **kwargs):
 @templated()
 def index():
     today = get_today()
-    q = filter_published_only(Event.query).\
+    q = maybe_filter_published_only(Event.query, user_can_edit()).\
         options(joinedload("city"), joinedload("city.country"), joinedload("city.state")).\
         filter(and_(Event.start_date <= today, Event.end_date >= today))
     q = order_by_newest_event(q)
@@ -163,7 +163,7 @@ def search():
     if request.method == "POST":   # Form has no validation
         search_form = SearchForm()
         search_string = search_form.search_string.data
-        found_events = search_events_by_string(search_string)
+        found_events = search_events_by_string(search_string, user_can_edit())
     else:
         search_string = ""
         found_events = []
@@ -180,10 +180,9 @@ def search():
 @app.cache.cached(timeout=60*60*24, unless=user_can_edit, key_prefix=make_cache_key)
 def view_event(event_id):
     try:
-        q = Event.query.filter(Event.id == event_id).\
+        q = maybe_filter_published_only(Event.query, user_can_edit()).\
+            filter(Event.id == event_id).\
             options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
-        if not user_can_edit():
-            q = filter_published_only(q)
         event = q.one()
     except sqlalchemy.orm.exc.NoResultFound:
         max_event_id = db.session.query(func.max(Event.id)).one()[0]
@@ -202,7 +201,7 @@ def view_upcoming_events():
     end_of_upcoming_period = date(end_of_upcoming_period.year, end_of_upcoming_period.month,
                                   monthrange(end_of_upcoming_period.year, end_of_upcoming_period.month)[1])
 
-    q = filter_published_only(Event.query).\
+    q = maybe_filter_published_only(Event.query, user_can_edit()).\
         options(joinedload("city"), joinedload("city.country"), joinedload("city.state")).\
         filter(and_(Event.start_date > today, Event.start_date < end_of_upcoming_period))
     q = order_by_newest_event(q)
@@ -219,7 +218,7 @@ def view_year(year):
     if year < min_year or year > max_year:
         return render_template('page_not_found.html'), 404
 
-    q = filter_published_only(Event.query).\
+    q = maybe_filter_published_only(Event.query, user_can_edit()).\
         options(joinedload("city"), joinedload("city.country"), joinedload("city.state"))
     q = order_by_newest_event(q)
     q = filter_by_year(q, year)
@@ -244,11 +243,11 @@ def view_place(place_name):
         return redirect(url_for('view_place', place_name="other"), code=301)
 
     if place_name == "other":
-        q = filter_published_only(Event.query).\
+        q = maybe_filter_published_only(Event.query, user_can_edit()).\
             filter(Event.city == None)
         location = "other"
     else:
-        q = filter_published_only(Event.query).\
+        q = maybe_filter_published_only(Event.query, user_can_edit()).\
             join(Event.city).\
             join(City.country).\
             join(Country.continent).\
@@ -277,11 +276,11 @@ def view_place(place_name):
 @app.cache.cached(timeout=60*60*24, key_prefix=make_cache_key)
 def view_place_past(place_name):
     if place_name == "other":
-        q = filter_published_only(Event.query).\
+        q = maybe_filter_published_only(Event.query, user_can_edit()).\
             filter(Event.city == None)
         location = "other"
     else:
-        q = filter_published_only(Event.query).\
+        q = maybe_filter_published_only(Event.query, user_can_edit()).\
             join(Event.city).\
             join(City.country).\
             join(Country.continent).\
@@ -304,7 +303,7 @@ def view_series(series_id):
     except sqlalchemy.orm.exc.NoResultFound:
         return render_template('page_not_found.html'), 404
 
-    q = filter_published_only(Event.query).\
+    q = maybe_filter_published_only(Event.query, user_can_edit()).\
         filter(Event.series_id == series_id).\
         order_by(Event.start_date.desc(), Event.end_date.asc())
     events = q.all()
@@ -540,7 +539,8 @@ def delete_event(event_id):
 @app.route('/event/<int:event_id>/ics')
 def event_ics(event_id):
     try:
-        q = filter_published_only(Event.query).filter(Event.id == event_id)
+        q = maybe_filter_published_only(Event.query, user_can_edit()).\
+            filter(Event.id == event_id)
         event = q.one()
     except sqlalchemy.orm.exc.NoResultFound:
         return render_template('page_not_found.html'), 404
