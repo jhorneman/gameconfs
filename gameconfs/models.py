@@ -58,7 +58,7 @@ class City(db.Model):
         self.name = _name
 
     def __repr__(self):
-        return '<City %r>' % (self.name)
+        return self.name
 
 
 class State(db.Model):
@@ -75,7 +75,7 @@ class State(db.Model):
         self.short_name = _short_name
 
     def __repr__(self):
-        return '<State %r>' % (self.name)
+        return self.name
 
 
 class Country(db.Model):
@@ -92,7 +92,7 @@ class Country(db.Model):
         self.has_states = _name in geocoder.countries_with_states
 
     def __repr__(self):
-        return '<Country %r>' % (self.name)
+        return self.name
 
 
 class Continent(db.Model):
@@ -105,7 +105,7 @@ class Continent(db.Model):
         self.name = _name
 
     def __repr__(self):
-        return '<Continent %r>' % (self.name)
+        return self.name
 
 
 class Series(db.Model):

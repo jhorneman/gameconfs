@@ -26,7 +26,6 @@ from flask.ext.sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.security import Security, SQLAlchemyUserDatastore
 from flask.ext.mail import Mail
-from flask_admin import Admin
 from werkzeug.routing import BaseConverter
 from jinja_filters import set_up_jinja_filters
 from .caching import set_up_cache
@@ -165,9 +164,21 @@ def create_app(_run_mode=None):
     # from gameconfs.admin import admin_blueprint
     # app.register_blueprint(admin_blueprint)
 
-    from .new_admin import AdminHomeView, AdminModelView
-    app.admin = Admin(app, name="Gameconfs", index_view=AdminHomeView(), template_mode="bootstrap3")
-    app.admin.add_view(AdminModelView(models.User, db.session))
+    from .new_admin import set_up_admin_interface
+    set_up_admin_interface(app, db.session)
+
+    # from .new_admin import AdminHomeView, AdminModelView
+    # app.admin = Admin(
+    #     app,
+    #     name="Gameconfs",
+    #     index_view=AdminHomeView(),
+    #     base_template="admin_master.html",
+    #     template_mode="bootstrap3"
+    # )
+    # app.admin.add_view(AdminModelView(models.Event, db.session))
+    # app.admin.add_view(AdminModelView(models.City, db.session))
+    # app.admin.add_view(AdminModelView(models.Country, db.session))
+    # app.admin.add_view(AdminModelView(models.User, db.session))
 
     from gameconfs.api import api_blueprint
     from gameconfs.api import set_up_blueprint as set_up_api_blueprint
