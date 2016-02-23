@@ -164,7 +164,7 @@ def create_app(_run_mode=None):
     # from gameconfs.admin import admin_blueprint
     # app.register_blueprint(admin_blueprint)
 
-    from .new_admin import set_up_admin_interface
+    from admin import set_up_admin_interface
     set_up_admin_interface(app, db.session)
 
     # from .new_admin import AdminHomeView, AdminModelView
