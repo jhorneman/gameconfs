@@ -18,6 +18,7 @@ from gameconfs.query_helpers import *
 from gameconfs.security import editing_kill_check, user_can_edit
 from today import get_today, get_now
 from kill_switches import is_feature_on
+from project import PROJECT_NAME
 
 
 def get_request_parameters():
@@ -63,6 +64,7 @@ def mailto(_address, _subject=None, _body=None):
 @app.context_processor
 def inject_common_values():
     common_values = {
+        "project_name": PROJECT_NAME,
         "logged_in": user_can_edit(),
         "sponsor": None,
         "ce_retarget": is_feature_on(app, "CE_RETARGET"),

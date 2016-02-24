@@ -6,7 +6,7 @@
   {{ event.start_date|nice_date }} until {{ event.end_date|nice_date }} {{ event.start_date.year }}
   {% endif %}
 {% endmacro %}
-{% block title %}{{ event.name }} - {{ date_or_range(event) }} - Gameconfs{% endblock %}
+{% block title %}{{ event.name }} - {{ date_or_range(event) }} - {{ project_name }}{% endblock %}
 {% block content %}
   <div itemscope itemtype="http://schema.org/Event" class="event-entry">
     {% if event.is_published %}

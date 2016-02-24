@@ -2,7 +2,7 @@
 {% block title %}Submit an event{% endblock %}
 {% block content %}
     <h2>Submit an event</h2>
-    <p>Can't find an event on Gameconfs? It's possible! Please let me know about it and I will add it.</p>
+    <p>Can't find an event on {{ project_name }}? It's possible! Please let me know about it and I will add it.</p>
     <p>(You did try searching, right?)<br/>
     <form class="form-inline" method="POST" action="{{ url_for('search') }}">
       {{ search_form.hidden_tag() }}
@@ -26,7 +26,7 @@
     <li>The venue.</li>
     <li>The city and country where it takes place.</li>
     <li>The Twitter account for the event, if any.</li>
-    <li>The Twitter hashtag for the event, if any. Gameconfs will tweet it on the day of the event!</li>
+    <li>The Twitter hashtag for the event, if any. {{ project_name }} will tweet it on the day of the event!</li>
     </ul></p>
     <p>Got all of that? Then please <a href="{{ mailto("admin@gameconfs.com", "I want to submit an event", "Hello Jurie.") }}">send me an email</a>. Thanks!</p>
 {% endblock %}
