@@ -3,7 +3,7 @@
 from flask import request, redirect, url_for, abort
 from flask_admin.form import SecureForm
 from flask.ext.login import current_user
-from gameconfs.security import user_has_all_roles
+from gameconfs.security import user_is_logged_in, user_has_all_roles
 
 
 # Take a Flask-Admin view class and return a derived class that uses Flask-Security.
@@ -13,7 +13,7 @@ def secure_view(view_class):
         form_base_class = SecureForm
 
         def is_accessible(self):
-            if not current_user or not current_user.is_active or not current_user.is_authenticated:
+            if not user_is_logged_in():
                 return False
             if user_has_all_roles(["admin"]):
                 return True
