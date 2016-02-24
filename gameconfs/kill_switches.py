@@ -16,7 +16,7 @@ def _build_kill_switch_name(_feature_name):
     if _feature_name not in feature_names:
         logger.error("Unknown kill switch feature '{0}'.".format(_feature_name))
         return None
-    return PROJECT_NAME.upper() + "_KILL_" + _feature_name
+    return "KILL_" + _feature_name
 
 
 def get_boolean_from_environment_variable(_environment_variable_name):
@@ -31,7 +31,9 @@ def _load_kill_switch(_app, _feature_name):
     kill_switch_name = _build_kill_switch_name(_feature_name)
     if kill_switch_name:
         environment_variable_name = PROJECT_NAME.upper() + "_" + kill_switch_name
-        _app.config[kill_switch_name] = get_boolean_from_environment_variable(environment_variable_name)
+        kill_switch_value = get_boolean_from_environment_variable(environment_variable_name)
+        logger.info("Feature {0} is turned {1}.".format(_feature_name, "off" if kill_switch_value else "on"))
+        _app.config[kill_switch_name] = kill_switch_value
 
 
 def load_all_kill_switches(_app):
