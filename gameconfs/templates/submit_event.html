@@ -8,7 +8,7 @@
       {{ search_form.hidden_tag() }}
       <div class="form-group">
         <label class="sr-only" for="search">Event name</label>
-        {{ search_form.search_string(id="search", class="form-control input-sm", placeholder="Amazing game event") }}
+        {{ search_form.search_string(id="search", class="form-control input-sm", placeholder="Event name") }}
       </div>
       <button type="submit" class="btn btn-sm btn-primary">Search</button>
     </form></p>
@@ -28,5 +28,5 @@
     <li>The Twitter account for the event, if any.</li>
     <li>The Twitter hashtag for the event, if any. {{ project_name }} will tweet it on the day of the event!</li>
     </ul></p>
-    <p>Got all of that? Then please <a href="{{ mailto("admin@gameconfs.com", "I want to submit an event", "Hello Jurie.") }}">send me an email</a>. Thanks!</p>
+    <p>Got all of that? Then please <a href="{{ mailto(admin_email, "I want to submit an event") }}">send me an email</a>. Thanks!</p>
 {% endblock %}

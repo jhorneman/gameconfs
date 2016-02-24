@@ -8,7 +8,7 @@
     {{ search_form.hidden_tag() }}
     &nbsp;&nbsp;
     <div class="form-group">
-      {{ search_form.search_string(id="search", class="form-control input-sm", placeholder="Amazing game event") }}
+      {{ search_form.search_string(id="search", class="form-control input-sm", placeholder="Event name") }}
     </div>
     <button type="submit" class="btn btn-sm btn-default">Search</button>
     <a class="btn btn-sm btn-danger pull-right" href="{{ url_for('security.logout') }}">Sign out {{ current_user.user_name }}</a>
