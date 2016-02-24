@@ -17,6 +17,7 @@ from gameconfs.forms import EventForm, SearchForm
 from gameconfs.query_helpers import *
 from gameconfs.security import editing_kill_check, user_can_edit
 from today import get_today, get_now
+from kill_switches import is_feature_on
 
 
 def get_request_parameters():
@@ -38,7 +39,7 @@ class DemoSponsor(object):
 
 
 def sponsoring_turned_on():
-    if app.config["GAMECONFS_KILL_SPONSORING"]:
+    if not is_feature_on(app, "SPONSORING"):
         return False
     return False
     # return request.cookies.get("sponsoring") == "true"
@@ -64,8 +65,7 @@ def inject_common_values():
     common_values = {
         "logged_in": user_can_edit(),
         "sponsor": None,
-        "kill_email": app.config["GAMECONFS_KILL_EMAIL"],
-        "kill_ce_retarget": app.config["GAMECONFS_KILL_CE_RETARGET"],
+        "ce_retarget": is_feature_on(app, "CE_RETARGET"),
         "mailto": mailto
     }
     if not sponsoring_turned_on():
@@ -623,7 +623,7 @@ recent_feed.make_cache_key = make_date_cache_key
 
 @app.route('/feedback', methods=("POST",))
 def feedback():
-    if app.config["GAMECONFS_KILL_EMAIL"]:
+    if not is_feature_on(app, "EMAIL"):
         return "", 500
 
     msg = Message("User feedback", recipients=["admin@gameconfs.com"])

@@ -48,7 +48,7 @@
     ga('create', 'UA-1597509-6', 'auto');
     ga('send', 'pageview');
   </script>
-  {% if not kill_ce_retarget %}
+  {% if ce_retarget %}
   <script>(function() {
     var _fbq = window._fbq || (window._fbq = []);
     if (!_fbq.loaded) {
@@ -88,7 +88,7 @@
 <script src="//static.getclicky.com/js" type="text/javascript"></script>
 <script type="text/javascript">try{ clicky.init(66602292); }catch(e){}</script>
 <noscript><p><img alt="Clicky" width="1" height="1" src="//in.getclicky.com/66602292ns.gif" /></p></noscript>
-{% if not kill_ce_retarget %}
+{% if ce_retarget %}
 <script type="text/javascript">
 /* <![CDATA[ */
 var google_conversion_id = 1042973873;

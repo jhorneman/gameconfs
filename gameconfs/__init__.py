@@ -28,8 +28,10 @@ from flask.ext.security import Security, SQLAlchemyUserDatastore
 from flask.ext.mail import Mail
 from werkzeug.routing import BaseConverter
 from jinja_filters import set_up_jinja_filters
+from .project import PROJECT_NAME
 from .caching import set_up_cache
 from .app_logging import set_up_logging
+from .kill_switches import load_all_kill_switches, is_feature_on, turn_feature_off
 
 
 app = None  # Set to None so code will fail screaming if create_app hasn't been called
@@ -42,16 +44,6 @@ class RegexIconURLConverter(BaseConverter):
         self.regex = items[0]
 
 
-def load_kill_switch(_killswitch_name):
-    full_name = "GAMECONFS_" + _killswitch_name
-    switch_value = os.environ.get(full_name, False)
-    if isinstance(switch_value, basestring):
-        switch_value = switch_value.lower() in ["1", "yes", "y", "true"]
-    else:
-        switch_value = bool(switch_value)
-    app.config[full_name] = switch_value
-
-
 def create_app(_run_mode=None):
     # Create Flask app
     global app
@@ -59,11 +51,7 @@ def create_app(_run_mode=None):
     app = Flask("gameconfs", template_folder=template_dir)
 
     # Load kill switches
-    load_kill_switch("KILL_CACHE")
-    load_kill_switch("KILL_EDITING")
-    load_kill_switch("KILL_EMAIL")
-    load_kill_switch("KILL_SPONSORING")
-    load_kill_switch("KILL_CE_RETARGET")
+    load_all_kill_switches(app)
 
     # Load default configuration
     app.config.from_object("gameconfs.default_config")
@@ -94,13 +82,13 @@ def create_app(_run_mode=None):
 
         app.config["TESTING"] = True
         app.config["WTF_CSRF_ENABLED"] = False  # Or CSRF checks will fail
-        app.config["GAMECONFS_KILL_CACHE"] = True
+        turn_feature_off(app, "CACHE")
         app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
 
     # Production run mode
     elif _run_mode == "production":
         # Get additional configuration based on run environment
-        run_environment = os.environ.get("GAMECONFS_RUN_ENV", "local")
+        run_environment = os.environ.get(PROJECT_NAME.upper() + "_RUN_ENV", "local")
         if run_environment == "heroku":
             # Get configuration data from Heroku environment variables
             app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
@@ -116,8 +104,9 @@ def create_app(_run_mode=None):
             app.config["MAIL_PASSWORD"] = os.environ.get("MANDRILL_APIKEY")
             app.config["MAIL_USE_TLS"] = True
 
-        elif run_environment == "vagrant":
-            app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gdcal-dev:gdcal@localhost:5432/gdcal-dev"
+        else:
+            logging.error("Did not recognize run environment '%s'" % run_environment)
+            return None, None
 
         set_up_logging(app)
 
@@ -141,7 +130,7 @@ def create_app(_run_mode=None):
     app.security = Security(app, app.user_datastore)
 
     # Initialize the cache
-    if app.config["GAMECONFS_KILL_CACHE"]:
+    if not is_feature_on(app, "CACHE"):
         app.config["CACHE_TYPE"] = "null"
     set_up_cache(app)
 
