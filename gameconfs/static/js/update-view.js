@@ -1,11 +1,5 @@
 $(document).ready(function() {
-    var bodyId = $(document.body).attr('id');
-    switch (bodyId) {
-        case 'events_update':
-        {
-            initEventsUpdatePage();
-        }
-    }
+    initEventsUpdatePage();
 });
 
 function initEventsUpdatePage() {
@@ -13,7 +7,7 @@ function initEventsUpdatePage() {
     .on('click', function(evt) {
         var rowEl = $(evt.target).parent().parent(),
             eventId = rowEl.data('event-id'),
-            ajax_url = '/admin/event/' + eventId.toString() + '/set_last_checked';
+            ajax_url = '/event/' + eventId.toString() + '/set_last_checked';
 
         $.post(ajax_url)
         .done(function(data, textStatus, jqXHR) {
@@ -31,7 +25,7 @@ function initEventsUpdatePage() {
     .on('click', function(evt) {
         var rowEl = $(evt.target).parent().parent(),
             eventId = rowEl.data('event-id'),
-            ajax_url = '/admin/event/' + eventId.toString() + '/toggle_checking';
+            ajax_url = '/event/' + eventId.toString() + '/toggle_checking';
 
         $.post(ajax_url)
         .done(function(data, textStatus, jqXHR) {

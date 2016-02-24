@@ -1,0 +1,39 @@
+/* Events update page */
+
+table {
+    table-layout: fixed;
+}
+
+table tr.recently-checked td.last-checked {
+    color: green;
+}
+
+table tr.due td.last-checked {
+    color: orange;
+}
+
+table tr.overdue td.last-checked {
+    color: red;
+}
+
+table tr.not-being-checked {
+    color: #d3d3d3;
+}
+
+table tr.not-being-checked a {
+    color: #d3d3d3;
+}
+
+table tr.not-being-checked {
+    color: #d3d3d3;
+}
+
+table tr.not-being-checked a {
+    color: #d3d3d3;
+}
+
+td {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}

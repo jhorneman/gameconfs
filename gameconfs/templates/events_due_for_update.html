@@ -1,6 +1,6 @@
-{% extends "base.html" %}
+{% extends "admin_master.html" %}
 {% block title %}Events that might be due for an update{% endblock %}
-{% block center %}
+{% block body %}
 <div class="row">
     <div class="col-md-12">
         <h2>Events that might be due for an update</h2>
@@ -39,6 +39,8 @@
 </div>
 {% endblock %}
 
-{% block end_of_body %}
-<script src="{{ url_for('admin.static', filename='js/admin.js') }}"></script>
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='css/update-view.css') }}">
+<script src="{{ url_for('static', filename='js/all.min.js') }}"></script>
+<script src="{{ url_for('static', filename='js/update-view.js') }}"></script>
 {% endblock %}

@@ -1,14 +1,13 @@
 import os
 import operator
 from functools import wraps
-from datetime import datetime, date, timedelta, time
+from datetime import date, timedelta, time
 from calendar import monthrange
 import icalendar
 import pytz
 import urllib
 from flask import render_template, request, send_from_directory, flash, redirect, url_for, Response, make_response
 from flask.ext.security.decorators import roles_required
-from flask.ext.login import current_user
 from flask.ext.mail import Message
 from werkzeug.contrib.atom import AtomFeed
 from gameconfs import app
@@ -16,6 +15,7 @@ from gameconfs.models import *
 from gameconfs.jinja_filters import event_venue_and_location, event_location
 from gameconfs.forms import EventForm, SearchForm
 from gameconfs.query_helpers import *
+from gameconfs.security import editing_kill_check, user_can_edit
 from today import get_today, get_now
 
 
@@ -35,10 +35,6 @@ class DemoSponsor(object):
         self.text = "Here are a few tasteful words about our lovely sponsor for this month."
         self.image_path = None
         self.alt_text = ""
-
-
-def user_can_edit():
-    return current_user and current_user.is_active and current_user.is_authenticated and not current_app.config["GAMECONFS_KILL_EDITING"]
 
 
 def sponsoring_turned_on():
@@ -76,15 +72,6 @@ def inject_common_values():
         common_values["sponsor"] = None
 
     return common_values
-
-
-def editing_kill_check(f):
-    @wraps(f)
-    def decorated_function(*args, **kwargs):
-        if current_app.config["GAMECONFS_KILL_EDITING"]:
-            return render_template('page_not_found.html'), 404
-        return f(*args, **kwargs)
-    return decorated_function
 
 
 # From http://flask.pocoo.org/docs/patterns/viewdecorators/

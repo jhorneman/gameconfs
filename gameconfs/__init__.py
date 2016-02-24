@@ -161,8 +161,24 @@ def create_app(_run_mode=None):
     from gameconfs.data import data_blueprint
     app.register_blueprint(data_blueprint)
 
-    from gameconfs.admin import admin_blueprint
-    app.register_blueprint(admin_blueprint)
+    # from gameconfs.admin import admin_blueprint
+    # app.register_blueprint(admin_blueprint)
+
+    from admin import set_up_admin_interface
+    set_up_admin_interface(app, db.session)
+
+    # from .new_admin import AdminHomeView, AdminModelView
+    # app.admin = Admin(
+    #     app,
+    #     name="Gameconfs",
+    #     index_view=AdminHomeView(),
+    #     base_template="admin_master.html",
+    #     template_mode="bootstrap3"
+    # )
+    # app.admin.add_view(AdminModelView(models.Event, db.session))
+    # app.admin.add_view(AdminModelView(models.City, db.session))
+    # app.admin.add_view(AdminModelView(models.Country, db.session))
+    # app.admin.add_view(AdminModelView(models.User, db.session))
 
     from gameconfs.api import api_blueprint
     from gameconfs.api import set_up_blueprint as set_up_api_blueprint
