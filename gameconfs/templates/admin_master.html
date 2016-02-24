@@ -1,5 +1,7 @@
 {% extends 'admin/base.html' %}
-
+{% block brand %}
+<a class="navbar-brand" href="{{ url_for('index') }}">{{ admin_view.admin.name }}</a>
+{% endblock %}
 {% block access_control %}
 {% if current_user.is_authenticated %}
 <div class="navbar-text btn-group pull-right">
