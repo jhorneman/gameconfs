@@ -1,11 +1,5 @@
 $(document).ready(function() {
-    var bodyId = $(document.body).attr('id');
-    switch (bodyId) {
-        case 'events_update':
-        {
-            initEventsUpdatePage();
-        }
-    }
+    initEventsUpdatePage();
 });
 
 function initEventsUpdatePage() {
