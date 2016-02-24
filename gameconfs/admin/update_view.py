@@ -33,25 +33,29 @@ class InsecureSpecialView(BaseView):
 
         a_while_ago = date(new_year, new_month, new_day)
 
-        events_due_for_update = Event.query.\
-            filter(and_(Event.series_id == None,
-                        Event.is_being_checked == True,
-                        Event.start_date >= a_while_ago,
-                        Event.start_date < today)).\
-            order_by(Event.start_date.asc()).\
-            options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
+        # Get the newest events per series.
+        events_due_for_update_in_series = Event.query.\
+            distinct(Event.series_id).\
+            filter(Event.series_id != None).\
+            order_by(Event.series_id, Event.start_date.desc()).\
             all()
 
-        for series in Series.query.all():
-            event = Event.query.\
-                filter(Event.series_id == series.id).\
-                order_by(Event.start_date.desc()).\
-                options(joinedload('city'), joinedload('city.country'), joinedload('city.state')).\
-                first()
-            if event:
-                if event.start_date >= a_while_ago and event.start_date < today and event.is_being_checked:
-                    events_due_for_update.append(event)
+        # Filter them out if they're either too old or newer than today, or not being checked.
+        # Need to do this *after* getting the newest event per series, or we'll get false positives:
+        # the newest event within the date range.
+        events_due_for_update_in_series = [event for event in events_due_for_update_in_series \
+                                 if event.start_date >= a_while_ago and event.start_date < today and event.is_being_checked]
 
+        # Get the events without a series that are being checked and are within in the date range.
+        events_due_for_update_without_series = Event.query.\
+            filter(and_(Event.series_id == None,
+                        Event.start_date >= a_while_ago,
+                        Event.start_date < today,
+                        Event.is_being_checked == True)).\
+            all()
+
+        # Combine both lists and sort.
+        events_due_for_update = events_due_for_update_in_series + events_due_for_update_without_series
         events_due_for_update = sorted(events_due_for_update, cmp=compare_events_due_for_update)
 
         return self.render(
