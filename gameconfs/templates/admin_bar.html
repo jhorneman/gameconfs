@@ -1,7 +1,7 @@
 <div id="admin-bar">
   {% if search_form %}
   <form class="form-inline" method="POST" action="{{ url_for('search') }}">
-    <a class="btn btn-sm btn-primary" href="{{ url_for('admin.index') }}">Dashboard</a>
+    <a class="btn btn-sm btn-primary" href="{{ url_for('admin.index') }}">Admin</a>
     {% if not body_id or body_id != "edit-event" %}
     <a class="btn btn-sm btn-default" href="{{ url_for('create_new_event') }}">New event</a>
     {% endif %}
