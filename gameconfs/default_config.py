@@ -1,12 +1,15 @@
+from .project import ADMIN_EMAIL, PROJECT_PREFIX
+
+
 # Default settings for all run modes
-SECRET_KEY = '\xa7Uy\tPMY\x99\xc4\xa1\x8bB\x9a\x8d\xc9T\xd3\xe3\xa9\xd7b\xbf\x0e\x81'
+SECRET_KEY = "\xa7Uy\tPMY\x99\xc4\xa1\x8bB\x9a\x8d\xc9T\xd3\xe3\xa9\xd7b\xbf\x0e\x81"
 DEBUG = False
 
 # Flask-Mail
-MAIL_DEFAULT_SENDER = 'admin@gameconfs.com'
+MAIL_DEFAULT_SENDER = ADMIN_EMAIL
 
 # Flask-Cache
-CACHE_KEY_PREFIX = 'GC:'
+CACHE_KEY_PREFIX = PROJECT_PREFIX + ":"
 CACHE_NO_NULL_WARNING = True
 
 # Flask-SQLAlchemy
