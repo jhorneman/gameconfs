@@ -1,9 +1,18 @@
 # -*- coding: utf-8 -*-
 
-from views import set_up_views
+from flask_admin import Admin
+from views import AdminHomeView, set_up_views
 from update_view import set_up_update_view
 
 
 def set_up_admin_interface(_app, _db_session):
-    set_up_views(_app, _db_session)
-    set_up_update_view(_app)
+    admin = Admin(
+        _app,
+        name="Gameconfs",
+        index_view=AdminHomeView(),
+        base_template="admin_master.html",
+        template_mode="bootstrap3"
+    )
+    _app.admin = admin
+    set_up_views(admin, _db_session)
+    set_up_update_view(admin, _app)

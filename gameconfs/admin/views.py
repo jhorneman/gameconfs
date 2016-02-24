@@ -33,16 +33,8 @@ class UserView(ModelView):
     pass
 
 
-def set_up_views(_app, _db_session):
-    admin = Admin(
-        _app,
-        name="Gameconfs",
-        index_view=AdminHomeView(),
-        base_template="admin_master.html",
-        template_mode="bootstrap3"
-    )
-    admin.add_view(EventView(models.Event, _db_session))
-    admin.add_view(CityView(models.City, _db_session))
-    admin.add_view(CountryView(models.Country, _db_session))
-    admin.add_view(UserView(models.User, _db_session))
-    _app.admin = admin
+def set_up_views(_admin, _db_session):
+    _admin.add_view(EventView(models.Event, _db_session))
+    _admin.add_view(CityView(models.City, _db_session))
+    _admin.add_view(CountryView(models.Country, _db_session))
+    _admin.add_view(UserView(models.User, _db_session))

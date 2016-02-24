@@ -82,7 +82,6 @@ def select_due_color_class(_date):
     return ""
 
 
-def set_up_update_view(_app):
+def set_up_update_view(_admin, _app):
     _app.add_template_filter(select_due_color_class, name="due_color")
-    assert _app.admin
-    _app.admin.add_view(SpecialView(name='Special', endpoint='special'))
+    _admin.add_view(SpecialView(name='Event Updates', endpoint='special'))
