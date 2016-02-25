@@ -17,7 +17,6 @@
 # The following run environments are supported:
 #   local   - a developers' local machine.
 #   heroku  - on Heroku or locally using Foreman.
-#   vagrant - in a VM managed using Vagrant.
 
 import os
 import logging
@@ -25,10 +24,9 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.security import Security, SQLAlchemyUserDatastore
-from flask.ext.mail import Mail
 from werkzeug.routing import BaseConverter
 from jinja_filters import set_up_jinja_filters
-from .project import PROJECT_NAME
+from .project import PROJECT_NAME, ADMIN_EMAIL
 from .caching import set_up_cache
 from .app_logging import set_up_logging
 from .kill_switches import load_all_kill_switches, is_feature_on, turn_feature_off
@@ -67,9 +65,6 @@ def create_app(_run_mode=None):
         # app.config["CACHE_MEMCACHED_USERNAME"] = None
         # app.config["CACHE_MEMCACHED_PASSWORD"] = None
 
-        app.config["MAIL_SERVER"] = "localhost"
-        app.config["MAIL_PORT"] = 1025
-
         app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False  # Otherwise this gets annoying real fast
         DebugToolbarExtension(app)
 
@@ -98,12 +93,6 @@ def create_app(_run_mode=None):
             app.config["CACHE_MEMCACHED_USERNAME"] = os.environ.get("MEMCACHEDCLOUD_USERNAME")
             app.config["CACHE_MEMCACHED_PASSWORD"] = os.environ.get("MEMCACHEDCLOUD_PASSWORD")
 
-            app.config["MAIL_SERVER"] = "smtp.mandrillapp.com"
-            app.config["MAIL_PORT"] = 587
-            app.config["MAIL_USERNAME"] = os.environ.get("MANDRILL_USERNAME")
-            app.config["MAIL_PASSWORD"] = os.environ.get("MANDRILL_APIKEY")
-            app.config["MAIL_USE_TLS"] = True
-
         else:
             logging.error("Did not recognize run environment '%s'" % run_environment)
             return None, None
@@ -121,10 +110,7 @@ def create_app(_run_mode=None):
     db.init_app(app)
 
     # Set up Flask-Security
-    # (Hang new variables off app to avoid terrible circular import issues.)
-    # app.config['SECURITY_PASSWORD_HASH'] = 'pbkdf2_sha512'
-    # app.config['SECURITY_PASSWORD_SALT'] = '4tjDFbMVTbmVYULHbj2baaGk'
-    app.config["SECURITY_EMAIL_SENDER"] = "admin@gameconfs.com"
+    app.config["SECURITY_EMAIL_SENDER"] = ADMIN_EMAIL
 
     app.user_datastore = SQLAlchemyUserDatastore(db, models.User, models.Role)
     app.security = Security(app, app.user_datastore)
@@ -150,24 +136,8 @@ def create_app(_run_mode=None):
     from gameconfs.data import data_blueprint
     app.register_blueprint(data_blueprint)
 
-    # from gameconfs.admin import admin_blueprint
-    # app.register_blueprint(admin_blueprint)
-
     from admin import set_up_admin_interface
     set_up_admin_interface(app, db.session)
-
-    # from .new_admin import AdminHomeView, AdminModelView
-    # app.admin = Admin(
-    #     app,
-    #     name="Gameconfs",
-    #     index_view=AdminHomeView(),
-    #     base_template="admin_master.html",
-    #     template_mode="bootstrap3"
-    # )
-    # app.admin.add_view(AdminModelView(models.Event, db.session))
-    # app.admin.add_view(AdminModelView(models.City, db.session))
-    # app.admin.add_view(AdminModelView(models.Country, db.session))
-    # app.admin.add_view(AdminModelView(models.User, db.session))
 
     from gameconfs.api import api_blueprint
     from gameconfs.api import set_up_blueprint as set_up_api_blueprint
@@ -176,8 +146,5 @@ def create_app(_run_mode=None):
 
     # Set up Jinja 2 filters
     set_up_jinja_filters(app)
-
-    # Set up email
-    app.mail = Mail(app)
 
     return app, db

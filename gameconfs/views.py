@@ -8,7 +8,7 @@ import pytz
 import urllib
 from flask import render_template, request, send_from_directory, flash, redirect, url_for, Response, make_response
 from flask.ext.security.decorators import roles_required
-from flask.ext.mail import Message
+# from flask.ext.mail import Message
 from werkzeug.contrib.atom import AtomFeed
 from gameconfs import app
 from gameconfs.models import *
@@ -626,15 +626,15 @@ def recent_feed():
 recent_feed.make_cache_key = make_date_cache_key
 
 
-@app.route('/feedback', methods=("POST",))
-def feedback():
-    if not is_feature_on(app, "EMAIL"):
-        return "", 500
-
-    msg = Message("User feedback", recipients=["admin@gameconfs.com"])
-    msg.body = get_request_parameters()
-    app.mail.send(msg)
-    return ""
+# @app.route('/feedback', methods=("POST",))
+# def feedback():
+#     if not is_feature_on(app, "EMAIL"):
+#         return "", 500
+#
+#     msg = Message("User feedback", recipients=["admin@gameconfs.com"])
+#     msg.body = get_request_parameters()
+#     app.mail.send(msg)
+#     return ""
 
 
 @app.route('/today.atom')
