@@ -637,14 +637,6 @@ recent_feed.make_cache_key = make_date_cache_key
 #     return ""
 
 
-@app.route('/email')
-def feedback():
-    msg = Message("User feedback", recipients=[ADMIN_EMAIL])
-    msg.body = "Yooooo!!!"
-    app.mail.send(msg)
-    return "Yay!"
-
-
 @app.route('/today.atom')
 @app.cache.cached(timeout=60*60*24)
 def today_feed():
