@@ -24,6 +24,7 @@ from flask import Flask
 from flask.ext.sqlalchemy import SQLAlchemy
 from flask_debugtoolbar import DebugToolbarExtension
 from flask.ext.security import Security, SQLAlchemyUserDatastore
+from flask.ext.mail import Mail
 from werkzeug.routing import BaseConverter
 from jinja_filters import set_up_jinja_filters
 from .project import PROJECT_NAME, ADMIN_EMAIL
@@ -65,6 +66,8 @@ def create_app(_run_mode=None):
         # app.config["CACHE_MEMCACHED_USERNAME"] = None
         # app.config["CACHE_MEMCACHED_PASSWORD"] = None
 
+        app.config["MAIL_PORT"] = 1025
+
         app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False  # Otherwise this gets annoying real fast
         DebugToolbarExtension(app)
 
@@ -92,6 +95,12 @@ def create_app(_run_mode=None):
             app.config["CACHE_MEMCACHED_SERVERS"] = os.environ.get("MEMCACHEDCLOUD_SERVERS").split(",")
             app.config["CACHE_MEMCACHED_USERNAME"] = os.environ.get("MEMCACHEDCLOUD_USERNAME")
             app.config["CACHE_MEMCACHED_PASSWORD"] = os.environ.get("MEMCACHEDCLOUD_PASSWORD")
+
+            app.config["MAIL_SERVER"] = os.environ.get("POSTMARK_SMTP_SERVER")
+            app.config["MAIL_USERNAME"] = os.environ.get("POSTMARK_API_TOKEN")
+            app.config["MAIL_PASSWORD"] = os.environ.get("POSTMARK_API_TOKEN")
+            app.config["MAIL_DEFAULT_SENDER"] = ADMIN_EMAIL
+            app.config["MAIL_USE_TLS"] = True
 
         else:
             logging.error("Did not recognize run environment '%s'" % run_environment)
@@ -146,5 +155,8 @@ def create_app(_run_mode=None):
 
     # Set up Jinja 2 filters
     set_up_jinja_filters(app)
+
+    # Set up email
+    app.mail = Mail(app)
 
     return app, db
