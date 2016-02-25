@@ -6,10 +6,8 @@ module.exports = function(grunt) {
       combine: {
         files: {
           'gameconfs/static/css/all.min.css': [
-              'gameconfs/static/css/jquery-ui.css',
               'gameconfs/static/css/bootstrap.min.css',
-              'gameconfs/static/css/gameconfs.css',
-              'gameconfs/admin/static/css/admin.css'
+              'gameconfs/static/css/gameconfs.css'
           ]
         }
       }
@@ -19,8 +17,7 @@ module.exports = function(grunt) {
       combine: {
         files: {
           'gameconfs/static/js/all.min.js': [
-              'gameconfs/static/js/jquery-1.9.1.js',
-              'gameconfs/static/js/jquery-ui.js',
+              'gameconfs/static/js/jquery-1.12.1.min.js',
               'gameconfs/static/js/bootstrap.js',
               'gameconfs/static/js/main.js'
           ]
