@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint, request, jsonify
-from gameconfs.query_helpers import search_events_by_string
+from gameconfs.query_helpers import build_search_events_by_string_query
 from gameconfs.jinja_filters import short_range
+from gameconfs.today import get_today
+from gameconfs.models import Event
 from slack_utils import escape_text_for_slack
 
 
@@ -19,7 +21,10 @@ def slack():
     if len(search_string) == 0:
         return "Enter search criteria after the command, e.g. '/confs London'."
 
-    found_events = search_events_by_string(search_string)
+    query = build_search_events_by_string_query(search_string)
+    query = query.filter(Event.end_date >= get_today())
+
+    found_events = query.all()
 
     if len(found_events) == 0:
         return "I didn't find any upcoming events for '{0}'.".format(search_string)
