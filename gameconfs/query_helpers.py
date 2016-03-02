@@ -5,9 +5,16 @@ from gameconfs import db
 from gameconfs.models import Event, Country, City, State, Continent
 
 
-def search_events_by_string(_search_string, _show_unpublished = False):
-    if not _search_string:
+def search_events_by_string(_search_string, _show_unpublished=False):
+    q = build_search_events_by_string_query(_search_string, _show_unpublished)
+    if not q:
         return []
+    return q.all()
+
+
+def build_search_events_by_string_query(_search_string, _show_unpublished=False):
+    if not _search_string:
+        return None
     query_string = "%" + _search_string + "%"
     q = maybe_filter_published_only(Event.query, _show_unpublished).\
         order_by(Event.start_date.desc(), Event.end_date.asc()).\
@@ -15,7 +22,7 @@ def search_events_by_string(_search_string, _show_unpublished = False):
                    Event.event_url.ilike(query_string),
                    Event.twitter_hashtags.ilike(query_string),
                    Event.twitter_account.ilike(query_string)))
-    return q.all()
+    return q
 
 
 def order_by_newest_event(_query):
