@@ -153,6 +153,9 @@ def create_app(_run_mode=None):
     app.register_blueprint(api_blueprint)
     set_up_api_blueprint(app)
 
+    from gameconfs.slack import slack_blueprint
+    app.register_blueprint(slack_blueprint)
+
     # Set up Jinja 2 filters
     set_up_jinja_filters(app)
 
