@@ -1,8 +1,9 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, request
+from flask import Blueprint, request, jsonify
 from gameconfs.query_helpers import search_events_by_string
 from gameconfs.jinja_filters import short_range
+from slack_utils import escape_text_for_slack
 
 
 slack_blueprint = Blueprint("slack", __name__, url_prefix="/slack")
@@ -25,8 +26,12 @@ def slack():
 
     message = "I found {0} upcoming events".format(len(found_events)) if len(found_events) > 1 else "I found 1 event"
 
-    message += " for '{0}':<br/>".format( search_string)
+    message += " for '{0}':\n".format( search_string)
 
-    message += u"<br/>".join([u"{0} ({1})".format(event.name, short_range(event)) for event in found_events])
+    message += u"\n".join([u"{2}|{0} ({1})".format(event.name, short_range(event), event.event_url) for event in found_events])
 
-    return message
+    response = jsonify({
+        "text": message
+    })
+    response.status_code = 200
+    return response
