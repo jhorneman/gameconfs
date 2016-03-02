@@ -55,7 +55,7 @@ def slack():
 
     if len(found_events_by_name) > 0:
         message += found_message(found_events_by_name) + " with '{0}':\n".format( search_string)
-        message += u"\n".join([u"<{2}|{0}> ({1}, {3})".\
+        message += u"\n".join([u"<{2}|{0}> ({1}, {3})".
                               format(escape_text_for_slack(event.name), short_range(event), event.event_url, event.city_and_state_or_country())
                               for event in found_events_by_name])
 
@@ -64,7 +64,9 @@ def slack():
             message += "\n\n"
 
         message += found_message(found_events_by_place) + " in {0}:\n".format(found_location_name)
-        message += u"\n".join([u"<{2}|{0}> ({1})".format(escape_text_for_slack(event.name), short_range(event), event.event_url) for event in found_events_by_name])
+        message += u"\n".join([u"<{2}|{0}> ({1})".
+                               format(escape_text_for_slack(event.name), short_range(event), event.event_url)
+                               for event in found_events_by_place])
 
     response = jsonify({
         "text": message,
