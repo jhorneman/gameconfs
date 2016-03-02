@@ -2,3 +2,8 @@
 /dumps/
 *.dump
 *.paw
+*.pyc
+/node_modules
+build/
+doc/build/
+.env
