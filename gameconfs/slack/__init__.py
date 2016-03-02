@@ -28,10 +28,11 @@ def slack():
 
     message += " for '{0}':\n".format( search_string)
 
-    message += u"\n".join([u"{2}|{0} ({1})".format(event.name, short_range(event), event.event_url) for event in found_events])
+    message += u"\n".join([u"<{2}|{0}> ({1})".format(escape_text_for_slack(event.name), short_range(event), event.event_url) for event in found_events])
 
     response = jsonify({
-        "text": message
+        "text": message,
+        "unfurl_media": False
     })
     response.status_code = 200
     return response
