@@ -12,7 +12,7 @@ slack_blueprint = Blueprint("slack", __name__, url_prefix="/slack")
 
 
 def found_message(_found_events):
-    return "I found {0} upcoming events".format(len(_found_events)) if len(_found_events) > 1 else "I found 1 event"
+    return "I found {0} upcoming events".format(len(_found_events)) if len(_found_events) > 1 else "I found 1 upcoming event"
 
 
 @slack_blueprint.route("/")
