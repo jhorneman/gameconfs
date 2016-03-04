@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from flask import Blueprint, request, jsonify
+from flask import Blueprint, request, jsonify, render_template, abort
 from gameconfs.query_helpers import *
 from gameconfs.jinja_filters import short_range
 from gameconfs.today import get_today
@@ -8,7 +8,7 @@ from gameconfs.models import Event
 from slack_utils import escape_text_for_slack
 
 
-slack_blueprint = Blueprint("slack", __name__, url_prefix="/slack")
+slack_blueprint = Blueprint("slack", __name__, url_prefix="/slack", template_folder="templates")
 
 
 def found_message(_found_events):
@@ -16,6 +16,22 @@ def found_message(_found_events):
 
 
 @slack_blueprint.route("/")
+def index():
+    if "command" in request.args:
+        return "It looks like the slash command URL is not set to the right value (/slack/slash) :(", 400
+    return render_template('slack/index.html')
+
+
+@slack_blueprint.route('/', defaults={'path': ''})
+@slack_blueprint.route('/<path:path>')
+def not_found(path):
+    if "command" in request.args:
+        return "It looks like the slash command URL is not set to the right value (/slack/slash) :(", 400
+    else:
+        abort(404)
+
+
+@slack_blueprint.route("/slash")
 def slack():
     command = request.args.get("command", "").strip()
     if command != "/confs":
@@ -74,3 +90,4 @@ def slack():
     })
     response.status_code = 200
     return response
+
