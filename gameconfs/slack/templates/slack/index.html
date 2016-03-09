@@ -1,11 +1,52 @@
 {% extends "layout.html" %}
 {% block title %}Gameconfs Slack integration{% endblock %}
 {% block content %}
-<h1 id="thegameconfsapi">Gameconfs Slack integration</h1>
+<h1>Gameconfs Slack integration</h1>
 
-<p>THIS IS ALPHA</p>
+<p><strong>THIS IS AN ALPHA FEATURE!</strong></p>
 
-<h2 id="questionsfeedback">Questions? Feedback?</h2>
+<p>Gameconfs integration is currently working in a few Slack teams, but it may break or change,
+ and it will most definitely be replaced by a proper Slack app in the future.
+ So if you try this, be warned that you will have to change or uninstall it some time from now.</p>
 
-<p><a href="mailto:admin@gameconfs.com">Email me</a>.</p>
+<p>For this reason, I also request that you do not spread this link to people I don't know.</p>
+  
+<h2>Setup</h2>
+
+<p>Go to the settings for your team and select &#8220;Configure Apps&#8221;. You may need administrator privileges to do this.</p>
+
+<p>Note that there is a limit of 10 app integrations on free Slack teams, and this counts as one of them.</p>
+
+<p>You should now be on the Installed Apps page. Select &#8220;Custom Integrations&#8221; at the top.</p>
+
+<p>If you&#8217;ve not set up any custom slash commands before, you will see the quite unhelpful message:
+ &#8220;You have not created any custom integrations for this team yet! When you connect an account to use with an integration,
+ it will show here.&#8221;
+ Go to the <a href="https://slack.com/apps/">Slack App Directory</a>, select &#8220;Build Your Own&#8221; in the top right,
+ then &#8220;Make Your Own (Make a Custom Integration)&#8221;, then &#8220;Slash Commands&#8221;.</p>
+
+<p>If you <em>have</em> set up custom slash commands before, just click on &#8220;Add Configuration&#8221; instead.</p>
+
+<p>You should now see an interface allowing you to create a new customized Slack command for your team.</p>
+
+<p>Enter &#8220;/confs&#8221; as your command (or something else to your liking) and click on &#8220;Add Slash Command Integration&#8221;.</p>
+
+<p>In the following screen, scroll down to Integration Settings and set the following:</p>
+
+<ul>
+<li><strong>URL</strong> http://www.gameconfs.com/slack/slash</li>
+<li><strong>Method</strong> GET</li>
+<li><strong>Customize Name</strong> Gameconfs</li>
+<li><strong>Customize Icon</strong> if you like, download and use <a href="http://www.gameconfs.com/apple-touch-icon-144x144.png">http://www.gameconfs.com/apple-touch-icon&#8211;144x144.png</a></li>
+<li><strong>Autocomplete help text</strong> turn on &#8220;Show this command in the autocomplete list&#8221;</li>
+<li><strong>Description</strong> Search Gameconfs</li>
+<li><strong>Usage hint</strong> [event name or place]</li>
+<li><strong>Descriptive Label</strong> Gameconfs</li>
+</ul>
+
+<p>Then click &#8220;Save Integration&#8221;.</p>
+
+<h2>Questions? Feedback?</h2>
+
+<p><a href="mailto:{{admin_email}}">Email me</a>.</p>
 {% endblock %}
