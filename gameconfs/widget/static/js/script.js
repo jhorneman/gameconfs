@@ -41,13 +41,12 @@
         jQuery(document).ready(function($) {
             var container,
                 css_link,
-                userId,
                 place,
                 nrMonths,
                 widgetWidth,
                 widgetHeight,
                 noCSS,
-                injectCSS,
+                injectCSS = true,
                 jsonpURL;
 
             container = $('#gameconfs-widget-container');
@@ -57,8 +56,17 @@
             nrMonths = container.data('nr-months') || 3;
             widgetWidth = container.data('width') || 240;
             widgetHeight = container.data('height') || 400;
+
             noCSS = container.data('no-css');
-            injectCSS = (noCSS === undefined) ? true : (noCSS !== true);
+            if (noCSS !== undefined) {
+                if (typeof noCSS === 'string') {
+                    if ((noCSS === '1') || (noCSS.toLowerCase() === 'true')) {
+                        injectCSS = false;
+                    }
+                } else {
+                    injectCSS = !noCSS;
+                }
+            }
 
             if (injectCSS) {
                 container.addClass('cleanslate');
