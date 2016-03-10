@@ -46,20 +46,23 @@
                 nrMonths,
                 widgetWidth,
                 widgetHeight,
+                noCSS,
                 injectCSS,
                 jsonpURL;
 
             container = $('#gameconfs-widget-container');
-            container.addClass('cleanslate');
 
             /* Load widget parameters */
             place = container.data('place');
             nrMonths = container.data('nr-months') || 3;
             widgetWidth = container.data('width') || 240;
             widgetHeight = container.data('height') || 400;
-            injectCSS = !container.data('no-css');
+            noCSS = container.data('no-css');
+            injectCSS = (noCSS === undefined) ? true : (noCSS !== true);
 
             if (injectCSS) {
+                container.addClass('cleanslate');
+
                 /* Append CSS to head */
                 css_link = $("<link>", {
                     rel: "stylesheet",
