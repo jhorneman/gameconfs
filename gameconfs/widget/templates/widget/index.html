@@ -7,7 +7,9 @@
     <script src="{{ url_for('widget.script', _external=True, version='1') }}" type="text/javascript"></script>
     <br/>
     <h2>How to add it to a WordPress blog</h2>
-    <p>Just go to the <a href="https://wordpress.org/plugins/gameconfs-widget/" target="_blank">plugin page in the official WordPress plugin directory</a> and follow the instructions there.</p>
+    <p>Just go to the 'Plugins / Add New' menu in the administration interface of your WordPress installation and search for Gameconfs.</p>
+    <p>If you want to install it manually, go to the <a href="https://wordpress.org/plugins/gameconfs-widget/" target="_blank">plugin page in the official WordPress plugin directory</a> and follow the instructions there.</p>
+    <p>Once installed, you can add the widget to your blog and change its parameters in the 'Appearance' / 'Widgets' menu.</p>
     <h2>How to add it to any website</h2>
     <p>The widget is easy to integrate. You just need to add two lines to your website's HTML. First, put:</p>
     <pre>&lt;div id="gameconfs-widget-container" data-nr-months="3" data-place="Europe" data-width="240" data-height="400"&gt;&lt;/div&gt;</pre>
@@ -21,11 +23,18 @@
         <li><strong>data-place</strong>: The continent, country, state or city you want to show events for. Optional. The default is to leave this parameter out, which shows events in the whole world.</li>
         <li><strong>data-width</strong>: The width of the widget in pixels. Optional. The default is 240.</li>
         <li><strong>data-height</strong>: The height of the widget in pixels. Optional. The default is 400.</li>
-        <li><strong>data-no-css</strong>: Set this to true if you don't want the widget to inject CSS. Optional. See below.</li>
+        <li><strong>data-no-css</strong>: Set this to true if you don't want the widget to use its own CSS. Optional. See below.</li>
     </ul>
-    <p>If you tell the widget not to inject CSS, all the styling is entirely up to you. This is an option for advanced users.</p>
-    <h2>How to add it to a Wordpress blog</h2>
-    <p>Download the <a href="{{ url_for('widget.static', filename='dl/gameconfs-widget.php') }}">Wordpress widget</a>, put it in your wp-content/plugins directory, and install it using your Wordpress administration interface. You can set all of the widget's parameters there.</p>
+    <p>If you tell the widget not to use its own CSS, all the styling is entirely up to you. This is an option for advanced users.</p>
+    <h2>Customizing CSS</h2>
+    <p>Here are some tips to help you customize the style of the widget if you've decided to not use the widget's own CSS:</p>
+    <ul>
+      <li>The widget is in a div with the ID 'gameconfs-widget-container'.</li>
+      <li>The widget mainly uses h2 and h3 elements, and tables for the event data.</li>
+      <li>You can use <a href="http://www.gameconfs.com/widget/v1/widget.css" target="_blank">the widget's existing CSS</a> for inspiration.
+        You can probably ignore the first section, which was copied from Bootstrap.
+        You can also ignore the heavy use of !important: that's just to make sure the widget's CSS overrides that of the site it's embedded into.</li>
+    </ul>
     <h2>FAQ</h2>
     <p>Here are the answers to some questions you might have:</p>
     <p><strong>How stable is this widget?</strong></p>
