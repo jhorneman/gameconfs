@@ -1,11 +1,13 @@
 {% extends "layout.html" %}
-{% block title %}
-  {% if location == "other" %}
-  Events in {{ year }}
-  {% else %}
-  Events in {{ location }} in {{ year }}
-  {% endif %}
-{% endblock %}
+{% macro title() -%}
+{%- if location == "other" -%}
+Online events in {{ year }}
+{%- else -%}
+Events in {{ location }} in {{ year }}
+{%- endif -%}
+{%- endmacro %}
+{% block title %}{{ title() }}{% endblock %}
+{% block ga_title %}{{ title() }}{% endblock %}
 {% block content %}
   {% if location == "other" %}
   <h2>Events in {{ year }}</h2>

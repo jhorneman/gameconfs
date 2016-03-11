@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block title %}Events in the {{ series.name }} series{% endblock %}
+{% block ga_title %}{{ series.name }} series{% endblock %}
 {% block content %}
   <h2>Events in the {{ series.name }} series</h2>
   {% if events %}

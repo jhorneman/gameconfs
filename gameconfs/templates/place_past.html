@@ -1,11 +1,13 @@
 {% extends "layout.html" %}
-{% block title %}
-  {% if location == "other" %}
-  Past events
-  {% else %}
-  Past events in {{ location }}
-  {% endif %}
-{% endblock %}
+{% macro title() -%}
+{%- if location == "other" -%}
+Past online events
+{%- else -%}
+Past events in {{ location }}
+{%- endif -%}
+{%- endmacro %}
+{% block title %}{{ title() }}{% endblock %}
+{% block ga_title %}{{ title() }}{% endblock %}
 {% block content %}
   {% if location == "other" %}
   <h2>Past events</h2>

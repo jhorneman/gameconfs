@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block title %}{{ event.name }} - {{ event|date_or_range }} - {{ project_name }}{% endblock %}
+{% block ga_title %}{{ event.name }}{% endblock %}
 {% block meta_tags %}
   <meta name="twitter:card" content="summary" />
   <meta name="twitter:site" content="@{{ project_twitter_account }}" />

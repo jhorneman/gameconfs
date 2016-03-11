@@ -1,5 +1,6 @@
 {% extends "layout.html" %}
 {% block title %}{{ project_name }} Stats{% endblock %}
+{% block ga_title %}Stats{% endblock %}
 {% block content %}
 	<h2>Top {{ country_stats|length }} countries</h2>
 	<table class="table table-condensed stats bars" id="country-stats"></table>
