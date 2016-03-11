@@ -18,7 +18,7 @@ from gameconfs.query_helpers import *
 from gameconfs.security import editing_kill_check, user_can_edit
 from today import get_today, get_now
 from kill_switches import is_feature_on
-from project import PROJECT_NAME, PROJECT_TAG_LINE, PROJECT_META_DESCRIPTION, ADMIN_EMAIL
+from project import PROJECT_NAME, PROJECT_TAG_LINE, PROJECT_META_DESCRIPTION, ADMIN_EMAIL, PROJECT_TWITTER_ACCOUNT
 
 
 def get_request_parameters():
@@ -65,13 +65,16 @@ def mailto(_address, _subject=None, _body=None):
 def inject_common_values():
     common_values = {
         "project_name": PROJECT_NAME,
+        "project_twitter_account": PROJECT_TWITTER_ACCOUNT,
         "tag_line": PROJECT_TAG_LINE,
         "meta_description": PROJECT_META_DESCRIPTION,
         "admin_email": ADMIN_EMAIL,
         "logged_in": user_can_edit(),
         "sponsor": None,
         "ce_retarget": is_feature_on(app, "CE_RETARGET"),
-        "mailto": mailto
+        "mailto": mailto,
+        "url_of_this": request.url,
+        "url_root": request.url_root
     }
     if not sponsoring_turned_on():
         common_values["sponsor"] = None

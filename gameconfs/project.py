@@ -8,4 +8,6 @@ PROJECT_META_DESCRIPTION = "The world's most comprehensive directory of conferen
 
 PROJECT_PREFIX = "GC"
 
+PROJECT_TWITTER_ACCOUNT = "gameconfs"
+
 ADMIN_EMAIL = "admin@gameconfs.com"
