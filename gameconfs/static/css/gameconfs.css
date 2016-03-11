@@ -205,6 +205,7 @@ body#view-event .event-entry span.event-location {
 }
 
 .internal-data {
+    margin-top: 0.6em
     color: #999;
 }
 
