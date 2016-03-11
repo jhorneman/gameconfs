@@ -8,10 +8,12 @@
   <meta name="twitter:description" content="{{ event.name }} - {{ event|date_or_range }}" />
   <meta name="twitter:image" content="{{ url_root }}apple-touch-icon-152x152.png" />
   <meta name="og:title" content="{{ event.name }} - {{ project_name }}" />
-  <meta name="og:type" content="website" />
+  <meta name="og:type" content="article" />
   <meta name="og:url" content="{{ url_of_this }}" />
   <meta name="og:description" content="{{ event.name }} - {{ event|date_or_range }}" />
   <meta name="og:site_name" content="{{ project_name }}" />
+  <meta name="article:published_time" content="{{ today_iso_8601 }}" />
+  <meta name="article:author" content="{{ project_name }}" />
 {% endblock %}
 {% block content %}
   <div itemscope itemtype="http://schema.org/Event" class="event-entry">

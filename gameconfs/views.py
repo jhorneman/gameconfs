@@ -74,7 +74,8 @@ def inject_common_values():
         "ce_retarget": is_feature_on(app, "CE_RETARGET"),
         "mailto": mailto,
         "url_of_this": request.url,
-        "url_root": request.url_root
+        "url_root": request.url_root,
+        "today_iso_8601": get_today().isoformat()
     }
     if not sponsoring_turned_on():
         common_values["sponsor"] = None
