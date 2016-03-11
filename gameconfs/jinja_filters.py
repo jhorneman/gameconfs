@@ -96,6 +96,13 @@ def index_to_year(_index):
     return int(int(_index) / 12)
 
 
+def date_or_range(_event):
+    if _event.start_date == _event.end_date:
+        return "{0} {1}".format(nice_date(_event.start_date), _event.start_date.year)
+    else:
+        return "{0} until {1} {2}".format(nice_date(_event.start_date), nice_date(_event.end_date), _event.start_date.year)
+
+
 def event_venue_and_location(_event):
     if _event.is_not_in_a_city():
         return _event.venue
