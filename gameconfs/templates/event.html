@@ -1,44 +1,50 @@
 {% extends "layout.html" %}
-{% macro date_or_range(event) %}
-  {% if event.start_date == event.end_date %}
-  {{ event.start_date|nice_date }} {{ event.start_date.year }}
-  {% else %}
-  {{ event.start_date|nice_date }} until {{ event.end_date|nice_date }} {{ event.start_date.year }}
-  {% endif %}
-{% endmacro %}
-{% block title %}{{ event.name }} - {{ date_or_range(event) }} - {{ project_name }}{% endblock %}
+{% block title %}{{ event.name }} - {{ event|date_or_range }} - {{ project_name }}{% endblock %}
+{% block meta_tags %}
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@{{ project_twitter_account }}" />
+  <meta name="twitter:title" content="{{ event.name }} - {{ project_name }}" />
+  <meta name="twitter:url" content="{{ url_of_this }}" />
+  <meta name="twitter:description" content="{{ event.name }} - {{ event|date_or_range }}" />
+  <meta name="twitter:image" content="{{ url_root }}apple-touch-icon-152x152.png" />
+  <meta name="og:title" content="{{ event.name }} - {{ project_name }}" />
+  <meta name="og:type" content="website" />
+  <meta name="og:url" content="{{ url_of_this }}" />
+  <meta name="og:description" content="{{ event.name }} - {{ event|date_or_range }}" />
+  <meta name="og:site_name" content="{{ project_name }}" />
+{% endblock %}
 {% block content %}
   <div itemscope itemtype="http://schema.org/Event" class="event-entry">
-    {% if event.is_published %}
+    {%- if event.is_published %}
     <h2 itemprop="name" class="event-name">{{ event.name }}</h2>
     {% else %}
     <h2 itemprop="name" class="event-name unpublished">{{ event.name }}</h2>
-    {% endif %}
+    {% endif -%}
     <span class="glyphicon glyphicon-calendar"></span>
     <span class="event-date">{{ adhoc_date_or_range(event) }}</span><br/>
-    {% if event.event_url %}
+    {%- if event.event_url %}
     <span class="glyphicon glyphicon-link"></span>
     <span class="event-url"><a itemprop="url" href="{{ event.event_url }}" target="_blank">{{ event.event_url|pretty_url }}</a></span><br/>
-    {% endif %}
-    {% if event.twitter_account %}
+    {% endif -%}
+    {%- if event.twitter_account %}
     <span class="glyphicon glyphicon-user"></span>
     <span class="event-twitter"><a href="http://twitter.com/{{ event.twitter_account|urlencode }}" target="_blank">@{{ event.twitter_account }}</a></span><br/>
-    {% endif %}
-    {% if event.twitter_hashtags %}
+    {% endif -%}
+    {% if event.twitter_hashtags -%}
     <span class="glyphicon glyphicon-tag"></span>
     <span class="event-hashtags">
       {% for tag in event.twitter_hashtags|split %}
       <a href="http://twitter.com/search?q=%23{{ tag[1:]|urlencode }}" target="_blank">{{ tag }}</a>
       {% endfor %}
     </span><br/>
-    {% endif %}
+    {% endif -%}
     <span class="glyphicon glyphicon-globe"></span>
     <span class="event-location" itemprop="location">{{ event|event_venue_and_location }}</span><br/>
   </div>
-  <p>
+  <div>
       <a class="btn btn-default" href="{{ url_for('event_ics', event_id=event.id) }}">Add to calendar</a>
       <a class="btn btn-default" href="{{ event|build_google_calendar_link|safe }}">Add to Google calendar</a>
-  </p>
+  </div>
   {% if logged_in %}
   <div class="internal-data">
     <p>

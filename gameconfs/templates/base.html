@@ -1,19 +1,19 @@
-{% macro monthly_date_or_range(event) %}
-  {% if event.start_date == event.end_date %}
+{% macro monthly_date_or_range(event) -%}
+  {%- if event.start_date == event.end_date -%}
   <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date.day }}</span>
   <span itemprop="endDate" content="{{ event.end_date|microdata_date }}"></span>
-  {% else %}
+  {%- else -%}
   <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date.day }}</span>-<span itemprop="endDate" content="{{ event.end_date|microdata_date }}">{{ event.end_date.day }}</span>
-  {% endif %}
-{% endmacro %}
-{% macro adhoc_date_or_range(event) %}
-  {% if event.start_date == event.end_date %}
+  {%- endif -%}
+{%- endmacro %}
+{% macro adhoc_date_or_range(event) -%}
+  {%- if event.start_date == event.end_date %}
   <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }} {{ event.start_date.year }}</span>
   <span itemprop="endDate" content="{{ event.end_date|microdata_date }}"></span>
-  {% else %}
+  {%- else %}
   <span itemprop="startDate" content="{{ event.start_date|microdata_date }}">{{ event.start_date|nice_date }}</span> until <span itemprop="endDate" content="{{ event.end_date|microdata_date }}">{{ event.end_date|nice_date }} {{ event.start_date.year }}</span>
-  {% endif %}
-{% endmacro %}
+  {%- endif %}
+{%- endmacro %}
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,6 +21,19 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>{% block title %}{{ project_name }}{% endblock %}</title>
   <meta name="description" content="{{ meta_description }}">
+{% block meta_tags %}
+  <meta name="twitter:card" content="summary" />
+  <meta name="twitter:site" content="@{{ project_twitter_account }}" />
+  <meta name="twitter:title" content="{{ project_name }}" />
+  <meta name="twitter:url" content="{{ url_of_this }}" />
+  <meta name="twitter:description" content="{{ meta_description }}" />
+  <meta name="twitter:image" content="{{ url_root }}apple-touch-icon-152x152.png" />
+  <meta name="og:title" content="{{ project_name }}" />
+  <meta name="og:type" content="website" />
+  <meta name="og:url" content="{{ url_of_this }}" />
+  <meta name="og:description" content="{{ meta_description }}" />
+  <meta name="og:site_name" content="{{ project_name }}" />
+{% endblock %}
   <link rel="stylesheet" href="{{ url_for('static', filename='css/all.min.css') }}">
   <link rel="icon" href="/favicon.ico" type="image/x-icon">
   <link rel="apple-touch-icon" href="/apple-touch-icon.png">
