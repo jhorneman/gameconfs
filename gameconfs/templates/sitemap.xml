@@ -1,24 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
 	<url>
-		<loc>{{url_root}}/sitemap.xml</loc>
+		<loc>{{ project_root_url }}/sitemap.xml</loc>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>{{url_root}}/robots.txt</loc>
+		<loc>{{ project_root_url }}/robots.txt</loc>
 		<changefreq>monthly</changefreq>
 	</url>
 	<url>
-		<loc>{{url_root}}/about</loc>
+		<loc>{{ project_root_url }}/about</loc>
 		<changefreq>weekly</changefreq>
 	</url>
 	<url>
-		<loc>{{url_root}}/</loc>
+		<loc>{{ project_root_url }}/</loc>
 		<changefreq>daily</changefreq>
 	</url>
 	{% for id in event_ids -%}
 	<url>
-		<loc>{{url_root}}/event/{{id}}</loc>
+		<loc>{{ project_root_url }}/event/{{id}}</loc>
 		<changefreq>weekly</changefreq>
 	</url>
 	{% endfor %}

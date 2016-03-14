@@ -8,7 +8,6 @@ import pytz
 import urllib
 from flask import render_template, request, send_from_directory, flash, redirect, url_for, Response, make_response
 from flask.ext.security.decorators import roles_required
-from flask.ext.mail import Message
 from werkzeug.contrib.atom import AtomFeed
 from gameconfs import app
 from gameconfs.models import *
@@ -18,7 +17,7 @@ from gameconfs.query_helpers import *
 from gameconfs.security import editing_kill_check, user_can_edit
 from today import get_today, get_now
 from kill_switches import is_feature_on
-from project import PROJECT_NAME, PROJECT_TAG_LINE, PROJECT_META_DESCRIPTION, ADMIN_EMAIL, PROJECT_TWITTER_ACCOUNT
+from project import *
 
 
 def get_request_parameters():
@@ -69,12 +68,14 @@ def inject_common_values():
         "tag_line": PROJECT_TAG_LINE,
         "meta_description": PROJECT_META_DESCRIPTION,
         "admin_email": ADMIN_EMAIL,
+        "project_root_url": PROJECT_ROOT_URL,
+        "project_domain": PROJECT_DOMAIN,
+
         "logged_in": user_can_edit(),
         "sponsor": None,
         "ce_retarget": is_feature_on(app, "CE_RETARGET"),
         "mailto": mailto,
         "url_of_this": request.url,
-        "url_root": request.url_root,
         "today_iso_8601": get_today().isoformat()
     }
     if not sponsoring_turned_on():
@@ -542,7 +543,7 @@ def event_ics(event_id):
         return render_template('page_not_found.html'), 404
 
     cal = icalendar.Calendar()
-    cal.add('prodid', '-//Game event//gameconfs.com//')
+    cal.add('prodid', '-//Event//' + PROJECT_DOMAIN + '//')
     cal.add('version', '2.0')
 
     calendar_entry = icalendar.Event()
@@ -552,7 +553,10 @@ def event_ics(event_id):
     calendar_entry.add('dtstart', event.start_date)
     calendar_entry.add('dtend', event.end_date + timedelta(days=1))
     calendar_entry.add('dtstamp', datetime.now(pytz.utc))
-    calendar_entry['uid'] = u'{event_id}-{date}@gameconfs.com'.format(date=event.start_date, event_id=event_id)
+    calendar_entry['uid'] = u'{event_id}-{date}@{domain}'.format(
+        date=event.start_date,
+        event_id=event_id,
+        domain=PROJECT_DOMAIN)
     calendar_entry.add('priority', 5)
     cal.add_component(calendar_entry)
 
@@ -574,10 +578,10 @@ def upcoming_ics():
     events = q.all()
 
     cal = icalendar.Calendar()
-    cal.add('prodid', '-//Game event//gameconfs.com//')
+    cal.add('prodid', '-//Event//' + PROJECT_DOMAIN + '//')
     cal.add('version', '2.0')
-    cal.add('X-WR-CALNAME','Gameconfs')
-    cal.add('X-WR-CALDESC','Upcoming conferences, trade shows and events related to electronic games, from www.gameconfs.com.')
+    cal.add('X-WR-CALNAME', PROJECT_NAME)
+    cal.add('X-WR-CALDESC', PROJECT_CALENDAR_DESCRIPTION)
 
     for event in events:
         calendar_entry = icalendar.Event()
@@ -587,7 +591,10 @@ def upcoming_ics():
         calendar_entry.add('dtstart', event.start_date)
         calendar_entry.add('dtend', event.end_date + timedelta(days=1))
         calendar_entry.add('dtstamp', datetime.now(pytz.utc))
-        calendar_entry['uid'] = u'{event_id}-{date}@gameconfs.com'.format(date=event.start_date, event_id=event.id)
+        calendar_entry['uid'] = u'{event_id}-{date}@{domain}'.format(
+            date=event.start_date,
+            event_id=event.id,
+            domain=PROJECT_DOMAIN)
         calendar_entry.add('priority', 5)
         cal.add_component(calendar_entry)
 
@@ -600,13 +607,13 @@ upcoming_ics.make_cache_key = make_date_cache_key
 def recent_feed():
     today = get_today()
 
-    feed = AtomFeed('Gameconfs - New events',
+    feed = AtomFeed(PROJECT_NAME + ' - New events',
                     title_type='text',
-                    url=request.url_root,
+                    url=PROJECT_ROOT_URL,
                     updated=get_now(),
                     feed_url=request.url,
-                    author='Gameconfs',
-                    subtitle='New events on Gameconfs',
+                    author=PROJECT_NAME,
+                    subtitle='New events on ' + PROJECT_NAME,
                     subtitle_type='text')
 
     #TODO: This will miss events if more than 15 are added at once, which occasionally happens.
@@ -623,34 +630,23 @@ def recent_feed():
                  content_type='text/html',
                  url=url_for('view_event', event_id=event.id, _external=True),
                  updated=event.created_at,
-                 author='Gameconfs',
+                 author=PROJECT_NAME,
                  published=event.created_at)
 
     return feed.get_response()
 recent_feed.make_cache_key = make_date_cache_key
 
 
-# @app.route('/feedback', methods=("POST",))
-# def feedback():
-#     if not is_feature_on(app, "EMAIL"):
-#         return "", 500
-#
-#     msg = Message("User feedback", recipients=["admin@gameconfs.com"])
-#     msg.body = get_request_parameters()
-#     app.mail.send(msg)
-#     return ""
-
-
 @app.route('/today.atom')
 @app.cache.cached(timeout=60*60*24)
 def today_feed():
-    feed = AtomFeed("Gameconfs - Today's events",
+    feed = AtomFeed(PROJECT_NAME + " - Today's events",
                     title_type='text',
-                    url=request.url_root,
+                    url=PROJECT_ROOT_URL,
                     updated=get_now(),
                     feed_url=request.url,
-                    author='Gameconfs',
-                    subtitle='Events on Gameconfs starting today',
+                    author=PROJECT_NAME,
+                    subtitle='Events on {0} starting today'.format(PROJECT_NAME),
                     subtitle_type='text')
 
     events = filter_published_only(Event.query).\
@@ -665,7 +661,7 @@ def today_feed():
                  content_type='text/plain',
                  url=url_for('view_event', event_id=event.id, _external=True),
                  updated=start_datetime,
-                 author='Gameconfs',
+                 author=PROJECT_NAME,
                  published=start_datetime)
 
     return feed.get_response()
@@ -679,18 +675,18 @@ def static_page(page_name):
     return render_template(template_name)
 
 
-@app.route('/sponsoring', methods=("GET", "POST"))
-def sponsoring():
-    if request.method == "POST":
-        if "on_button" in request.form:
-            resp = make_response(render_template('sponsoring.html', sponsoring_state=True, sponsor=GamingInsidersSponsor()))
-            resp.set_cookie("sponsoring", "true")
-        else:
-            resp = make_response(render_template('sponsoring.html', sponsoring_state=False, sponsor=None))
-            resp.set_cookie("sponsoring", "")
-        return resp
-    else:
-        return render_template('sponsoring.html', sponsoring_state=sponsoring_turned_on())
+# @app.route('/sponsoring', methods=("GET", "POST"))
+# def sponsoring():
+#     if request.method == "POST":
+#         if "on_button" in request.form:
+#             resp = make_response(render_template('sponsoring.html', sponsoring_state=True, sponsor=GamingInsidersSponsor()))
+#             resp.set_cookie("sponsoring", "true")
+#         else:
+#             resp = make_response(render_template('sponsoring.html', sponsoring_state=False, sponsor=None))
+#             resp.set_cookie("sponsoring", "")
+#         return resp
+#     else:
+#         return render_template('sponsoring.html', sponsoring_state=sponsoring_turned_on())
 
 
 @app.route('/stats')
@@ -769,6 +765,5 @@ def robots_txt():
 @app.route('/sitemap.xml')
 @app.cache.cached(timeout=60*60*24)
 def sitemap():
-    url_root = request.url_root[:-1]
     event_ids = [e[0] for e in db.session.query(Event.id).all()]
-    return render_template('sitemap.xml', url_root=url_root, event_ids=event_ids, mimetype='text/xml')
+    return render_template('sitemap.xml', event_ids=event_ids, mimetype='text/xml')

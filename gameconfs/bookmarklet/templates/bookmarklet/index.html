@@ -5,9 +5,9 @@ javascript:(function(){var%20jsCode=document.createElement('script');jsCode.setA
 {% block title %}Search{% endblock %}
 {% block content %}
     <h1>Bookmarklet</h1>
-    <p>Drag this button to your bookmarks to search events on Gameconfs:</p>
-    <a class="btn" href="{{ search_bookmarklet_code() }}">Search on Gameconf</a>
+    <p>Drag this button to your bookmarks to search events on {{ project_name }}:</p>
+    <a class="btn" href="{{ search_bookmarklet_code() }}">Search on {{ project_name }}</a>
     <p><br/>Or copy it directly:</p>
     <pre>{{ search_bookmarklet_code() }}</pre></p>
-    <p>Go to a web page and select the bookmarklet. Gameconfs will search for events with the same URL and for events containing any text you might have selected.</p>
+    <p>Go to a web page and select the bookmarklet. {{ project_name }} will search for events with the same URL and for events containing any text you might have selected.</p>
 {% endblock %}

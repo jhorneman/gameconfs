@@ -1,5 +1,5 @@
 {% extends "layout.html" %}
-{% block title %}Gameconfs widget{% endblock %}
+{% block title %}{{ project_name }} widget{% endblock %}
 {% block ga_title %}Widget{% endblock %}
 {% block content %}
     <h1>The Gameconfs Widget</h1>
@@ -32,7 +32,7 @@
     <ul>
       <li>The widget is in a div with the ID 'gameconfs-widget-container'.</li>
       <li>The widget mainly uses h2 and h3 elements, and tables for the event data.</li>
-      <li>You can use <a href="http://www.gameconfs.com/widget/v1/widget.css" target="_blank">the widget's existing CSS</a> for inspiration.
+      <li>You can use <a href="http://{{ project_root_url }}/widget/v1/widget.css" target="_blank">the widget's existing CSS</a> for inspiration.
         You can probably ignore the first section, which was copied from Bootstrap.
         You can also ignore the heavy use of !important: that's just to make sure the widget's CSS overrides that of the site it's embedded into.</li>
     </ul>
@@ -45,5 +45,5 @@
     <p><strong>How does the widget work?</strong></p>
     <p>The script uses jQuery to insert its own CSS into your page and to load some HTML from the Gameconfs server (using JSONP). It tries to play nice with your Javascript, jQuery and CSS.</p>
     <p><strong>Do you take feature requests?</strong></p>
-    <p>Within reason, sure. I want this widget to be useful. Just <a href="mailto:admin@gameconfs.com">email me</a> and I'll see what I can do.</p>
+    <p>Within reason, sure. I want this widget to be useful. Just <a href="{{ mailto(admin_email, "About the widget") }}">email me</a> and I'll see what I can do.</p>
 {% endblock %}

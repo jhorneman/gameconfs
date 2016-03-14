@@ -44,12 +44,15 @@ class RegexIconURLConverter(BaseConverter):
 
 
 def create_app(_run_mode=None):
-    # Create Flask app
-    global app
+    # Create Flask app.
+    # We have to calculate these paths because by default Flask uses the app name to do so, and we're
+    # setting that to a value that won't result in a valid path.
     template_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'templates')
-    app = Flask("gameconfs", template_folder=template_dir)
+    static_dir = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'static')
+    global app
+    app = Flask(PROJECT_NAME, template_folder=template_dir, static_folder=static_dir)
 
-    # Load kill switches
+    # Load kill switches.
     load_all_kill_switches(app)
 
     # Load default configuration

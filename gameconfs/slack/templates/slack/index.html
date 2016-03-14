@@ -1,12 +1,12 @@
 {% extends "layout.html" %}
-{% block title %}Gameconfs Slack integration{% endblock %}
+{% block title %}{{ project_name }} Slack integration{% endblock %}
 {% block ga_title %}Slack integration{% endblock %}
 {% block content %}
-<h1>Gameconfs Slack integration</h1>
+<h1>{{ project_name }} Slack integration</h1>
 
 <p><strong>THIS IS AN ALPHA FEATURE!</strong></p>
 
-<p>Gameconfs integration is currently working in a few Slack teams, but it may break or change,
+<p>{{ project_name }} integration is currently working in a few Slack teams, but it may break or change,
  and it will most definitely be replaced by a proper Slack app in the future.
  So if you try this, be warned that you will have to change or uninstall it some time from now.</p>
 
@@ -35,14 +35,14 @@
 <p>In the following screen, scroll down to Integration Settings and set the following:</p>
 
 <ul>
-<li><strong>URL</strong> http://www.gameconfs.com/slack/slash</li>
+<li><strong>URL</strong> http://{{ project_root_url }}/slack/slash</li>
 <li><strong>Method</strong> GET</li>
-<li><strong>Customize Name</strong> Gameconfs</li>
-<li><strong>Customize Icon</strong> if you like, download and use <a href="http://www.gameconfs.com/apple-touch-icon-144x144.png">http://www.gameconfs.com/apple-touch-icon&#8211;144x144.png</a></li>
+<li><strong>Customize Name</strong> {{ project_name }}</li>
+<li><strong>Customize Icon</strong> if you like, download and use <a href="http://{{ project_root_url }}/apple-touch-icon-144x144.png">http://www.gameconfs.com/apple-touch-icon&#8211;144x144.png</a></li>
 <li><strong>Autocomplete help text</strong> turn on &#8220;Show this command in the autocomplete list&#8221;</li>
-<li><strong>Description</strong> Search Gameconfs</li>
+<li><strong>Description</strong> Search {{ project_name }}</li>
 <li><strong>Usage hint</strong> [event name or place]</li>
-<li><strong>Descriptive Label</strong> Gameconfs</li>
+<li><strong>Descriptive Label</strong> {{ project_name }}</li>
 </ul>
 
 <p>Then click &#8220;Save Integration&#8221;.</p>
@@ -50,7 +50,7 @@
 <h2>Usage</h2>
 
 <p>In Slack, type '/confs Amsterdam' to search for upcoming conferences in Amsterdam, or '/confs AI' to search for upcoming
- conferences with 'AI' in them. The slash command will talk to Gameconfs, and then display the results.
+ conferences with 'AI' in them. The slash command will talk to {{ project_name }}, and then display the results.
  Only you will be able to see the results: they're not broadcast to everyone in the channel you're in.</p>
 
 <h2>Questions? Feedback?</h2>
