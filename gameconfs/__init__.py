@@ -35,7 +35,7 @@ class RegexIconURLConverter(BaseConverter):
         self.regex = items[0]
 
 
-def create_app(_run_mode=None):
+def create_app(_run_mode=None, _production_config_filename=None):
     # Create Flask app.
     # We have to calculate these paths because by default Flask uses the app name to do so, and we're
     # setting that to a value that won't result in a valid path.
@@ -70,6 +70,13 @@ def create_app(_run_mode=None):
 
     # Production run mode.
     elif _run_mode == "production":
+        if not _production_config_filename:
+            logging.error("No production configuration filename provided.")
+            return None, None
+
+        config_filename = os.path.join(app.instance_path, _production_config_filename)
+        app.config.from_pyfile(config_filename)
+
         set_up_logging(app)
 
     # Unrecognized run mode.
