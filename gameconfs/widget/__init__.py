@@ -3,9 +3,9 @@ import re
 import json
 from dateutil.relativedelta import *
 from flask import Blueprint, render_template, send_from_directory, request, jsonify
-from gameconfs.query_helpers import *
-from gameconfs.today import get_today
-from gameconfs.json_api_helpers import set_up_JSON_api_error_handlers
+from ..query_helpers import *
+from ..today import get_today
+from ..json_api_helpers import set_up_JSON_api_error_handlers
 
 
 widget_blueprint = Blueprint('widget', __name__,url_prefix='/widget', template_folder='templates', static_folder='static')

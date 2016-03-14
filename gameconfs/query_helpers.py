@@ -1,8 +1,8 @@
 from sqlalchemy.sql.expression import *
 from sqlalchemy.orm import *
 from flask import current_app
-from gameconfs import db
-from gameconfs.models import Event, Country, City, State, Continent
+from . import db
+from .models import Event, Country, City, State, Continent
 
 
 def search_events_by_string(_search_string, _show_unpublished=False):

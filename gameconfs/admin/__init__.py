@@ -3,7 +3,7 @@
 from flask_admin import Admin
 from views import AdminHomeView, set_up_views
 from update_view import set_up_update_view
-from gameconfs.project import PROJECT_NAME
+from ..project import PROJECT_NAME
 
 
 def set_up_admin_interface(_app, _db_session):

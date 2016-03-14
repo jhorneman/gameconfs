@@ -2,9 +2,9 @@
 
 from dateutil.relativedelta import *
 from flask import request, jsonify
-from gameconfs.query_helpers import *
-from gameconfs.today import get_today
-from gameconfs.view_module_helper import DeferredRoutes
+from ..query_helpers import *
+from ..today import get_today
+from ..view_module_helper import DeferredRoutes
 from . import InvalidUsage, convert_events_for_JSON
 
 

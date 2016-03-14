@@ -1,8 +1,8 @@
 import re
 from flask import Blueprint, render_template, request
-from gameconfs.models import Event
-from gameconfs.query_helpers import search_events_by_string
-from gameconfs.views import user_can_edit
+from ..models import Event
+from ..query_helpers import search_events_by_string
+from ..views import user_can_edit
 
 
 bookmarklet_blueprint = Blueprint('bookmarklet', __name__, url_prefix='/bookmarklet', template_folder='templates', static_folder='static')

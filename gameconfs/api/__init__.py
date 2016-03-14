@@ -1,8 +1,8 @@
 from datetime import date
 from flask import Blueprint, jsonify, render_template
-from gameconfs.app_logging import add_logger
-from gameconfs.models import *
-from gameconfs.json_api_helpers import set_up_JSON_api_error_handlers
+from ..app_logging import add_logger
+from ..models import *
+from ..json_api_helpers import set_up_JSON_api_error_handlers
 
 
 logger = logging.getLogger(__name__)

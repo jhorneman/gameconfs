@@ -2,7 +2,7 @@
 
 from flask_admin import Admin, AdminIndexView, expose
 from flask_admin.contrib.sqla import ModelView as SQLAModelview
-from gameconfs import models
+from .. import models
 from secure_view import secure_view
 
 

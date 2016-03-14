@@ -55,7 +55,8 @@ def create_app(_run_mode=None):
     # Load kill switches.
     load_all_kill_switches(app)
 
-    # Load default configuration
+    # Load default configuration.
+    # 'Gameconfs' here refers to the source root folder, so it's fine even if this project isn't Gameconfs.
     app.config.from_object("gameconfs.default_config")
 
     # Dev run mode
@@ -78,7 +79,7 @@ def create_app(_run_mode=None):
     elif _run_mode == "test":
         # Override today so it's always the same value.
         from datetime import date
-        from gameconfs.today import override_today
+        from .today import override_today
         override_today(date(2014, 5, 25))
 
         app.config["TESTING"] = True
@@ -118,7 +119,7 @@ def create_app(_run_mode=None):
 
     # Initialize the database
     global db
-    import gameconfs.models
+    import models
     db.init_app(app)
 
     # Set up Flask-Security
@@ -134,29 +135,29 @@ def create_app(_run_mode=None):
 
     # Import the views, to apply the decorators which use the global app object.
     app.url_map.converters['regex'] = RegexIconURLConverter
-    import gameconfs.views
+    import views
 
     # Register blueprints
-    from gameconfs.widget import widget_blueprint
-    from gameconfs.widget import set_up_blueprint as set_up_widget_blueprint
+    from .widget import widget_blueprint
+    from .widget import set_up_blueprint as set_up_widget_blueprint
     app.register_blueprint(widget_blueprint)
     set_up_widget_blueprint(app)
 
-    from gameconfs.bookmarklet import bookmarklet_blueprint
+    from .bookmarklet import bookmarklet_blueprint
     app.register_blueprint(bookmarklet_blueprint)
 
-    from gameconfs.data import data_blueprint
+    from .data import data_blueprint
     app.register_blueprint(data_blueprint)
 
     from admin import set_up_admin_interface
     set_up_admin_interface(app, db.session)
 
-    from gameconfs.api import api_blueprint
-    from gameconfs.api import set_up_blueprint as set_up_api_blueprint
+    from .api import api_blueprint
+    from .api import set_up_blueprint as set_up_api_blueprint
     app.register_blueprint(api_blueprint)
     set_up_api_blueprint(app)
 
-    from gameconfs.slack import slack_blueprint
+    from .slack import slack_blueprint
     app.register_blueprint(slack_blueprint)
 
     # Set up Jinja 2 filters

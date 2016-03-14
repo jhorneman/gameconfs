@@ -14,7 +14,7 @@ import logging
 import codecs
 import json
 import requests
-from gameconfs.today import get_now
+from .today import get_now
 
 
 logger = logging.getLogger(__name__)

@@ -5,8 +5,8 @@ from sqlalchemy import Column, Integer, String, ForeignKey, Date, DateTime, Bool
 from sqlalchemy.orm import relationship, backref
 import sqlalchemy.orm
 from flask.ext.security import UserMixin, RoleMixin
-from gameconfs import db
-from gameconfs import geocoder
+from . import db
+from . import geocoder
 
 
 logger = logging.getLogger(__name__)

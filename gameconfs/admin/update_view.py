@@ -4,12 +4,12 @@ from datetime import date
 import calendar
 from dateutil.relativedelta import *
 from flask_admin import BaseView, expose
-from gameconfs.today import get_today
+from ..today import get_today
 from secure_view import secure_view
 import update_view_api      # Importing it so it gets run
 from sqlalchemy.sql.expression import *
 from sqlalchemy.orm import joinedload
-from gameconfs.models import *
+from ..models import *
 
 
 class InsecureSpecialView(BaseView):

@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 
 from flask import Blueprint, request, jsonify, render_template, abort
-from gameconfs.query_helpers import *
-from gameconfs.jinja_filters import short_range
-from gameconfs.today import get_today
-from gameconfs.models import Event
+from ..query_helpers import *
+from ..jinja_filters import short_range
+from ..today import get_today
+from ..models import Event
 from slack_utils import escape_text_for_slack
 
 

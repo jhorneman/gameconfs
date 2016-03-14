@@ -1,7 +1,7 @@
 import json
 from flask import Blueprint
 from sqlalchemy.orm import joinedload
-from gameconfs.models import Series, City, Event
+from ..models import Series, City, Event
 
 
 data_blueprint = Blueprint('data', __name__,url_prefix='/data', template_folder='templates', static_folder='static')

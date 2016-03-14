@@ -2,10 +2,10 @@
 
 from flask import jsonify, abort, redirect, url_for, request
 from flask.ext.login import current_user
-from gameconfs import app
-from gameconfs.models import *
-from gameconfs.today import get_today
-from gameconfs.security import user_has_all_roles
+from .. import app
+from ..models import *
+from ..today import get_today
+from ..security import user_has_all_roles
 
 
 def is_accessible():

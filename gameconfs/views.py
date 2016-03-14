@@ -9,12 +9,12 @@ import urllib
 from flask import render_template, request, send_from_directory, flash, redirect, url_for, Response, make_response
 from flask.ext.security.decorators import roles_required
 from werkzeug.contrib.atom import AtomFeed
-from gameconfs import app
-from gameconfs.models import *
-from gameconfs.jinja_filters import event_venue_and_location, event_location
-from gameconfs.forms import EventForm, SearchForm
-from gameconfs.query_helpers import *
-from gameconfs.security import editing_kill_check, user_can_edit
+from . import app
+from .models import *
+from .jinja_filters import event_venue_and_location, event_location
+from .forms import EventForm, SearchForm
+from .query_helpers import *
+from .security import editing_kill_check, user_can_edit
 from today import get_today, get_now
 from kill_switches import is_feature_on
 from project import *
