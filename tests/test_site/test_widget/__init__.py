@@ -5,6 +5,7 @@ import json
 from nose.tools import *
 from .. import SiteTestCase
 from bs4 import BeautifulSoup, Tag
+from gameconfs.project import PROJECT_NAME
 
 
 base_url = "/widget/"
@@ -110,7 +111,7 @@ class WidgetTestCase(SiteTestCase):
     def test_place_not_found_returns_empty_html(self):
         html = self.call_api({"callback": "JSONP", "place": "Vatican City"}, 200)
         paragraph = html.find_all("p")[0]
-        eq_(paragraph.text, "The Gameconfs database contains no events satisfying these criteria.")
+        eq_(paragraph.text, "The {0} database contains no events satisfying these criteria.".format(PROJECT_NAME))
         events = WidgetTestCase.gather_events_from_widget_html(html)
         eq_(len(events), 0)
 
