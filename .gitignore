@@ -7,4 +7,4 @@
 build/
 doc/build/
 .env
-/gameconfs/config/production.py
+/instance/
