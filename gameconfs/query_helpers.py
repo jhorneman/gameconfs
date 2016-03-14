@@ -3,6 +3,7 @@ from sqlalchemy.orm import *
 from flask import current_app
 from . import db
 from .models import Event, Country, City, State, Continent
+from .today import get_today
 
 
 def search_events_by_string(_search_string, _show_unpublished=False):
@@ -68,8 +69,13 @@ def get_year_range():
             min_year, max_year = map(int, cached_value.split("-"))
             return min_year, max_year
 
-    min_year = db.session.query(func.min(Event.start_date)).one()[0].year
-    max_year = db.session.query(func.max(Event.end_date)).one()[0].year
+    min_year = db.session.query(func.min(Event.start_date)).one()[0]
+    if min_year:
+        min_year = min_year.year
+        max_year = db.session.query(func.max(Event.end_date)).one()[0].year
+    else:
+        min_year = get_today().year
+        max_year = min_year
 
     if current_app.cache:
         current_app.cache.set("min-max-year", "%s-%s" % (min_year, max_year), 60*60*24)
