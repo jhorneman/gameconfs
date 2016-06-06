@@ -35,7 +35,7 @@ class RegexIconURLConverter(BaseConverter):
         self.regex = items[0]
 
 
-def create_app(_run_mode=None, _production_config_filename=None):
+def create_app(_run_mode=None):
     # Create Flask app.
     # We have to calculate these paths because by default Flask uses the app name to do so, and we're
     # setting that to a value that won't result in a valid path.
@@ -51,7 +51,15 @@ def create_app(_run_mode=None, _production_config_filename=None):
     # The 'gameconfs' refers to the name of the directory the app is in, not the project.
     app.config.from_object("gameconfs.config.default")
     try:
-        app.config.from_object("gameconfs.config." + _run_mode)
+        config_module_name = "gameconfs.config." + _run_mode
+        if _run_mode == "production":
+            production_env = os.environ.get("GAMECONFS_RUN_ENV")
+            if production_env is None:
+                logging.error("No GAMECONFS_RUN_ENV environment variable provided.")
+                return None, None
+            config_module_name += "_" + production_env
+
+        app.config.from_object(config_module_name)
     except ImportError:
         pass
 
@@ -70,13 +78,6 @@ def create_app(_run_mode=None, _production_config_filename=None):
 
     # Production run mode.
     elif _run_mode == "production":
-        if not _production_config_filename:
-            logging.error("No production configuration filename provided.")
-            return None, None
-
-        config_filename = os.path.join(app.instance_path, _production_config_filename)
-        app.config.from_pyfile(config_filename)
-
         set_up_logging(app)
 
     # Unrecognized run mode.
