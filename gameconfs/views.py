@@ -350,6 +350,7 @@ def create_new_event():
 
         # Try to extract a city ID from the hidden field set by the auto-completion system.
         # This helps us avoid using geolocation if it's not necessary.
+        # TODO: Do this for duplicate and edit too.
         try:
             city_id = event_form.city_id.data
             if city_id is not None:
