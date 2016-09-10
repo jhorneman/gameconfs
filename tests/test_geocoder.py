@@ -19,7 +19,7 @@ class GeocoderTestCase(unittest.TestCase):
         with LogCapture(level=logging.ERROR) as l:
             g = GeocodeResults("")
             ok_(not g.is_valid)
-            l.check(("gameconfs.geocoder", "ERROR", "Geocoding query '': Status was 'ZERO_RESULTS' instead of 'OK'"))
+            l.check(("gameconfs.geocoder", "ERROR", "Geocoding query '': Status was 'INVALID_REQUEST' instead of 'OK'"))
 
     def test_utf8_query_works(self):
         g = GeocodeResults("Koelnmesse, Köln, Germany")
