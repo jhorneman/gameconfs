@@ -350,7 +350,6 @@ def create_new_event():
 
         # Try to extract a city ID from the hidden field set by the auto-completion system.
         # This helps us avoid using geolocation if it's not necessary.
-        # TODO: Do this for duplicate and edit too.
         try:
             city_id = event_form.city_id.data
             if city_id is not None:
@@ -375,6 +374,10 @@ def create_new_event():
 
             elif not new_event.set_location(db.session, event_form.venue.data, event_form.address.data):
                 raise EventSaveException("Location setting failed.")
+
+            if is_duplicate_event(new_event):
+                raise EventSaveException("Another event with the same name already exists for this year.")
+
         except Exception as e:
             # Get rid of whatever was done to the session or it will cause trouble later
             db.session.expunge_all()
@@ -442,9 +445,33 @@ def duplicate_event(event_id):
                 db.session.add(series)
             new_event.series = series
 
+        # Try to extract a city ID from the hidden field set by the auto-completion system.
+        # This helps us avoid using geolocation if it's not necessary.
         try:
-            if not new_event.set_location(db.session, event_form.venue.data, event_form.address.data):
+            city_id = event_form.city_id.data
+            if city_id is not None:
+                city_id = int(city_id)
+        except ValueError:
+            city_id = None
+
+        try:
+            if city_id:
+                new_event.city_id = city_id
+
+                # TODO: Refactor this, it's copied from Event.set_location()
+                venue = event_form.venue.data
+                if venue is None:
+                    venue = ""
+                new_event.venue = venue.strip()
+
+                address_for_geocoding = event_form.address.data
+                if address_for_geocoding is None:
+                    address_for_geocoding = ""
+                new_event.address_for_geocoding = address_for_geocoding.strip()
+
+            elif not new_event.set_location(db.session, event_form.venue.data, event_form.address.data):
                 raise EventSaveException("Location setting failed.")
+
             if is_duplicate_event(new_event):
                 raise EventSaveException("Another event with the same name already exists for this year.")
 
@@ -494,9 +521,32 @@ def edit_event(event_id):
                 db.session.add(series)
             event.series = series
 
+        # Try to extract a city ID from the hidden field set by the auto-completion system.
+        # This helps us avoid using geolocation if it's not necessary.
         try:
-            if not event.set_location(db.session, event_form.venue.data, event_form.address.data):
+            city_id = event_form.city_id.data
+            if city_id is not None:
+                city_id = int(city_id)
+        except ValueError:
+            city_id = None
+
+        try:
+            if city_id:
+                event.city_id = city_id
+
+                # TODO: Refactor this, it's copied from Event.set_location()
+                venue = event_form.venue.data
+                if venue is None:
+                    venue = ""
+                event.venue = venue.strip()
+
+                address_for_geocoding = event_form.address.data
+                if address_for_geocoding is None:
+                    address_for_geocoding = ""
+                event.address_for_geocoding = address_for_geocoding.strip()
+            elif not event.set_location(db.session, event_form.venue.data, event_form.address.data):
                 raise EventSaveException("Location setting failed.")
+
         except EventSaveException as e:
             # Get rid of whatever was done to the session or it will cause trouble later
             db.session.expunge_all()
