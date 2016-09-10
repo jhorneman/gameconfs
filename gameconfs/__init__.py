@@ -1,22 +1,14 @@
 # This module encapsulates everything related to creating the Flask app, including selecting and
 # loading configurations.
 #
-# The application's behavior depends on:
+# The application's behavior depends on
 #   the RUN MODE - the role it's in,
-#   the RUN ENVIRONMENT - where it's running (how it connects to external services), and
 #   KILL SWITCHES - used to turn off certain features, overriding the run mode and the run environment
 #
 # The following run modes are supported:
 #   dev        - for development.
 #   test       - for automated testing.
 #   production - for live operations.
-#
-# The run environment is only valid in production mode, and is set using the GAMECONFS_RUN_ENV
-# environment variable.
-#
-# The following run environments are supported:
-#   local   - a developers' local machine.
-#   heroku  - on Heroku or locally using Foreman.
 
 import os
 import logging
@@ -55,69 +47,45 @@ def create_app(_run_mode=None):
     # Load kill switches.
     load_all_kill_switches(app)
 
-    # Load default configuration.
-    # 'Gameconfs' here refers to the source root folder, so it's fine even if this project isn't Gameconfs.
-    app.config.from_object("gameconfs.default_config")
+    # Load default, then run mode specific configuration.
+    # The 'gameconfs' refers to the name of the directory the app is in, not the project.
+    app.config.from_object("gameconfs.config.default")
+    try:
+        config_module_name = "gameconfs.config." + _run_mode
+        if _run_mode == "production":
+            production_env = os.environ.get("GAMECONFS_RUN_ENV")
+            if production_env is None:
+                logging.error("No GAMECONFS_RUN_ENV environment variable provided.")
+                return None, None
+            config_module_name += "_" + production_env
 
-    # Dev run mode
+        app.config.from_object(config_module_name)
+    except ImportError:
+        pass
+
+    # Dev run mode.
     if _run_mode == "dev":
-        app.config["DEBUG"] = True
-
-        app.config["SQLALCHEMY_DATABASE_URI"] = "postgresql://gameconfs@localhost:5432/gameconfs"
-
-        # app.config["CACHE_TYPE"] = "gameconfs.caching.bmemcached_cache"
-        # app.config["CACHE_MEMCACHED_SERVERS"] = ["0.0.0.0:11211"]
-        # app.config["CACHE_MEMCACHED_USERNAME"] = None
-        # app.config["CACHE_MEMCACHED_PASSWORD"] = None
-
-        app.config["MAIL_PORT"] = 1025
-
-        app.config["DEBUG_TB_INTERCEPT_REDIRECTS"] = False  # Otherwise this gets annoying real fast
         DebugToolbarExtension(app)
 
-    # Test run mode
+    # Test run mode.
     elif _run_mode == "test":
         # Override today so it's always the same value.
         from datetime import date
         from .today import override_today
         override_today(date(2014, 5, 25))
 
-        app.config["TESTING"] = True
-        app.config["WTF_CSRF_ENABLED"] = False  # Or CSRF checks will fail
         turn_feature_off(app, "CACHE")
-        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
 
-    # Production run mode
+    # Production run mode.
     elif _run_mode == "production":
-        # Get additional configuration based on run environment
-        run_environment = os.environ.get(PROJECT_NAME.upper() + "_RUN_ENV", "local")
-        if run_environment == "heroku":
-            # Get configuration data from Heroku environment variables
-            app.config["SQLALCHEMY_DATABASE_URI"] = os.environ.get("DATABASE_URL")
-
-            app.config["CACHE_TYPE"] = "gameconfs.caching.bmemcached_cache"
-            app.config["CACHE_MEMCACHED_SERVERS"] = os.environ.get("MEMCACHEDCLOUD_SERVERS").split(",")
-            app.config["CACHE_MEMCACHED_USERNAME"] = os.environ.get("MEMCACHEDCLOUD_USERNAME")
-            app.config["CACHE_MEMCACHED_PASSWORD"] = os.environ.get("MEMCACHEDCLOUD_PASSWORD")
-
-            app.config["MAIL_SERVER"] = os.environ.get("POSTMARK_SMTP_SERVER")
-            app.config["MAIL_USERNAME"] = os.environ.get("POSTMARK_API_TOKEN")
-            app.config["MAIL_PASSWORD"] = os.environ.get("POSTMARK_API_TOKEN")
-            app.config["MAIL_DEFAULT_SENDER"] = ADMIN_EMAIL
-            app.config["MAIL_USE_TLS"] = True
-
-        else:
-            logging.error("Did not recognize run environment '%s'" % run_environment)
-            return None, None
-
         set_up_logging(app)
 
-    # Unrecognized run mode
+    # Unrecognized run mode.
     else:
         logging.error("Did not recognize run mode '%s'" % _run_mode)
         return None, None
 
-    # Initialize the database
+    # Initialize the connection to the database.
     global db
     import models
     db.init_app(app)
