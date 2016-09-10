@@ -14,8 +14,17 @@ Source: [https://devcenter.heroku.com/articles/heroku-postgres-backups]
 
 The user is important! See: [http://www.softr.li/blog/2012/07/25/postgresql-schema-owner-altered-during-dump-prevent-access-from-rails]
 
-# Create local database from scratch
+# Create local PostgreSQL database from scratch
+    CREATE USER "gameconfs" WITH PASSWORD "<password>";
+    CREATE DATABASE "gameconfs";
+    GRANT ALL PRIVILEGES ON DATABASE "gameconfs" to "gameconfs";
 
-    CREATE USER "gdcal-dev" WITH PASSWORD "<password>";
-    CREATE DATABASE "gdcal-dev";
-    GRANT ALL PRIVILEGES ON DATABASE "gdcal-dev" to "gdcal-dev";
+# Connect to local MySQL
+
+    mysql -h localhost -u root -p
+
+# Create local MySQL database from scratch
+
+    CREATE USER 'aiconfs'@'localhost' IDENTIFIED BY '<password>';
+    CREATE DATABASE aiconfs;
+    GRANT ALL PRIVILEGES ON aiconfs.* TO 'aiconfs'@'localhost';
