@@ -143,7 +143,7 @@
 </tr>
 <tr>
 	<td style="text-align:left;">city</td>
-	<td style="text-align:left;">The city the event takes place in.</td>
+	<td style="text-align:left;">The city the event takes place in (if any, see below).</td>
 </tr>
 <tr>
 	<td style="text-align:left;">state</td>
@@ -159,6 +159,10 @@
 </tr>
 </tbody>
 </table>
+
+<p>Some events do not take place in a single physical location, such as online events, or worldwide events like the Global Game Jam.
+In this case, the API won’t return city (or state, country, and continent) fields, and the venue field alone will be
+descriptive enough (i.e. it will be “Online” or something similar).</p>
 
 <h3>Examples</h3>
 
