@@ -36,7 +36,7 @@ python-binary-memcached==0.21
 python-dateutil==2.1
 python-editor==0.5
 pytz==2015.7
-PyYAML==3.10
+PyYAML==5.4
 requests==2.8.1
 rsa==3.0.1
 six==1.10.0
